@@ -21,7 +21,7 @@ The change history is available online at [History](docs/HEAD/history.html)
 This project was made using theese open-sourced [third parties](THIRDPARTIES.md).
 
 ## Contributors
-MoBaGEn development was made by theese [People](PEOPLE.md), and the top contributors are:
+MoBaGEn development is made by theese [People](PEOPLE.md), and the top contributors are:
 - [Alexandre Tolstenko](linkedin.com/in/aletolstenko/)
 
 ## Sponsorship
@@ -31,7 +31,6 @@ This project is sponsored via [![Donate](https://img.shields.io/badge/Donate-Pay
 - Bruno Aragão
 - Joel Oliveira
 - Rafael Dalmazo
-- Samuel Carlos
 
 ## Finance Report
 In order to report our costs properly via [OpenCollective](https://opencollective.com/) we need to achieve at least 100 stars in this repository. So please star us!
