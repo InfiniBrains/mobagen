@@ -26,7 +26,7 @@ MoBaGEn development was made by theese [People](PEOPLE.md), and the top contribu
 
 ## Sponsorship
 This project is sponsored via [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=tolstenko@gmail.com) and [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=tolstenko@gmail.com)[Patreon](https://www.patreon.com/tolstenko) by this kind people:
-- [Alexandre Tolstenko](linkedin.com/in/aletolstenko/)
+- [Alexandre Tolstenko](http://linkedin.com/in/aletolstenko/)
 - Aurus Dourado
 - Bruno Aragão
 - Joel Oliveira
