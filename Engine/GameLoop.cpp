@@ -11,7 +11,7 @@ class GameLoopController
 public:
     static GameLoopController& getInstance()
     {
-    	static GameLoopController instance; // Guaranteed to be destroyed.                                  // Instantiated on first use.
+    	static GameLoopController instance; // Instantiated on first use.
         return instance;
     }
 
@@ -39,11 +39,3 @@ public:
   		}
 	}
 };
-
-
-int main ()
-{
-  
-
-  return 0;
-}

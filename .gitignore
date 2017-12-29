@@ -28,3 +28,4 @@
 *.app
 .vs/
 build/
+cmake-build-debug/
