@@ -4,7 +4,7 @@ Welcome to the **MoBaGEn**. The **MO**dule **BA**sed **G**ame **EN**gine.
 **MoBaGEn** is a free lightweight, cross-platform 3D Game Engine implemented in C++ and scripted in C#(Mono), Javascript(V8) and Lua.
 
 ## License
-Licensed under the [![WTFPL](http://www.wtfpl.net/wp-content/uploads/2012/12/wtfpl-badge-4.png)](http://www.wtfpl.net/). In short: you can do what ever you want to do, and we kindly ask you a contribution to pay our bills. See [LICENSE](LICENSE.md) for details.
+Licensed under the [![WTFPL](http://www.wtfpl.net/wp-content/uploads/2012/12/wtfpl-badge-4.png)](http://www.wtfpl.net/). In short: you can do what ever you want to do, and we kindly ask you for a contribution to pay our bills. See [LICENSE](LICENSE.md) for details.
 
 ## Contributing
 Before making pull requests, please read the [Contribution checklist](CONTRIBUTION.md) and [Coding Conventions](CODINGCONVENTION.md) pages from the documentation.
