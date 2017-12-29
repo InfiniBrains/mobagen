@@ -1,2 +1,2 @@
-# mobagen
+# MoBaGEn
 MOBAGEN
