@@ -1,41 +1,49 @@
-#include <iostream>
-#include <chrono>
+#include "GameLoop.h"
 #include <thread>
-#include "Timer.cpp"
+#include <cfloat>
 
 using namespace std;
 
-class GameLoopController
+GameLoop::GameLoop(const double targetDeltaTime)
 {
- 	int TargetFramePeriod = 16667; // (1s/60) to microseconds
-public:
-    static GameLoopController& getInstance()
-    {
-    	static GameLoopController instance; // Instantiated on first use.
-        return instance;
-    }
+  accumulatedTime_ = duration<double>(duration_values<double>::zero());
+  lastUpdateTime_ = high_resolution_clock::now();
+  dt_ = 0;
+  targetDeltaTime_ = targetDeltaTime;
+}
 
-	~GameLoopController();
+GameLoop::~GameLoop() = default;
 
-	void Init(int TargetFramePeriod)
-	{
-		this->TargetFramePeriod = TargetFramePeriod;
-	}	
-	
-	void UpdateThread()
-  	{
-		Timer t;
-  		int lastFrameTime = 0;
+// todo: check pausable status, and physics steps
+void GameLoop::Tick()
+{
+  const auto now = high_resolution_clock::now();
+  auto deltaTime = duration_cast<duration<double>>(now - lastUpdateTime_);
+  if (deltaTime.count() < FLT_MIN) {
+    deltaTime = duration<double>(TargetDeltaTime());
+    //lastUpdateTime_ = now - duration<double>(TargetDeltaTime());
+  }
+  else
+    accumulatedTime_ += deltaTime;
 
-  		for(;;)
-  		{
-			t.Start();
-			
+  dt_ = deltaTime.count();
 
-			t.Stop();
-			lastFrameTime = t.Duration();
-			//cout <<"wating "<< 1000000 - lastFrameTime << "us" << endl;
-  			this_thread::sleep_for(chrono::microseconds(TargetFramePeriod - t.Duration()));
-  		}
-	}
-};
+  lastUpdateTime_ = now;
+}
+
+double GameLoop::TargetDeltaTime()
+{
+  return targetDeltaTime_;
+}
+
+double GameLoop::Dt()
+{
+  return dt_;
+}
+
+void GameLoop::WaitForNextFrame()
+{
+  auto delta = duration<double>(TargetDeltaTime())- (high_resolution_clock::now() - lastUpdateTime_);
+  if (delta.count() > 0)
+    this_thread::sleep_for(delta);
+}
