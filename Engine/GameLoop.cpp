@@ -21,7 +21,6 @@ void GameLoop::Tick()
   auto deltaTime = duration_cast<duration<double>>(now - lastUpdateTime_);
   if (deltaTime.count() < FLT_MIN) {
     deltaTime = duration<double>(TargetDeltaTime());
-    //lastUpdateTime_ = now - duration<double>(TargetDeltaTime());
   }
   else
     accumulatedTime_ += deltaTime;

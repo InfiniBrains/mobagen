@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.9)
 project(MoBaGEn)
 set(CMAKE_CXX_STANDARD 14)
+include_directories("Engine")
 add_subdirectory("Engine")
 add_subdirectory("Samples")
