@@ -24,7 +24,7 @@ Other short-lived branches may pop-up from time to time as we stabilize new rele
 ## Documentation
 The documentation is also available online at [Documentation](docs/HEAD/index.html)
 
-Documentation on how to build MoBaGEn: [Building](docs/HEAD/building.html)
+Documentation on how to build MoBaGEn: [Building](BUILDING.md)
 
 ## History
 The change history is available online at [History](docs/HEAD/history.html)
