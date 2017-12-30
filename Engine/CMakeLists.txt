@@ -1,5 +1,5 @@
 add_library(
-		MoBaGEn SHARED
+		MoBaGEn STATIC
 		GameLoop.cpp
 		GameObject.cpp
 )
