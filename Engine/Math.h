@@ -2,6 +2,9 @@
 #include <limits>
 #include <cstdint>
 #include "Color.h"
+#include <vector>
+#include <cfloat>
+
 # define M_PIl          3.141592653589793238462643383279502884197169399375105820974L /* pi */
 
 /**
@@ -35,7 +38,7 @@ struct Math {
 	 * \brief Degrees-to-radians conversion constant (Read Only).
 	 */
 	const double Deg2Rad = 0.017453292519943295769236907684886127134428718885417254560L;
-	
+
 	/**
 	 * \brief Radians-to-degrees conversion constant (Read Only).
 	 */
@@ -44,237 +47,164 @@ struct Math {
 
 	/**
 	 * \brief Returns the closest power of two value.
-	 * \param value 
+	 * \param value
 	 * \return Returns the closest power of two value.
 	 */
 	static uint32_t ClosestPowerOfTwo(uint32_t value);
 
+	/**
+	* \brief Returns the next power of two value.
+	* \param value
+	* \return
+	*/
+	static uint32_t NextPowerOfTwo(uint32_t v);
 
 	/**
 	 * \brief Converts the given value from gamma (sRGB) to linear color space.
-	 * \param value 
-	 * \return 
+	 * \param value
+	 * \return
 	 */
 	static double GammaToLinearSpace(double value);
 
 	/**
 	 * \brief Converts the given value from linear to gamma (sRGB) color space.
-	 * \param value 
-	 * \return 
+	 * \param value
+	 * \return
 	 */
 	static double LinearToGammaSpace(double value);
 
+	/**
+	 * \brief Convert a color temperature in Kelvin to RGB color.
+	 * \param kelvin Temperature in Kelvin. Range 1000 to 40000 Kelvin.
+	 * \return Correlated Color Temperature as floating point RGB color.
+	 */
+	static Color CorrelatedColorTemperatureToRGB(float kelvin)
+	{
+		// todo: implement this
+		return Color::black();
+	}
+
+	/**
+	 * \brief Returns true if the value is power of two.
+	 * \param value 
+	 * \return true if the value is power of two.
+	 */
+	static bool IsPowerOfTwo(uint32_t value);
+	
+	/**
+	 * \brief Generate 2D Perlin noise.
+	 * \param x X-coordinate of sample point.
+	 * \param y Y-coordinate of sample point.
+	 * \return Value between 0.0 and 1.0.
+	 */
+	static double PerlinNoise(double x, double y);
+
+	static int16_t FloatToHalf(float val);
+
+	static float HalfToFloat(int16_t val);
+
+	/**
+	 * \brief Returns the sine of angle f in radians.
+	 * \param f The argument as a radian.
+	 * \return The return value between -1 and +1.
+	 */
+	static float Sin(float f);
+
+	/**
+	 * \brief Returns the cosine of angle f in radians.
+	 * \param f 
+	 * \return 
+	 */
+	static float Cos(float f);
+
+	/**
+	 * \brief Returns the tangent of angle f in radians.
+	 * \param f 
+	 * \return 
+	 */
+	static float Tan(float f);
+
+	/**
+	 * \brief Returns the arc-sine of f - the angle in radians whose sine is f.
+	 * \param f 
+	 * \return 
+	 */
+	static float Asin(float f);
+
+	/**
+	 * \brief Returns the arc-cosine of f - the angle in radians whose cosine is f.
+	 * \param f 
+	 * \return 
+	 */
+	static float Acos(float f);
+
+	/**
+	 * \brief Returns the arc-tangent of f - the angle in radians whose tangent is f.
+	 * \param f 
+	 * \return 
+	 */
+	static float Atan(float f);
+
+	/**
+	 * \brief Returns the angle in radians whose Tan is y/x.
+	 * \param y 
+	 * \param x 
+	 * \return 
+	 */
+	static float Atan2(float y, float x);
+
+	/**
+	 * \brief Returns square root of f.
+	 * \param f 
+	 * \return 
+	 */
+	static float Sqrt(float f);
+
+	/**
+	 * \brief Returns the absolute value of f.
+	 * \param f 
+	 * \return 
+	 */
+	static float Abs(float f);
+
+	/**
+	 * \brief Returns the absolute value of value.
+	 * \param value 
+	 * \return 
+	 */
+	static int32_t Abs(int32_t value);
+
+	/**
+	 * \brief Returns the smallest of two or more values.
+	 * \param a 
+	 * \param b 
+	 * \return 
+	 */
+	static double Min(double a, double b);
+
+	/**
+	 * \brief Returns the smallest of two or more values.
+	 * \param values 
+	 * \return 
+	 */
+	static double Min(std::vector<double> values);
+
+	/**
+	 * \brief Returns the smallest of two values.
+	 * \param a 
+	 * \param b 
+	 * \return 
+	 */
+	static int32_t Min(int32_t a, int32_t b);
+
+	/**
+	 * \brief Returns the smallest of two or more values.
+	 * \param values 
+	 * \return 
+	 */
+	static int32_t Min(std::vector<int32_t> values);
+};
 	/*
-		/// <summary>
-		///   <para>Convert a color temperature in Kelvin to RGB color.</para>
-		/// </summary>
-		/// <param name="kelvin">Temperature in Kelvin. Range 1000 to 40000 Kelvin.</param>
-		/// <returns>
-		///   <para>Correlated Color Temperature as floating point RGB color.</para>
-		/// </returns>
-		public static Color CorrelatedColorTemperatureToRGB(float kelvin)
-		{
-			Color color;
-			Mathf.INTERNAL_CALL_CorrelatedColorTemperatureToRGB(kelvin, out color);
-			return color;
-		}
-
-		[GeneratedByOldBindingsGenerator]
-		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern void INTERNAL_CALL_CorrelatedColorTemperatureToRGB(float kelvin, out Color value);
-
-		/// <summary>
-		///   <para>Returns true if the value is power of two.</para>
-		/// </summary>
-		/// <param name="value"></param>
-		[GeneratedByOldBindingsGenerator]
-		[MethodImpl(MethodImplOptions.InternalCall)]
-		public static extern bool IsPowerOfTwo(int value);
-
-		/// <summary>
-		///   <para>Returns the next power of two value.</para>
-		/// </summary>
-		/// <param name="value"></param>
-		[GeneratedByOldBindingsGenerator]
-		[MethodImpl(MethodImplOptions.InternalCall)]
-		public static extern int NextPowerOfTwo(int value);
-
-		/// <summary>
-		///   <para>Generate 2D Perlin noise.</para>
-		/// </summary>
-		/// <param name="x">X-coordinate of sample point.</param>
-		/// <param name="y">Y-coordinate of sample point.</param>
-		/// <returns>
-		///   <para>Value between 0.0 and 1.0.</para>
-		/// </returns>
-		[GeneratedByOldBindingsGenerator]
-		[MethodImpl(MethodImplOptions.InternalCall)]
-		public static extern float PerlinNoise(float x, float y);
-
-		[GeneratedByOldBindingsGenerator]
-		[MethodImpl(MethodImplOptions.InternalCall)]
-		public static extern ushort FloatToHalf(float val);
-
-		[GeneratedByOldBindingsGenerator]
-		[MethodImpl(MethodImplOptions.InternalCall)]
-		public static extern float HalfToFloat(ushort val);
-
-		/// <summary>
-		///   <para>Returns the sine of angle f in radians.</para>
-		/// </summary>
-		/// <param name="f">The argument as a radian.</param>
-		/// <returns>
-		///   <para>The return value between -1 and +1.</para>
-		/// </returns>
-		public static float Sin(float f)
-		{
-			return (float)Math.Sin((double)f);
-		}
-
-		/// <summary>
-		///   <para>Returns the cosine of angle f in radians.</para>
-		/// </summary>
-		/// <param name="f"></param>
-		public static float Cos(float f)
-		{
-			return (float)Math.Cos((double)f);
-		}
-
-		/// <summary>
-		///   <para>Returns the tangent of angle f in radians.</para>
-		/// </summary>
-		/// <param name="f"></param>
-		public static float Tan(float f)
-		{
-			return (float)Math.Tan((double)f);
-		}
-
-		/// <summary>
-		///   <para>Returns the arc-sine of f - the angle in radians whose sine is f.</para>
-		/// </summary>
-		/// <param name="f"></param>
-		public static float Asin(float f)
-		{
-			return (float)Math.Asin((double)f);
-		}
-
-		/// <summary>
-		///   <para>Returns the arc-cosine of f - the angle in radians whose cosine is f.</para>
-		/// </summary>
-		/// <param name="f"></param>
-		public static float Acos(float f)
-		{
-			return (float)Math.Acos((double)f);
-		}
-
-		/// <summary>
-		///   <para>Returns the arc-tangent of f - the angle in radians whose tangent is f.</para>
-		/// </summary>
-		/// <param name="f"></param>
-		public static float Atan(float f)
-		{
-			return (float)Math.Atan((double)f);
-		}
-
-		/// <summary>
-		///   <para>Returns the angle in radians whose Tan is y/x.</para>
-		/// </summary>
-		/// <param name="y"></param>
-		/// <param name="x"></param>
-		public static float Atan2(float y, float x)
-		{
-			return (float)Math.Atan2((double)y, (double)x);
-		}
-
-		/// <summary>
-		///   <para>Returns square root of f.</para>
-		/// </summary>
-		/// <param name="f"></param>
-		public static float Sqrt(float f)
-		{
-			return (float)Math.Sqrt((double)f);
-		}
-
-		/// <summary>
-		///   <para>Returns the absolute value of f.</para>
-		/// </summary>
-		/// <param name="f"></param>
-		public static float Abs(float f)
-		{
-			return Math.Abs(f);
-		}
-
-		/// <summary>
-		///   <para>Returns the absolute value of value.</para>
-		/// </summary>
-		/// <param name="value"></param>
-		public static int Abs(int value)
-		{
-			return Math.Abs(value);
-		}
-
-		/// <summary>
-		///   <para>Returns the smallest of two or more values.</para>
-		/// </summary>
-		/// <param name="a"></param>
-		/// <param name="b"></param>
-		/// <param name="values"></param>
-		public static float Min(float a, float b)
-		{
-			return (double)a >= (double)b ? b : a;
-		}
-
-		/// <summary>
-		///   <para>Returns the smallest of two or more values.</para>
-		/// </summary>
-		/// <param name="a"></param>
-		/// <param name="b"></param>
-		/// <param name="values"></param>
-		public static float Min(params float[] values)
-		{
-			int length = values.Length;
-			if (length == 0)
-				return 0.0f;
-			float num = values[0];
-			for (int index = 1; index < length; ++index)
-			{
-				if ((double)values[index] < (double)num)
-					num = values[index];
-			}
-			return num;
-		}
-
-		/// <summary>
-		///   <para>Returns the smallest of two or more values.</para>
-		/// </summary>
-		/// <param name="a"></param>
-		/// <param name="b"></param>
-		/// <param name="values"></param>
-		public static int Min(int a, int b)
-		{
-			return a >= b ? b : a;
-		}
-
-		/// <summary>
-		///   <para>Returns the smallest of two or more values.</para>
-		/// </summary>
-		/// <param name="a"></param>
-		/// <param name="b"></param>
-		/// <param name="values"></param>
-		public static int Min(params int[] values)
-		{
-			int length = values.Length;
-			if (length == 0)
-				return 0;
-			int num = values[0];
-			for (int index = 1; index < length; ++index)
-			{
-				if (values[index] < num)
-					num = values[index];
-			}
-			return num;
-		}
-
 		/// <summary>
 		///   <para>Returns largest of two or more values.</para>
 		/// </summary>
