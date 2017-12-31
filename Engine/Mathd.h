@@ -1,16 +1,18 @@
 #pragma once
 #include <limits>
 #include <cstdint>
-#include "Color.h"
+//#include "Color.h"
 #include <vector>
 #include <cfloat>
+#include <math.h>
 
 # define M_PIl          3.141592653589793238462643383279502884197169399375105820974L /* pi */
 
 /**
  * \brief A collection of common math functions.
  */
-struct Math {
+class Mathd {
+public:
 	/**
 	 * \brief A tiny floating point value (Read Only).
 	 */
@@ -59,30 +61,7 @@ struct Math {
 	*/
 	static uint32_t NextPowerOfTwo(uint32_t v);
 
-	/**
-	 * \brief Converts the given value from gamma (sRGB) to linear color space.
-	 * \param value
-	 * \return
-	 */
-	static double GammaToLinearSpace(double value);
-
-	/**
-	 * \brief Converts the given value from linear to gamma (sRGB) color space.
-	 * \param value
-	 * \return
-	 */
-	static double LinearToGammaSpace(double value);
-
-	/**
-	 * \brief Convert a color temperature in Kelvin to RGB color.
-	 * \param kelvin Temperature in Kelvin. Range 1000 to 40000 Kelvin.
-	 * \return Correlated Color Temperature as floating point RGB color.
-	 */
-	static Color CorrelatedColorTemperatureToRGB(float kelvin)
-	{
-		// todo: implement this
-		return Color::black();
-	}
+	
 
 	/**
 	 * \brief Returns true if the value is power of two.
@@ -203,79 +182,51 @@ struct Math {
 	 * \return 
 	 */
 	static int32_t Min(std::vector<int32_t> values);
+
+	/**
+	* \brief Returns the largest of two or more values.
+	* \param a
+	* \param b
+	* \return
+	*/
+	static double Max(double a, double b);
+
+	/**
+	* \brief Returns the largest of two or more values.
+	* \param values
+	* \return
+	*/
+	static double Max(std::vector<double> values);
+
+	/**
+	* \brief Returns the largest of two values.
+	* \param a
+	* \param b
+	* \return
+	*/
+	static int32_t Max(int32_t a, int32_t b);
+
+	/**
+	* \brief Returns the largest of two or more values.
+	* \param values
+	* \return
+	*/
+	static int32_t Max(std::vector<int32_t> values);
+
+
+	/**
+	 * \brief Returns f raised to power p. 
+	 * \param f 
+	 * \param p 
+	 * \return 
+	 */
+	static double Pow(double f, double p);
 };
+
 	/*
-		/// <summary>
-		///   <para>Returns largest of two or more values.</para>
-		/// </summary>
-		/// <param name="a"></param>
-		/// <param name="b"></param>
-		/// <param name="values"></param>
-		public static float Max(float a, float b)
-		{
-			return (double)a <= (double)b ? b : a;
-		}
+		
 
-		/// <summary>
-		///   <para>Returns largest of two or more values.</para>
-		/// </summary>
-		/// <param name="a"></param>
-		/// <param name="b"></param>
-		/// <param name="values"></param>
-		public static float Max(params float[] values)
-		{
-			int length = values.Length;
-			if (length == 0)
-				return 0.0f;
-			float num = values[0];
-			for (int index = 1; index < length; ++index)
-			{
-				if ((double)values[index] >(double) num)
-					num = values[index];
-			}
-			return num;
-		}
-
-		/// <summary>
-		///   <para>Returns the largest of two or more values.</para>
-		/// </summary>
-		/// <param name="a"></param>
-		/// <param name="b"></param>
-		/// <param name="values"></param>
-		public static int Max(int a, int b)
-		{
-			return a <= b ? b : a;
-		}
-
-		/// <summary>
-		///   <para>Returns the largest of two or more values.</para>
-		/// </summary>
-		/// <param name="a"></param>
-		/// <param name="b"></param>
-		/// <param name="values"></param>
-		public static int Max(params int[] values)
-		{
-			int length = values.Length;
-			if (length == 0)
-				return 0;
-			int num = values[0];
-			for (int index = 1; index < length; ++index)
-			{
-				if (values[index] > num)
-					num = values[index];
-			}
-			return num;
-		}
-
-		/// <summary>
-		///   <para>Returns f raised to power p.</para>
-		/// </summary>
-		/// <param name="f"></param>
-		/// <param name="p"></param>
-		public static float Pow(float f, float p)
-		{
-			return (float)Math.Pow((double)f, (double)p);
-		}
+		
 
 		/// <summary>
 		///   <para>Returns e raised to the specified power.</para>

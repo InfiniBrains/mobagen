@@ -1,8 +1,10 @@
 #pragma once
-#include "Math.h"
 #include <string>
+#include "Mathd.h"
 
-struct Color {
+class Mathd;
+
+class Color {
 private:
 	float r;
 	float g;
@@ -71,6 +73,37 @@ public:
 		return { 0.f, 0.f, 0.f, 0.f };
 	}
 
+	/**
+	* \brief Converts the given value from gamma (sRGB) to linear color space.
+	* \param value
+	* \return
+	*/
+	static double GammaToLinearSpace(double value)
+	{
+		return Mathd::Pow(value, 2.2);
+	}
+
+	/**
+	* \brief Converts the given value from linear to gamma (sRGB) color space.
+	* \param value
+	* \return
+	*/
+	static double LinearToGammaSpace(double value)
+	{
+		return Mathd::Pow(value, 1 / 2.2);
+	}
+
+	/**
+	* \brief Convert a color temperature in Kelvin to RGB color.
+	* \param kelvin Temperature in Kelvin. Range 1000 to 40000 Kelvin.
+	* \return Correlated Color Temperature as floating point RGB color.
+	*/
+	static Color CorrelatedColorTemperatureToRGB(double kelvin)
+	{
+		// todo: implement this
+		return Color::black();
+	}
+
 	// members
 	float grayscale()
 	{
@@ -80,16 +113,16 @@ public:
 	{
 		// todo: use mathf instead of math
 		return {
-			Math::GammaToLinearSpace(this->r), Math::GammaToLinearSpace(this->g), Math::GammaToLinearSpace(this->b), this->a
+			(float)GammaToLinearSpace((double)this->r), (float)GammaToLinearSpace((double)this->g), (float)GammaToLinearSpace((double)this->b), (float)this->a
 		};
 	}
 	Color gamma() {
 		// todo: use mathf instead of math
-		return{ Math::LinearToGammaSpace(this->r), Math::LinearToGammaSpace(this->g), Math::LinearToGammaSpace(this->b), this->a };
+		return{ (float)LinearToGammaSpace((double)this->r), (float)LinearToGammaSpace((double)this->g), (float)LinearToGammaSpace((double)this->b), (float)this->a };
 	}
 	float maxColorComponent(){
 		// todo: use mathf instead of math
-		return Math::Max(Math::Max(this->r, this->g), this->b);
+		return (float)Mathd::Max(Mathd::Max((double)this->r, (double)this->g), (double)this->b);
 	}
 	float & operator [](int32_t i)
 	{
@@ -145,7 +178,6 @@ public:
 	*/
 };
 
-typedef struct Color Color;
 /*
 	public override bool Equals(object other)
 	{

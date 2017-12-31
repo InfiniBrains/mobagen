@@ -10,4 +10,3 @@ add_library(
 		${MoBaGEn_SRC}
 )
 
-target_link_libraries(MoBaGEn m)
