@@ -1,4 +1,6 @@
 #pragma once
+// todo: crate vector2, 3 and 4 as template
+/*
 #include <cstdint>
 
 template<typename containerType, size_t size>
@@ -58,3 +60,4 @@ public:
 	static Vector<containerType, size> OrthoNormalize(Vector<containerType, size> * normal, Vector<containerType, size> * tangent, Vector<containerType, size> * binormal);
 };
 
+*/

@@ -221,6 +221,7 @@ public:
 	 * \return 
 	 */
 	static double Pow(double f, double p);
+
 };
 
 	/*
