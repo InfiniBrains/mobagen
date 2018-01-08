@@ -1,6 +1,6 @@
 os:
   - linux
-  - osx
+  #- osx
 
 sudo: false
 dist: trusty
@@ -12,9 +12,9 @@ compiler:
 
 env:
   matrix:
-    - BUILD_TYPE=android
+    #- BUILD_TYPE=android
     - BUILD_TYPE=native
-    - BUILD_TYPE=emscripten
+    #- BUILD_TYPE=emscripten
 
 addons:
   coverity_scan:
@@ -27,13 +27,13 @@ addons:
     branch_pattern: coverity_scan
   apt:
     packages:
-    # - cmake
-    # - cmake-data
-    # - build-essential
-    # - clang
+    - cmake
+    - cmake-data
+    - build-essential
+    - clang
     - clang-3.7
-    # - g++-5
-    # - gcc-5
+    - g++-5
+    - gcc-5
     # - libc6-dev-i386
     sources:
     - ubuntu-toolchain-r-test
