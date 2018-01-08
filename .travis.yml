@@ -31,13 +31,11 @@ addons:
     - cmake-data
     - build-essential
     - clang
-    - clang-3.7
-    - g++-5
-    - gcc-5
-    # - libc6-dev-i386
+    - g++
+    - gcc
     sources:
     - ubuntu-toolchain-r-test
-    - llvm-toolchain-precise-3.7
+    # - llvm-toolchain-precise-3.7
     # - george-edison55-precise-backports
 
 install:
