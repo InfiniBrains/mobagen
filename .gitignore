@@ -1,31 +1,24 @@
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-
-# Compiled Static libraries
-*.lai
-*.la
+.DS_Store
+CMakeCache.txt
 *.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
-.vs/
+*.dylib
+ignore_folder/
+bin/
+bin-xcode/
+bin-emscripten/
+bin-android/
 build/
 cmake-build-debug/
+gen/
+libs/
+obj/
+local.properties
+*.so
+.vs/
+imgui.ini
+dependencies/assimp
+dependencies/glew
+dependencies/glm
+dependencies/imgui
+dependencies/SDL
+dependencies/whereami
