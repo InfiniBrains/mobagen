@@ -1,12 +1,2 @@
-file(GLOB MoBaGEn_SRC
-    "*.h"
-    "*.cpp"
-	"*.hpp"
-    "*.cxx"
-)
-
-add_library(
-		MoBaGEn STATIC
-		${MoBaGEn_SRC}
-)
-
+add_subdirectory( engine )
+add_subdirectory( example )

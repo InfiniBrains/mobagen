@@ -15,3 +15,11 @@
 - https://github.com/EpicGames/UnrealEngine
 
 - https://unity3d.com/
+
+Uses the following 3rd party libraries:
+- SDL2 window library.
+- stb_image.h image library.
+- OpenGL 3 / OpenGL ES 2.0 / OpenGL ES 3.0 Graphics APIs.
+- Assimp asset importing library.
+- GLEW extension loading library.
+- Dear ImGui UI library.
