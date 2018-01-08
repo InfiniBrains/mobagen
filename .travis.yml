@@ -2,7 +2,7 @@ os:
   - linux
   #- osx
 
-sudo: false
+sudo: true
 dist: trusty
 
 language: cpp
@@ -29,13 +29,16 @@ addons:
     packages:
     - cmake
     - cmake-data
-    - build-essential
-    - clang
-    - g++
-    - gcc
+    # - build-essential
+    # - clang
+    - clang-3.9
+    #- gcc-6
+    #- g++-6
+    #- cmake
+    # - libc6-dev-i386
     sources:
     - ubuntu-toolchain-r-test
-    # - llvm-toolchain-precise-3.7
+    - llvm-toolchain-precise-3.9
     # - george-edison55-precise-backports
 
 install:
@@ -85,4 +88,6 @@ before_script:
   fi"
 
 script:
+  #- sudo ln -s /usr/bin/gcc-6 /usr/local/bin/gcc
+  #- sudo ln -s /usr/bin/g++-6 /usr/local/bin/g++
   - ./scripts/travis-build.sh
