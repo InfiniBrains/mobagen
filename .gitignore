@@ -15,10 +15,3 @@ obj/
 local.properties
 *.so
 .vs/
-imgui.ini
-dependencies/assimp
-dependencies/glew
-dependencies/glm
-dependencies/imgui
-dependencies/SDL
-dependencies/whereami
