@@ -100,8 +100,8 @@ ELSE ()
   )
 
   set(ENGINE_INCLUDES
-    ${SDL2_INCLUDE_DIR}
     ${GLM_INCLUDE_DIRS}
+    ${SDL2_INCLUDE_DIR}
     ${ASSIMP_INCLUDE_DIR}
     ${CMAKE_BINARY_DIR}/dependencies/assimp/include
     ${GLEW_INCLUDE_DIRS}
