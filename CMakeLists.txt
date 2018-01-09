@@ -36,6 +36,11 @@ set ( GLEW_LIBRARIES libglew_shared )
 set ( ASSIMP_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/assimp/include )
 set ( ASSIMP_LIBRARY assimp )
 
+#set ( ASSIMP_LIBRARY_DIRS "lib/assimp/build/code")
+#set(ASSIMP_INCLUDE_DIRS "lib/assimp/include" "lib/assimp/build/include")
+#include_directories( ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/dependencies/assimp/include )
+#link_directories(${ASSIMP_LIBRARY_DIRS})
+
 set ( GLM_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/glm/ )
 
 set ( WHEREAMI_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/whereami/src/ )
@@ -59,6 +64,7 @@ IF (EMSCRIPTEN)
   set(ENGINE_INCLUDES
     ${GLM_INCLUDE_DIRS}
     ${ASSIMP_INCLUDE_DIR}
+    ${CMAKE_BINARY_DIR}/dependencies/assimp/include 
     ${IMGUI_INCLUDE_DIRS}
     ${CMAKE_CURRENT_SOURCE_DIR}/Engine/engine/
   )
@@ -76,6 +82,7 @@ ELSEIF (ANDROID)
     ${SDL2_INCLUDE_DIR}
     ${GLM_INCLUDE_DIRS}
     ${ASSIMP_INCLUDE_DIR}
+    ${CMAKE_BINARY_DIR}/dependencies/assimp/include
     ${IMGUI_INCLUDE_DIRS}
     ${CMAKE_CURRENT_SOURCE_DIR}/Engine/engine/
   )
@@ -96,6 +103,7 @@ ELSE ()
     ${SDL2_INCLUDE_DIR}
     ${GLM_INCLUDE_DIRS}
     ${ASSIMP_INCLUDE_DIR}
+    ${CMAKE_BINARY_DIR}/dependencies/assimp/include
     ${GLEW_INCLUDE_DIRS}
     ${WHEREAMI_INCLUDE_DIRS}
     ${IMGUI_INCLUDE_DIRS}
@@ -107,3 +115,4 @@ include_directories(${ENGINE_INCLUDES})
 
 add_subdirectory( ${CMAKE_CURRENT_SOURCE_DIR}/Engine )
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT game)
+

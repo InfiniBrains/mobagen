@@ -6,5 +6,6 @@
     },
     "description": "Emit debug information without performing optimizations"
   },
-  "activeEnvironments": []
+  "activeEnvironments": [],
+  "codeModel": null
 }
