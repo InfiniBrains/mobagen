@@ -53,7 +53,7 @@ set ( IMGUI_LIBRARY imgui )
 IF (EMSCRIPTEN)
   #add_definitions( -DGLES2=1 )
 
-  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall --preload-file ${CMAKE_CURRENT_SOURCE_DIR}/Engine/example/assets/ -s TOTAL_MEMORY=67108864 -s USE_SDL=2 -std=c++1y -O0")
+  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall --preload-file ${CMAKE_CURRENT_SOURCE_DIR}/Engine/example/assets/ -s TOTAL_MEMORY=67108864 -s USE_SDL=2 -std=c++14 -Oz")
   add_definitions(-DASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/Engine/example/assets/")
 
   set(ENGINE_LIBS
@@ -70,7 +70,7 @@ IF (EMSCRIPTEN)
   )
 ELSEIF (ANDROID)
   add_definitions( -DGLES2=1 )
-  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y")
+  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 
   set(ENGINE_LIBS
     ${SDL2_LIBRARY}
@@ -87,7 +87,7 @@ ELSEIF (ANDROID)
     ${CMAKE_CURRENT_SOURCE_DIR}/Engine/engine/
   )
 ELSE ()
-  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -std=c++1y")
+  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -std=c++14")
   find_package(OpenGL REQUIRED)
 
   set(ENGINE_LIBS
