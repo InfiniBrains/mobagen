@@ -1,18 +1,24 @@
 [submodule "dependencies/assimp"]
 	path = dependencies/assimp
 	url = https://github.com/assimp/assimp.git
+	branch = b01e424476c8933fd1a5429025c1a4a1ff533aa5
 [submodule "dependencies/SDL"]
 	path = dependencies/SDL
 	url = https://github.com/spurious/SDL-mirror.git
+	branch = 8b84c36b11009130c18c9490ff3c171210ef92e7
 [submodule "dependencies/glew"]
 	path = dependencies/glew
 	url = https://github.com/Perlmint/glew-cmake.git
+	branch = 0ba2fb54c61d1ba9b4757ca4c1b7288869addd12
 [submodule "dependencies/glm"]
 	path = dependencies/glm
 	url = https://github.com/g-truc/glm.git
+	branch = 09241ec000060fd3d085a11d608eb7909e004c75
 [submodule "dependencies/whereami"]
 	path = dependencies/whereami
 	url = https://github.com/gpakosz/whereami.git
+	branch = 574cea670800e402c9c8325b159aa4361b645566
 [submodule "dependencies/imgui"]
 	path = dependencies/imgui
 	url = https://github.com/ocornut/imgui.git
+	branch = 907265d6320ffdfb438fff94aa88133d33ac3775
