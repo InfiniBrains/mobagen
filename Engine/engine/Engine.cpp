@@ -64,7 +64,7 @@ void Engine::start(void)
   while (!quit) {
     tick();
 
-    SDL_Delay(1);
+    //SDL_Delay(1);
   }
 #endif
 }

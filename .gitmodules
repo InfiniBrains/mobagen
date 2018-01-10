@@ -21,4 +21,4 @@
 [submodule "dependencies/imgui"]
 	path = dependencies/imgui
 	url = https://github.com/ocornut/imgui.git
-	branch = 907265d6320ffdfb438fff94aa88133d33ac3775
+	branch = e916310b2e1f9cacbb2b9ce192a3dfb359e4b509

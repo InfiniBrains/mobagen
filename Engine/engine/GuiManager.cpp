@@ -193,7 +193,7 @@ GuiManager::GuiManager(const glm::vec2& drawableSize, const glm::vec2& displaySi
 #ifdef ANDROID
   showProps = true;
 #else
-  showProps = false;
+  showProps = true;
 #endif
   ImGuiIO& io = ImGui::GetIO();
   io.KeyMap[ImGuiKey_Tab] = SDLK_TAB;                     // Keyboard mapping. ImGui will use those indices to peek into the io.KeyDown[] array.
