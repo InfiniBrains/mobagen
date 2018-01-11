@@ -29,6 +29,7 @@ env:
     #- BUILD_TYPE=android
     - BUILD_TYPE=native
     #- BUILD_TYPE=emscripten
+    - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
 
 addons:
   coverity_scan:
@@ -44,21 +45,23 @@ addons:
     - cmake
     # - cmake-data
     # - build-essential
-    # - clang
-    - clang-3.9
-    #- gcc-6
-    #- g++-6
+    #- clang
+    - clang-5.0
+    - gcc-6
+    - g++-6
     #- cmake
     # - libc6-dev-i386
     sources:
     - ubuntu-toolchain-r-test
-    - llvm-toolchain-precise-3.9
+    - llvm-toolchain-trusty-5.0
     # - george-edison55-precise-backports
 
 install:
-  - if [ "$CXX" = "g++" ]; then export CXX="g++-5"; fi
+  - if [ "$CXX" = "g++" ]; then export CXX="clang++-5.0"; fi
+  - if [ "$CC" = "gcc" ]; then export CC="clang-5.0"; fi
 
 before_script:
+  - uname -a
   - "if [ $TRAVIS_OS_NAME == osx ] && [ $BUILD_TYPE == android ]; then \
         brew update;
         brew cask install java;
