@@ -56,8 +56,8 @@ addons:
     # - george-edison55-precise-backports
 
 install:
-  - if [ "$CXX" = "g++" ]; then export CXX="clang++-5.0"; fi
-  - if [ "$CC" = "gcc" ]; then export CC="clang-5.0"; fi
+  #- if [ "$CXX" = "g++" ]; then export CXX="clang++-5.0"; fi
+  #- if [ "$CC" = "gcc" ]; then export CC="clang-5.0"; fi
 
 before_script:
   - uname -a
