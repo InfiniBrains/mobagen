@@ -20,7 +20,7 @@ You will need to install *git* and *build-essentials* using your package manager
 
 ### Ubuntu
 ``` bash
-sudo apt-get install git cmake clang build-essentials
+sudo apt-get install git cmake clang build-essential
 ```
 
 ## Windows
