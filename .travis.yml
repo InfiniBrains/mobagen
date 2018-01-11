@@ -29,7 +29,6 @@ env:
     #- BUILD_TYPE=android
     - BUILD_TYPE=native
     #- BUILD_TYPE=emscripten
-    - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
 
 addons:
   coverity_scan:
