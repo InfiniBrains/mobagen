@@ -1,7 +1,7 @@
 [submodule "dependencies/assimp"]
 	path = dependencies/assimp
 	url = https://github.com/assimp/assimp.git
-	branch = b01e424476c8933fd1a5429025c1a4a1ff533aa5
+	branch = 80799bdbf90ce626475635815ee18537718a05b1
 [submodule "dependencies/SDL"]
 	path = dependencies/SDL
 	url = https://github.com/spurious/SDL-mirror.git
