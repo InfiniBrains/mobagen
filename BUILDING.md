@@ -16,7 +16,12 @@ brew install git
 ```
 
 ## Linux
-You will need to install *git* and *build-essentials* using your package manager. (TODO: improve this)
+You will need to install *git* and *build-essentials* using your package manager. 
+
+### Ubuntu
+``` bash
+sudo apt-get install git cmake clang build-essentials
+```
 
 ## Windows
 - Installing [MSYS2](http://www.msys2.org/) to install linux tools on Windows terminal;
