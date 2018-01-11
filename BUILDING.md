@@ -66,7 +66,7 @@ But if you prefer Microsoft development tools:
 ## Usage
 
 First clone repo with the following command to download all submodules (which are located in the dependencies folder):
-`git clone --recursive git@github.com:Shervanator/Engine.git`
+`git clone --recursive -j8 https://github.com/InfiniBrains/mobagen.git`
 
 All builds require cmake 3.6.0, so the first step is to download that [here](https://cmake.org/download/)
 
