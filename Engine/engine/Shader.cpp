@@ -18,13 +18,13 @@ Shader::Shader(std::string shaderAssetName)
 {
   g_shProg = glCreateProgram();
 
-#if defined(GLES2) || defined(GLES3) || defined(EMSCRIPTEN)
-  addVertex(Asset(shaderAssetName + "-gles.vs").read());
-  addFragment(Asset(shaderAssetName + "-gles.fs").read());
-#else
-  addVertex(Asset(shaderAssetName + ".vs").read());
-  addFragment(Asset(shaderAssetName + ".fs").read());
-#endif
+ #if defined(GLES2) || defined(GLES3) || defined(EMSCRIPTEN) 
+   addVertex(Asset(shaderAssetName + "-gles.vs").read());
+   addFragment(Asset(shaderAssetName + "-gles.fs").read());
+ #else
+   addVertex(Asset(shaderAssetName + ".vs").read());
+   addFragment(Asset(shaderAssetName + ".fs").read());
+ #endif
 }
 
 Shader::Shader(const char* vert_src, const char* frag_src)

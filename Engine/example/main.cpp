@@ -41,7 +41,7 @@ void CoolGame::update(int delta)
 
 void CoolGame::init(GLManager *glManager)
 {
-  /*auto brickMat = std::make_shared<Material>(std::make_shared<Texture>(Asset("bricks2.jpg")), std::make_shared<Texture>(Asset("bricks2_normal.jpg")), std::make_shared<Texture>(Asset("bricks2_specular.png")));
+  auto brickMat = std::make_shared<Material>(std::make_shared<Texture>(Asset("bricks2.jpg")), std::make_shared<Texture>(Asset("bricks2_normal.jpg")), std::make_shared<Texture>(Asset("bricks2_specular.png")));
   auto planeMesh = Plane::getMesh();
   auto plane = std::make_shared<Entity>();
   plane->addComponent<MeshRenderer>(planeMesh, brickMat);
@@ -63,51 +63,30 @@ void CoolGame::init(GLManager *glManager)
     ml.getEntity()->getTransform().setPosition(glm::vec3(0 + (i * 3), -2, 0));
     ml.getEntity()->addComponent<Sphere>(1);
     addToScene(ml.getEntity());
-  }*/
+  }
 
-  MeshLoader arteria("arteria2.stl");
-  arteria.getEntity()->getTransform().setPosition(glm::vec3(0, 0, -2));
- // money.getEntity()->addComponent<PerspectiveCamera>(glm::pi<float>() / 2.0f, getEngine()->getWindow()->getWidth() / (float)getEngine()->getWindow()->getHeight(), 0.9f, 100.0f);
-  //money.getEntity()->addComponent<Sphere>(1);
-  //money.getEntity()->addComponent<SpotLight>(glm::vec3(0.1f, 1.0f, 1.0f), 5.8f, 0.7f, std::make_shared<Attenuation>(0, 0, 0.2));
-  addToScene(arteria.getEntity());
+  MeshLoader money("monkey3.obj");
+  money.getEntity()->getTransform().setPosition(glm::vec3(0, 0, 8));
+  money.getEntity()->addComponent<PerspectiveCamera>(glm::pi<float>() / 2.0f, getEngine()->getWindow()->getWidth() / (float)getEngine()->getWindow()->getHeight(), 0.9f, 100.0f);
+  money.getEntity()->addComponent<Sphere>(1);
+  money.getEntity()->addComponent<SpotLight>(glm::vec3(0.1f, 1.0f, 1.0f), 5.8f, 0.7f, std::make_shared<Attenuation>(0, 0, 0.2));
+  addToScene(money.getEntity());
 
-  MeshLoader coletor("coletor2.stl");
-  coletor.getEntity()->getTransform().setPosition(glm::vec3(0, 0, -2));
-  addToScene(coletor.getEntity());
-
-  MeshLoader esqueleto("esqueleto3.stl");
-  esqueleto.getEntity()->getTransform().setPosition(glm::vec3(0, 0, -2));
-  addToScene(esqueleto.getEntity());
-
-  MeshLoader rim("rim2.stl");
-  rim.getEntity()->getTransform().setPosition(glm::vec3(0, 0, -2));
-  addToScene(rim.getEntity());
-
-  MeshLoader veia("veia2.stl");
-  veia.getEntity()->getTransform().setPosition(glm::vec3(0, 0, -2));
-  addToScene(veia.getEntity());
-
-  MeshLoader tumor("tumor2.stl");
-  tumor.getEntity()->getTransform().setPosition(glm::vec3(0, 0, -2));
-  addToScene(tumor.getEntity());
-
-  auto money2 = std::make_shared<Entity>();
-  money2->addComponent<PerspectiveCamera>(glm::pi<float>() / 2.0f, getEngine()->getWindow()->getWidth() / (float)getEngine()->getWindow()->getHeight(), 0.9f, 10000.0f);
-  money2->addComponent<FreeMove>();
+  MeshLoader money2("monkey3.obj");
+  money2.getEntity()->addComponent<PerspectiveCamera>(glm::pi<float>() / 2.0f, getEngine()->getWindow()->getWidth() / (float)getEngine()->getWindow()->getHeight(), 0.9f, 100.0f);
+  money2.getEntity()->addComponent<FreeMove>();
 #if defined(ANDROID)
-  money2->addComponent<FreeLook>(0.0001f);
+  money2.getEntity()->addComponent<FreeLook>(0.0001f);
 #else
-  money2->addComponent<FreeLook>();
+  money2.getEntity()->addComponent<FreeLook>();
 #endif
-  money2->getTransform().setPosition(glm::vec3(0, 300, 0));
-  money2->getTransform().setScale(glm::vec3(0.8, 0.8, 0.8));
-  money2->getTransform().setRotation(glm::quat(0, 0, 0.707, 0.707));
-  money2->addComponent<SpotLight>(glm::vec3(1.0f, 1.0f, 1.0f), 1.8f, 0.7f, std::make_shared<Attenuation>(0, 0, 0.2));
+  money2.getEntity()->getTransform().setPosition(glm::vec3(0, 0, 5));
+  money2.getEntity()->getTransform().setScale(glm::vec3(0.8, 0.8, 0.8));
+  money2.getEntity()->addComponent<SpotLight>(glm::vec3(1.0f, 1.0f, 1.0f), 1.8f, 0.7f, std::make_shared<Attenuation>(0, 0, 0.2));
 
-  addToScene(money2);
+  addToScene(money2.getEntity());
 
-  auto primary_camera = money2->getComponent<PerspectiveCamera>();
+  auto primary_camera = money2.getEntity()->getComponent<PerspectiveCamera>();
 
   getEngine()->getGLManager()->setActiveCamera(primary_camera);
 }

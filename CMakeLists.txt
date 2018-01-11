@@ -47,7 +47,10 @@ set ( IMGUI_LIBRARY imgui )
 IF (EMSCRIPTEN)
   #add_definitions( -DGLES2=1 )
 
-  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall --preload-file ${CMAKE_CURRENT_SOURCE_DIR}/Engine/example/assets/ -s TOTAL_MEMORY=67108864 -s USE_SDL=2 -std=c++14 -Oz")
+  SET ( CMAKE_SHARED_LINKER_FLAGS "-Oz -s ASSERTIONS=1" )
+  SET ( CMAKE_STATIC_LINKER_FLAGS "-Oz -s ASSERTIONS=1" ) 
+  
+  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall --preload-file ${CMAKE_CURRENT_SOURCE_DIR}/Engine/example/assets/ -s ASSERTIONS=1 -s TOTAL_MEMORY=536870912 -s USE_SDL=2 -std=c++14 -Oz")
   add_definitions(-DASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/Engine/example/assets/")
 
   set(ENGINE_LIBS
