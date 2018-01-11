@@ -1,5 +1,5 @@
 os:
-  - linux
+  #- linux
   - osx
 
 #matrix:
@@ -14,8 +14,9 @@ os:
 #      env:
 #        - MATRIX_EVAL="CC=clang-3.9 && CXX=clang++-3.9"
 
-sudo: true
+#sudo: required
 dist: trusty
+#group: deprecated-2017Q4
 
 language: cpp
 

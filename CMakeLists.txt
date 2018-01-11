@@ -36,11 +36,6 @@ set ( GLEW_LIBRARIES libglew_shared )
 set ( ASSIMP_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/assimp/include )
 set ( ASSIMP_LIBRARY assimp )
 
-#set ( ASSIMP_LIBRARY_DIRS "lib/assimp/build/code")
-#set(ASSIMP_INCLUDE_DIRS "lib/assimp/include" "lib/assimp/build/include")
-#include_directories( ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/dependencies/assimp/include )
-#link_directories(${ASSIMP_LIBRARY_DIRS})
-
 set ( GLM_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/glm/ )
 
 set ( WHEREAMI_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/whereami/src/ )
@@ -48,7 +43,6 @@ set ( WHEREAMI_LIBRARY whereami )
 
 set ( IMGUI_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/imgui/ )
 set ( IMGUI_LIBRARY imgui )
-
 
 IF (EMSCRIPTEN)
   #add_definitions( -DGLES2=1 )
