@@ -1,5 +1,5 @@
 os:
-  #- linux
+  - linux
   - osx
 
 #matrix:
@@ -15,6 +15,7 @@ os:
 #        - MATRIX_EVAL="CC=clang-3.9 && CXX=clang++-3.9"
 
 #sudo: required
+group: travis_latest
 dist: trusty
 #group: deprecated-2017Q4
 
