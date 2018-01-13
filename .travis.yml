@@ -1,59 +1,29 @@
-os:
-  - linux
-  - osx
+matrix:
+  include:
+    - os: osx
+      env:
+        - MATRIX_EVAL="CC=clang && CXX=clang++"
+        - BUILD_TYPE=native
 
-#matrix:
-#  include:
-#    - os: linux
-#      addons:
-#        apt:
-#          sources:
-#            - llvm-toolchain-trusty-3.9
-#          packages:
-#            - clang-3.9
-#      env:
-#        - MATRIX_EVAL="CC=clang-3.9 && CXX=clang++-3.9"
-
-#sudo: required
-group: travis_latest
-dist: trusty
-#group: deprecated-2017Q4
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-trusty-5.0
+          packages:
+            - clang-5.0
+            - gcc-6
+            - g++-6
+            - cmake
+      env:
+        - MATRIX_EVAL="CC=clang && CXX=clang++"
+        - BUILD_TYPE=native
+      group: travis_latest
+      dist: trusty
 
 language: cpp
-
-compiler:
-  - clang
-
-env:
-  matrix:
-    #- BUILD_TYPE=android
-    - BUILD_TYPE=native
-    #- BUILD_TYPE=emscripten
-
-addons:
-  coverity_scan:
-    project:
-      name: "InfiniBrains/Engine"
-      description: "Build submitted via Travis CI"
-    notification_email: tolstenko@gmail.com
-    build_command_prepend: "cmake ."
-    build_command: "make -j 4"
-    branch_pattern: coverity_scan
-  apt:
-    packages:
-    - cmake
-    # - cmake-data
-    # - build-essential
-    #- clang
-    - clang-5.0
-    - gcc-6
-    - g++-6
-    #- cmake
-    # - libc6-dev-i386
-    sources:
-    - ubuntu-toolchain-r-test
-    - llvm-toolchain-trusty-5.0
-    # - george-edison55-precise-backports
+compiler: clang
 
 install:
   #- if [ "$CXX" = "g++" ]; then export CXX="clang++-5.0"; fi
