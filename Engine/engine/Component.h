@@ -10,7 +10,7 @@
 #include "Shader.h"
 #include "Entity.h"
 #include "Transform.h"
-#include "ImGui.h"
+#include "ImGUI.h"
 
 class Engine;
 
