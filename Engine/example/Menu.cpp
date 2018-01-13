@@ -1,5 +1,5 @@
 #include "Menu.h"
-#include "ImGUI.h"
+#include <imgui.h>
 
 const char* Menu::getType()
 {
