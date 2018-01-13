@@ -23,7 +23,7 @@ IF (ANDROID)
   add_custom_command(TARGET game POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/ ${ANDROID_BIN_ROOT}/libs/${ANDROID_NDK_ABI_NAME})
 ELSE ()
-  add_executable (game main.cpp)
+  add_executable (game main.cpp Menu.cpp)
   target_link_libraries (game engine)
 
   add_custom_command(TARGET game PRE_BUILD

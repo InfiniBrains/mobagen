@@ -1,6 +1,6 @@
 //
 //  Author: Shervin Aflatooni
-//
+//          Alexandre Tolstenko
 
 #pragma once
 
@@ -10,6 +10,7 @@
 #include "Shader.h"
 #include "Entity.h"
 #include "Transform.h"
+#include "ImGui.h"
 
 class Engine;
 
@@ -38,6 +39,7 @@ public:
   virtual void render(Shader *shader) {};
   virtual void registerWithEngine(Engine *engine) {};
   virtual void deregisterFromEngine(Engine *engine) {};
+  virtual void onGUI(ImGuiContext *context) {};
 
   virtual const char *getType(void) = 0;
 

@@ -399,6 +399,7 @@ void GuiManager::togglePropertyEditor(void)
 
 void GuiManager::render(Entity *sceneGraph)
 {
+  renderComponents(sceneGraph);
   if (showProps) {
     ImGui::SetNextWindowPos(ImVec2(10,10));
     ImGui::SetNextWindowSize(ImVec2(500,0), ImGuiSetCond_FirstUseEver);
@@ -425,4 +426,14 @@ void GuiManager::render(Entity *sceneGraph)
 
     ImGui::Render();
   }
+}
+
+void GuiManager::renderComponents(Entity * entity)
+{
+	ImGuiContext * context = ImGui::GetCurrentContext();
+	auto components = entity->getComponents();
+	for (const auto& component : components)
+		component->onGUI(context);
+	for (const auto& child : entity->getChildren())
+		renderComponents(child.get());
 }

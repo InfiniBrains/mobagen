@@ -1,6 +1,6 @@
 //
 //  Author: Shervin Aflatooni
-//
+//          Alexandre Tolstenko
 
 #pragma once
 
@@ -22,6 +22,7 @@ public:
   void setKeyEvent(int key, bool keydown);
 
   void togglePropertyEditor(void);
+  void renderComponents(Entity* entity);
 
 private:
   void createDeviceObjects(void);

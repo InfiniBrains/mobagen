@@ -1,8 +1,8 @@
 //
 //  Author: Shervin Aflatooni
-//
+//          Alexandre Tolstenko
 
-#include "Engine.h"
+#include "Menu.h"
 
 #include "components/MeshRenderer.h"
 #include "components/PerspectiveCamera.h"
@@ -19,6 +19,7 @@
 #include "Texture.h"
 #include "Logger.h"
 #include "MeshLoader.h"
+#include "Menu.h"
 
 #include <SDL_main.h>
 
@@ -41,6 +42,8 @@ void CoolGame::update(int delta)
 
 void CoolGame::init(GLManager *glManager)
 {
+  getRootScene()->addComponent<Menu>();
+
   auto brickMat = std::make_shared<Material>(std::make_shared<Texture>(Asset("bricks2.jpg")), std::make_shared<Texture>(Asset("bricks2_normal.jpg")), std::make_shared<Texture>(Asset("bricks2_specular.png")));
   /*auto planeMesh = Plane::getMesh();
   auto plane = std::make_shared<Entity>();
