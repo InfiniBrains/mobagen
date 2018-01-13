@@ -1,10 +1,5 @@
 matrix:
   include:
-    - os: osx
-      env:
-        - MATRIX_EVAL="CC=clang && CXX=clang++"
-        - BUILD_TYPE=native
-
     - os: linux
       addons:
         apt:
@@ -21,6 +16,11 @@ matrix:
         - BUILD_TYPE=native
       group: travis_latest
       dist: trusty
+      
+    - os: osx
+      env:
+        - MATRIX_EVAL="CC=clang && CXX=clang++"
+        - BUILD_TYPE=native
 
 language: cpp
 compiler: clang
