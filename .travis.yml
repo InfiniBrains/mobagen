@@ -25,10 +25,10 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
             - llvm-toolchain-trusty-5.0
-            - sourceline: 'ppa:george-edison55/cmake-3.x'
+            #- sourceline: 'ppa:george-edison55/cmake-3.x'
           packages:
-            - cmake
-            - cmake-data
+            #- cmake
+            #- cmake-data
       env:
         - BUILD_TYPE=emscripten
       group: travis_latest
