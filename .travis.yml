@@ -1,5 +1,6 @@
 matrix:
   include:
+    # linux native
     - os: linux
       addons:
         apt:
@@ -16,7 +17,25 @@ matrix:
         - BUILD_TYPE=native
       group: travis_latest
       dist: trusty
+
+    # linux emscripten
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-trusty-5.0
+          packages:
+            - clang-5.0
+            - gcc-6
+            - g++-6
+            - cmake
+      env:
+        - BUILD_TYPE=emscripten
+      group: travis_latest
+      dist: trusty
       
+    # osx native
     - os: osx
       env:
         - MATRIX_EVAL="CC=clang && CXX=clang++"
