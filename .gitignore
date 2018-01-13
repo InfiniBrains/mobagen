@@ -15,3 +15,5 @@ obj/
 local.properties
 *.so
 .vs/
+emsdk-portable
+emsdk-portable.tar.gz
