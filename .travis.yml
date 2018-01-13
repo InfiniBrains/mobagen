@@ -25,11 +25,13 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
             - llvm-toolchain-trusty-5.0
+            - george-edison55
           packages:
             - clang-5.0
             - gcc-6
             - g++-6
             - cmake
+            - cmake-data
       env:
         - BUILD_TYPE=emscripten
       group: travis_latest
