@@ -52,7 +52,7 @@ before_install:
 
 install:
   - "if [ $TRAVIS_OS_NAME == linux ] && [ $BUILD_TYPE == emscripten ]; then \
-        sudo sh alpine-chroot-install -b v3. -r 'https://nl.alpinelinux.org/alpine/edge/testing' -p 'emscripten emscripten-libs-asmjs closure-compiler' -k 'CI TRAVIS_.* EM_.*' ;
+        sudo sh alpine-chroot-install -b v3.7 -r 'https://nl.alpinelinux.org/alpine/edge/testing' -p 'emscripten emscripten-libs-asmjs closure-compiler' -k 'CI TRAVIS_.* EM_.*' ;
     fi"
 
 before_script:
