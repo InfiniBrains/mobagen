@@ -17,6 +17,20 @@ matrix:
         - BUILD_TYPE=native
       group: travis_latest
       dist: trusty
+
+    # linux emscripten
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-trusty-5.0
+          packages:
+            - cmake
+      env:
+        - BUILD_TYPE=emscripten
+      group: travis_latest
+      dist: trusty
       
     # osx native
     - os: osx
@@ -71,10 +85,10 @@ before_script:
       pwd ;
       wget --quiet --continue https://s3.amazonaws.com/mozilla-games/emscripten/releases/emsdk-portable.tar.gz;
       tar -xzf emsdk-portable.tar.gz;
-      `pwd`/emsdk-portable/emsdk update;
-      `pwd`/emsdk-portable/emsdk install latest;
-      `pwd`/emsdk-portable/emsdk activate latest;
-      source `pwd`/emsdk-portable/emsdk_env.sh;
+      ./emsdk-portable/emsdk update;
+      ./emsdk-portable/emsdk install latest > /dev/null 2>&1;;
+      ./emsdk-portable/emsdk activate latest;
+      source ./emsdk-portable/emsdk_env.sh;
     fi"
 
 script:
