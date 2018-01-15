@@ -91,8 +91,7 @@ before_script:
     fi"
 
 script:
-  - "if [ $TRAVIS_OS_NAME == linux ] && [ $BUILD_TYPE == emscripten ]; then \
-      /alpine/enter-chroot -u $USER ./scripts/travis-build.sh ;
-    else
-      ./scripts/travis-build.sh ;
-    fi"
+  - if [ $TRAVIS_OS_NAME == linux ] && [ $BUILD_TYPE == emscripten ]; 
+    then /alpine/enter-chroot -u $USER ./scripts/travis-build.sh ; 
+    else ./scripts/travis-build.sh ;
+    fi
