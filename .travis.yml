@@ -67,6 +67,15 @@ before_script:
         brew update;
         brew install emscripten;
     fi"
+  - "if [ $TRAVIS_OS_NAME == linux ] && [ $BUILD_TYPE == emscripten ]; then \
+      pwd ;
+      wget --quiet --continue https://s3.amazonaws.com/mozilla-games/emscripten/releases/emsdk-portable.tar.gz;
+      tar -xzf emsdk-portable.tar.gz;
+      `pwd`/emsdk-portable/emsdk update;
+      `pwd`/emsdk-portable/emsdk install latest;
+      `pwd`/emsdk-portable/emsdk activate latest;
+      source `pwd`/emsdk-portable/emsdk_env.sh;
+    fi"
 
 script:
   - ./scripts/travis-build.sh
