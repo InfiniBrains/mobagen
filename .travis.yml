@@ -20,6 +20,8 @@ matrix:
 
     # linux emscripten
     - os: linux
+      services:
+        - docker
       addons:
         apt:
           sources:
@@ -81,15 +83,15 @@ before_script:
         brew update;
         brew install emscripten;
     fi"
-  - "if [ $TRAVIS_OS_NAME == linux ] && [ $BUILD_TYPE == emscripten ]; then \
-      pwd ;
-      wget --quiet --continue https://s3.amazonaws.com/mozilla-games/emscripten/releases/emsdk-portable.tar.gz ;
-      tar -xzf emsdk-portable.tar.gz ;
-      ./emsdk-portable/emsdk update ;
-      ./emsdk-portable/emsdk install latest > /dev/null 2>&1 ;
-      ./emsdk-portable/emsdk activate latest ;
-      source ./emsdk-portable/emsdk_env.sh ;
-    fi"
+  - if [ $TRAVIS_OS_NAME == linux ] && [ $BUILD_TYPE == emscripten ]; then 
+      docker run -dit --name emscripten -e TRAVIS_OS_NAME='linux' -e BUILD_TYPE='emscripten' -v `pwd`:/mobagen -w /mobagen trzeci/emscripten:sdk-incoming-64bit bash ; 
+      docker exec -it emscripten apt-get update ;
+      docker exec -it emscripten apt-get install -y cmake wget ;
+    fi
 
 script:
-  - ./scripts/travis-build.sh
+  - if [ $TRAVIS_OS_NAME == linux ] && [ $BUILD_TYPE == emscripten ]; then 
+      docker exec -it emscripten ./scripts/travis-build.sh ;
+    else
+      ./scripts/travis-build.sh ;
+    fi 
