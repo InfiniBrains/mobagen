@@ -34,12 +34,12 @@ The **_feature_ branch** where _feature_ is the name of a given feature being de
 Other short-lived branches may pop-up from time to time as we stabilize new releases or hotfixes.
 
 ## Documentation
-The documentation is also available online at [Documentation](docs/HEAD/index.html)
+The documentation is also available online at [Documentation](docs/HEAD/index.html) (Work in Progress. Help Needed.)
 
 Documentation on how to build MoBaGEn: [Building](BUILDING.md)
 
 ## History
-The change history is available online at [History](docs/HEAD/history.html)
+The change history is available online at [History](docs/HEAD/history.html) (Work in Progress. Help Needed.)
 
 ## Third Parties
 This project was made using these open-sourced [third parties](THIRDPARTIES.md).
