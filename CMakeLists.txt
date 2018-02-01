@@ -1,12 +1,11 @@
-#
-#  Author: 
-#   Shervin Aflatooni
-#   Alexandre Tolstenko
-#
-
 cmake_minimum_required(VERSION 2.8)
 
 project (Engine)
+
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 set(ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR} CACHE STRING "Root dir")
@@ -17,7 +16,7 @@ include(${CP_CMAKE_DIR}/macros.cmake)
 
 IF (ANDROID)
   include(${CP_CMAKE_DIR}/android.cmake)
-ENDIF ()
+ENDIF () 
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
@@ -50,7 +49,7 @@ IF (EMSCRIPTEN)
   #SET ( CMAKE_SHARED_LINKER_FLAGS "-s ASSERTIONS=1" )
   #SET ( CMAKE_STATIC_LINKER_FLAGS "-s ASSERTIONS=1" )
   SET ( CMAKE_SHARED_LINKER_FLAGS "-Oz --closure 1" )
-  SET ( CMAKE_STATIC_LINKER_FLAGS "-Oz --closure 1" ) 
+  SET ( CMAKE_STATIC_LINKER_FLAGS "-Oz --closure 1" )
   SET ( CMAKE_EXE_LINKER_FLAGS "-Oz --closure 1")
   
   #SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall --preload-file ${CMAKE_CURRENT_SOURCE_DIR}/Engine/example/assets/ -s DEMANGLE_SUPPORT=1 -s ASSERTIONS=2 -s TOTAL_MEMORY=536870912 -s USE_SDL=2 -std=c++14 -Oz")

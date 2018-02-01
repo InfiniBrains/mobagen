@@ -1,7 +1,3 @@
-//
-//  Author: Shervin Aflatooni
-//
-
 #pragma once
 
 #include <glm/glm.hpp>

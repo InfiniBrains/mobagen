@@ -1,7 +1,3 @@
-//
-//  Author: Shervin Aflatooni
-//
-
 #include "MeshData.h"
 
 MeshData::MeshData(Vertex vertices[], int vertSize, unsigned int indices[], int indexSize)

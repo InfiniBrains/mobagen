@@ -1,7 +1,3 @@
-//
-//  Author: Shervin Aflatooni
-//
-
 #include "Entity.h"
 
 #include "Component.h"
@@ -52,7 +48,7 @@ void Entity::addChild(std::shared_ptr<Entity> child)
   }
 }
 
-void Entity::updateInputAll(Input *input, int delta)
+void Entity::updateInputAll(Input *input, double delta)
 {
   if (parentEntity == nullptr) {
     worldMatrix = transform.getTransformMatrix();
@@ -71,7 +67,7 @@ void Entity::updateInputAll(Input *input, int delta)
   }
 }
 
-void Entity::updateAll(int delta)
+void Entity::updateAll(double delta)
 {
   for (auto component : components) {
     component->update(delta);
@@ -126,6 +122,11 @@ void Entity::deregisterFromEngineAll(void)
   m_engine = nullptr;
 }
 
+Entity * Entity::getParent()
+{
+	return parentEntity;
+}
+
 Transform& Entity::getTransform(void)
 {
   return transform;
@@ -162,4 +163,8 @@ glm::vec4 Entity::getDirection(void)
   } else {
     return glm::normalize(parentEntity->worldMatrix * transform.getDirection());
   }
+}
+
+Engine *Entity::getEngine() {
+  return m_engine;
 }

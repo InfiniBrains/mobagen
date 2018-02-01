@@ -1,7 +1,3 @@
-//
-//  Author: Shervin Aflatooni
-//
-
 #include "Asset.h"
 
 Asset::Asset(const std::string &fileName)

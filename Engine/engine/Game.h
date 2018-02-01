@@ -1,7 +1,3 @@
-//
-//  Author: Shervin Aflatooni
-//
-
 #pragma once
 
 #include "Entity.h"
@@ -20,8 +16,8 @@ public:
 
   virtual void init(GLManager *glManager);
 
-  virtual void updateInput(Input *input, int delta);
-  virtual void update(int delta);
+  virtual void updateInput(Input *input, double delta);
+  virtual void update(double delta);
   virtual void render(GLManager *glManager);
 
   inline std::shared_ptr<Entity> getRootScene(void) { return rootScene; };

@@ -1,7 +1,3 @@
-//
-//  Author: Shervin Aflatooni
-//
-
 #include "FreeMove.h"
 
 #include "../Transform.h"
@@ -19,7 +15,7 @@ FreeMove::~FreeMove(void)
 {
 }
 
-void FreeMove::updateInput(Input *input, int delta)
+void FreeMove::updateInput(Input *input, double delta)
 {
   float moveAmount = m_speed * delta;
 

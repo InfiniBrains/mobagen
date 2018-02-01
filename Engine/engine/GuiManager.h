@@ -1,7 +1,3 @@
-//
-//  Author: Shervin Aflatooni
-//          Alexandre Tolstenko
-
 #pragma once
 
 #include "Window.h"
@@ -16,7 +12,7 @@ public:
   ~GuiManager(void);
 
   void render(Entity *sceneGraph);
-  void tick(Window *window);
+  void tick(Window *window, double deltaTime);
 
   void addInputCharactersUTF8(const char *text);
   void setKeyEvent(int key, bool keydown);

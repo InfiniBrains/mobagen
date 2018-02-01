@@ -1,7 +1,3 @@
-//
-//  Author: Shervin Aflatooni
-//
-
 #include "MeshRenderer.h"
 #include <iostream>
 
@@ -15,7 +11,7 @@ MeshRenderer::~MeshRenderer(void)
 {
 }
 
-void MeshRenderer::update(int delta)
+void MeshRenderer::update(double delta)
 {}
 
 void MeshRenderer::render(Shader *shader)
@@ -24,4 +20,24 @@ void MeshRenderer::render(Shader *shader)
 
   m_material->bind();
   m_mesh->render();
+}
+
+void MeshRenderer::setMaterial(std::shared_ptr<Material> material)
+{
+  m_material = material;
+}
+
+std::shared_ptr<Material> MeshRenderer::getMaterial()
+{
+  return m_material;
+}
+
+void MeshRenderer::setMesh(std::shared_ptr<Mesh> mesh)
+{
+  m_mesh = mesh;
+}
+
+std::shared_ptr<Mesh> MeshRenderer::getMesh()
+{
+  return m_mesh;
 }

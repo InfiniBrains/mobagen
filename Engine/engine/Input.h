@@ -1,7 +1,3 @@
-//
-//  Author: Shervin Aflatooni
-//
-
 #pragma once
 
 #include <map>
@@ -16,6 +12,15 @@ public:
   Input(void);
   ~Input(void);
 
+  enum InputState {
+	RELEASED=0,
+	PRESSED=1,
+	JUSTRELEASED=2,
+	JUSTPRESSED=3
+  };
+
+  void storeLastFrame();
+
   void handleKeyboardEvent(SDL_KeyboardEvent keyEvent);
   void handleMouseEvent(SDL_MouseButtonEvent buttonEvent);
   void handleMouseWheelEvent(Sint32 x, Sint32 y);
@@ -23,9 +28,11 @@ public:
 
   bool isPressed(SDL_Keycode key);
   bool isReleased(SDL_Keycode key);
+  InputState keyState(SDL_Keycode key);
 
   bool mouseIsPressed(Uint8 button);
   bool mouseIsReleased(Uint8 button);
+  InputState mousePressedState(Uint8 button);
 
   void setMouseDelta(int x, int y);
   void setMousePosition(int x, int y);
@@ -40,6 +47,9 @@ public:
 private:
   std::map <SDL_Keycode, Uint8> m_keyState;
   std::map <Uint8, Uint8> m_buttonState;
+  std::map <SDL_Keycode, Uint8> m_keyStateOld;
+  std::map <Uint8, Uint8> m_buttonStateOld;
+
   SDL_Keymod m_keyModState;
 
   glm::vec2 m_mouseDelta;

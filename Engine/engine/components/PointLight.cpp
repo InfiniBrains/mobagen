@@ -1,7 +1,3 @@
-//
-//  Author: Shervin Aflatooni
-//
-
 #include "PointLight.h"
 
 #include "../Engine.h"

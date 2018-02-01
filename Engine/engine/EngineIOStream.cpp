@@ -1,7 +1,3 @@
-//
-//  Author: Shervin Aflatooni
-//
-
 #include "EngineIOStream.h"
 
 #ifdef EMSCRIPTEN

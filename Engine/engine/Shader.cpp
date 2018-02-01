@@ -1,7 +1,3 @@
-//
-//  Author: Shervin Aflatooni
-//
-
 #include "Shader.h"
 #include "Logger.h"
 
@@ -110,6 +106,7 @@ void Shader::link(void)
   char shErr[1024];
   int errlen;
   GLint res;
+
   // Link the shaders
   glLinkProgram(g_shProg);
   glGetProgramiv(g_shProg, GL_LINK_STATUS, &res);
@@ -121,7 +118,7 @@ void Shader::link(void)
   glGetProgramiv(g_shProg, GL_VALIDATE_STATUS, &res);
   if (GL_FALSE == res) {
     glGetProgramInfoLog(g_shProg, 1024, &errlen, shErr);
-    log_err("Error validating shader: %s", shErr);
+    log_warn("Error validating shader: %s", shErr);
   }
 }
 

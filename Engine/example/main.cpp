@@ -1,9 +1,3 @@
-//
-//  Author: Shervin Aflatooni
-//          Alexandre Tolstenko
-
-#include "Menu.h"
-
 #include "components/MeshRenderer.h"
 #include "components/PerspectiveCamera.h"
 #include "components/OrthoCamera.h"
@@ -19,109 +13,92 @@
 #include "Texture.h"
 #include "Logger.h"
 #include "MeshLoader.h"
-#include "Menu.h"
-
+#include "Engine.h"
+#include "CrystalPicker.h"
+#include "Crystal.h"
 #include <SDL_main.h>
+#include <iostream>
+#include <map>
+#include "Matrix.h"
+#include <random>
+#include "Menu.h"
 
 class CoolGame : public Game
 {
 public:
   virtual void init(GLManager *glManager);
-  virtual void update(int delta);
+  virtual void update(double delta);
 };
 
-void CoolGame::update(int delta)
+void CoolGame::update(double delta)
 {
-  static float angle = 0;
-  angle += delta * 0.0008;
-  // plane->getTransform().setRotation(glm::vec3(1, 0, 0), angle);
-  //plane->getTransform().setPosition(glm::vec3(glm::sin(angle) * 5, 0, 0));
-
   Game::update(delta);
 }
 
 void CoolGame::init(GLManager *glManager)
 {
+  getRootScene()->addComponent<Matrix>();
+  
+  // loat assets
+  auto backgroundTex = std::make_shared<Texture>(Asset("BackGround.jpg"));
+  auto normal = std::make_shared<Texture>(Asset("default_normal.jpg"));
+  auto specular = std::make_shared<Texture>(Asset("default_specular.jpg"));
+
+  std::map<Crystal::CrystalType, std::shared_ptr<Texture>> textures;
+  textures[Crystal::CrystalType::BLUE]   = std::make_shared<Texture>(Asset("Blue.png"));
+  textures[Crystal::CrystalType::GREEN]  = std::make_shared<Texture>(Asset("Green.png"));
+  textures[Crystal::CrystalType::PURPLE] = std::make_shared<Texture>(Asset("Purple.png"));
+  textures[Crystal::CrystalType::RED]    = std::make_shared<Texture>(Asset("Red.png"));
+  textures[Crystal::CrystalType::YELLOW] = std::make_shared<Texture>(Asset("Yellow.png"));
+
+  std::map<Crystal::CrystalType, std::shared_ptr<Material>> materials;
+  materials[Crystal::CrystalType::BLUE]   = std::make_shared<Material>(textures[Crystal::CrystalType::BLUE], normal, specular);
+  materials[Crystal::CrystalType::GREEN]  = std::make_shared<Material>(textures[Crystal::CrystalType::GREEN], normal, specular);
+  materials[Crystal::CrystalType::PURPLE] = std::make_shared<Material>(textures[Crystal::CrystalType::PURPLE], normal, specular);
+  materials[Crystal::CrystalType::RED]    = std::make_shared<Material>(textures[Crystal::CrystalType::RED], normal, specular);
+  materials[Crystal::CrystalType::YELLOW] = std::make_shared<Material>(textures[Crystal::CrystalType::YELLOW], normal, specular);
+
+  // store materials and textures
+  getRootScene()->addComponent<CrystalPicker>(textures, materials);
+
+
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<> dis(0, 4);
+
+  auto matrix = getRootScene()->getComponent<Matrix>();
+  for(int y=0;y<8;y++){
+    for(int x=0;x<8;x++){
+	    auto color = (Crystal::CrystalType)dis(gen);
+      auto entity = Crystal::CrystalFactory(textures,materials,x,y-8, color);
+      auto crystal = entity->getComponent<Crystal>();
+	    auto targetPosition = CrystalPicker::MatrixPositionToVec3(x, y);
+	    crystal->dropTo(targetPosition);
+	    matrix->setElement(x, y, crystal);
+      addToScene(entity);
+    }
+  }
+
+  auto backgroundMat = std::make_shared<Material>(backgroundTex, normal, specular);
+  auto backgroundMesh = Plane::getMesh();
+  auto planeEntity = std::make_shared<Entity>();
+  planeEntity->addComponent<MeshRenderer>(backgroundMesh, backgroundMat);
+  planeEntity->getTransform().setPosition(glm::vec3(0, -10, 0));
+  planeEntity->getTransform().setScale(glm::vec3(755, 1, 600));
+  addToScene(planeEntity);
+
   getRootScene()->addComponent<Menu>();
 
-  auto brickMat = std::make_shared<Material>(std::make_shared<Texture>(Asset("bricks2.jpg")), std::make_shared<Texture>(Asset("bricks2_normal.jpg")), std::make_shared<Texture>(Asset("bricks2_specular.png")));
-  /*auto planeMesh = Plane::getMesh();
-  auto plane = std::make_shared<Entity>();
-  plane->addComponent<MeshRenderer>(planeMesh, brickMat);
-  plane->getTransform().setPosition(glm::vec3(0, -2, 0));
-  plane->getTransform().setScale(glm::vec3(10, 10, 10));
-  addToScene(plane);
-*/
-  MeshLoader arteria("arteria2.obj");
-  arteria.getEntity()->getTransform().setPosition(glm::vec3(0, 0, 0));
-  addToScene(arteria.getEntity());
-
-  MeshLoader coletor("coletor2.obj");
-  coletor.getEntity()->getTransform().setPosition(glm::vec3(0, 0, 0));
-  addToScene(coletor.getEntity());
-
-  MeshLoader esqueleto("esqueleto3.obj");
-  esqueleto.getEntity()->getTransform().setPosition(glm::vec3(0, 0, 0));
-  addToScene(esqueleto.getEntity());
-
-  MeshLoader rim("rim2.obj");
-  rim.getEntity()->getTransform().setPosition(glm::vec3(0, 0, 0));
-  addToScene(rim.getEntity());
-
-  MeshLoader tumor("tumor2.obj");
-  tumor.getEntity()->getTransform().setPosition(glm::vec3(0, 0, 0));
-  addToScene(tumor.getEntity());
-
-  MeshLoader veia("veia2.obj");
-  veia.getEntity()->getTransform().setPosition(glm::vec3(0, 0, 0));
-  addToScene(veia.getEntity());
-
-  // MeshLoader money("monkey3.obj");
-  // money.getEntity()->getTransform().setPosition(glm::vec3(0, 0, 8));
-  // money.getEntity()->addComponent<PerspectiveCamera>(glm::pi<float>() / 2.0f, getEngine()->getWindow()->getWidth() / (float)getEngine()->getWindow()->getHeight(), 0.9f, 100.0f);
-  // money.getEntity()->addComponent<Sphere>(1);
-  // money.getEntity()->addComponent<SpotLight>(glm::vec3(0.1f, 1.0f, 1.0f), 5.8f, 0.7f, std::make_shared<Attenuation>(0, 0, 0.2));
-  // addToScene(money.getEntity());
-
   auto cam = std::make_shared<Entity>();
-  cam->addComponent<PerspectiveCamera>(glm::pi<float>() / 2.0f, getEngine()->getWindow()->getWidth() / (float)getEngine()->getWindow()->getHeight(), 0.9f, 1000000.0f);
-  cam->addComponent<FreeMove>();
-#if defined(ANDROID)
-  cam->addComponent<FreeLook>(0.0001f);
-#else
-  cam->addComponent<FreeLook>();
-#endif
-  cam->getTransform().setPosition(glm::vec3(0, 300, 0));
+  cam->addComponent<PerspectiveCamera>(glm::pi<float>() / 4.0f * 0.96f, getEngine()->getWindow()->getWidth() / (float)getEngine()->getWindow()->getHeight(), 0.01f, 10000.0f);
+  cam->getTransform().setPosition(glm::vec3(0, getEngine()->getWindow()->getWidth(), 0));
   cam->getTransform().setScale(glm::vec3(0.8, 0.8, 0.8));
   cam->getTransform().setRotation(glm::quat(0, 0, 0.707, 0.707));
-  cam->addComponent<SpotLight>(glm::vec3(1.0f, 1.0f, 1.0f), 1.8f, 0.7f, std::make_shared<Attenuation>(0, 0, 0.2));
-
-  // money2->getTransform().setPosition(glm::vec3(0, 300, 0));
-  // money2->getTransform().setScale(glm::vec3(0.8, 0.8, 0.8));
-  // money2->getTransform().setRotation(glm::quat(0, 0, 0.707, 0.707));
-
+  cam->addComponent<DirectionalLight>(glm::vec3(1,1,1), 0.5);
   addToScene(cam);
 
   auto primary_camera = cam->getComponent<PerspectiveCamera>();
-
   getEngine()->getGLManager()->setActiveCamera(primary_camera);
-//   MeshLoader money2("monkey3.obj");
-//   money2.getEntity()->addComponent<PerspectiveCamera>(glm::pi<float>() / 2.0f, getEngine()->getWindow()->getWidth() / (float)getEngine()->getWindow()->getHeight(), 0.9f, 100.0f);
-//   money2.getEntity()->addComponent<FreeMove>();
-// #if defined(ANDROID)
-//   money2.getEntity()->addComponent<FreeLook>(0.0001f);
-// #else
-//   money2.getEntity()->addComponent<FreeLook>();
-// #endif
-//   money2.getEntity()->getTransform().setPosition(glm::vec3(0, 0, 5));
-//   money2.getEntity()->getTransform().setScale(glm::vec3(0.8, 0.8, 0.8));
-//   money2.getEntity()->addComponent<SpotLight>(glm::vec3(1.0f, 1.0f, 1.0f), 1.8f, 0.7f, std::make_shared<Attenuation>(0, 0, 0.2));
-
-//   addToScene(money2.getEntity());
-
-//   auto primary_camera = money2.getEntity()->getComponent<PerspectiveCamera>();
-
-//   getEngine()->getGLManager()->setActiveCamera(primary_camera);
 }
 
 int main(int argc, char *argv[]) {

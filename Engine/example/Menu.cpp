@@ -6,37 +6,57 @@ const char* Menu::getType()
 	return "MENU";
 }
 
+void Menu::update(double delta)
+{
+	m_remainingTime -= delta;
+}
+
 void Menu::onGUI(ImGuiContext* context)
 {
 	ImGui::SetCurrentContext(context);
-	ImGui::BeginMainMenuBar();
-	if (ImGui::BeginMenu("File"))
+
+	if (m_remainingTime > 0)
 	{
-		ImGui::EndMenu();
+		ImVec2 pos = ImVec2(50,50);
+		ImGui::SetNextWindowPos(pos);
+		ImGui::Begin("", 0, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
+			ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_ShowBorders |
+			ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoTitleBar);
+		ImGui::Text("TIME LEFT");
+		ImGui::Text("  %.1lf", m_remainingTime);
+		ImGui::Text("");
+		ImGui::Text("  SCORE  ");
+		ImGui::Text("   %d   ", m_score);
+		ImGui::End();
 	}
-	if (ImGui::BeginMenu("Edit"))
+	else
 	{
-		ImGui::EndMenu();
+		ImVec2 pos = ImVec2(400, 170);
+		ImGui::SetNextWindowPos(pos);
+		ImGui::SetNextWindowSize(ImVec2(200, 200));
+		ImGui::Begin("", 0, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
+			ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_ShowBorders |
+			ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoTitleBar);
+		
+		ImGui::SetCursorPos(ImVec2(60,80));
+		ImGui::Text("TIME IS UP!");
+		ImGui::SetCursorPos(ImVec2(60, 100));
+		ImGui::Text("  YOU GOT  ");
+		ImGui::SetCursorPos(ImVec2(60, 130));
+		ImGui::Text("    %d   ", m_score);
+		ImGui::End();
+		//ImGui::BeginPopupModal("", 0, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
+		//	ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_ShowBorders |
+		//	ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoTitleBar);
 	}
-	if (ImGui::BeginMenu("Assets"))
-	{
-		ImGui::EndMenu();
-	}
-	if (ImGui::BeginMenu("GameObject"))
-	{
-		ImGui::EndMenu();
-	}
-	if (ImGui::BeginMenu("Component"))
-	{
-		ImGui::EndMenu();
-	}
-	if (ImGui::BeginMenu("Window"))
-	{
-		ImGui::EndMenu();
-	}
-	if (ImGui::BeginMenu("Help"))
-	{
-		ImGui::EndMenu();
-	}
-	ImGui::EndMainMenuBar();
+}
+
+void Menu::addScore(int value)
+{
+	m_score += value;
+}
+
+double Menu::getTime()
+{
+	return m_remainingTime;
 }

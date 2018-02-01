@@ -1,7 +1,3 @@
-//
-//  Author: Shervin Aflatooni
-//
-
 #pragma once
 
 #include "../Component.h"
@@ -12,7 +8,7 @@ public:
   FreeLook(float speed = 0.001f);
   ~FreeLook(void);
 
-  virtual void updateInput(Input *input, int delta);
+  virtual void updateInput(Input *input, double delta);
 
   inline virtual const char *getType(void) { return "FREE_LOOK"; }
 
