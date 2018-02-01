@@ -41,10 +41,10 @@ matrix:
         - BUILD_TYPE=native
 
     # osx emscripten
-    - os: osx
-      osx_image: xcode9.2
-      env:
-        - BUILD_TYPE=emscripten
+    # - os: osx
+    #   osx_image: xcode9.2
+    #   env:
+    #     - BUILD_TYPE=emscripten
 
 language: cpp
 compiler: clang
