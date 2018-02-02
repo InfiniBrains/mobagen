@@ -5,6 +5,8 @@ Welcome to the **MoBaGEn**. The **MO**dule **BA**sed **G**ame **EN**gine.
 
 [![Coverity](https://scan.coverity.com/projects/14798/badge.svg)](https://scan.coverity.com/projects/infinibrains-mobagen) [![Build Status](https://api.travis-ci.org/InfiniBrains/mobagen.svg?branch=master)](https://travis-ci.org/InfiniBrains/mobagen)
 
+[![Throughput Graph](https://graphs.waffle.io/InfiniBrains/mobagen/throughput.svg)](https://waffle.io/InfiniBrains/mobagen/metrics/throughput)
+
 ## Feature:
 - Scene Graph
 - 3D model loading (most common file formats)
