@@ -28,8 +28,8 @@ ELSE ()
 ENDIF ()
 
 target_link_libraries (engine ${ENGINE_LIBS})
-set_target_properties(engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "stdafx.h")
-cotire(engine)
+#set_target_properties(engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "stdafx.h")
+#cotire(engine)
 
 install (TARGETS engine DESTINATION lib)
 install (FILES ${TARGET_INC} DESTINATION include/engine)
