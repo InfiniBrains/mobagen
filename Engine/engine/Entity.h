@@ -1,7 +1,3 @@
-//
-//  Author: Shervin Aflatooni
-//
-
 #pragma once
 
 #include <vector>
@@ -44,11 +40,12 @@ public:
     components.push_back(component);
   }
 
-  void updateInputAll(Input *input, int delta);
-  void updateAll(int delta);
+  void updateInputAll(Input *input, double delta);
+  void updateAll(double delta);
   void renderAll(Shader *shader);
   void registerWithEngineAll(Engine *engine);
   void deregisterFromEngineAll(void);
+  Entity* getParent();
 
   Transform& getTransform(void);
 
@@ -92,6 +89,8 @@ public:
   }
 
   static std::vector<Entity*> findByTag(const std::string& tag);
+
+  Engine * getEngine();
 
 private:
   Transform transform;

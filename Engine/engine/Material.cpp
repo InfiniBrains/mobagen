@@ -1,7 +1,3 @@
-//
-//  Author: Shervin Aflatooni
-//
-
 #include "Material.h"
 
 Material::Material(std::shared_ptr<Texture> diffuseMap, std::shared_ptr<Texture> normalMap, std::shared_ptr<Texture> specularMap)

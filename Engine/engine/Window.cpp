@@ -20,6 +20,7 @@ Window::Window(void)
   SDL_DisplayMode mode;
   SDL_GetCurrentDisplayMode(0, &mode);
 
+
   SDL_GL_SetAttribute(SDL_GL_RED_SIZE,    BITS_PER_CHANNEL);
   SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,  BITS_PER_CHANNEL);
   SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,   BITS_PER_CHANNEL);
@@ -51,7 +52,8 @@ Window::Window(void)
   #endif
 
   // SDL_WINDOW_FULLSCREEN |
-  m_window = SDL_CreateWindow("Engine!", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, mode.w, mode.h - 100, SDL_WINDOW_OPENGL);
+  //  m_window = SDL_CreateWindow("Engine!", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, mode.w, mode.h - 100, SDL_WINDOW_OPENGL);
+  m_window = SDL_CreateWindow("Midas Miner!", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 755, 600, SDL_WINDOW_OPENGL);
   if (m_window == nullptr)
   {
     log_err("SDL_CreateWindow error: %s", SDL_GetError());
@@ -63,8 +65,6 @@ Window::Window(void)
   }
 
   SDL_GL_SetSwapInterval(0);
-
-  m_time = SDL_GetTicks();
 
   int display_w, display_h;
   SDL_GL_GetDrawableSize(m_window, &display_w, &display_h);
@@ -87,14 +87,11 @@ void Window::init(void)
   m_guiManager = std::make_unique<GuiManager>(getDrawableSize(), getDisplaySize(), getSDLWindow());
 }
 
-void Window::tick(void)
+void Window::tick(double deltaTime)
 {
-  m_lastTime = m_time;
-  m_time = SDL_GetTicks();
-  m_deltaTime = m_time - m_lastTime;
-
+  m_input.storeLastFrame();
   m_input.setMouseDelta(0, 0);
-
+  
   SDL_Event event;
 
   bool mouseWheelEvent = false;
@@ -133,8 +130,8 @@ void Window::tick(void)
   if (mouseWheelEvent == false) {
     m_input.handleMouseWheelEvent(0, 0);
   }
-
-  m_guiManager->tick(this);
+  
+  m_guiManager->tick(this,deltaTime);
 }
 
 void Window::swapBuffer(void)
@@ -150,11 +147,6 @@ Input* Window::getInput(void)
 SDL_Window* Window::getSDLWindow(void)
 {
   return m_window;
-}
-
-Uint32 Window::getDeltaTime(void) const
-{
-  return m_deltaTime;
 }
 
 int Window::getWidth(void) const

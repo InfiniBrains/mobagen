@@ -191,7 +191,7 @@ GuiManager::GuiManager(const glm::vec2& drawableSize, const glm::vec2& displaySi
   m_sdlWindow = sdlWindow;
 
 #ifdef ANDROID
-  showProps = true;
+  showProps = false;
 #else
   showProps = true;
 #endif
@@ -245,11 +245,11 @@ GuiManager::~GuiManager(void)
   ImGui::Shutdown();
 }
 
-void GuiManager::tick(Window *window)
+void GuiManager::tick(Window *window, double deltaTime)
 {
   ImGuiIO& io = ImGui::GetIO();
 
-  io.DeltaTime = window->getDeltaTime() / 1000.0f;
+  io.DeltaTime = deltaTime;
 
   glm::vec2 mousePos = window->getInput()->getMousePosition();
   io.MousePos = ImVec2(mousePos.x, mousePos.y);
@@ -400,7 +400,9 @@ void GuiManager::togglePropertyEditor(void)
 void GuiManager::render(Entity *sceneGraph)
 {
   renderComponents(sceneGraph);
-  if (showProps) {
+  ImGui::Render();
+
+  /*if (showProps) {
     ImGui::SetNextWindowPos(ImVec2(10,10));
     ImGui::SetNextWindowSize(ImVec2(500,0), ImGuiSetCond_FirstUseEver);
     if (!ImGui::Begin("Example: Fixed Overlay", nullptr, ImVec2(0,0), 0.3f, ImGuiWindowFlags_NoTitleBar|ImGuiWindowFlags_NoResize|ImGuiWindowFlags_NoMove|ImGuiWindowFlags_NoSavedSettings))
@@ -425,7 +427,7 @@ void GuiManager::render(Entity *sceneGraph)
     // ImGui::ShowTestWindow();
 
     ImGui::Render();
-  }
+  }*/
 }
 
 void GuiManager::renderComponents(Entity * entity)

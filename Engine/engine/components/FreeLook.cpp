@@ -1,7 +1,3 @@
-//
-//  Author: Shervin Aflatooni
-//
-
 #include "FreeLook.h"
 
 FreeLook::FreeLook(float speed)
@@ -14,7 +10,7 @@ FreeLook::~FreeLook(void)
 {
 }
 
-void FreeLook::updateInput(Input *input, int delta)
+void FreeLook::updateInput(Input *input, double delta)
 {
 #ifdef ANDROID
   if (input->mouseIsPressed(SDL_BUTTON_LEFT)) {

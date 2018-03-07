@@ -1,7 +1,3 @@
-//
-//  Author: Shervin Aflatooni
-//
-
 #include "DirectionalLight.h"
 
 #include "../Engine.h"

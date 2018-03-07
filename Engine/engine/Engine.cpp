@@ -1,7 +1,3 @@
-//
-//  Author: Shervin Aflatooni
-//
-
 #include "Engine.h"
 #include "Logger.h"
 #include "Ray.h"
@@ -14,8 +10,9 @@
 
 #ifdef EMSCRIPTEN
   #include <emscripten.h>
-
   static Engine *instance = NULL;
+#else
+#include <thread>
 #endif
 
 
@@ -34,6 +31,8 @@ Engine::Engine(Game *game)
   m_physicsManager = std::make_unique<PhysicsManager>();
 
   this->game = game;
+
+  m_deltaTime = 1 / 60.0;
 
   quit = false;
 }
@@ -56,15 +55,30 @@ void Engine::start(void)
 
   m_window->makeCurrentContext();
 
+  lastUpdateTime = std::chrono::high_resolution_clock::now();
+
 #ifdef EMSCRIPTEN
   instance = this;
-
   emscripten_set_main_loop(Engine::loop, 0, 1);
 #else
+  auto accumulatedTime = std::chrono::duration<double>(std::chrono::duration_values<double>::zero());
   while (!quit) {
-    tick();
-
-    //SDL_Delay(1);
+	// run engine loop
+	tick(); 
+	// get time
+	const auto afterTick = std::chrono::high_resolution_clock::now();
+	
+	// sleep
+    std::chrono::duration<double> sleepTime;
+    sleepTime = std::chrono::duration<double>(1 / 60.0) - (afterTick - lastUpdateTime) - accumulatedTime;
+	if (sleepTime.count() > 0)
+		std::this_thread::sleep_for(sleepTime); //SDL_Delay(sleepTime);
+	
+	// get the sleep error and store the lastFrame time duration
+	auto now = std::chrono::high_resolution_clock::now();
+	m_deltaTime = (now - lastUpdateTime).count()/1000000000.0;
+	lastUpdateTime = now;
+	accumulatedTime = (lastUpdateTime - afterTick) - sleepTime;
   }
 #endif
 }
@@ -78,27 +92,15 @@ void Engine::loop(void)
 
 void Engine::tick(void)
 {
-  m_window->tick();
-  Uint32 delta_time = m_window->getDeltaTime();
+  m_window->tick(m_deltaTime);
 
   quit = m_window->shouldQuit();
 
-  game->updateInput(m_window->getInput(), delta_time);
+  game->updateInput(m_window->getInput(), getDeltaTime());
 
-  game->update(delta_time);
+  game->update(getDeltaTime());
 
   game->render(m_glManager.get());
-
-  if (m_window->getInput()->mouseIsPressed(SDL_BUTTON_LEFT)) {
-    Ray ray = Ray::getPickRay(m_window->getInput()->getMousePosition(), m_window->getViewport(), m_glManager->getViewMatrix(), m_glManager->getProjectionMatrix());
-
-    Entity *pickedEntity = m_physicsManager->pick(&ray);
-
-    if (pickedEntity != nullptr)
-      m_glManager->drawEntity(pickedEntity);
-
-    m_glManager->drawLine(ray.getLine(100.0f));
-  }
 
   static bool f1Pressed = false;
 
@@ -112,6 +114,11 @@ void Engine::tick(void)
   m_window->getGuiManager()->render(game->getRootScene().get());
 
   m_window->swapBuffer();
+#if EMSCRIPTEN
+  auto now = std::chrono::high_resolution_clock::now();
+  m_deltaTime = (now - lastUpdateTime).count()/1000000000.0;
+  lastUpdateTime = now;
+#endif
 }
 
 Window *Engine::getWindow(void) const
@@ -127,4 +134,9 @@ GLManager *Engine::getGLManager(void) const
 PhysicsManager *Engine::getPhysicsManager(void) const
 {
   return m_physicsManager.get();
+}
+
+double Engine::getDeltaTime()
+{
+	return m_deltaTime;
 }

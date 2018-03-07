@@ -1,7 +1,3 @@
-//
-//  Author: Shervin Aflatooni
-//
-
 #pragma once
 
 #include "Entity.h"
@@ -17,7 +13,7 @@ public:
 
   std::shared_ptr<Entity> getEntity(void) const;
 
-private:
+protected:
   void loadScene(const aiScene* scene);
 
   std::string m_fileName;

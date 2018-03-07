@@ -1,7 +1,3 @@
-//
-//  Author: Shervin Aflatooni
-//
-
 #include "Game.h"
 
 Game::Game(void)
@@ -32,12 +28,12 @@ void Game::addToScene(std::shared_ptr<Entity> entity)
   rootScene->addChild(entity);
 }
 
-void Game::updateInput(Input *input, int delta)
+void Game::updateInput(Input *input, double delta)
 {
   rootScene->updateInputAll(input, delta);
 }
 
-void Game::update(int delta)
+void Game::update(double delta)
 {
   rootScene->updateAll(delta);
 }

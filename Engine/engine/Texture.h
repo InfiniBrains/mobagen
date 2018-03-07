@@ -24,7 +24,11 @@ public:
   ~Texture(void);
 
   void bind(unsigned int unit = 0) const;
+  int width() const;
+  int height() const;
 
 private:
   std::shared_ptr<TextureData> m_textureData;
+  int m_width;
+  int m_height;
 };

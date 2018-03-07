@@ -1,7 +1,3 @@
-//
-//  Author: Shervin Aflatooni
-//
-
 #include "CustomIOSystem.h"
 #include "MeshLoader.h"
 #include "Mesh.h"

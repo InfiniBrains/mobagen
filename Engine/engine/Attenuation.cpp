@@ -1,7 +1,3 @@
-//
-//  Author: Shervin Aflatooni
-//
-
 #include "Attenuation.h"
 
 Attenuation::Attenuation(float constant, float linear, float exponent)

@@ -1,8 +1,5 @@
-//
-//  Author: Shervin Aflatooni
-//
-
 #include "Component.h"
+#include "Engine.h"
 
 void Component::setParent(Entity *parentEntity)
 {
@@ -39,4 +36,13 @@ void Component::setProperty(const char *name, PropertyType type, void *p)
   prop.p = p;
 
   m_properties[name] = prop;
+}
+
+Engine * Component::getEngine() {
+  return m_parentEntity->getEngine();
+}
+
+double Component::getDeltaTime()
+{
+	return m_parentEntity->getEngine()->getDeltaTime();
 }

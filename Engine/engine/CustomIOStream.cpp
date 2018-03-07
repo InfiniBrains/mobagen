@@ -1,7 +1,3 @@
-//
-//  Author: Shervin Aflatooni
-//
-
 #include "CustomIOStream.h"
 
 #include <string>

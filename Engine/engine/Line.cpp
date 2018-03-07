@@ -1,7 +1,3 @@
-//
-//  Author: Shervin Aflatooni
-//
-
 #include "Line.h"
 
 Line::Line(glm::vec3 v1, glm::vec3 v2)

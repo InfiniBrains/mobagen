@@ -1,7 +1,3 @@
-//
-//  Author: Shervin Aflatooni
-//
-
 #include "PhysicsManager.h"
 
 #include <glm/gtx/norm.hpp>

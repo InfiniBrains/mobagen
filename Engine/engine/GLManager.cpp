@@ -1,7 +1,3 @@
-//
-//  Author: Shervin Aflatooni
-//
-
 #include "GLManager.h"
 #include "Logger.h"
 

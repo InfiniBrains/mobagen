@@ -1,7 +1,3 @@
-//
-//  Author: Shervin Aflatooni
-//          Alexandre Tolstenko
-
 #pragma once
 
 #include <memory>
@@ -34,8 +30,8 @@ class Component
 public:
   virtual ~Component(void) {};
 
-  virtual void updateInput(Input *input, int delta) {};
-  virtual void update(int delta) {};
+  virtual void updateInput(Input *input, double delta) {};
+  virtual void update(double delta) {};
   virtual void render(Shader *shader) {};
   virtual void registerWithEngine(Engine *engine) {};
   virtual void deregisterFromEngine(Engine *engine) {};
@@ -53,6 +49,8 @@ public:
 
   std::map<const char *, Property> m_properties;
 
+  Engine * getEngine();
+  double getDeltaTime();
 protected:
   Entity *m_parentEntity;
 };

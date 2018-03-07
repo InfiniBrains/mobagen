@@ -1,13 +1,8 @@
-//
-//  Author: Shervin Aflatooni
-//
-
 #ifndef ANDROID
   #include <GL/glew.h>
 #endif
 
 #include "GLEWManager.h"
-
 #include "Logger.h"
 
 GLEWManager::GLEWManager(void)
