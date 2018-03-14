@@ -2,6 +2,12 @@ execute_process( COMMAND git submodule update --init --recursive )
 set_directory_properties( PROPERTIES CLEAN_NO_CUSTOM 1)
 
 IF (EMSCRIPTEN)
+  set(TEST_BIG_ENDIAN OFF CACHE BOOL "Avoid problems with emscripten")
+  set(EMSCRIPTEN ON CACHE BOOL "Enable emscripten build")
+  set(CMAKE_MODULE_PATH "${EMSCRIPTEN}/cmake/" CACHE PATH)
+  set(CMAKE_TOOLCHAIN_FILE "${EMSCRIPTEN}/cmake/Modules/Platform/Emscripten.cmake" CACHE FILEPATH)
+  #todo: emconfigure cmake -DTEST_BIG_ENDIAN=0 -DEMSCRIPTEN=1 -DGDCM_BUILD_DOCBOOK_MANPAGES=0 -DGDCM_DOCUMENTATION=0 -DBUILD_DOC=0 -DCMAKE_MODULE_PATH=$EMSCRIPTEN/cmake/ -DCMAKE_TOOLCHAIN_FILE=$EMSCRIPTEN/cmake/Modules/Platform/Emscripten.cmake -DCMAKE_AR=`which llvm-ar` -DOPJ_BIG_ENDIAN=0 -DCMAKE_CXX_COMPILER=`which em++` -DCMAKE_C_COMPILER=`which emcc` -DCMAKE_STATIC_LIBRARY_SUFFIX=".bc" -DCMAKE_SHARED_LIBRARY_SUFFIX=".bc" -G "Unix Makefiles" ../ ; \
+
 ELSEIF (ANDROID)
   set( SDL_STATIC ON CACHE BOOL "Build the static SDL library" )
   set( SDL_SHARED OFF CACHE BOOL "Build the shared SDL library" )
@@ -28,6 +34,9 @@ ELSE ()
   add_subdirectory( glew )
 ENDIF ()
 
+set(GDCM_BUILD_DOCBOOK_MANPAGES OFF CACHE BOOL "Do not build gdcm manpages")
+set(GDCM_DOCUMENTATION OFF CACHE BOOL "Do not build gdcm manpages")
+set(DBUILD_DOC OFF CACHE BOOL "Do not build gdcm manpages")
 add_subdirectory( gdcm )
 
 set( ASSIMP_BUILD_ASSIMP_TOOLS OFF CACHE BOOL "Build assimp tools" )
