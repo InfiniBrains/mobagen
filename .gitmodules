@@ -22,3 +22,7 @@
 	path = dependencies/imgui
 	url = https://github.com/ocornut/imgui.git
 	branch = e916310b2e1f9cacbb2b9ce192a3dfb359e4b509
+[submodule "dependencies/gdcm"]
+	path = dependencies/gdcm
+	url = https://github.com/malaterre/GDCM.git
+	branch = af81d4448a4c5159a9b0bbb67e7b4fd7f9121c7d
