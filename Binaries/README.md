@@ -1,1 +1,0 @@
-This folder holds all files needed to build the solution
