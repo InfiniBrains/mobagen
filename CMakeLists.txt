@@ -26,6 +26,8 @@ LINK_DIRECTORIES(${CMAKE_BINARY_DIR}/lib)
 
 add_subdirectory(dependencies)
 
+include( ${CMAKE_CURRENT_BINARY_DIR}/dependencies/gdcm/UseGDCM.cmake )
+
 set ( SDL2_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/SDL/include )
 set ( SDL2_LIBRARY SDL2 )
 
@@ -59,6 +61,7 @@ IF (EMSCRIPTEN)
   set(ENGINE_LIBS
     ${ASSIMP_LIBRARY}
     ${IMGUI_LIBRARY}
+    ${GDCM_LIBRARY_DIRS}
   )
 
   set(ENGINE_INCLUDES
@@ -67,6 +70,7 @@ IF (EMSCRIPTEN)
     ${CMAKE_BINARY_DIR}/dependencies/assimp/include 
     ${IMGUI_INCLUDE_DIRS}
     ${CMAKE_CURRENT_SOURCE_DIR}/Engine/engine/
+    ${GDCM_INCLUDE_DIRS}
   )
 ELSEIF (ANDROID)
   add_definitions( -DGLES2=1 )
@@ -76,6 +80,7 @@ ELSEIF (ANDROID)
     ${SDL2_LIBRARY}
     ${ASSIMP_LIBRARY}
     ${IMGUI_LIBRARY}
+    ${GDCM_LIBRARY_DIRS}
   )
 
   set(ENGINE_INCLUDES
@@ -85,6 +90,7 @@ ELSEIF (ANDROID)
     ${CMAKE_BINARY_DIR}/dependencies/assimp/include
     ${IMGUI_INCLUDE_DIRS}
     ${CMAKE_CURRENT_SOURCE_DIR}/Engine/engine/
+    ${GDCM_INCLUDE_DIRS}
   )
 ELSE ()
   SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -std=c++14")
@@ -97,6 +103,7 @@ ELSE ()
     ${GLEW_LIBRARIES}
     ${WHEREAMI_LIBRARY}
     ${IMGUI_LIBRARY}
+    ${GDCM_LIBRARY_DIRS}
   )
 
   set(ENGINE_INCLUDES
@@ -108,6 +115,7 @@ ELSE ()
     ${WHEREAMI_INCLUDE_DIRS}
     ${IMGUI_INCLUDE_DIRS}
     ${CMAKE_CURRENT_SOURCE_DIR}/Engine/engine/
+    ${GDCM_INCLUDE_DIRS}
   )
 ENDIF ()
 

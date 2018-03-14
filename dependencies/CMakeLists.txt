@@ -28,6 +28,8 @@ ELSE ()
   add_subdirectory( glew )
 ENDIF ()
 
+add_subdirectory( gdcm )
+
 set( ASSIMP_BUILD_ASSIMP_TOOLS OFF CACHE BOOL "Build assimp tools" )
 set( ASSIMP_BUILD_TESTS OFF CACHE BOOL "Build assimp tests" )
 set( ASSIMP_BUILD_SAMPLES OFF CACHE BOOL "Build assimp samples" )
