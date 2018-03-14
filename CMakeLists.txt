@@ -35,7 +35,7 @@ endif()
 
 add_subdirectory(dependencies)
 
-include( ${CMAKE_CURRENT_BINARY_DIR}/dependencies/gdcm/UseGDCM.cmake )
+include(${CMAKE_CURRENT_BINARY_DIR}/dependencies/gdcm/GDCMConfig.cmake )
 
 set ( SDL2_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/SDL/include )
 set ( SDL2_LIBRARY SDL2 )
