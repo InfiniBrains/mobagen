@@ -23,6 +23,7 @@
 #include <random>
 #include "Menu.h"
 
+
 class CoolGame : public Game
 {
 public:

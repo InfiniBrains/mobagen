@@ -5,29 +5,29 @@ IF (ANDROID)
   add_custom_target(android-build ${ANDROID_ANT} ${ANT_FLAGS} ${ANT_TARGET} WORKING_DIRECTORY ${ANDROID_BIN_ROOT})
   add_custom_target(android-start ${ANDROID_ADB} shell am start -n org.libsdl.app/org.libsdl.app.SDLActivity WORKING_DIRECTORY ${ANDROID_BIN_ROOT})
 
-  add_library (game ${CMAKE_CURRENT_SOURCE_DIR}/../../dependencies/SDL/src/main/android/SDL_android_main.c main.cpp)
-  target_link_libraries (game engine)
+  add_library (midasminer ${CMAKE_CURRENT_SOURCE_DIR}/../../dependencies/SDL/src/main/android/SDL_android_main.c main.cpp)
+  target_link_libraries (midasminer engine)
 
-  # add_custom_command(TARGET game POST_BUILD COMMAND ${ANDROID_ANT} ${ANT_FLAGS} ${ANT_TARGET} WORKING_DIRECTORY ${ANDROID_BIN_ROOT})
+  # add_custom_command(TARGET midasminer POST_BUILD COMMAND ${ANDROID_ANT} ${ANT_FLAGS} ${ANT_TARGET} WORKING_DIRECTORY ${ANDROID_BIN_ROOT})
 
-  add_custom_command(TARGET game PRE_BUILD
+  add_custom_command(TARGET midasminer PRE_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
       ${CMAKE_CURRENT_SOURCE_DIR}/android-project/
       ${ANDROID_BIN_ROOT}/)
 
-  add_custom_command(TARGET game PRE_BUILD
+  add_custom_command(TARGET midasminer PRE_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
       ${CMAKE_CURRENT_SOURCE_DIR}/assets/
       ${ANDROID_BIN_ROOT}/assets)
 
-  add_custom_command(TARGET game POST_BUILD
+  add_custom_command(TARGET midasminer POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/ ${ANDROID_BIN_ROOT}/libs/${ANDROID_NDK_ABI_NAME})
 ELSE ()
-  add_executable (game main.cpp Menu.cpp CrystalPicker.cpp Crystal.cpp Matrix.cpp)
-  target_link_libraries (game engine)
+  add_executable (midasminer main.cpp Menu.cpp CrystalPicker.cpp Crystal.cpp Matrix.cpp)
+  target_link_libraries (midasminer engine)
 
-  add_custom_command(TARGET game PRE_BUILD
+  add_custom_command(TARGET midasminer PRE_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
       ${CMAKE_CURRENT_SOURCE_DIR}/assets
-      $<TARGET_FILE_DIR:game>/assets)
+      $<TARGET_FILE_DIR:midasminer>/assets)
 ENDIF ()

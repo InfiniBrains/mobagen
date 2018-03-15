@@ -19,32 +19,26 @@ matrix:
       dist: trusty
 
     # linux emscripten
-    - os: linux
-      services:
-        - docker
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-trusty-5.0
-          packages:
-            #- cmake
-      env:
-        - BUILD_TYPE=emscripten
-      group: travis_latest
-      dist: trusty
+#    - os: linux
+#      services:
+#        - docker
+#      addons:
+#        apt:
+#          sources:
+#            - ubuntu-toolchain-r-test
+#            - llvm-toolchain-trusty-5.0
+#          packages:
+#            #- cmake
+#      env:
+#        - BUILD_TYPE=emscripten
+#      group: travis_latest
+#      dist: trusty
       
     # osx native
     - os: osx
       env:
         - MATRIX_EVAL="CC=clang && CXX=clang++"
         - BUILD_TYPE=native
-
-    # osx emscripten
-    # - os: osx
-    #   osx_image: xcode9.2
-    #   env:
-    #     - BUILD_TYPE=emscripten
 
 language: cpp
 compiler: clang
