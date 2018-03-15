@@ -10,11 +10,11 @@ cmake .. -DCMAKE_BUILD_TYPE=${BUILD_TYPE}
 make $*
 if [[ $BUILD_TYPE == native ]] && [[ $TRAVIS_OS_NAME == linux ]]; then
   rm -rf ../linux.zip
-  zip -r ../linux.zip bin/
+  zip -r ../linux.zip bin/*
 fi
 if [[ $BUILD_TYPE == native ]] && [[ $TRAVIS_OS_NAME == osx ]]; then
   rm -rf ../osx.zip
-  zip -r ../osx.zip bin/
+  zip -r ../osx.zip bin/*
 fi
 
 
