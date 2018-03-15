@@ -6,4 +6,4 @@ BUILD_TYPE=${BUILD_TYPE:-Debug}
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 mkdir -p $DIR/../bin
 cd $DIR/../bin
-cmake .. -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -G Xcode
+cmake .. -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -GXcode
