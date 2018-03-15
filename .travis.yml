@@ -100,6 +100,7 @@ deploy:
     on:
       repo: InfiniBrains/mobagen
       condition: $BUILD_TYPE == emscripten && $TRAVIS_OS_NAME == linux
+
   - provider: releases
     api_key:
       secure: MfsqovFmQorr7+r1Y0SlKpfi4SlCCLzkzefCMDDRtnib8h5oWt6ZlNxpQP2EwIx9QVsF3RR+BucRiQ/jc1daeQgBSRjUyTJAFRutigFvNbcoCZ5f3a1VAI1EqmBaDuMKdimtd9KEpYfJhI92tgVz2nf/CmcYYV0ylz5/R5KC8qJbGyhlww8Brcij2s1/yUtiLsupeBsfpmx9t96HcRDCnSD27h5mP3SANeTT1u2NJJtLXLFEmz/Zk6M3ziDKuw7Dvu7fZL7gUH2ofC6+9Q3bSLbTIsSYMbC9gWrdbWNPSWiSK/hd4Y8yB3KwDqLP7jJ/2sLze9NlyDftdGHoazC6Cyq0FmUyQkLUXSH6y7XyzoHuSMhy9Z07HoHRjcm3HxOPE5nfxDDsAKuPcyW9wS5E/Z/MNBHcJdwOacRic+haA88kXvo1Gg5XgayBch5EHYPod6hTdUC7U3y3LW2fmhIvSG8jU+lkkKdb3cY6wd9iGMyJuWjXcvYVMsjCGW5I8hdC4ntWDh0dFAtZd+MStH4mUuuAYBVvBDiVkc8UxF8WP5ZwP3WSwdGm6z867Hg+tI3osqP9yDfuEHWilBJLZQzDE93DyOQtfKabmQHQU6mRUZS0DY2h8z5Tz0GOAI6xmUmNbr16yrPdgDJzqBygpiKFiZUsET+XZEjEnAMUB/h8hhg=
@@ -107,6 +108,7 @@ deploy:
     on:
       repo: InfiniBrains/mobagen
       condition: $BUILD_TYPE == native && $TRAVIS_OS_NAME == linux
+
   - provider: releases
       api_key:
         secure: MfsqovFmQorr7+r1Y0SlKpfi4SlCCLzkzefCMDDRtnib8h5oWt6ZlNxpQP2EwIx9QVsF3RR+BucRiQ/jc1daeQgBSRjUyTJAFRutigFvNbcoCZ5f3a1VAI1EqmBaDuMKdimtd9KEpYfJhI92tgVz2nf/CmcYYV0ylz5/R5KC8qJbGyhlww8Brcij2s1/yUtiLsupeBsfpmx9t96HcRDCnSD27h5mP3SANeTT1u2NJJtLXLFEmz/Zk6M3ziDKuw7Dvu7fZL7gUH2ofC6+9Q3bSLbTIsSYMbC9gWrdbWNPSWiSK/hd4Y8yB3KwDqLP7jJ/2sLze9NlyDftdGHoazC6Cyq0FmUyQkLUXSH6y7XyzoHuSMhy9Z07HoHRjcm3HxOPE5nfxDDsAKuPcyW9wS5E/Z/MNBHcJdwOacRic+haA88kXvo1Gg5XgayBch5EHYPod6hTdUC7U3y3LW2fmhIvSG8jU+lkkKdb3cY6wd9iGMyJuWjXcvYVMsjCGW5I8hdC4ntWDh0dFAtZd+MStH4mUuuAYBVvBDiVkc8UxF8WP5ZwP3WSwdGm6z867Hg+tI3osqP9yDfuEHWilBJLZQzDE93DyOQtfKabmQHQU6mRUZS0DY2h8z5Tz0GOAI6xmUmNbr16yrPdgDJzqBygpiKFiZUsET+XZEjEnAMUB/h8hhg=
