@@ -149,7 +149,7 @@ deploy:
     github-token: $GITHUB_TOKEN
     keep-history: true
     local-dir: $TRAVIS_BUILD_DIR/bin-emscripten/bin
-    target-branch: gh-pages
+#    target-branch: gh-pages
     on:
       branch: master
       condition: $BUILD_TYPE = emscripten
