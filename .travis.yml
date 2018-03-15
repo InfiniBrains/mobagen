@@ -86,7 +86,8 @@ before_script:
 
 script:
   - if [ $TRAVIS_OS_NAME == linux ] && [ $BUILD_TYPE == emscripten ]; then 
-      docker exec -it emscripten ./scripts/travis-build.sh -j9;
+      docker exec -it emscripten ./scripts/travis-build.sh -j9 ;
+      docker exec -it emscripten ./scripts/travis-build.sh -j9 ;
     else
       ./scripts/travis-build.sh ;
     fi 
