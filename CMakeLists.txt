@@ -50,10 +50,10 @@ SET(GDCM_LIBRARIES
         gdcmexpat
         gdcmopenjp2
         gdcmcharls
-        #gdcmmd5
         gdcmzlib
         gdcmuuid
-        socketxx)
+        socketxx
+        )
 
 set ( SDL2_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/SDL/include )
 set ( SDL2_LIBRARY SDL2 )
@@ -82,13 +82,13 @@ IF (EMSCRIPTEN)
   SET ( CMAKE_EXE_LINKER_FLAGS "-Oz --closure 1")
   
   #SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall --preload-file ${CMAKE_CURRENT_SOURCE_DIR}/Engine/example/assets/ -s DEMANGLE_SUPPORT=1 -s ASSERTIONS=2 -s TOTAL_MEMORY=536870912 -s USE_SDL=2 -std=c++14 -Oz")
-  SET(CMAKE_CXX_FLAGS "--closure 1 --preload-file ${CMAKE_CURRENT_SOURCE_DIR}/Engine/example/assets/ -s TOTAL_MEMORY=536870912 -s USE_SDL=2 -std=c++14 -Oz")
-  add_definitions(-DASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/Engine/example/assets/")
+  SET(CMAKE_CXX_FLAGS "--closure 1 --preload-file ${CMAKE_CURRENT_SOURCE_DIR}/Engine/midasminer/assets/ -s TOTAL_MEMORY=536870912 -s USE_SDL=2 -std=c++14 -Oz")
+  add_definitions(-DASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/Engine/midasminer/assets/")
 
   set(ENGINE_LIBS
     ${ASSIMP_LIBRARY}
     ${IMGUI_LIBRARY}
-    ${GDCM_LIBRARY_DIRS}
+    ${GDCM_LIBRARIES}
   )
 
   set(ENGINE_INCLUDES
@@ -107,7 +107,7 @@ ELSEIF (ANDROID)
     ${SDL2_LIBRARY}
     ${ASSIMP_LIBRARY}
     ${IMGUI_LIBRARY}
-    ${GDCM_LIBRARY_DIRS}
+    ${GDCM_LIBRARIES}
   )
 
   set(ENGINE_INCLUDES
@@ -130,7 +130,6 @@ ELSE ()
     ${GLEW_LIBRARIES}
     ${WHEREAMI_LIBRARY}
     ${IMGUI_LIBRARY}
-    #${GDCM_LIBRARY_DIRS}
     ${GDCM_LIBRARIES}
   )
 
@@ -151,4 +150,3 @@ include_directories(${ENGINE_INCLUDES})
 
 add_subdirectory( ${CMAKE_CURRENT_SOURCE_DIR}/Engine )
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT midasminer)
-
