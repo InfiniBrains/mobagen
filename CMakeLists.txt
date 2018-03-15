@@ -37,6 +37,24 @@ add_subdirectory(dependencies)
 
 include(${CMAKE_CURRENT_BINARY_DIR}/dependencies/gdcm/GDCMConfig.cmake )
 
+SET(GDCM_LIBRARIES
+        gdcmCommon
+        gdcmDICT
+        gdcmDSED
+        gdcmIOD
+        gdcmMSFF
+        gdcmMEXD
+        gdcmjpeg8
+        gdcmjpeg12
+        gdcmjpeg16
+        gdcmexpat
+        gdcmopenjp2
+        gdcmcharls
+        #gdcmmd5
+        gdcmzlib
+        gdcmuuid
+        socketxx)
+
 set ( SDL2_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/SDL/include )
 set ( SDL2_LIBRARY SDL2 )
 
@@ -112,7 +130,8 @@ ELSE ()
     ${GLEW_LIBRARIES}
     ${WHEREAMI_LIBRARY}
     ${IMGUI_LIBRARY}
-    ${GDCM_LIBRARY_DIRS}
+    #${GDCM_LIBRARY_DIRS}
+    ${GDCM_LIBRARIES}
   )
 
   set(ENGINE_INCLUDES
