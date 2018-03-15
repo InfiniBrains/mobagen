@@ -44,6 +44,7 @@ language: cpp
 compiler: clang
 
 before_script:
+  - TRAVIS_TAG=`git tag | grep -v rc | sort -t. -k 1,1n -k 2,2n -k 3,3n -k 4,4n | sed '1!G;h;$!d' | sed -n 1p`
   - uname -a
   - "if [ $TRAVIS_OS_NAME == osx ] && [ $BUILD_TYPE == android ]; then \
         brew update;
@@ -85,7 +86,7 @@ before_script:
     fi
 
 script:
-  - if [ $TRAVIS_OS_NAME == linux ] && [ $BUILD_TYPE == emscripten ]; then 
+  - if [ $TRAVIS_OS_NAME == linux ] && [ $BUILD_TYPE == emscripten ]; then
       docker exec -it emscripten ./scripts/travis-build.sh -j9 ;
       docker exec -it emscripten ./scripts/travis-build.sh -j9 ;
     else
@@ -122,3 +123,29 @@ deploy:
       repo: InfiniBrains/mobagen
       condition: $BUILD_TYPE = native
       os: osx
+
+  - provider: pages
+    skip-cleanup: true
+    api_key:
+      secure: MfsqovFmQorr7+r1Y0SlKpfi4SlCCLzkzefCMDDRtnib8h5oWt6ZlNxpQP2EwIx9QVsF3RR+BucRiQ/jc1daeQgBSRjUyTJAFRutigFvNbcoCZ5f3a1VAI1EqmBaDuMKdimtd9KEpYfJhI92tgVz2nf/CmcYYV0ylz5/R5KC8qJbGyhlww8Brcij2s1/yUtiLsupeBsfpmx9t96HcRDCnSD27h5mP3SANeTT1u2NJJtLXLFEmz/Zk6M3ziDKuw7Dvu7fZL7gUH2ofC6+9Q3bSLbTIsSYMbC9gWrdbWNPSWiSK/hd4Y8yB3KwDqLP7jJ/2sLze9NlyDftdGHoazC6Cyq0FmUyQkLUXSH6y7XyzoHuSMhy9Z07HoHRjcm3HxOPE5nfxDDsAKuPcyW9wS5E/Z/MNBHcJdwOacRic+haA88kXvo1Gg5XgayBch5EHYPod6hTdUC7U3y3LW2fmhIvSG8jU+lkkKdb3cY6wd9iGMyJuWjXcvYVMsjCGW5I8hdC4ntWDh0dFAtZd+MStH4mUuuAYBVvBDiVkc8UxF8WP5ZwP3WSwdGm6z867Hg+tI3osqP9yDfuEHWilBJLZQzDE93DyOQtfKabmQHQU6mRUZS0DY2h8z5Tz0GOAI6xmUmNbr16yrPdgDJzqBygpiKFiZUsET+XZEjEnAMUB/h8hhg=
+    keep-history: true
+    local-dir: $TRAVIS_BUILD_DIR/bin-emscripten/bin
+    on:
+      branch: master
+      condition: $BUILD_TYPE = emscripten
+
+#after_success: |
+#  if [ -n "$GITHUB_API_KEY" ]; then
+#    cd "$TRAVIS_BUILD_DIR"
+#    # This generates a `web` directory containing the website.
+#    make web
+#    cd web
+#    git init
+#    git checkout -b gh-pages
+#    git add .
+#    git -c user.name='travis' -c user.email='travis' commit -m init
+#    # Make sure to make the output quiet, or else the API token will leak!
+#    # This works because the API key can replace your password.
+#    git push -f -q https://<me>:$GITHUB_API_KEY@github.com/<me>/<myrepo>-gh-pages gh-pages &2>/dev/null
+#    cd "$TRAVIS_BUILD_DIR"
+#  fi
