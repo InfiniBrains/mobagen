@@ -8,3 +8,14 @@ mkdir -p $DIR/../bin
 cd $DIR/../bin
 cmake .. -DCMAKE_BUILD_TYPE=${BUILD_TYPE}
 make $*
+if [[ $BUILD_TYPE == native ]] && [[ $TRAVIS_OS_NAME == linux ]]; then
+  rm linux.zip
+  zip -r linux.zip bin/
+fi
+if [[ $BUILD_TYPE == native ]] && [[ $TRAVIS_OS_NAME == osx ]]; then
+  rm osx.zip
+  zip -r osx.zip bin/
+fi
+
+
+
