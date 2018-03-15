@@ -99,7 +99,8 @@ deploy:
     file: "/mobagen/bin-emscripten/emscripten.zip"
     on:
       repo: InfiniBrains/mobagen
-      condition: $BUILD_TYPE == emscripten && $TRAVIS_OS_NAME == linux
+      condition: $BUILD_TYPE = emscripten
+      os: linux
 
   - provider: releases
     api_key:
@@ -107,7 +108,8 @@ deploy:
     file: "/mobagen/bin/linux.zip"
     on:
       repo: InfiniBrains/mobagen
-      condition: $BUILD_TYPE == native && $TRAVIS_OS_NAME == linux
+      condition: $BUILD_TYPE = native
+      os: linux
 
   - provider: releases
       api_key:
@@ -115,4 +117,5 @@ deploy:
       file: "/mobagen/bin/osx.zip"
       on:
         repo: InfiniBrains/mobagen
-        condition: $BUILD_TYPE == native && $TRAVIS_OS_NAME == osx
+        condition: $BUILD_TYPE = native
+        os: osx
