@@ -93,6 +93,9 @@ script:
       ./scripts/travis-build.sh ;
     fi 
 
+before_deploy:
+  - echo $TRAVIS_OS_NAME $BUILD_TYPE $TRAVIS_BRANCH $TRAVIS_TAG
+
 deploy:
   - provider: releases
     api_key:
@@ -103,6 +106,9 @@ deploy:
       repo: InfiniBrains/mobagen
       condition: $BUILD_TYPE = emscripten
       os: linux
+      branches:
+        except:
+          - gh-pages
 
   - provider: releases
     api_key:
@@ -113,6 +119,9 @@ deploy:
       repo: InfiniBrains/mobagen
       condition: $BUILD_TYPE = native
       os: linux
+      branches:
+        except:
+          - gh-pages
 
   - provider: releases
     api_key:
@@ -123,6 +132,9 @@ deploy:
       repo: InfiniBrains/mobagen
       condition: $BUILD_TYPE = native
       os: osx
+      branches:
+        except:
+        - gh-pages
 
   - provider: pages
     skip-cleanup: true
@@ -133,19 +145,3 @@ deploy:
     on:
       branch: master
       condition: $BUILD_TYPE = emscripten
-
-#after_success: |
-#  if [ -n "$GITHUB_API_KEY" ]; then
-#    cd "$TRAVIS_BUILD_DIR"
-#    # This generates a `web` directory containing the website.
-#    make web
-#    cd web
-#    git init
-#    git checkout -b gh-pages
-#    git add .
-#    git -c user.name='travis' -c user.email='travis' commit -m init
-#    # Make sure to make the output quiet, or else the API token will leak!
-#    # This works because the API key can replace your password.
-#    git push -f -q https://<me>:$GITHUB_API_KEY@github.com/<me>/<myrepo>-gh-pages gh-pages &2>/dev/null
-#    cd "$TRAVIS_BUILD_DIR"
-#  fi
