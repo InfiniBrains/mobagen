@@ -147,12 +147,11 @@ deploy:
   - provider: pages
     skip-cleanup: true
     github-token: $GITHUB_TOKEN
-    keep-history: true
     local-dir: $TRAVIS_BUILD_DIR/bin-emscripten/bin
 #    target-branch: gh-pages
     on:
       repo: InfiniBrains/mobagen
+      condition: $BUILD_TYPE = emscripten
       branches:
         only:
           - master
-      condition: $BUILD_TYPE = emscripten
