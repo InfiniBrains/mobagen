@@ -96,7 +96,7 @@ script:
 
 before_deploy:
 #  - git tag "$(date +'%Y%m%d')-$(git log --format=%h -1)"
-#  - TRAVIS_TAG=`date +%Y-%m-%d` ;
+  - TRAVIS_TAG=`date +%Y-%m-%d` ;
 #    if [ $(git tag -l "TRAVIS_TAG") ]; then
 #      echo tag is already present ;
 #    else
@@ -151,5 +151,8 @@ deploy:
     local-dir: $TRAVIS_BUILD_DIR/bin-emscripten/bin
 #    target-branch: gh-pages
     on:
-      branch: master
+      repo: InfiniBrains/mobagen
+      branches:
+        only:
+          - master
       condition: $BUILD_TYPE = emscripten
