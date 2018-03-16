@@ -102,7 +102,7 @@ before_deploy:
 #    else
 #      git tag $TRAVIS_TAG ;
 #    fi
-  - echo "tolsta $TRAVIS_OS_NAME $BUILD_TYPE $TRAVIS_BRANCH $TRAVIS_TAG"
+  - echo tolsta $TRAVIS_OS_NAME $BUILD_TYPE $TRAVIS_BRANCH $TRAVIS_TAG
 
 deploy:
   - provider: releases
