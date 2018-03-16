@@ -96,12 +96,12 @@ script:
 
 before_deploy:
 #  - git tag "$(date +'%Y%m%d')-$(git log --format=%h -1)"
-  - TRAVIS_TAG=`date +%Y-%m-%d` ;
-    if [ $(git tag -l "TRAVIS_TAG") ]; then
-      echo tag is already present ;
-    else
-      git tag $TRAVIS_TAG ;
-    fi
+#  - TRAVIS_TAG=`date +%Y-%m-%d` ;
+#    if [ $(git tag -l "TRAVIS_TAG") ]; then
+#      echo tag is already present ;
+#    else
+#      git tag $TRAVIS_TAG ;
+#    fi
   - echo "tolsta $TRAVIS_OS_NAME $BUILD_TYPE $TRAVIS_BRANCH $TRAVIS_TAG"
 
 deploy:
