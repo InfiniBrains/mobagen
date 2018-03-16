@@ -16,10 +16,10 @@
 #endif
 
 
-Engine::Engine(Game *game)
+Engine::Engine(Game *game, char * windowTitle)
 {
   log_info("Initializing SDL");
-  m_window = std::make_unique<Window>();
+  m_window = std::make_unique<Window>(windowTitle);
 
   log_info("Initializing GLEW");
   m_glewManager = std::make_unique<GLEWManager>();

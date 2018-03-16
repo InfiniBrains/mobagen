@@ -23,7 +23,7 @@ class GuiManager;
 class Window
 {
 public:
-  Window(void);
+  Window(char * title);
   ~Window(void);
 
   void init(void);

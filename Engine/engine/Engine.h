@@ -13,7 +13,7 @@
 class Engine
 {
 public:
-  Engine(Game *game);
+  Engine(Game *game, char * windowTitle);
   ~Engine(void);
 
 #ifdef EMSCRIPTEN
