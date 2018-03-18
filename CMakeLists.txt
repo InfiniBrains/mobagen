@@ -94,7 +94,8 @@ IF (EMSCRIPTEN)
   set(ENGINE_INCLUDES
     ${GLM_INCLUDE_DIRS}
     ${ASSIMP_INCLUDE_DIR}
-    ${CMAKE_BINARY_DIR}/dependencies/assimp/include 
+    ${CMAKE_BINARY_DIR}/dependencies/assimp/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/stb
     ${IMGUI_INCLUDE_DIRS}
     ${CMAKE_CURRENT_SOURCE_DIR}/Engine/engine/
     ${GDCM_INCLUDE_DIRS}
@@ -115,6 +116,7 @@ ELSEIF (ANDROID)
     ${GLM_INCLUDE_DIRS}
     ${ASSIMP_INCLUDE_DIR}
     ${CMAKE_BINARY_DIR}/dependencies/assimp/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/stb
     ${IMGUI_INCLUDE_DIRS}
     ${CMAKE_CURRENT_SOURCE_DIR}/Engine/engine/
     ${GDCM_INCLUDE_DIRS}
@@ -138,6 +140,7 @@ ELSE ()
     ${SDL2_INCLUDE_DIR}
     ${ASSIMP_INCLUDE_DIR}
     ${CMAKE_BINARY_DIR}/dependencies/assimp/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/stb
     ${GLEW_INCLUDE_DIRS}
     ${WHEREAMI_INCLUDE_DIRS}
     ${IMGUI_INCLUDE_DIRS}
@@ -149,6 +152,7 @@ ENDIF ()
 include_directories(${ENGINE_INCLUDES})
 
 add_subdirectory( ${CMAKE_CURRENT_SOURCE_DIR}/Engine )
-set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT midasminer)
 
+#projects
+set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT midasminer)
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT doceditor)
