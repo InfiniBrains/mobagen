@@ -13,8 +13,8 @@ Texture::Texture(const Asset &file, GLenum textureTarget, GLfloat filter)
   auto it = m_textureCache.find(file.getIOStream()->getFileName());
 
   if(it == m_textureCache.end() || !(m_textureData = it->second.lock())) {
-    int bytesPerPixel;
-    unsigned char* data = stbi_load_from_memory(reinterpret_cast<const unsigned char *>(file.read()), file.getIOStream()->fileSize(), &m_width, &m_height, &bytesPerPixel, 4);
+
+    unsigned char* data = stbi_load_from_memory(reinterpret_cast<const unsigned char *>(file.read()), file.getIOStream()->fileSize(), &m_width, &m_height, &m_bytesPerPixel, 4);
 
     if (data == NULL) {
       log_err("Unable to load texture: %s", file.getIOStream()->getFileName().c_str());
@@ -39,3 +39,7 @@ void Texture::bind(unsigned int unit) const
 int Texture::width() const {return m_width;}
 
 int Texture::height() const {return m_height;}
+
+std::shared_ptr<TextureData> Texture::getTextureData() { return m_textureData; }
+
+int Texture::getBytesPerPixel() const { return m_bytesPerPixel; }

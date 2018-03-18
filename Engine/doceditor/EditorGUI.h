@@ -5,6 +5,7 @@
 #pragma once
 
 #include "Engine.h"
+#include "Texture.h"
 
 class EditorGUI : public Component
 {
@@ -19,4 +20,7 @@ public:
   void deregisterFromEngine(Engine* engine) override {};
   void onGUI(ImGuiContext* context) override;
 private:
+
+  std::shared_ptr<Texture> originalImage;
+  std::shared_ptr<Texture> noiseImage;
 };

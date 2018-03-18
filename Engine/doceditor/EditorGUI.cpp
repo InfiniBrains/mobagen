@@ -2,6 +2,7 @@
 // Created by Alexandre Tolstenko Nogueira on 3/18/18.
 //
 
+#include <Material.h>
 #include "EditorGUI.h"
 #include "Texture.h"
 
@@ -33,10 +34,19 @@ const char* EditorGUI::getType()
 
 void EditorGUI::update(double delta)
 {
-  auto backgroundTex = std::make_shared<Texture>(Asset("boat.png"));
+  //ImGui::Image((ImTextureID*)originalImage->getTextureData()->getTextureId(), ImVec2(originalImage->width(), originalImage->height()));
+
+  ImGui::Image((ImTextureID*)originalImage->getTextureData()->getTextureId(), ImVec2(256,256));
+  //ImGui::Image((ImTextureID*)tex->id, ImVec2(currentSprite->sW, currentSprite->sH), uv0, uv1, ImColor(255, 255, 255, 55));
 }
 
 EditorGUI::EditorGUI()
 {
-  
+  //auto normal = std::make_shared<Texture>(Asset("default_normal.jpg"));
+  //auto specular = std::make_shared<Texture>(Asset("default_specular.jpg"));
+
+  //originalImage = std::make_shared<Texture>(Asset("boat.png"));
+  //originalImage->bind(0);
+  //std::make_shared<Material>(originalImage, normal, specular);
+
 }

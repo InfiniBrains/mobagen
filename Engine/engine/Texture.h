@@ -27,8 +27,11 @@ public:
   int width() const;
   int height() const;
 
+  std::shared_ptr<TextureData> getTextureData();
+  int getBytesPerPixel() const;
 private:
   std::shared_ptr<TextureData> m_textureData;
   int m_width;
   int m_height;
+  int m_bytesPerPixel;
 };

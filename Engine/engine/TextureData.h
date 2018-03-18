@@ -21,6 +21,8 @@ public:
   void createTexture(int width, int height, const unsigned char* data, GLenum textureTarget, GLfloat filter);
   void bind(unsigned int unit) const;
 
+  GLuint getTextureId();
+
 private:
   GLenum m_textureTarget;
   GLuint m_textureId;

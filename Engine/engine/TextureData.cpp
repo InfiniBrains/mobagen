@@ -33,3 +33,7 @@ void TextureData::bind(unsigned int unit) const
   glActiveTexture(GL_TEXTURE0 + unit);
   glBindTexture(m_textureTarget, m_textureId);
 }
+
+GLuint TextureData::getTextureId() {
+  return m_textureId;
+}
