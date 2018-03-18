@@ -17,17 +17,17 @@ IF (ANDROID)
 
     add_custom_command(TARGET doceditor PRE_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy_directory
-            ${CMAKE_CURRENT_SOURCE_DIR}/assets/
+            ${CMAKE_SOURCE_DIR}/assets/
             ${ANDROID_BIN_ROOT}/assets)
 
     add_custom_command(TARGET doceditor POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/ ${ANDROID_BIN_ROOT}/libs/${ANDROID_NDK_ABI_NAME})
 ELSE ()
-    add_executable (doceditor main.cpp)
+    add_executable (doceditor main.cpp EditorGUI.cpp EditorGUI.h)
     target_link_libraries (doceditor engine)
 
     add_custom_command(TARGET doceditor PRE_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy_directory
-            ${CMAKE_CURRENT_SOURCE_DIR}/assets
+            ${CMAKE_SOURCE_DIR}/assets
             $<TARGET_FILE_DIR:doceditor>/assets)
 ENDIF ()

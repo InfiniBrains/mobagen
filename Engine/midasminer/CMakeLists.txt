@@ -17,7 +17,7 @@ IF (ANDROID)
 
   add_custom_command(TARGET midasminer PRE_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
-      ${CMAKE_CURRENT_SOURCE_DIR}/assets/
+      ${CMAKE_SOURCE_DIR}/assets/
       ${ANDROID_BIN_ROOT}/assets)
 
   add_custom_command(TARGET midasminer POST_BUILD
@@ -28,6 +28,6 @@ ELSE ()
 
   add_custom_command(TARGET midasminer PRE_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
-      ${CMAKE_CURRENT_SOURCE_DIR}/assets
+      ${CMAKE_SOURCE_DIR}/assets
       $<TARGET_FILE_DIR:midasminer>/assets)
 ENDIF ()

@@ -4,6 +4,7 @@
 #include "Logger.h"
 #include "MeshLoader.h"
 #include "Engine.h"
+#include "EditorGUI.h"
 #include <SDL_main.h>
 #include <iostream>
 #include <map>
@@ -27,6 +28,8 @@ void DocEditor::init(GLManager *glManager)
   // loat assets
   auto normal = std::make_shared<Texture>(Asset("default_normal.jpg"));
   auto specular = std::make_shared<Texture>(Asset("default_specular.jpg"));
+
+  getRootScene()->addComponent<EditorGUI>();
 
   auto backgroundMesh = Plane::getMesh();
   auto planeEntity = std::make_shared<Entity>();
