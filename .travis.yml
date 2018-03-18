@@ -141,7 +141,6 @@ deploy:
     skip-cleanup: true
     github-token: $GITHUB_TOKEN
     local-dir: bin-emscripten/bin
-#    target-branch: gh-pages
     on:
       repo: InfiniBrains/mobagen
       condition: $BUILD_TYPE = emscripten

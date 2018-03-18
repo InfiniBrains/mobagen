@@ -104,7 +104,7 @@ void CoolGame::init(GLManager *glManager)
 
 int main(int argc, char *argv[]) {
   CoolGame game;
-  Engine gameEngine(&game);
+  Engine gameEngine(&game, "Midas Miner!");
 
   gameEngine.start();
 

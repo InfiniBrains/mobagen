@@ -8,7 +8,7 @@
 #include "GuiManager.h"
 #include "Logger.h"
 
-Window::Window(void)
+Window::Window(char * title)
 {
   m_quit = false;
 
@@ -53,7 +53,7 @@ Window::Window(void)
 
   // SDL_WINDOW_FULLSCREEN |
   //  m_window = SDL_CreateWindow("Engine!", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, mode.w, mode.h - 100, SDL_WINDOW_OPENGL);
-  m_window = SDL_CreateWindow("Midas Miner!", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 755, 600, SDL_WINDOW_OPENGL);
+  m_window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 755, 600, SDL_WINDOW_OPENGL);
   if (m_window == nullptr)
   {
     log_err("SDL_CreateWindow error: %s", SDL_GetError());
