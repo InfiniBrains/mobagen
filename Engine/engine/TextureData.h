@@ -3,6 +3,7 @@
 //
 
 #pragma once
+#include <vector>
 
 #if defined(GLES2)
   #include <GLES2/gl2.h>
@@ -23,6 +24,7 @@ public:
 
   GLuint getTextureId();
 
+  std::vector<unsigned char> data;
 private:
   GLenum m_textureTarget;
   GLuint m_textureId;

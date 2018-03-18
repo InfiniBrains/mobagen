@@ -26,6 +26,8 @@ void TextureData::createTexture(int width, int height, const unsigned char* data
   // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
   // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
   glTexImage2D(textureTarget, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+  for(int i = 0; i<width*height*4;i++)
+    this->data.push_back(data[i]);
 }
 
 void TextureData::bind(unsigned int unit) const

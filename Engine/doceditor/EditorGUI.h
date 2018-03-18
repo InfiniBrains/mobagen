@@ -19,8 +19,9 @@ public:
   void registerWithEngine(Engine* engine) override {};
   void deregisterFromEngine(Engine* engine) override {};
   void onGUI(ImGuiContext* context) override;
-private:
 
   std::shared_ptr<Texture> originalImage;
+private:
+
   std::shared_ptr<Texture> noiseImage;
 };

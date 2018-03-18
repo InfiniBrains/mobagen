@@ -23,7 +23,7 @@ class GuiManager;
 class Window
 {
 public:
-  Window(char * title);
+  Window(char * title, glm::vec2 windowSize);
   ~Window(void);
 
   void init(void);
