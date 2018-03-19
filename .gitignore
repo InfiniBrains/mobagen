@@ -17,5 +17,5 @@ local.properties
 .vs/
 emsdk-portable
 emsdk-portable.tar.gz
-
-imgui\.ini
+imgui.ini
+.idea/workspace.xml
