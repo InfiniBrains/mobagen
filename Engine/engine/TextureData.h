@@ -3,6 +3,7 @@
 //
 
 #pragma once
+#include <vector>
 
 #if defined(GLES2)
   #include <GLES2/gl2.h>
@@ -21,7 +22,15 @@ public:
   void createTexture(int width, int height, const unsigned char* data, GLenum textureTarget, GLfloat filter);
   void bind(unsigned int unit) const;
 
+  GLuint getTextureId();
+
+  std::vector<unsigned char> data;
+  int width();
+  int height();
 private:
   GLenum m_textureTarget;
   GLuint m_textureId;
+
+  int m_height;
+  int m_width;
 };

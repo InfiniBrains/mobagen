@@ -21,14 +21,18 @@ class Texture
 {
 public:
   Texture(const Asset &file, GLenum textureTarget = GL_TEXTURE_2D, GLfloat filter = GL_LINEAR);
+  Texture(std::shared_ptr<TextureData> texData);
   ~Texture(void);
 
   void bind(unsigned int unit = 0) const;
   int width() const;
   int height() const;
 
+  std::shared_ptr<TextureData> getTextureData();
+  void setTextureData(std::shared_ptr<TextureData> textureData);
+
+  int getBytesPerPixel() const;
 private:
   std::shared_ptr<TextureData> m_textureData;
-  int m_width;
-  int m_height;
+  int m_bytesPerPixel;
 };

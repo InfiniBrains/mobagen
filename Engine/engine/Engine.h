@@ -13,7 +13,7 @@
 class Engine
 {
 public:
-  Engine(Game *game, char * windowTitle);
+  Engine(Game *game, char * windowTitle, glm::vec2 windowSize);
   ~Engine(void);
 
 #ifdef EMSCRIPTEN
