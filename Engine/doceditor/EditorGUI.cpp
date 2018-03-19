@@ -26,6 +26,50 @@ static int imageOffset=0;
 
 static bool offsetApplied = false;
 
+//std::vector<int> histogram(std::shared_ptr<Texture> originalImage)
+//{
+//  std::vector<int> histogram;
+//  histogram.resize(256,0);
+//  for (int i = 0; i < originalImage->height() * originalImage->width(); i++) {
+//    auto color = originalImage->getTextureData()->data[i * 4]; // get the red channel of the grayscale rgba image
+//    histogram[color] += 1;
+//  }
+//  return histogram;
+//}
+
+
+//std::shared_ptr<Texture> equalizeHistogram(std::shared_ptr<Texture> originalImage)
+//{
+//  // histogram
+//  static float histogram[256];
+//  memset(histogram, 0, sizeof(float)*256);
+//  for (int i = 0; i < originalImage->height() * originalImage->width(); i++) {
+//    auto color = originalImage->getTextureData()->data[i * 4]; // get the red channel of the grayscale rgba image
+//    histogram[color] += 1;
+//  }
+//
+//  // transfer function
+//  float transfer[256];
+//  memset(transfer, 0, sizeof(float)*256);
+//  transfer[0] = 255.0f * transfer[0] / (float) (originalImage->height() * originalImage->width());
+//  for (int i = 1; i < 256; i++)
+//    transferOriginal[i] = transferOriginal[i - 1] + 255.0f * histogramDataOriginal[i] / (float) (originalImage->height() * originalImage->width());
+//
+//  // apply transfer
+//  auto equalizedData = originalImage->getTextureData()->data;
+//  for (int i = 0; i < equalizedData.size(); i += 4) {
+//    int newValue = (int) floor(transferOriginal[equalizedData[i]]);
+//    newValue = MIN(255, MAX(0, newValue));
+//    equalizedData[i] = newValue;   // r
+//    equalizedData[i + 1] = newValue; // g
+//    equalizedData[i + 2] = newValue; // b
+//  }
+//  unsigned char *newEqualizedData = &equalizedData[0];
+//
+//  auto newTextureData = std::make_shared<TextureData>(originalImage->width(),originalImage->height(), newEqualizedData ,GL_TEXTURE_2D,GL_LINEAR);
+//  return std::make_shared<Texture>(newTextureData);
+//}
+
 void EditorGUI::onGUI(ImGuiContext* context)
 {
   ImGui::SetCurrentContext(context);
