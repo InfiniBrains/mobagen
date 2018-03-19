@@ -19,3 +19,5 @@ emsdk-portable
 emsdk-portable.tar.gz
 
 imgui\.ini
+
+.idea/workspace.xml
