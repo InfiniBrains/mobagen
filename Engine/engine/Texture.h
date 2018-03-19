@@ -34,7 +34,5 @@ public:
   int getBytesPerPixel() const;
 private:
   std::shared_ptr<TextureData> m_textureData;
-  int m_width;
-  int m_height;
   int m_bytesPerPixel;
 };

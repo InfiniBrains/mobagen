@@ -25,7 +25,12 @@ public:
   GLuint getTextureId();
 
   std::vector<unsigned char> data;
+  int width();
+  int height();
 private:
   GLenum m_textureTarget;
   GLuint m_textureId;
+
+  int m_height;
+  int m_width;
 };

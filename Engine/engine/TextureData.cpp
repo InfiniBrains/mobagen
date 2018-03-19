@@ -4,9 +4,11 @@
 
 #include "TextureData.h"
 
-TextureData::TextureData(int width, int height, const unsigned char* data, GLenum textureTarget, GLfloat filter)
+TextureData::TextureData(int width_, int height_, const unsigned char* data, GLenum textureTarget, GLfloat filter)
 {
-  createTexture(width, height, data, textureTarget, filter);
+  createTexture(width_, height_, data, textureTarget, filter);
+  this->m_width = width_;
+  this->m_height = width_;
 }
 
 TextureData::~TextureData()
@@ -39,3 +41,7 @@ void TextureData::bind(unsigned int unit) const
 GLuint TextureData::getTextureId() {
   return m_textureId;
 }
+
+int TextureData::width() { return m_width; }
+
+int TextureData::height() { return m_height; }

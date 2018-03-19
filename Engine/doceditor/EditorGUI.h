@@ -23,8 +23,14 @@ public:
   std::shared_ptr<Texture> originalImage;
   std::shared_ptr<Entity> originalEntity;
 
-  std::shared_ptr<Texture> modifiedImage;
-  std::shared_ptr<Entity> modifiedEntity;
+  std::shared_ptr<Texture> offsetImage;
+  std::shared_ptr<Entity> offsetEntity;
+
+  std::shared_ptr<Texture> equalizedImage;
+  std::shared_ptr<Entity> equalizedEntity;
+
+  std::shared_ptr<Texture> offsetEqualizedImage;
+  std::shared_ptr<Entity> offsetEqualizedEntity;
 
   std::shared_ptr<Texture> normalTexture;
   std::shared_ptr<Texture> specularTexture;

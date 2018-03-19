@@ -12,11 +12,18 @@
 #include <Plane.h>
 #include "Material.h"
 
-static float histogramData[256];
-static float maxValue=0;
-static float imageOffset=0;
+static float histogramDataOriginal[256];
+static float transferOriginal[256];
+static float histogramDataOffset[256];
+static float transferOffset[256];
+static float histogramDataOffsetEqualized[256];
+static float histogramDataEqualized[256];
+static float maxValueOriginal=0;
+static float maxValueOffset=0;
+static float maxValueOffsetEqualized=0;
+static float maxValueEqualized=0;
+static int imageOffset=0;
 
-static bool histogramApplied = false;
 static bool offsetApplied = false;
 
 void EditorGUI::onGUI(ImGuiContext* context)
@@ -24,61 +31,170 @@ void EditorGUI::onGUI(ImGuiContext* context)
   ImGui::SetCurrentContext(context);
 
   ImGui::Begin("Options", nullptr, ImVec2(128,128),0, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_ChildWindowAutoFitX | ImGuiWindowFlags_ChildWindowAutoFitY);
-  if (histogramApplied==false && ImGui::Button("Histogram"))
-  {
-    histogramApplied = true;
-    memset(histogramData,0, sizeof(histogramData));
-    for(int i=0; i<originalImage->height()*originalImage->width();i++)
-    {
-      auto color = originalImage->getTextureData()->data[i*4]; // get the red channel of the grayscale rgba image
-      histogramData[color]+=1;
-    }
-    maxValue = 0;
-    for(int i=0; i<255; i++)
-      if(histogramData[i]>maxValue)
-        maxValue=histogramData[i];
-  }
 
   ImGui::BeginGroup();
   ImGui::Text("Type the offset to be added to image:");
-  ImGui::InputFloat("Offset", &imageOffset,1,2,-1,0);
+  ImGui::InputInt("Offset", &imageOffset,1,2,0);
 
-  if (offsetApplied == false && ImGui::Button("Apply offset"))
+  if (offsetApplied == false && ImGui::Button("Apply offset and calculate"))
   {
+    // apply offset
     offsetApplied = true;
-    auto modifiedData = originalImage->getTextureData()->data;
-
-    for(int i=0; i<modifiedData.size();i+=4)
     {
-      int newValue = modifiedData[i]+imageOffset;
-      newValue = MIN(255,MAX(0,newValue));
-      modifiedData[i] = newValue;   // r
-      modifiedData[i+1] = newValue; // g
-      modifiedData[i+2] = newValue; // b
+      auto modifiedData = originalImage->getTextureData()->data;
+      for (int i = 0; i < modifiedData.size(); i += 4) {
+        int newValue = modifiedData[i] + imageOffset;
+        newValue = MIN(255, MAX(0, newValue));
+        modifiedData[i] = newValue;   // r
+        modifiedData[i + 1] = newValue; // g
+        modifiedData[i + 2] = newValue; // b
+      }
+      unsigned char *newData = &modifiedData[0];
+
+      auto newTextureData = std::make_shared<TextureData>(originalImage->width(), originalImage->height(), newData, GL_TEXTURE_2D, GL_LINEAR);
+      offsetImage = std::make_shared<Texture>(newTextureData);
+
+      offsetEntity = std::make_shared<Entity>();
+      auto modifiedMat = std::make_shared<Material>(offsetImage, normalTexture, specularTexture);
+      auto modifiedMesh = Plane::getMesh();
+      offsetEntity->addComponent<MeshRenderer>(modifiedMesh, modifiedMat);
+      offsetEntity->getTransform().setPosition(glm::vec3(-300, 0, 250));
+      offsetEntity->getTransform().setScale(glm::vec3(300, 1, 300));
+      rootScene->addChild(offsetEntity);
     }
-    unsigned char * newData = &modifiedData[0];
 
-    auto newTextureData = std::make_shared<TextureData>(originalImage->width(),originalImage->height(), newData ,GL_TEXTURE_2D,GL_LINEAR);
-    modifiedImage = std::make_shared<Texture>(newTextureData);
+    // set histogram original
+    {
+      memset(histogramDataOriginal, 0, sizeof(histogramDataOriginal));
+      for (int i = 0; i < originalImage->height() * originalImage->width(); i++) {
+        auto color = originalImage->getTextureData()->data[i * 4]; // get the red channel of the grayscale rgba image
+        histogramDataOriginal[color] += 1;
+      }
+      maxValueOriginal = 0;
+      for (int i = 0; i < 255; i++)
+        if (histogramDataOriginal[i] > maxValueOriginal)
+          maxValueOriginal = histogramDataOriginal[i];
+    }
 
-    auto modifiedEntity = std::make_shared<Entity>();
-    auto modifiedMat = std::make_shared<Material>(modifiedImage, normalTexture, specularTexture);
-    auto modifiedMesh = Plane::getMesh();
-    modifiedEntity->addComponent<MeshRenderer>(modifiedMesh, modifiedMat);
-    modifiedEntity->getTransform().setPosition(glm::vec3(-256, 0, 0));
-    modifiedEntity->getTransform().setScale(glm::vec3(400, 1, 400));
-    rootScene->addChild(modifiedEntity);
+    // set histogram offset
+    {
+      memset(histogramDataOffset, 0, sizeof(histogramDataOffset));
+      for (int i = 0; i < offsetImage->height() * offsetImage->width(); i++) {
+        auto color = offsetImage->getTextureData()->data[i * 4]; // get the red channel of the grayscale rgba image
+        histogramDataOffset[color] += 1;
+      }
+      maxValueOffset = 0;
+      for (int i = 0; i < 255; i++)
+        if (histogramDataOffset[i] > maxValueOffset)
+          maxValueOffset = histogramDataOffset[i];
+    }
 
-    //modifiedEntity->getComponent<Material>
+    // new equalized image from original
+    {
+      memset(transferOriginal, 0, sizeof(transferOriginal));
+      transferOriginal[0] =
+          255.0f * histogramDataOriginal[0] / (float) (originalImage->height() * originalImage->width());
+      for (int i = 1; i < 256; i++)
+        transferOriginal[i] = transferOriginal[i - 1] + 255.0f * histogramDataOriginal[i] /
+                                                        (float) (originalImage->height() * originalImage->width());
+      auto equalizedData = originalImage->getTextureData()->data;
+      for (int i = 0; i < equalizedData.size(); i += 4) {
+        int newValue = (int) floor(transferOriginal[equalizedData[i]]);
+        newValue = MIN(255, MAX(0, newValue));
+        equalizedData[i] = newValue;   // r
+        equalizedData[i + 1] = newValue; // g
+        equalizedData[i + 2] = newValue; // b
+      }
+      unsigned char *newEqualizedData = &equalizedData[0];
 
-    //MeshRenderer
+      auto newTextureData = std::make_shared<TextureData>(originalImage->width(),originalImage->height(), newEqualizedData ,GL_TEXTURE_2D,GL_LINEAR);
+      equalizedImage = std::make_shared<Texture>(newTextureData);
+
+      equalizedEntity = std::make_shared<Entity>();
+      auto modifiedMat = std::make_shared<Material>(equalizedImage, normalTexture, specularTexture);
+      auto modifiedMesh = Plane::getMesh();
+      equalizedEntity->addComponent<MeshRenderer>(modifiedMesh, modifiedMat);
+      equalizedEntity->getTransform().setPosition(glm::vec3(300, 0, -250));
+      equalizedEntity->getTransform().setScale(glm::vec3(300, 1, 300));
+      rootScene->addChild(equalizedEntity);
+    }
+
+    // new equalized image from offset
+    {
+      memset(transferOffset, 0, sizeof(transferOffset));
+      transferOffset[0] = 255.0f * histogramDataOffset[0] / (float) (originalImage->height() * originalImage->width());
+      for (int i = 1; i < 256; i++)
+        transferOffset[i] = transferOffset[i - 1] + 255.0f * histogramDataOffset[i] / (float) (originalImage->height() * originalImage->width());
+      auto equalizedData = offsetImage->getTextureData()->data;
+      for (int i = 0; i < equalizedData.size(); i += 4) {
+        int newValue = (int) floor(transferOffset[equalizedData[i]]);
+        newValue = MIN(255, MAX(0, newValue));
+        equalizedData[i] = newValue;   // r
+        equalizedData[i + 1] = newValue; // g
+        equalizedData[i + 2] = newValue; // b
+      }
+      unsigned char *newEqualizedData = &equalizedData[0];
+
+      auto newTextureData = std::make_shared<TextureData>(originalImage->width(),originalImage->height(), newEqualizedData ,GL_TEXTURE_2D,GL_LINEAR);
+      offsetEqualizedImage = std::make_shared<Texture>(newTextureData);
+
+      offsetEqualizedEntity = std::make_shared<Entity>();
+      auto modifiedMat = std::make_shared<Material>(offsetEqualizedImage, normalTexture, specularTexture);
+      auto modifiedMesh = Plane::getMesh();
+      offsetEqualizedEntity->addComponent<MeshRenderer>(modifiedMesh, modifiedMat);
+      offsetEqualizedEntity->getTransform().setPosition(glm::vec3(-300, 0, -250));
+      offsetEqualizedEntity->getTransform().setScale(glm::vec3(300, 1, 300));
+      rootScene->addChild(offsetEqualizedEntity);
+    }
+
+    // set histogram equalized
+    {
+      memset(histogramDataEqualized, 0, sizeof(histogramDataEqualized));
+      for (int i = 0; i < offsetImage->height() * offsetImage->width(); i++) {
+        auto color = equalizedImage->getTextureData()->data[i * 4]; // get the red channel of the grayscale rgba image
+        histogramDataEqualized[color] += 1;
+      }
+      maxValueEqualized = 0;
+      for (int i = 0; i < 255; i++)
+        if (histogramDataEqualized[i] > maxValueEqualized)
+          maxValueEqualized = histogramDataEqualized[i];
+    }
+
+    // set histogram offset equalized
+    {
+      memset(histogramDataOffsetEqualized, 0, sizeof(histogramDataOffsetEqualized));
+      for (int i = 0; i < offsetEqualizedImage->height() * offsetEqualizedImage->width(); i++) {
+        auto color = offsetEqualizedImage->getTextureData()->data[i * 4]; // get the red channel of the grayscale rgba image
+        histogramDataOffsetEqualized[color] += 1;
+      }
+      maxValueOffsetEqualized = 0;
+      for (int i = 0; i < 255; i++)
+        if (histogramDataOffsetEqualized[i] > maxValueOffsetEqualized)
+          maxValueOffsetEqualized = histogramDataOffsetEqualized[i];
+    }
   }
 
   ImGui::EndGroup();
   ImGui::End();
 
-  ImGui::Begin("Histogram", nullptr, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_ChildWindowAutoFitX | ImGuiWindowFlags_ChildWindowAutoFitY );
-  ImGui::PlotHistogram("", histogramData, IM_ARRAYSIZE(histogramData), 0, "Color", 0.f, maxValue, ImVec2(256,256));
+  ImGui::Begin("Histogram", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_ChildWindowAutoFitX | ImGuiWindowFlags_ChildWindowAutoFitY );
+  ImGui::SetWindowPos(ImVec2(50,0),0);
+  ImGui::PlotHistogram("", histogramDataOriginal, IM_ARRAYSIZE(histogramDataOriginal), 0, "Original", 0.f, maxValueOriginal, ImVec2(300,80));
+  ImGui::End();
+
+  ImGui::Begin("Histogram2", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_ChildWindowAutoFitX | ImGuiWindowFlags_ChildWindowAutoFitY );
+  ImGui::SetWindowPos(ImVec2(653,0),0);
+  ImGui::PlotHistogram("", histogramDataOffset, IM_ARRAYSIZE(histogramDataOffset), 0, "Offset", 0.f, maxValueOffset, ImVec2(300,80));
+  ImGui::End();
+
+  ImGui::Begin("Histogram3", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_ChildWindowAutoFitX | ImGuiWindowFlags_ChildWindowAutoFitY );
+  ImGui::SetWindowPos(ImVec2(50,500),0);
+  ImGui::PlotHistogram("", histogramDataEqualized, IM_ARRAYSIZE(histogramDataEqualized), 0, "Equalized", 0.f, maxValueEqualized, ImVec2(300,80));
+  ImGui::End();
+
+  ImGui::Begin("Histogram4", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_ChildWindowAutoFitX | ImGuiWindowFlags_ChildWindowAutoFitY );
+  ImGui::SetWindowPos(ImVec2(653,500),0);
+  ImGui::PlotHistogram("", histogramDataOffsetEqualized, IM_ARRAYSIZE(histogramDataOffsetEqualized), 0, "Offset Equalized", 0.f, maxValueOffsetEqualized, ImVec2(300,80));
   ImGui::End();
 }
 
@@ -101,7 +217,11 @@ void EditorGUI::update(double delta) {}
 
 EditorGUI::EditorGUI()
 {
-  memset(histogramData,0, sizeof(histogramData));
+  memset(histogramDataOriginal,0, sizeof(histogramDataOriginal));
+  memset(histogramDataOffset,0, sizeof(histogramDataOffset));
+  memset(histogramDataOffsetEqualized,0, sizeof(histogramDataOffsetEqualized));
+  memset(histogramDataEqualized,0, sizeof(histogramDataEqualized));
+
   //auto normal = std::make_shared<Texture>(Asset("default_normal.jpg"));
   //auto specular = std::make_shared<Texture>(Asset("default_specular.jpg"));
 
