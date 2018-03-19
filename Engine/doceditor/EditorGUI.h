@@ -28,6 +28,8 @@ public:
 
   std::shared_ptr<Texture> normalTexture;
   std::shared_ptr<Texture> specularTexture;
+
+  std::shared_ptr<Entity> rootScene;
 private:
 
 

@@ -8,19 +8,25 @@
 #include "EditorGUI.h"
 #include <Logger.h>
 #include <imgui_internal.h>
+#include "components/MeshRenderer.h"
+#include <Plane.h>
 #include "Material.h"
 
 static float histogramData[256];
 static float maxValue=0;
 static float imageOffset=0;
 
+static bool histogramApplied = false;
+static bool offsetApplied = false;
+
 void EditorGUI::onGUI(ImGuiContext* context)
 {
   ImGui::SetCurrentContext(context);
 
   ImGui::Begin("Options", nullptr, ImVec2(128,128),0, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_ChildWindowAutoFitX | ImGuiWindowFlags_ChildWindowAutoFitY);
-  if (ImGui::Button("Histogram"))
+  if (histogramApplied==false && ImGui::Button("Histogram"))
   {
+    histogramApplied = true;
     memset(histogramData,0, sizeof(histogramData));
     for(int i=0; i<originalImage->height()*originalImage->width();i++)
     {
@@ -37,8 +43,9 @@ void EditorGUI::onGUI(ImGuiContext* context)
   ImGui::Text("Type the offset to be added to image:");
   ImGui::InputFloat("Offset", &imageOffset,1,2,-1,0);
 
-  if (ImGui::Button("Apply offset"))
+  if (offsetApplied == false && ImGui::Button("Apply offset"))
   {
+    offsetApplied = true;
     auto modifiedData = originalImage->getTextureData()->data;
 
     for(int i=0; i<modifiedData.size();i+=4)
@@ -52,7 +59,15 @@ void EditorGUI::onGUI(ImGuiContext* context)
     unsigned char * newData = &modifiedData[0];
 
     auto newTextureData = std::make_shared<TextureData>(originalImage->width(),originalImage->height(), newData ,GL_TEXTURE_2D,GL_LINEAR);
-    modifiedImage->setTextureData(newTextureData);
+    modifiedImage = std::make_shared<Texture>(newTextureData);
+
+    auto modifiedEntity = std::make_shared<Entity>();
+    auto modifiedMat = std::make_shared<Material>(modifiedImage, normalTexture, specularTexture);
+    auto modifiedMesh = Plane::getMesh();
+    modifiedEntity->addComponent<MeshRenderer>(modifiedMesh, modifiedMat);
+    modifiedEntity->getTransform().setPosition(glm::vec3(-256, 0, 0));
+    modifiedEntity->getTransform().setScale(glm::vec3(400, 1, 400));
+    rootScene->addChild(modifiedEntity);
 
     //modifiedEntity->getComponent<Material>
 

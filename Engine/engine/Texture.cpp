@@ -27,9 +27,12 @@ Texture::Texture(const Asset &file, GLenum textureTarget, GLfloat filter)
   }
 }
 
-Texture::~Texture()
+Texture::Texture(std::shared_ptr<TextureData> texData)
 {
+  m_textureData = texData;
 }
+
+Texture::~Texture() {}
 
 void Texture::bind(unsigned int unit) const
 {

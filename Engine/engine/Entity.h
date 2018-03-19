@@ -24,6 +24,23 @@ public:
   void addChild(std::shared_ptr<Entity> child);
 
   template <class T>
+  inline void removeComponent(std::shared_ptr<T> component)
+  {
+    // todo: check if it will remove the component properly
+    //component->deregisterFromEngine(m_engine);
+    //component->setParent(nullptr);
+
+//    auto f = std::find(componentsByTypeid[typeid(T)].begin(),componentsByTypeid[typeid(T)].end(), component);
+//    if(f!=componentsByTypeid[typeid(T)].end())
+//      componentsByTypeid[typeid(T)].erase(f);
+//
+//    auto d = std::find(components.begin(),components.end(), component);
+//    if(d!=components.end())
+//      components.erase(d);
+  }
+
+
+  template <class T>
   inline void addComponent(std::shared_ptr<T> component)
   {
     component->setParent(this);

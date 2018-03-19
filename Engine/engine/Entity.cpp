@@ -107,6 +107,7 @@ void Entity::registerWithEngineAll(Engine *engine)
   }
 }
 
+
 void Entity::deregisterFromEngineAll(void)
 {
   for (auto component : components)
