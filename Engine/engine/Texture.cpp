@@ -42,4 +42,9 @@ int Texture::height() const {return m_height;}
 
 std::shared_ptr<TextureData> Texture::getTextureData() { return m_textureData; }
 
+void Texture::setTextureData(std::shared_ptr<TextureData> textureData)
+{
+  m_textureData = textureData;
+}
+
 int Texture::getBytesPerPixel() const { return m_bytesPerPixel; }

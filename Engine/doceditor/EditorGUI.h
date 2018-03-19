@@ -21,7 +21,14 @@ public:
   void onGUI(ImGuiContext* context) override;
 
   std::shared_ptr<Texture> originalImage;
+  std::shared_ptr<Entity> originalEntity;
+
+  std::shared_ptr<Texture> modifiedImage;
+  std::shared_ptr<Entity> modifiedEntity;
+
+  std::shared_ptr<Texture> normalTexture;
+  std::shared_ptr<Texture> specularTexture;
 private:
 
-  std::shared_ptr<Texture> noiseImage;
+
 };

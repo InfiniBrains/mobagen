@@ -28,6 +28,8 @@ public:
   int height() const;
 
   std::shared_ptr<TextureData> getTextureData();
+  void setTextureData(std::shared_ptr<TextureData> textureData);
+
   int getBytesPerPixel() const;
 private:
   std::shared_ptr<TextureData> m_textureData;

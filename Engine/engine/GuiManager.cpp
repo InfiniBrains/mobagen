@@ -193,7 +193,7 @@ GuiManager::GuiManager(const glm::vec2& drawableSize, const glm::vec2& displaySi
 #ifdef ANDROID
   showProps = false;
 #else
-  showProps = true;
+  showProps = false;
 #endif
   ImGuiIO& io = ImGui::GetIO();
   io.KeyMap[ImGuiKey_Tab] = SDLK_TAB;                     // Keyboard mapping. ImGui will use those indices to peek into the io.KeyDown[] array.
@@ -400,9 +400,8 @@ void GuiManager::togglePropertyEditor(void)
 void GuiManager::render(Entity *sceneGraph)
 {
   renderComponents(sceneGraph);
-  ImGui::Render();
 
-  /*if (showProps) {
+  if (showProps) {
     ImGui::SetNextWindowPos(ImVec2(10,10));
     ImGui::SetNextWindowSize(ImVec2(500,0), ImGuiSetCond_FirstUseEver);
     if (!ImGui::Begin("Example: Fixed Overlay", nullptr, ImVec2(0,0), 0.3f, ImGuiWindowFlags_NoTitleBar|ImGuiWindowFlags_NoResize|ImGuiWindowFlags_NoMove|ImGuiWindowFlags_NoSavedSettings))
@@ -425,9 +424,9 @@ void GuiManager::render(Entity *sceneGraph)
     ImGui::End();
 
     // ImGui::ShowTestWindow();
+  }
 
-    ImGui::Render();
-  }*/
+  ImGui::Render();
 }
 
 void GuiManager::renderComponents(Entity * entity)

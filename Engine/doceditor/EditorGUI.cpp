@@ -2,12 +2,17 @@
 // Created by Alexandre Tolstenko Nogueira on 3/18/18.
 //
 
+#define MAX(x, y) (((x) > (y)) ? (x) : (y))
+#define MIN(x, y) (((x) < (y)) ? (x) : (y))
+
 #include "EditorGUI.h"
 #include <Logger.h>
 #include <imgui_internal.h>
+#include "Material.h"
 
 static float histogramData[256];
 static float maxValue=0;
+static float imageOffset=0;
 
 void EditorGUI::onGUI(ImGuiContext* context)
 {
@@ -27,6 +32,34 @@ void EditorGUI::onGUI(ImGuiContext* context)
       if(histogramData[i]>maxValue)
         maxValue=histogramData[i];
   }
+
+  ImGui::BeginGroup();
+  ImGui::Text("Type the offset to be added to image:");
+  ImGui::InputFloat("Offset", &imageOffset,1,2,-1,0);
+
+  if (ImGui::Button("Apply offset"))
+  {
+    auto modifiedData = originalImage->getTextureData()->data;
+
+    for(int i=0; i<modifiedData.size();i+=4)
+    {
+      int newValue = modifiedData[i]+imageOffset;
+      newValue = MIN(255,MAX(0,newValue));
+      modifiedData[i] = newValue;   // r
+      modifiedData[i+1] = newValue; // g
+      modifiedData[i+2] = newValue; // b
+    }
+    unsigned char * newData = &modifiedData[0];
+
+    auto newTextureData = std::make_shared<TextureData>(originalImage->width(),originalImage->height(), newData ,GL_TEXTURE_2D,GL_LINEAR);
+    modifiedImage->setTextureData(newTextureData);
+
+    //modifiedEntity->getComponent<Material>
+
+    //MeshRenderer
+  }
+
+  ImGui::EndGroup();
   ImGui::End();
 
   ImGui::Begin("Histogram", nullptr, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_ChildWindowAutoFitX | ImGuiWindowFlags_ChildWindowAutoFitY );

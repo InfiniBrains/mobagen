@@ -34,33 +34,49 @@ void DocEditor::update(double delta)
 
 void DocEditor::init(GLManager *glManager)
 {
+  // init editorgui
+  getRootScene()->addComponent<EditorGUI>();
 
   // load assets
-  auto normal = std::make_shared<Texture>(Asset("default_normal.jpg"));
-  auto specular = std::make_shared<Texture>(Asset("default_specular.jpg"));
+  getRootScene()->getComponent<EditorGUI>()->normalTexture = std::make_shared<Texture>(Asset("default_normal.jpg"));
+  getRootScene()->getComponent<EditorGUI>()->specularTexture = std::make_shared<Texture>(Asset("black.jpg"));
 
   auto planeEntity = std::make_shared<Entity>();
-  planeEntity->addComponent<EditorGUI>();
-  planeEntity->getComponent<EditorGUI>()->originalImage = std::make_shared<Texture>(Asset("boat.png"));
-
-  auto backgroundMat = std::make_shared<Material>(planeEntity->getComponent<EditorGUI>()->originalImage, normal, specular);
+  getRootScene()->getComponent<EditorGUI>()->originalImage = std::make_shared<Texture>(Asset("boat.png"));
+  getRootScene()->getComponent<EditorGUI>()->originalEntity = planeEntity;
+  auto backgroundMat = std::make_shared<Material>(getRootScene()->getComponent<EditorGUI>()->originalImage, getRootScene()->getComponent<EditorGUI>()->normalTexture, getRootScene()->getComponent<EditorGUI>()->specularTexture);
   auto backgroundMesh = Plane::getMesh();
   planeEntity->addComponent<MeshRenderer>(backgroundMesh, backgroundMat);
-  planeEntity->getTransform().setPosition(glm::vec3(0, -10, 0));
-  planeEntity->getTransform().setScale(glm::vec3(512, 1, 512));
+  planeEntity->getTransform().setPosition(glm::vec3(256, 0, 0));
+  planeEntity->getTransform().setScale(glm::vec3(400, 1, 400));
   addToScene(planeEntity);
 
+  auto planeSpotLight =  std::make_shared<Entity>();
+  planeSpotLight->addComponent<DirectionalLight>(glm::vec3(1,1,1), 0.5);
+  planeSpotLight->getTransform().setPosition(glm::vec3(0, 512, 0));
+  planeSpotLight->getTransform().setRotation(glm::quat(0, 0, 0.707, 0.707));
+  addToScene(planeSpotLight);
+
+  auto modifiedEntity = std::make_shared<Entity>();
+  getRootScene()->getComponent<EditorGUI>()->modifiedImage = std::make_shared<Texture>(Asset("boat.png"));
+  getRootScene()->getComponent<EditorGUI>()->modifiedEntity = modifiedEntity;
+  auto modifiedMat = std::make_shared<Material>(getRootScene()->getComponent<EditorGUI>()->modifiedImage, getRootScene()->getComponent<EditorGUI>()->normalTexture, getRootScene()->getComponent<EditorGUI>()->specularTexture);
+  auto modifiedMesh = Plane::getMesh();
+  modifiedEntity->addComponent<MeshRenderer>(modifiedMesh, modifiedMat);
+  modifiedEntity->getTransform().setPosition(glm::vec3(-256, 0, 0));
+  modifiedEntity->getTransform().setScale(glm::vec3(400, 1, 400));
+  addToScene(modifiedEntity);
 
 
   auto cam = std::make_shared<Entity>();
-  cam->addComponent<PerspectiveCamera>(glm::pi<float>() / 4.0f * 0.96f, getEngine()->getWindow()->getWidth() / (float)getEngine()->getWindow()->getHeight(), 0.01f, 10000.0f);
-  cam->getTransform().setPosition(glm::vec3(0, getEngine()->getWindow()->getWidth(), 0));
-  cam->getTransform().setScale(glm::vec3(0.8, 0.8, 0.8));
+  cam->addComponent<OrthoCamera>(getEngine()->getWindow()->getWidth() / (float)getEngine()->getWindow()->getHeight(), 512, 0.01f, 10000.0f);
+  cam->getTransform().setPosition(glm::vec3(0, 512, 0));
+  cam->getTransform().setScale(glm::vec3(1, 1, 1));
   cam->getTransform().setRotation(glm::quat(0, 0, 0.707, 0.707));
-  cam->addComponent<DirectionalLight>(glm::vec3(1,1,1), 0.5);
+  //cam->addComponent<DirectionalLight>(glm::vec3(1,1,1), 0.5);
   addToScene(cam);
 
-  auto primary_camera = cam->getComponent<PerspectiveCamera>();
+  auto primary_camera = cam->getComponent<OrthoCamera>();
   getEngine()->getGLManager()->setActiveCamera(primary_camera);
 }
 
