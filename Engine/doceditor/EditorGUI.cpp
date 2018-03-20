@@ -75,7 +75,7 @@ void EditorGUI::onGUI(ImGuiContext* context)
   ImGui::SetCurrentContext(context);
 
   ImGui::Begin("Options", nullptr, ImVec2(128,128),0, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_ChildWindowAutoFitX | ImGuiWindowFlags_ChildWindowAutoFitY);
-
+  ImGui::SetWindowPos(ImVec2(370,0),0);
   ImGui::BeginGroup();
   ImGui::Text("Type the offset to be added to image:");
   ImGui::InputInt("Offset", &imageOffset,1,2,0);
