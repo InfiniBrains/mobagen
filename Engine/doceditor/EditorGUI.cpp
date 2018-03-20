@@ -10,6 +10,8 @@
 #include <imgui_internal.h>
 #include "components/MeshRenderer.h"
 #include <Plane.h>
+#include <gdcmImageReader.h>
+#include <string>
 #include "Material.h"
 
 static float histogramDataOriginal[256];
@@ -265,6 +267,35 @@ EditorGUI::EditorGUI()
   memset(histogramDataOffset,0, sizeof(histogramDataOffset));
   memset(histogramDataOffsetEqualized,0, sizeof(histogramDataOffsetEqualized));
   memset(histogramDataEqualized,0, sizeof(histogramDataEqualized));
+
+  auto dicomAsset = Asset("brain.dcm");
+  gdcm::ImageReader imageReader;
+
+  int fileSize = dicomAsset.getIOStream()->fileSize();
+
+  // todo: check for size greater than 4gb
+  auto dicomFileData = new char[fileSize];
+  dicomAsset.getIOStream()->read(dicomFileData,1,fileSize);
+
+  std::stringstream str;
+
+  str.write(dicomFileData,fileSize);
+  imageReader.SetStream(str);
+  imageReader.Read();
+
+  auto image = imageReader.GetImage();
+
+  auto photometric = image.GetPhotometricInterpretation();
+
+  auto pixelformat = image.GetPixelFormat();
+
+  char * imageBuffer = new char[pixelformat.GetPixelSize()*image.GetColumns()*image.GetRows()];
+  image.GetBuffer(imageBuffer);
+
+  log_info("format %d", pixelformat.GetBitsAllocated());
+
+  delete dicomFileData;
+  delete imageBuffer;
 
   //auto normal = std::make_shared<Texture>(Asset("default_normal.jpg"));
   //auto specular = std::make_shared<Texture>(Asset("default_specular.jpg"));
