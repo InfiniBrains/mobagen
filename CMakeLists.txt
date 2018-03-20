@@ -24,15 +24,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 LINK_DIRECTORIES(${CMAKE_BINARY_DIR}/lib)
 
-if( NOT EXISTS "${PROJECT_SOURCE_DIR}/dependencies/SDL/.git" )
-  message( SEND_ERROR "The git submodules are not available. Please run git submodule update --init --recursive")
-  execute_process(
-          COMMAND git submodule update --init --recursive
-          WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}"
-  )
-  return()
-endif()
-
 add_subdirectory(dependencies)
 
 include(${CMAKE_CURRENT_BINARY_DIR}/dependencies/gdcm/GDCMConfig.cmake )
