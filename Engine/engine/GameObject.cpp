@@ -3,3 +3,11 @@
 //
 
 #include "GameObject.h"
+
+GameObject::GameObject(std::string name) : Object(name) {
+
+}
+
+GameObject::~GameObject() {
+
+}
