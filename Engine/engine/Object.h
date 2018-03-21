@@ -9,6 +9,9 @@
 
 class Object {
 public:
+  Object(std::string name);
+  ~Object();
+
   /// Should the object be hidden, saved with the scene or modifiable by the user?
   HideFlags hideFlags;
 

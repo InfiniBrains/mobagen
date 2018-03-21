@@ -20,3 +20,11 @@ bool Object::operator!=(const Object &other)
   // todo: improve this operator with type check, and make it tolerant to any type of object
   return m_InstanceID != other.m_InstanceID;
 }
+
+Object::Object(std::string name) {
+  this->name = name;
+}
+
+Object::~Object() {
+
+}
