@@ -2,9 +2,9 @@
 // Created by Alexandre Tolstenko Nogueira on 3/20/18.
 //
 
-#ifndef ENGINE_ERROR_H
-#define ENGINE_ERROR_H
+#pragma once
 
+#include <exception>
 
 class NotImplementedException : public std::exception {
 public:
@@ -26,4 +26,3 @@ private:
   std::string errorMessage;
 };
 
-#endif //ENGINE_ERROR_H
