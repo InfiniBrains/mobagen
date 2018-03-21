@@ -294,8 +294,8 @@ EditorGUI::EditorGUI()
 
   log_info("format %d", pixelformat.GetBitsAllocated());
 
-  delete dicomFileData;
-  delete imageBuffer;
+  delete []dicomFileData;
+  delete []imageBuffer;
 
   //auto normal = std::make_shared<Texture>(Asset("default_normal.jpg"));
   //auto specular = std::make_shared<Texture>(Asset("default_specular.jpg"));
