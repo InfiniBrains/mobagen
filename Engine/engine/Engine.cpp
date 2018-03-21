@@ -2,6 +2,7 @@
 #include "Logger.h"
 #include "Ray.h"
 #include "GuiManager.h"
+#include <memory>
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>

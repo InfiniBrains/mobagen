@@ -18,6 +18,30 @@ matrix:
       group: travis_latest
       dist: trusty
 
+    # windows cross compile
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-trusty-5.0
+          packages:
+            - clang-5.0
+            - gcc-6
+            - g++-6
+            - cmake
+            - binutils-mingw-w64-x86-64
+            - gcc-mingw-w64
+            - gcc-mingw-w64-x86-64
+            - g++-mingw-w64
+            - g++-mingw-w64-x86-64
+            - wine
+      env:
+        - MATRIX_EVAL="CC=x86_64-w64-mingw32-gcc && CXX=x86_64-w64-mingw32-g++ && AR=x86_64-w64-mingw32-ar"
+        - BUILD_TYPE=windows
+      group: travis_latest
+      dist: trusty
+
     # linux emscripten
     - os: linux
       services:
@@ -91,8 +115,9 @@ script:
       docker exec -it emscripten ./scripts/travis-build.sh -j9 ;
       docker exec -it emscripten ./scripts/travis-build.sh -j9 ;
     else
-      ./scripts/travis-build.sh ;
-    fi 
+      ./scripts/travis-build.sh -j9 ;
+    fi
+
 
 before_deploy:
   - echo tolsta $TRAVIS_OS_NAME $BUILD_TYPE $TRAVIS_BRANCH $TRAVIS_TAG
