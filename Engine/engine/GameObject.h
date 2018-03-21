@@ -7,6 +7,7 @@
 
 class GameObject : Object {
   GameObject(std::string name);
+  ~GameObject();
 
 //  activeInHierarchy	Is the GameObject active in the scene?
 //  activeSelf	The local active state of this GameObject. (Read Only)

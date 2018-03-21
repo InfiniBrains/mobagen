@@ -5,7 +5,9 @@
 #include <string>
 #include "HideFlags.h"
 #include <vector>
+#include <memory>
 #include "Error.h"
+
 
 class Object {
 public:
