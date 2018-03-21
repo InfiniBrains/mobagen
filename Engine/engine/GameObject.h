@@ -5,14 +5,20 @@
 
 #include "Object.h"
 
-class GameObject : Object {
+class GameObject : Object
+{
   GameObject(std::string name);
   ~GameObject();
 
-//  activeInHierarchy	Is the GameObject active in the scene?
+  /// Is the GameObject active in the scene?
+  bool activeInHierarchy;
+
 //  activeSelf	The local active state of this GameObject. (Read Only)
 //  isStatic	Editor only API that specifies if a game object is static.
-//  layer	The layer the game object is in. A layer is in the range [0...31].
+
+  /// The layer the game object is in. A layer is in the range [0...31].
+  int layer;
+
 //  scene	Scene that the GameObject is part of.
 //  tag	The tag of this game object.
 //  transform	The Transform attached to this GameObject.
