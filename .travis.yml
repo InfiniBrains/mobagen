@@ -24,16 +24,10 @@ matrix:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-trusty-5.0
           packages:
-            - clang-5.0
-            - gcc-6
-            - g++-6
             - cmake
             - binutils-mingw-w64-x86-64
-            - gcc-mingw-w64
             - gcc-mingw-w64-x86-64
-            - g++-mingw-w64
             - g++-mingw-w64-x86-64
             - wine
       env:
@@ -52,7 +46,7 @@ matrix:
             - ubuntu-toolchain-r-test
             - llvm-toolchain-trusty-5.0
           packages:
-            #- cmake
+            - cmake
       env:
         - BUILD_TYPE=emscripten
       group: travis_latest
@@ -63,9 +57,6 @@ matrix:
       env:
         - MATRIX_EVAL="CC=clang && CXX=clang++"
         - BUILD_TYPE=native
-
-language: cpp
-compiler: clang
 
 before_script:
   - TRAVIS_TAG=`date +%Y-%m-%d`
