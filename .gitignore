@@ -22,3 +22,5 @@ imgui.ini
 emscripten.zip
 
 bin-mingw/
+
+win64mingw\.zip

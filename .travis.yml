@@ -23,15 +23,14 @@ matrix:
 
     # windows cross compile
     - os: linux
+      services:
+        - docker
       addons:
         apt:
           sources:
             - ubuntu-toolchain-r-test
           packages:
             - cmake
-            - binutils-mingw-w64-x86-64
-            - gcc-mingw-w64-x86-64
-            - g++-mingw-w64-x86-64
             - wine
       env:
         - MATRIX_EVAL="CC=x86_64-w64-mingw32-gcc && CXX=x86_64-w64-mingw32-g++ && AR=x86_64-w64-mingw32-ar"
@@ -112,11 +111,19 @@ before_script:
       docker exec -it emscripten rm /usr/local/bin/cmake ;
       docker exec -it emscripten apt-get install -y cmake wget ;
     fi
+  - if [ $BUILD_TYPE == windows ]; then
+      docker run -dit --name windows -e TRAVIS_OS_NAME='linux' -e BUILD_TYPE='windows' -v `pwd`:/mobagen -w /mobagen library/ubuntu:bionic bash ;
+      docker exec -it windows apt-get update ;
+      docker exec -it windows apt-get install -y cmake wget binutils-mingw-w64* gcc-mingw-w64* g++-mingw-w64* wine-development git mingw-w64 mingw-w64-tools binutils-mingw-w64 binutils-mingw-w64-x86-64 binutils-mingw-w64-i686 mingw-w64-x86-64-dev mingw-w64-i686-dev autoconf automake autotools-dev zip ;
+    fi
 
 script:
   - if [ $TRAVIS_OS_NAME == linux ] && [ $BUILD_TYPE == emscripten ]; then
       docker exec -it emscripten ./scripts/travis-build.sh -j9 ;
       docker exec -it emscripten ./scripts/travis-build.sh -j9 ;
+    elif [ $BUILD_TYPE == windows ]; then
+      docker exec -it windows ./scripts/travis-build.sh -j9 ;
+      docker exec -it windows ./scripts/travis-build.sh -j9 ;
     else
       ./scripts/travis-build.sh -j9 ;
     fi
