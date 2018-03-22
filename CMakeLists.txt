@@ -14,6 +14,9 @@ set(CP_CMAKE_DIR ${PROJECT_SOURCE_DIR}/cmake)
 #include(cotire)
 include(${CP_CMAKE_DIR}/macros.cmake)
 
+set(BUILD_STATIC_LIBS TRUE)
+set(BUILD_SHARED_LIBS FALSE)
+
 IF (ANDROID)
   include(${CP_CMAKE_DIR}/android.cmake)
 ENDIF () 
@@ -23,6 +26,9 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 LINK_DIRECTORIES(${CMAKE_BINARY_DIR}/lib)
+
+add_definitions(-DGLEW_STATIC)
+add_definitions(-UGLEW_BUILD)
 
 add_subdirectory(dependencies)
 
@@ -42,15 +48,15 @@ SET(GDCM_LIBRARIES
         gdcmopenjp2
         gdcmcharls
         gdcmzlib
-        gdcmuuid
+        #gdcmuuid
         socketxx
         )
 
 set ( SDL2_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/SDL/include )
-set ( SDL2_LIBRARY SDL2 )
+set ( SDL2_LIBRARY SDL2-static )
 
 set ( GLEW_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/glew/include )
-set ( GLEW_LIBRARIES libglew_shared )
+set ( GLEW_LIBRARIES libglew_static )
 
 set ( ASSIMP_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/assimp/include )
 set ( ASSIMP_LIBRARY assimp )
@@ -68,9 +74,9 @@ IF (EMSCRIPTEN)
 
   #SET ( CMAKE_SHARED_LINKER_FLAGS "-s ASSERTIONS=1" )
   #SET ( CMAKE_STATIC_LINKER_FLAGS "-s ASSERTIONS=1" )
-  SET ( CMAKE_SHARED_LINKER_FLAGS "-Oz --closure 1" )
-  SET ( CMAKE_STATIC_LINKER_FLAGS "-Oz --closure 1" )
-  SET ( CMAKE_EXE_LINKER_FLAGS "-Oz --closure 1")
+  #SET ( CMAKE_SHARED_LINKER_FLAGS "-Oz --closure 1" )
+  #SET ( CMAKE_STATIC_LINKER_FLAGS "-Oz --closure 1" )
+  #SET ( CMAKE_EXE_LINKER_FLAGS "-Oz --closure 1")
   
   #SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall --preload-file ${CMAKE_CURRENT_SOURCE_DIR}/Engine/example/assets/ -s DEMANGLE_SUPPORT=1 -s ASSERTIONS=2 -s TOTAL_MEMORY=536870912 -s USE_SDL=2 -std=c++14 -Oz")
   SET(CMAKE_CXX_FLAGS "--closure 1 --preload-file ${CMAKE_CURRENT_SOURCE_DIR}/assets/ -s TOTAL_MEMORY=536870912 -s USE_SDL=2 -std=c++14 -Oz")
@@ -142,6 +148,7 @@ ELSE ()
     ${IMGUI_INCLUDE_DIRS}
     ${CMAKE_CURRENT_SOURCE_DIR}/Engine/engine/
     ${GDCM_INCLUDE_DIRS}
+#    ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/mingw-std-threads
   )
 ENDIF ()
 

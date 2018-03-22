@@ -19,6 +19,8 @@ class SpotLight;
 #elif defined(GLES3)
   #include <GLES3/gl3.h>
 #else
+#define GLEW_STATIC
+#undef GLEW_BUILD
   #include <GL/glew.h>
 #endif
 

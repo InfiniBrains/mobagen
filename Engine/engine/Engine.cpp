@@ -2,6 +2,7 @@
 #include "Logger.h"
 #include "Ray.h"
 #include "GuiManager.h"
+#include <memory>
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>
@@ -15,17 +16,22 @@
 #include <thread>
 #endif
 
+//#ifdef __MINGW32__
+//#include "mingw.thread.h"
+//#endif
+
 
 Engine::Engine(Game *game, char * windowTitle, glm::vec2 windowSize)
 {
   log_info("Initializing SDL");
   m_window = std::make_unique<Window>(windowTitle, windowSize);
 
+  log_info("Initializing GL");
+  m_glManager = std::make_unique<GLManager>(m_window.get());
+
   log_info("Initializing GLEW");
   m_glewManager = std::make_unique<GLEWManager>();
 
-  log_info("Initializing GL");
-  m_glManager = std::make_unique<GLManager>(m_window.get());
 
   log_info("Initializing Physics Manager");
   m_physicsManager = std::make_unique<PhysicsManager>();
@@ -71,9 +77,14 @@ void Engine::start(void)
 	// sleep
     std::chrono::duration<double> sleepTime;
     sleepTime = std::chrono::duration<double>(1 / 60.0) - (afterTick - lastUpdateTime) - accumulatedTime;
+
+
 	if (sleepTime.count() > 0)
+#ifndef __MINGW32__
 		std::this_thread::sleep_for(sleepTime); //SDL_Delay(sleepTime);
-	
+#else
+        SDL_Delay(std::chrono::duration_cast<std::chrono::milliseconds>(sleepTime).count());
+#endif
 	// get the sleep error and store the lastFrame time duration
 	auto now = std::chrono::high_resolution_clock::now();
 	m_deltaTime = (now - lastUpdateTime).count()/1000000000.0;

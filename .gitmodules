@@ -9,7 +9,7 @@
 [submodule "dependencies/glew"]
 	path = dependencies/glew
 	url = https://github.com/Perlmint/glew-cmake.git
-	branch = 0ba2fb54c61d1ba9b4757ca4c1b7288869addd12
+	branch = ea68a2109330f3288bd9eddade1376bd75962f5e
 [submodule "dependencies/glm"]
 	path = dependencies/glm
 	url = https://github.com/g-truc/glm.git
@@ -30,3 +30,8 @@
 	path = dependencies/stb
 	url = https://github.com/nothings/stb.git
 	branch = e6afb9cbae4064da8c3e69af3ff5c4629579c1d2
+[submodule "dependencies/mingw-std-threads"]
+	path = dependencies/mingw-std-threads
+	url = https://github.com/meganz/mingw-std-threads.git
+	branch = 3a5361a3e9308ce854dd2761d2a9416e21ad489d
+

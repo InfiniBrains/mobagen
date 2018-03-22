@@ -17,6 +17,29 @@ matrix:
         - BUILD_TYPE=native
       group: travis_latest
       dist: trusty
+      language: cpp
+      compiler: clang
+
+
+    # windows cross compile
+    - os: linux
+      services:
+        - docker
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - cmake
+            - wine
+      env:
+        - MATRIX_EVAL="CC=x86_64-w64-mingw32-gcc && CXX=x86_64-w64-mingw32-g++ && AR=x86_64-w64-mingw32-ar"
+        - BUILD_TYPE=windows
+      group: travis_latest
+      dist: trusty
+      language: cpp
+      compiler: mingw
+
 
     # linux emscripten
     - os: linux
@@ -28,20 +51,23 @@ matrix:
             - ubuntu-toolchain-r-test
             - llvm-toolchain-trusty-5.0
           packages:
-            #- cmake
+            - cmake
       env:
         - BUILD_TYPE=emscripten
       group: travis_latest
       dist: trusty
+      language: cpp
+      compiler: emscripten
+
       
     # osx native
     - os: osx
       env:
         - MATRIX_EVAL="CC=clang && CXX=clang++"
         - BUILD_TYPE=native
+      language: cpp
+      compiler: clang
 
-language: cpp
-compiler: clang
 
 before_script:
   - TRAVIS_TAG=`date +%Y-%m-%d`
@@ -85,19 +111,41 @@ before_script:
       docker exec -it emscripten rm /usr/local/bin/cmake ;
       docker exec -it emscripten apt-get install -y cmake wget ;
     fi
+  - if [ $BUILD_TYPE == windows ]; then
+      docker run -dit --name windows -e TRAVIS_OS_NAME='linux' -e BUILD_TYPE='windows' -v `pwd`:/mobagen -w /mobagen library/ubuntu:bionic bash ;
+      docker exec -it windows apt-get update ;
+      docker exec -it windows apt-get install -y cmake wget binutils-mingw-w64* gcc-mingw-w64* g++-mingw-w64* wine-development git mingw-w64 mingw-w64-tools binutils-mingw-w64 binutils-mingw-w64-x86-64 binutils-mingw-w64-i686 mingw-w64-x86-64-dev mingw-w64-i686-dev autoconf automake autotools-dev zip ;
+    fi
 
 script:
   - if [ $TRAVIS_OS_NAME == linux ] && [ $BUILD_TYPE == emscripten ]; then
       docker exec -it emscripten ./scripts/travis-build.sh -j9 ;
       docker exec -it emscripten ./scripts/travis-build.sh -j9 ;
+    elif [ $BUILD_TYPE == windows ]; then
+      docker exec -it windows ./scripts/travis-build.sh -j9 ;
+      docker exec -it windows ./scripts/travis-build.sh -j9 ;
     else
-      ./scripts/travis-build.sh ;
-    fi 
+      ./scripts/travis-build.sh -j9 ;
+    fi
+
 
 before_deploy:
   - echo tolsta $TRAVIS_OS_NAME $BUILD_TYPE $TRAVIS_BRANCH $TRAVIS_TAG
 
 deploy:
+  - provider: releases
+    api_key:
+      secure: MfsqovFmQorr7+r1Y0SlKpfi4SlCCLzkzefCMDDRtnib8h5oWt6ZlNxpQP2EwIx9QVsF3RR+BucRiQ/jc1daeQgBSRjUyTJAFRutigFvNbcoCZ5f3a1VAI1EqmBaDuMKdimtd9KEpYfJhI92tgVz2nf/CmcYYV0ylz5/R5KC8qJbGyhlww8Brcij2s1/yUtiLsupeBsfpmx9t96HcRDCnSD27h5mP3SANeTT1u2NJJtLXLFEmz/Zk6M3ziDKuw7Dvu7fZL7gUH2ofC6+9Q3bSLbTIsSYMbC9gWrdbWNPSWiSK/hd4Y8yB3KwDqLP7jJ/2sLze9NlyDftdGHoazC6Cyq0FmUyQkLUXSH6y7XyzoHuSMhy9Z07HoHRjcm3HxOPE5nfxDDsAKuPcyW9wS5E/Z/MNBHcJdwOacRic+haA88kXvo1Gg5XgayBch5EHYPod6hTdUC7U3y3LW2fmhIvSG8jU+lkkKdb3cY6wd9iGMyJuWjXcvYVMsjCGW5I8hdC4ntWDh0dFAtZd+MStH4mUuuAYBVvBDiVkc8UxF8WP5ZwP3WSwdGm6z867Hg+tI3osqP9yDfuEHWilBJLZQzDE93DyOQtfKabmQHQU6mRUZS0DY2h8z5Tz0GOAI6xmUmNbr16yrPdgDJzqBygpiKFiZUsET+XZEjEnAMUB/h8hhg=
+    file: $TRAVIS_BUILD_DIR/win64mingw.zip
+    skip_cleanup: true
+    on:
+      repo: InfiniBrains/mobagen
+      condition: $BUILD_TYPE = windows
+      os: linux
+      branches:
+        except:
+          - gh-pages
+
   - provider: releases
     api_key:
       secure: MfsqovFmQorr7+r1Y0SlKpfi4SlCCLzkzefCMDDRtnib8h5oWt6ZlNxpQP2EwIx9QVsF3RR+BucRiQ/jc1daeQgBSRjUyTJAFRutigFvNbcoCZ5f3a1VAI1EqmBaDuMKdimtd9KEpYfJhI92tgVz2nf/CmcYYV0ylz5/R5KC8qJbGyhlww8Brcij2s1/yUtiLsupeBsfpmx9t96HcRDCnSD27h5mP3SANeTT1u2NJJtLXLFEmz/Zk6M3ziDKuw7Dvu7fZL7gUH2ofC6+9Q3bSLbTIsSYMbC9gWrdbWNPSWiSK/hd4Y8yB3KwDqLP7jJ/2sLze9NlyDftdGHoazC6Cyq0FmUyQkLUXSH6y7XyzoHuSMhy9Z07HoHRjcm3HxOPE5nfxDDsAKuPcyW9wS5E/Z/MNBHcJdwOacRic+haA88kXvo1Gg5XgayBch5EHYPod6hTdUC7U3y3LW2fmhIvSG8jU+lkkKdb3cY6wd9iGMyJuWjXcvYVMsjCGW5I8hdC4ntWDh0dFAtZd+MStH4mUuuAYBVvBDiVkc8UxF8WP5ZwP3WSwdGm6z867Hg+tI3osqP9yDfuEHWilBJLZQzDE93DyOQtfKabmQHQU6mRUZS0DY2h8z5Tz0GOAI6xmUmNbr16yrPdgDJzqBygpiKFiZUsET+XZEjEnAMUB/h8hhg=
