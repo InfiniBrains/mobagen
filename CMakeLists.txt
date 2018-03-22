@@ -45,7 +45,7 @@ SET(GDCM_LIBRARIES
         gdcmopenjp2
         gdcmcharls
         gdcmzlib
-        gdcmuuid
+        #gdcmuuid
         socketxx
         )
 
@@ -145,6 +145,7 @@ ELSE ()
     ${IMGUI_INCLUDE_DIRS}
     ${CMAKE_CURRENT_SOURCE_DIR}/Engine/engine/
     ${GDCM_INCLUDE_DIRS}
+#    ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/mingw-std-threads
   )
 ENDIF ()
 

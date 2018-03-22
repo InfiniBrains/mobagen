@@ -16,6 +16,10 @@
 #include <thread>
 #endif
 
+//#ifdef __MINGW32__
+//#include "mingw.thread.h"
+//#endif
+
 
 Engine::Engine(Game *game, char * windowTitle, glm::vec2 windowSize)
 {
@@ -72,9 +76,14 @@ void Engine::start(void)
 	// sleep
     std::chrono::duration<double> sleepTime;
     sleepTime = std::chrono::duration<double>(1 / 60.0) - (afterTick - lastUpdateTime) - accumulatedTime;
+
+
 	if (sleepTime.count() > 0)
+#ifndef __MINGW32__
 		std::this_thread::sleep_for(sleepTime); //SDL_Delay(sleepTime);
-	
+#else
+        SDL_Delay(std::chrono::duration_cast<std::chrono::milliseconds>(sleepTime).count());
+#endif
 	// get the sleep error and store the lastFrame time duration
 	auto now = std::chrono::high_resolution_clock::now();
 	m_deltaTime = (now - lastUpdateTime).count()/1000000000.0;

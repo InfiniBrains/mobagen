@@ -16,16 +16,20 @@ ELSEIF (ANDROID)
   add_definitions(-DGL_GLEXT_PROTOTYPES)
   add_subdirectory( SDL )
 ELSE ()
-  INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/whereami/src/)
-  add_library (whereami STATIC ${CMAKE_CURRENT_SOURCE_DIR}/whereami/src/whereami.c ${CMAKE_CURRENT_SOURCE_DIR}/whereami/src/whereami.h)
-  add_subdirectory( SDL )
-
+  set(GLEW_USE_STATIC_LIBS ON CACHE BOOL "bla")
+  set(BUILD_SHARED_LIBS OFF CACHE BOOL "bla")
   set( glew-cmake_BUILD_SHARED OFF CACHE BOOL "Build the shared glew library" )
   set( glew-cmake_BUILD_STATIC ON CACHE BOOL "Build the static glew library" )
   set( glew-cmake_BUILD_SINGLE_CONTEXT ON CACHE BOOL "Build the single context glew library" )
   set( glew-cmake_BUILD_MULTI_CONTEXT OFF CACHE BOOL "Build the multi context glew library" )
 
   add_subdirectory( glew )
+
+
+  INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/whereami/src/)
+  add_library (whereami STATIC ${CMAKE_CURRENT_SOURCE_DIR}/whereami/src/whereami.c ${CMAKE_CURRENT_SOURCE_DIR}/whereami/src/whereami.h)
+  add_subdirectory( SDL )
+
 ENDIF ()
 
 set(GDCM_BUILD_DOCBOOK_MANPAGES OFF CACHE BOOL "Do not build gdcm manpages")
