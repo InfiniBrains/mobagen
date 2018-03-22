@@ -14,6 +14,9 @@ set(CP_CMAKE_DIR ${PROJECT_SOURCE_DIR}/cmake)
 #include(cotire)
 include(${CP_CMAKE_DIR}/macros.cmake)
 
+set(BUILD_STATIC_LIBS TRUE)
+set(BUILD_SHARED_LIBS FALSE)
+
 IF (ANDROID)
   include(${CP_CMAKE_DIR}/android.cmake)
 ENDIF () 
@@ -47,10 +50,10 @@ SET(GDCM_LIBRARIES
         )
 
 set ( SDL2_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/SDL/include )
-set ( SDL2_LIBRARY SDL2 )
+set ( SDL2_LIBRARY SDL2-static )
 
 set ( GLEW_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/glew/include )
-set ( GLEW_LIBRARIES libglew_shared )
+set ( GLEW_LIBRARIES libglew_static )
 
 set ( ASSIMP_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/assimp/include )
 set ( ASSIMP_LIBRARY assimp )
