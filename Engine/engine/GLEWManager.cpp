@@ -1,4 +1,6 @@
 #ifndef ANDROID
+#define GLEW_STATIC
+#undef GLEW_BUILD
   #include <GL/glew.h>
 #endif
 

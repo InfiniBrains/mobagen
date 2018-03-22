@@ -27,6 +27,9 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 LINK_DIRECTORIES(${CMAKE_BINARY_DIR}/lib)
 
+add_definitions(-DGLEW_STATIC)
+add_definitions(-UGLEW_BUILD)
+
 add_subdirectory(dependencies)
 
 include(${CMAKE_CURRENT_BINARY_DIR}/dependencies/gdcm/GDCMConfig.cmake )

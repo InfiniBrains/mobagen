@@ -26,11 +26,12 @@ Engine::Engine(Game *game, char * windowTitle, glm::vec2 windowSize)
   log_info("Initializing SDL");
   m_window = std::make_unique<Window>(windowTitle, windowSize);
 
+  log_info("Initializing GL");
+  m_glManager = std::make_unique<GLManager>(m_window.get());
+
   log_info("Initializing GLEW");
   m_glewManager = std::make_unique<GLEWManager>();
 
-  log_info("Initializing GL");
-  m_glManager = std::make_unique<GLManager>(m_window.get());
 
   log_info("Initializing Physics Manager");
   m_physicsManager = std::make_unique<PhysicsManager>();
