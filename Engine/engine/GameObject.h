@@ -4,11 +4,15 @@
 #pragma once
 
 #include "Object.h"
+#include "Transform.h"
 
 class GameObject : Object
 {
-  GameObject(std::string name);
+  explicit GameObject(std::string name);
   ~GameObject();
+
+  /// The name of the gameObject.
+  std::string name;
 
   /// Is the GameObject active in the scene?
   bool activeInHierarchy;
@@ -21,13 +25,19 @@ class GameObject : Object
 
 //  scene	Scene that the GameObject is part of.
 //  tag	The tag of this game object.
-//  transform	The Transform attached to this GameObject.
 
+  /// The Transform attached to this GameObject.
+  Transform transform;
 
-//  AddComponent	Adds a component class named className to the game object.
+  /// @brief Adds a component class named className to the game object.
+  template <class T, class... _Types>
+  void AddComponent(_Types&&... _Args);
 //  BroadcastMessage	Calls the method named methodName on every MonoBehaviour in this game object or any of its children.
 //  CompareTag	Is this game object tagged with tag ?
-//  GetComponent	Returns the component of Type type if the game object has one attached, null if it doesn't.
+
+  /// @brief Returns the component of Type type if the game object has one attached, null if it doesn't.
+  template <class T>
+  std::shared_ptr<T> GetComponent();
 //  GetComponentInChildren	Returns the component of Type type in the GameObject or any of its children using depth first search.
 //  GetComponentInParent	Returns the component of Type type in the GameObject or any of its parents.
 //  GetComponents	Returns all components of Type type in the GameObject.

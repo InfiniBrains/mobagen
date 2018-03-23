@@ -7,6 +7,7 @@
 #include "Entity.h"
 #include "Transform.h"
 #include <imgui.h>
+#include "Object.h"
 
 class Engine;
 
@@ -25,10 +26,11 @@ struct Property {
   float max;
 };
 
-class Component
+class Component : public Object
 {
 public:
-  virtual ~Component(void) {};
+  Component();
+  ~Component(void) {};
 
   virtual void updateInput(Input *input, double delta) {};
   virtual void update(double delta) {};

@@ -2,7 +2,7 @@
 
 #include "../Engine.h"
 
-Sphere::Sphere(float radius)
+Sphere::Sphere(float radius) : Component()
 {
   m_radius = radius;
   setProperty("radius", FLOAT, &m_radius, 0, 10);

@@ -21,9 +21,7 @@ bool Object::operator!=(const Object &other)
   return m_InstanceID != other.m_InstanceID;
 }
 
-Object::Object(std::string name) {
-  this->name = name;
-}
+Object::Object() {}
 
 Object::~Object() {
 

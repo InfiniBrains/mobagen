@@ -2,7 +2,7 @@
 
 #include "../Transform.h"
 
-FreeMove::FreeMove(bool moveForwards, float speed)
+FreeMove::FreeMove(bool moveForwards, float speed) : Component()
 {
   m_speed = speed;
   m_moveForwards = moveForwards;

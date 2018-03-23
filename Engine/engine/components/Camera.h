@@ -7,6 +7,8 @@
 class Camera : public Component
 {
 public:
+  Camera(std::string name);
+
   virtual ~Camera(void) {}
 
   glm::mat4 getViewMatrix(void) const;

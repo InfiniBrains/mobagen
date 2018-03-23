@@ -3,7 +3,7 @@
 
 #include "PerspectiveCamera.h"
 
-PerspectiveCamera::PerspectiveCamera(float fov, float aspect, float zNear, float zFar)
+PerspectiveCamera::PerspectiveCamera(float fov, float aspect, float zNear, float zFar) : Camera("PerspectiveCamera")
 {
   m_fov = fov;
   m_aspect = aspect;

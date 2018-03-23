@@ -3,7 +3,7 @@
 
 #include "OrthoCamera.h"
 
-OrthoCamera::OrthoCamera(float aspect, float scale, float zNear, float zFar)
+OrthoCamera::OrthoCamera(float aspect, float scale, float zNear, float zFar) : Camera("OrthoCamera")
 {
   m_scale = scale;
   m_aspect = aspect;

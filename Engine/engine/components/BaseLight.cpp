@@ -1,6 +1,6 @@
 #include "BaseLight.h"
 
-BaseLight::BaseLight(glm::vec3 color, float intensity)
+BaseLight::BaseLight(glm::vec3 color, float intensity) : Component()
 {
   m_color = color;
   m_intensity = intensity;

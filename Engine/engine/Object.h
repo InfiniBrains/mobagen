@@ -1,6 +1,7 @@
 //
 // Created by Alexandre Tolstenko Nogueira on 3/20/18.
 //
+#pragma once
 
 #include <string>
 #include "HideFlags.h"
@@ -8,17 +9,13 @@
 #include <memory>
 #include "Error.h"
 
-
 class Object {
 public:
-  Object(std::string name);
-  ~Object();
+  Object();
+  virtual ~Object();
 
   /// Should the object be hidden, saved with the scene or modifiable by the user?
   HideFlags hideFlags;
-
-  /// The name of the object.
-  std::string name;
 
   /// Returns the instance id of the object.
   int GetInstanceID();

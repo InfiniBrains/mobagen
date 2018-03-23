@@ -1,7 +1,7 @@
 #include "MeshRenderer.h"
 #include <iostream>
 
-MeshRenderer::MeshRenderer(std::shared_ptr<Mesh> mesh, std::shared_ptr<Material> material)
+MeshRenderer::MeshRenderer(std::shared_ptr<Mesh> mesh, std::shared_ptr<Material> material) : Component()
 {
   this->m_mesh = mesh;
   this->m_material = material;

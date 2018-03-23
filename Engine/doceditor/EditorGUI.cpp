@@ -261,7 +261,7 @@ const char* EditorGUI::getType()
 
 void EditorGUI::update(double delta) {}
 
-EditorGUI::EditorGUI()
+EditorGUI::EditorGUI() : Component()
 {
   memset(histogramDataOriginal,0, sizeof(histogramDataOriginal));
   memset(histogramDataOffset,0, sizeof(histogramDataOffset));
