@@ -9,7 +9,7 @@
 [submodule "dependencies/glew"]
 	path = dependencies/glew
 	url = https://github.com/Perlmint/glew-cmake.git
-	branch = ea68a2109330f3288bd9eddade1376bd75962f5e
+	branch = cd
 [submodule "dependencies/glm"]
 	path = dependencies/glm
 	url = https://github.com/g-truc/glm.git
