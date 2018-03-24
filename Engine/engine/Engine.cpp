@@ -66,7 +66,6 @@ void Engine::start(void)
 	// run engine loop
 	tick();
 
-#ifndef __MINGW32__
 	// get time
 	const auto afterTick = std::chrono::high_resolution_clock::now();
 	
@@ -74,14 +73,17 @@ void Engine::start(void)
     std::chrono::duration<double> sleepTime;
     sleepTime = std::chrono::duration<double>(1 / 60.0) - (afterTick - lastUpdateTime) - accumulatedTime;
 	if (sleepTime.count() > 0)
-		std::this_thread::sleep_for(sleepTime); //SDL_Delay(sleepTime);
-	
+#ifndef __MINGW32__
+		std::this_thread::sleep_for(sleepTime);
+#else
+    SDL_Delay(sleepTime.count());
+#endif
 	// get the sleep error and store the lastFrame time duration
 	auto now = std::chrono::high_resolution_clock::now();
 	m_deltaTime = (now - lastUpdateTime).count()/1000000000.0;
 	lastUpdateTime = now;
 	accumulatedTime = (lastUpdateTime - afterTick) - sleepTime;
-#endif
+
   }
 #endif
 }
