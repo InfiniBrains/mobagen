@@ -20,7 +20,7 @@ void Menu::onGUI(ImGuiContext* context)
 		ImVec2 pos = ImVec2(50,50);
 		ImGui::SetNextWindowPos(pos);
 		ImGui::Begin("", 0, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
-			ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_ShowBorders |
+			ImGuiWindowFlags_NoCollapse |
 			ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoTitleBar);
 		ImGui::Text("TIME LEFT");
 		ImGui::Text("  %.1lf", m_remainingTime);
@@ -35,7 +35,7 @@ void Menu::onGUI(ImGuiContext* context)
 		ImGui::SetNextWindowPos(pos);
 		ImGui::SetNextWindowSize(ImVec2(200, 200));
 		ImGui::Begin("", 0, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
-			ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_ShowBorders |
+			ImGuiWindowFlags_NoCollapse  |
 			ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoTitleBar);
 		
 		ImGui::SetCursorPos(ImVec2(60,80));
