@@ -34,4 +34,3 @@
 	path = dependencies/mingw-std-threads
 	url = https://github.com/meganz/mingw-std-threads.git
 	branch = 3a5361a3e9308ce854dd2761d2a9416e21ad489d
-

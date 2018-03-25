@@ -26,4 +26,5 @@ make $*
 make $*
 rm -rf /mobagen/win64mingw.zip
 zip -r /mobagen/win64mingw.zip bin/*
-chmod -R 777 /mobagen/
+chmod 777 /mobagen/win64mingw.zip
+chmod -R 777 /mobagen/bin-mingw/

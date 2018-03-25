@@ -117,7 +117,7 @@ void EditorGUI::onGUI(ImGuiContext* context)
 
   ImGui::SetCurrentContext(context);
 
-  ImGui::Begin("Options", nullptr, ImVec2(128,128),0, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_ChildWindowAutoFitX | ImGuiWindowFlags_ChildWindowAutoFitY);
+  ImGui::Begin("Options", nullptr, ImVec2(128,128),0, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove);
   ImGui::SetWindowPos(ImVec2(370,20),0);
   ImGui::BeginGroup();
   ImGui::Text("Type the offset to be added to image:");
@@ -264,22 +264,22 @@ void EditorGUI::onGUI(ImGuiContext* context)
   ImGui::EndGroup();
   ImGui::End();
 
-  ImGui::Begin("Histogram", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_ChildWindowAutoFitX | ImGuiWindowFlags_ChildWindowAutoFitY );
+  ImGui::Begin("Histogram", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove);
   ImGui::SetWindowPos(ImVec2(50,20),0);
   ImGui::PlotHistogram("", histogramDataOriginal, IM_ARRAYSIZE(histogramDataOriginal), 0, "Original", 0.f, maxValueOriginal, ImVec2(300,80));
   ImGui::End();
 
-  ImGui::Begin("Histogram2", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_ChildWindowAutoFitX | ImGuiWindowFlags_ChildWindowAutoFitY );
+  ImGui::Begin("Histogram2", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove);
   ImGui::SetWindowPos(ImVec2(653,20),0);
   ImGui::PlotHistogram("", histogramDataOffset, IM_ARRAYSIZE(histogramDataOffset), 0, "Offset", 0.f, maxValueOffset, ImVec2(300,80));
   ImGui::End();
 
-  ImGui::Begin("Histogram3", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_ChildWindowAutoFitX | ImGuiWindowFlags_ChildWindowAutoFitY );
+  ImGui::Begin("Histogram3", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove);
   ImGui::SetWindowPos(ImVec2(50,500),0);
   ImGui::PlotHistogram("", histogramDataEqualized, IM_ARRAYSIZE(histogramDataEqualized), 0, "Equalized", 0.f, maxValueEqualized, ImVec2(300,80));
   ImGui::End();
 
-  ImGui::Begin("Histogram4", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_ChildWindowAutoFitX | ImGuiWindowFlags_ChildWindowAutoFitY );
+  ImGui::Begin("Histogram4", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove);
   ImGui::SetWindowPos(ImVec2(653,500),0);
   ImGui::PlotHistogram("", histogramDataOffsetEqualized, IM_ARRAYSIZE(histogramDataOffsetEqualized), 0, "Offset Equalized", 0.f, maxValueOffsetEqualized, ImVec2(300,80));
   ImGui::End();
@@ -302,7 +302,7 @@ const char* EditorGUI::getType()
 
 void EditorGUI::update(double delta) {}
 
-EditorGUI::EditorGUI()
+EditorGUI::EditorGUI() : Component()
 {
   memset(histogramDataOriginal,0, sizeof(histogramDataOriginal));
   memset(histogramDataOffset,0, sizeof(histogramDataOffset));

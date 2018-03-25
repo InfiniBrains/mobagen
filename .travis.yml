@@ -70,7 +70,7 @@ matrix:
 
 
 before_script:
-#  - TRAVIS_TAG=`date +%Y-%m-%d`
+  - TRAVIS_TAG=`date +%Y-%m-%d`
 #  - TRAVIS_TAG=`git tag | grep -v rc | sort -t. -k 1,1n -k 2,2n -k 3,3n -k 4,4n | sed '1!G;h;$!d' | sed -n 1p`
   - uname -a
   - "if [ $TRAVIS_OS_NAME == osx ] && [ $BUILD_TYPE == android ]; then \

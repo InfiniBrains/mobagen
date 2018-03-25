@@ -46,3 +46,5 @@ double Component::getDeltaTime()
 {
 	return m_parentEntity->getEngine()->getDeltaTime();
 }
+
+Component::Component() : Object(){}

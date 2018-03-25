@@ -195,6 +195,7 @@ GuiManager::GuiManager(const glm::vec2& drawableSize, const glm::vec2& displaySi
 #else
   showProps = false;
 #endif
+  ImGui::CreateContext();
   ImGuiIO& io = ImGui::GetIO();
   io.KeyMap[ImGuiKey_Tab] = SDLK_TAB;                     // Keyboard mapping. ImGui will use those indices to peek into the io.KeyDown[] array.
   io.KeyMap[ImGuiKey_LeftArrow] = SDL_SCANCODE_LEFT;
@@ -217,8 +218,8 @@ GuiManager::GuiManager(const glm::vec2& drawableSize, const glm::vec2& displaySi
   io.KeyMap[ImGuiKey_Z] = SDLK_z;
 
   io.RenderDrawListsFn = GuiManager::renderDrawLists;   // Alternatively you can set this to NULL and call ImGui::GetDrawData() after ImGui::Render() to get the same ImDrawData pointer.
-  io.SetClipboardTextFn = Window::setClipboardText;
-  io.GetClipboardTextFn = Window::getClipboardText;
+  //io.SetClipboardTextFn = Window::setClipboardText;
+  //io.GetClipboardTextFn = Window::getClipboardText;
 
 //#ifdef _WIN32
 //  SDL_SysWMinfo wmInfo;
@@ -242,7 +243,7 @@ GuiManager::~GuiManager(void)
 {
   invalidateDeviceObjects();
   delete m_textureData;
-  ImGui::Shutdown();
+  ImGui::DestroyContext();
 }
 
 void GuiManager::tick(Window *window, double deltaTime)
@@ -275,7 +276,7 @@ void renderComponent(Component *component) {
   ImGui::PushID(component);
   ImGui::AlignFirstTextHeightToWidgets();
 
-  ImGui::PushStyleColor(ImGuiCol_Text, ImColor(1.0f,0.78f,0.58f,1.0f));
+  ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f,0.78f,0.58f,1.0f));
   bool node_open = ImGui::TreeNodeEx("Component", ImGuiTreeNodeFlags_DefaultOpen, "%s_%u", "component", component);
   ImGui::NextColumn();
   ImGui::AlignFirstTextHeightToWidgets();
@@ -291,7 +292,7 @@ void renderComponent(Component *component) {
 
       ImGui::AlignFirstTextHeightToWidgets();
       ImGui::Bullet();
-      ImGui::PushStyleColor(ImGuiCol_Text, ImColor(0.78f,0.58f,1.0f,1.0f));
+      ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.78f,0.58f,1.0f,1.0f));
       ImGui::Selectable(property.first);
       ImGui::NextColumn();
       ImGui::PushItemWidth(-1);
@@ -330,7 +331,7 @@ void renderSceneGraph(Entity *sceneGraph)
   ImGui::PushID(sceneGraph);
   ImGui::AlignFirstTextHeightToWidgets();
 
-  ImGui::PushStyleColor(ImGuiCol_Text, ImColor(0.78f,1.0f,0.58f,1.0f));
+  ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.78f,1.0f,0.58f,1.0f));
   bool node_open = ImGui::TreeNodeEx("Node", ImGuiTreeNodeFlags_DefaultOpen, "%s_%u", "node", sceneGraph);
   ImGui::PopStyleColor();
   ImGui::NextColumn();
@@ -342,7 +343,7 @@ void renderSceneGraph(Entity *sceneGraph)
   if (node_open)
   {
     ImGui::PushID(id);
-    ImGui::PushStyleColor(ImGuiCol_Text, ImColor(0.0f,0.8f,1.0f,1.0f));
+    ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.0f,0.8f,1.0f,1.0f));
 
     ImGui::AlignFirstTextHeightToWidgets();
     ImGui::Bullet();

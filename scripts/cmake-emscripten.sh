@@ -12,4 +12,5 @@ cd $DIR/../bin-emscripten
 make $*
 rm -rf /mobagen/bin-emscripten/emscripten.zip
 zip -r /mobagen/emscripten.zip bin/*
-chmod -R 777 /mobagen/
+chmod 777 /mobagen/emscripten.zip
+chmod -R 777 /mobagen/bin-emscripten/

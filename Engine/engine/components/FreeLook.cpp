@@ -1,6 +1,6 @@
 #include "FreeLook.h"
 
-FreeLook::FreeLook(float speed)
+FreeLook::FreeLook(float speed) : Component()
 {
   m_speed = speed;
   setProperty("speed", FLOAT, &m_speed, 0, 0.01);
