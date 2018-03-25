@@ -74,10 +74,51 @@ static bool offsetApplied = false;
 
 void EditorGUI::onGUI(ImGuiContext* context)
 {
+  ImGui::BeginMainMenuBar();
+  if (ImGui::BeginMenu("File"))
+  {
+    //ShowExampleMenuFile();
+    if (ImGui::MenuItem("New Scene")) {}
+    if (ImGui::MenuItem("Open Scene")) {}
+    ImGui::Separator();
+    if (ImGui::MenuItem("Save Scene")) {}
+    if (ImGui::MenuItem("Save Scene as...")) {}
+    ImGui::Separator();
+    if (ImGui::MenuItem("New Project")) {}
+    if (ImGui::MenuItem("Open Project")) {}
+    if (ImGui::MenuItem("Save Project")) {}
+    ImGui::Separator();
+    if (ImGui::MenuItem("Build Settings")) {}
+    if (ImGui::MenuItem("Build and Run")) {}
+    ImGui::Separator();
+    if (ImGui::MenuItem("Close")) {
+#ifndef EMSCRIPTEN
+      exit(0);
+#endif
+    }
+
+    ImGui::EndMenu();
+  }
+
+  if (ImGui::BeginMenu("Edit"))
+  {
+    if (ImGui::MenuItem("Undo", "CTRL+Z")) {}
+    if (ImGui::MenuItem("Redo", "CTRL+SHIFT+Z", false, false)) {}  // Disabled item
+    ImGui::Separator();
+    if (ImGui::MenuItem("Cut", "CTRL+X")) {}
+    if (ImGui::MenuItem("Copy", "CTRL+C")) {}
+    if (ImGui::MenuItem("Paste", "CTRL+V")) {}
+    ImGui::Separator();
+    if (ImGui::MenuItem("Duplicate", "CTRL+D")) {}
+    if (ImGui::MenuItem("Delete", "Del")) {}
+    ImGui::EndMenu();
+  }
+  ImGui::EndMainMenuBar();
+
   ImGui::SetCurrentContext(context);
 
   ImGui::Begin("Options", nullptr, ImVec2(128,128),0, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_ChildWindowAutoFitX | ImGuiWindowFlags_ChildWindowAutoFitY);
-  ImGui::SetWindowPos(ImVec2(370,0),0);
+  ImGui::SetWindowPos(ImVec2(370,20),0);
   ImGui::BeginGroup();
   ImGui::Text("Type the offset to be added to image:");
   ImGui::InputInt("Offset", &imageOffset,1,2,0);
@@ -224,12 +265,12 @@ void EditorGUI::onGUI(ImGuiContext* context)
   ImGui::End();
 
   ImGui::Begin("Histogram", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_ChildWindowAutoFitX | ImGuiWindowFlags_ChildWindowAutoFitY );
-  ImGui::SetWindowPos(ImVec2(50,0),0);
+  ImGui::SetWindowPos(ImVec2(50,20),0);
   ImGui::PlotHistogram("", histogramDataOriginal, IM_ARRAYSIZE(histogramDataOriginal), 0, "Original", 0.f, maxValueOriginal, ImVec2(300,80));
   ImGui::End();
 
   ImGui::Begin("Histogram2", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_ChildWindowAutoFitX | ImGuiWindowFlags_ChildWindowAutoFitY );
-  ImGui::SetWindowPos(ImVec2(653,0),0);
+  ImGui::SetWindowPos(ImVec2(653,20),0);
   ImGui::PlotHistogram("", histogramDataOffset, IM_ARRAYSIZE(histogramDataOffset), 0, "Offset", 0.f, maxValueOffset, ImVec2(300,80));
   ImGui::End();
 
