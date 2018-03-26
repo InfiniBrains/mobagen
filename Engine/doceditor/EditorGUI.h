@@ -41,6 +41,7 @@ private:
   void options();
   void equalize();
   void highPass();
+  void Laplace(unsigned char * input, unsigned char * output, int width, int height,int bytesPerChannels, int numberOfChannels);
 
   // 0 -> not chosen
   // 1 -> equalization

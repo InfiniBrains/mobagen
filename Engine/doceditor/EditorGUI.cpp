@@ -7,12 +7,13 @@
 
 #include "EditorGUI.h"
 #include <Logger.h>
-#include <imgui_internal.h>
 #include "components/MeshRenderer.h"
 #include <Plane.h>
 #include <gdcmImageReader.h>
 #include <string>
 #include "Material.h"
+#include <imgui.h>
+#include <imgui_user.h>
 
 static float histogramDataOriginal[256];
 static float transferOriginal[256];
@@ -373,6 +374,21 @@ void EditorGUI::equalize() {
 
 void EditorGUI::highPass() {
   applied = true;
+}
 
+void EditorGUI::Laplace(unsigned char * input, unsigned char * output, int width, int height, int bytesPerChannels=1, int numberOfChannels=4)
+{
+  if(numberOfChannels!=4 || bytesPerChannels!=1)
+    throw NotImplementedException();
 
+  for(int line =0;line<height;line++){
+    for(int column =0;column<width;column++){
+      int pos = line * column * numberOfChannels * bytesPerChannels;
+      unsigned char color = input[pos];
+      output[pos]  =color;
+      output[pos+1]=color;
+      output[pos+2]=color;
+      output[pos+3]=255;
+    }
+  }
 }
