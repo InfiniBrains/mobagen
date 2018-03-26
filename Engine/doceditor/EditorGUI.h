@@ -37,6 +37,13 @@ public:
 
   std::shared_ptr<Entity> rootScene;
 private:
+  void mainMenu();
+  void options();
+  void equalize();
+  void highPass();
 
-
+  // 0 -> not chosen
+  // 1 -> equalization
+  // 2 -> high-pass
+  int option = 0;
 };

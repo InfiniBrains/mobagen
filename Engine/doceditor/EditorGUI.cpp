@@ -26,7 +26,7 @@ static float maxValueOffsetEqualized=0;
 static float maxValueEqualized=0;
 static int imageOffset=0;
 
-static bool offsetApplied = false;
+static bool applied = false;
 
 //std::vector<int> histogram(std::shared_ptr<Texture> originalImage)
 //{
@@ -74,6 +74,107 @@ static bool offsetApplied = false;
 
 void EditorGUI::onGUI(ImGuiContext* context)
 {
+  mainMenu();
+
+  if(applied == false) {
+    // options
+    ImGui::Begin("Options", nullptr, ImVec2(128, 128), 0, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove);
+    ImGui::SetWindowPos(ImVec2(370, 20), 0);
+    if (option == 0)
+      options();
+
+    if (option == 1 && applied == false)
+      equalize();
+
+    if (option == 2 && applied == false)
+      highPass();
+    ImGui::End();
+  }
+
+  ImGui::Begin("Histogram", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove);
+  ImGui::SetWindowPos(ImVec2(50,20),0);
+  ImGui::PlotHistogram("", histogramDataOriginal, IM_ARRAYSIZE(histogramDataOriginal), 0, "Original", 0.f, maxValueOriginal, ImVec2(300,80));
+  ImGui::End();
+
+  ImGui::Begin("Histogram2", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove);
+  ImGui::SetWindowPos(ImVec2(653,20),0);
+  ImGui::PlotHistogram("", histogramDataOffset, IM_ARRAYSIZE(histogramDataOffset), 0, "Offset", 0.f, maxValueOffset, ImVec2(300,80));
+  ImGui::End();
+
+  ImGui::Begin("Histogram3", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove);
+  ImGui::SetWindowPos(ImVec2(50,500),0);
+  ImGui::PlotHistogram("", histogramDataEqualized, IM_ARRAYSIZE(histogramDataEqualized), 0, "Equalized", 0.f, maxValueEqualized, ImVec2(300,80));
+  ImGui::End();
+
+  ImGui::Begin("Histogram4", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove);
+  ImGui::SetWindowPos(ImVec2(653,500),0);
+  ImGui::PlotHistogram("", histogramDataOffsetEqualized, IM_ARRAYSIZE(histogramDataOffsetEqualized), 0, "Offset Equalized", 0.f, maxValueOffsetEqualized, ImVec2(300,80));
+  ImGui::End();
+}
+
+// show image
+// show histogram
+// add remove constant value to pixels
+// average
+// median
+// equalization
+// high-pass
+// http://www.cis.umac.mo/cybernetics/WCSR-L2L1/DenoisedResults.htm
+
+
+const char* EditorGUI::getType()
+{
+  return "EDITORGUI";
+}
+
+void EditorGUI::update(double delta) {}
+
+EditorGUI::EditorGUI() : Component()
+{
+  memset(histogramDataOriginal,0, sizeof(histogramDataOriginal));
+  memset(histogramDataOffset,0, sizeof(histogramDataOffset));
+  memset(histogramDataOffsetEqualized,0, sizeof(histogramDataOffsetEqualized));
+  memset(histogramDataEqualized,0, sizeof(histogramDataEqualized));
+
+  auto dicomAsset = Asset("brain.dcm");
+  gdcm::ImageReader imageReader;
+
+  int fileSize = dicomAsset.getIOStream()->fileSize();
+
+  // todo: check for size greater than 4gb
+  auto dicomFileData = new char[fileSize];
+  dicomAsset.getIOStream()->read(dicomFileData,1,fileSize);
+
+  std::stringstream str;
+
+  str.write(dicomFileData,fileSize);
+  imageReader.SetStream(str);
+  imageReader.Read();
+
+  auto image = imageReader.GetImage();
+
+  auto photometric = image.GetPhotometricInterpretation();
+
+  auto pixelformat = image.GetPixelFormat();
+
+  char * imageBuffer = new char[pixelformat.GetPixelSize()*image.GetColumns()*image.GetRows()];
+  image.GetBuffer(imageBuffer);
+
+  log_info("format %d", pixelformat.GetBitsAllocated());
+
+  delete []dicomFileData;
+  delete []imageBuffer;
+
+  //auto normal = std::make_shared<Texture>(Asset("default_normal.jpg"));
+  //auto specular = std::make_shared<Texture>(Asset("default_specular.jpg"));
+
+  //originalImage = std::make_shared<Texture>(Asset("boat.png"));
+  //originalImage->bind(0);
+  //std::make_shared<Material>(originalImage, normal, specular);
+
+}
+
+void EditorGUI::mainMenu() {
   ImGui::BeginMainMenuBar();
   if (ImGui::BeginMenu("File"))
   {
@@ -114,19 +215,25 @@ void EditorGUI::onGUI(ImGuiContext* context)
     ImGui::EndMenu();
   }
   ImGui::EndMainMenuBar();
+}
 
-  ImGui::SetCurrentContext(context);
+void EditorGUI::options() {
+  ImGui::BeginGroup();
+  ImGui::Text("Choose your Algorithm:");
+  if(ImGui::Button("Equalization")){option = 1;}
+  if(ImGui::Button("High-Pass")){option=2;}
+  ImGui::EndGroup();
+}
 
-  ImGui::Begin("Options", nullptr, ImVec2(128,128),0, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove);
-  ImGui::SetWindowPos(ImVec2(370,20),0);
+void EditorGUI::equalize() {
   ImGui::BeginGroup();
   ImGui::Text("Type the offset to be added to image:");
   ImGui::InputInt("Offset", &imageOffset,1,2,0);
 
-  if (offsetApplied == false && ImGui::Button("Apply offset and calculate"))
+  if (applied == false && ImGui::Button("Apply offset and calculate"))
   {
     // apply offset
-    offsetApplied = true;
+    applied = true;
     {
       auto modifiedData = originalImage->getTextureData()->data;
       for (int i = 0; i < modifiedData.size(); i += 4) {
@@ -260,89 +367,12 @@ void EditorGUI::onGUI(ImGuiContext* context)
           maxValueOffsetEqualized = histogramDataOffsetEqualized[i];
     }
   }
-
   ImGui::EndGroup();
-  ImGui::End();
 
-  ImGui::Begin("Histogram", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove);
-  ImGui::SetWindowPos(ImVec2(50,20),0);
-  ImGui::PlotHistogram("", histogramDataOriginal, IM_ARRAYSIZE(histogramDataOriginal), 0, "Original", 0.f, maxValueOriginal, ImVec2(300,80));
-  ImGui::End();
-
-  ImGui::Begin("Histogram2", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove);
-  ImGui::SetWindowPos(ImVec2(653,20),0);
-  ImGui::PlotHistogram("", histogramDataOffset, IM_ARRAYSIZE(histogramDataOffset), 0, "Offset", 0.f, maxValueOffset, ImVec2(300,80));
-  ImGui::End();
-
-  ImGui::Begin("Histogram3", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove);
-  ImGui::SetWindowPos(ImVec2(50,500),0);
-  ImGui::PlotHistogram("", histogramDataEqualized, IM_ARRAYSIZE(histogramDataEqualized), 0, "Equalized", 0.f, maxValueEqualized, ImVec2(300,80));
-  ImGui::End();
-
-  ImGui::Begin("Histogram4", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove);
-  ImGui::SetWindowPos(ImVec2(653,500),0);
-  ImGui::PlotHistogram("", histogramDataOffsetEqualized, IM_ARRAYSIZE(histogramDataOffsetEqualized), 0, "Offset Equalized", 0.f, maxValueOffsetEqualized, ImVec2(300,80));
-  ImGui::End();
 }
 
-// show image
-// show histogram
-// add remove constant value to pixels
-// average
-// median
-// equalization
-// high-pass
-// http://www.cis.umac.mo/cybernetics/WCSR-L2L1/DenoisedResults.htm
+void EditorGUI::highPass() {
+  applied = true;
 
-
-const char* EditorGUI::getType()
-{
-  return "EDITORGUI";
-}
-
-void EditorGUI::update(double delta) {}
-
-EditorGUI::EditorGUI() : Component()
-{
-  memset(histogramDataOriginal,0, sizeof(histogramDataOriginal));
-  memset(histogramDataOffset,0, sizeof(histogramDataOffset));
-  memset(histogramDataOffsetEqualized,0, sizeof(histogramDataOffsetEqualized));
-  memset(histogramDataEqualized,0, sizeof(histogramDataEqualized));
-
-  auto dicomAsset = Asset("brain.dcm");
-  gdcm::ImageReader imageReader;
-
-  int fileSize = dicomAsset.getIOStream()->fileSize();
-
-  // todo: check for size greater than 4gb
-  auto dicomFileData = new char[fileSize];
-  dicomAsset.getIOStream()->read(dicomFileData,1,fileSize);
-
-  std::stringstream str;
-
-  str.write(dicomFileData,fileSize);
-  imageReader.SetStream(str);
-  imageReader.Read();
-
-  auto image = imageReader.GetImage();
-
-  auto photometric = image.GetPhotometricInterpretation();
-
-  auto pixelformat = image.GetPixelFormat();
-
-  char * imageBuffer = new char[pixelformat.GetPixelSize()*image.GetColumns()*image.GetRows()];
-  image.GetBuffer(imageBuffer);
-
-  log_info("format %d", pixelformat.GetBitsAllocated());
-
-  delete []dicomFileData;
-  delete []imageBuffer;
-
-  //auto normal = std::make_shared<Texture>(Asset("default_normal.jpg"));
-  //auto specular = std::make_shared<Texture>(Asset("default_specular.jpg"));
-
-  //originalImage = std::make_shared<Texture>(Asset("boat.png"));
-  //originalImage->bind(0);
-  //std::make_shared<Material>(originalImage, normal, specular);
 
 }
