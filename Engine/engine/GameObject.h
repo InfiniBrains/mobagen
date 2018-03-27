@@ -1,12 +1,9 @@
-//
-// Created by Alexandre Tolstenko Nogueira on 3/20/18.
-//
 #pragma once
 
 #include "Object.h"
 #include "Transform.h"
 
-class GameObject : Object
+class GameObject : public Object
 {
   explicit GameObject(std::string name);
   ~GameObject();
@@ -38,6 +35,7 @@ class GameObject : Object
   /// @brief Returns the component of Type type if the game object has one attached, null if it doesn't.
   template <class T>
   std::shared_ptr<T> GetComponent();
+
 //  GetComponentInChildren	Returns the component of Type type in the GameObject or any of its children using depth first search.
 //  GetComponentInParent	Returns the component of Type type in the GameObject or any of its parents.
 //  GetComponents	Returns all components of Type type in the GameObject.
