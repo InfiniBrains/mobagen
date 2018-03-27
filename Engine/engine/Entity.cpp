@@ -12,11 +12,13 @@ Entity::Entity(const std::string& tag)
 
   m_tag = tag;
   parentEntity = nullptr;
+  transform = std::make_unique<Transform>();
 }
 
 Entity::Entity(void)
 {
   parentEntity = nullptr;
+  transform = std::make_unique<Transform>();
 }
 
 Entity::~Entity(void)
@@ -51,9 +53,9 @@ void Entity::addChild(std::shared_ptr<Entity> child)
 void Entity::updateInputAll(Input *input, double delta)
 {
   if (parentEntity == nullptr) {
-    worldMatrix = transform.getTransformMatrix();
+    worldMatrix = transform->getTransformMatrix();
   } else {
-    worldMatrix = parentEntity->worldMatrix * transform.getTransformMatrix();
+    worldMatrix = parentEntity->worldMatrix * transform->getTransformMatrix();
   }
 
   for (auto component : components)
@@ -128,9 +130,9 @@ Entity * Entity::getParent()
 	return parentEntity;
 }
 
-Transform& Entity::getTransform(void)
+Transform* Entity::getTransform(void)
 {
-  return transform;
+  return transform.get();
 }
 
 std::vector<std::shared_ptr<Entity>> Entity::getChildren(void)
@@ -151,18 +153,18 @@ glm::mat4& Entity::getWorldMatrix(void)
 glm::vec4 Entity::getPosition(void)
 {
   if (parentEntity == nullptr) {
-    return transform.getPosition();
+    return transform->getPosition();
   } else {
-    return parentEntity->worldMatrix * transform.getPosition();
+    return parentEntity->worldMatrix * transform->getPosition();
   }
 }
 
 glm::vec4 Entity::getDirection(void)
 {
   if (parentEntity == nullptr) {
-    return transform.getDirection();
+    return transform->getDirection();
   } else {
-    return glm::normalize(parentEntity->worldMatrix * transform.getDirection());
+    return glm::normalize(parentEntity->worldMatrix * transform->getDirection());
   }
 }
 

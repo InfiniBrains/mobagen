@@ -48,21 +48,21 @@ void DocEditor::init(GLManager *glManager)
   auto backgroundMat = std::make_shared<Material>(getRootScene()->getComponent<EditorGUI>()->originalImage, getRootScene()->getComponent<EditorGUI>()->normalTexture, getRootScene()->getComponent<EditorGUI>()->specularTexture);
   auto backgroundMesh = Plane::getMesh();
   planeEntity->addComponent<MeshRenderer>(backgroundMesh, backgroundMat);
-  planeEntity->getTransform().setPosition(glm::vec3(300, 0, 250));
-  planeEntity->getTransform().setScale(glm::vec3(300, 1, 300));
+  planeEntity->getTransform()->setPosition(glm::vec3(300, 0, 250));
+  planeEntity->getTransform()->setScale(glm::vec3(300, 1, 300));
   addToScene(planeEntity);
 
   auto planeSpotLight =  std::make_shared<Entity>();
   planeSpotLight->addComponent<DirectionalLight>(glm::vec3(1,1,1), 0.5);
-  planeSpotLight->getTransform().setPosition(glm::vec3(0, 512, 0));
-  planeSpotLight->getTransform().setRotation(glm::quat(0, 0, 0.707, 0.707));
+  planeSpotLight->getTransform()->setPosition(glm::vec3(0, 512, 0));
+  planeSpotLight->getTransform()->setRotation(glm::quat(0, 0, 0.707, 0.707));
   addToScene(planeSpotLight);
 
   auto cam = std::make_shared<Entity>();
   cam->addComponent<OrthoCamera>(getEngine()->getWindow()->getWidth() / (float)getEngine()->getWindow()->getHeight(), 512, 0.01f, 10000.0f);
-  cam->getTransform().setPosition(glm::vec3(0, 512, 0));
-  cam->getTransform().setScale(glm::vec3(1, 1, 1));
-  cam->getTransform().setRotation(glm::quat(0, 0, 0.707, 0.707));
+  cam->getTransform()->setPosition(glm::vec3(0, 512, 0));
+  cam->getTransform()->setScale(glm::vec3(1, 1, 1));
+  cam->getTransform()->setRotation(glm::quat(0, 0, 0.707, 0.707));
   //cam->addComponent<DirectionalLight>(glm::vec3(1,1,1), 0.5);
   addToScene(cam);
 

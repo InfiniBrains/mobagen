@@ -252,8 +252,8 @@ void EditorGUI::equalize() {
       auto modifiedMat = std::make_shared<Material>(offsetImage, normalTexture, specularTexture);
       auto modifiedMesh = Plane::getMesh();
       offsetEntity->addComponent<MeshRenderer>(modifiedMesh, modifiedMat);
-      offsetEntity->getTransform().setPosition(glm::vec3(-300, 0, 250));
-      offsetEntity->getTransform().setScale(glm::vec3(300, 1, 300));
+      offsetEntity->getTransform()->setPosition(glm::vec3(-300, 0, 250));
+      offsetEntity->getTransform()->setScale(glm::vec3(300, 1, 300));
       rootScene->addChild(offsetEntity);
     }
 
@@ -308,8 +308,8 @@ void EditorGUI::equalize() {
       auto modifiedMat = std::make_shared<Material>(equalizedImage, normalTexture, specularTexture);
       auto modifiedMesh = Plane::getMesh();
       equalizedEntity->addComponent<MeshRenderer>(modifiedMesh, modifiedMat);
-      equalizedEntity->getTransform().setPosition(glm::vec3(300, 0, -250));
-      equalizedEntity->getTransform().setScale(glm::vec3(300, 1, 300));
+      equalizedEntity->getTransform()->setPosition(glm::vec3(300, 0, -250));
+      equalizedEntity->getTransform()->setScale(glm::vec3(300, 1, 300));
       rootScene->addChild(equalizedEntity);
     }
 
@@ -336,8 +336,8 @@ void EditorGUI::equalize() {
       auto modifiedMat = std::make_shared<Material>(offsetEqualizedImage, normalTexture, specularTexture);
       auto modifiedMesh = Plane::getMesh();
       offsetEqualizedEntity->addComponent<MeshRenderer>(modifiedMesh, modifiedMat);
-      offsetEqualizedEntity->getTransform().setPosition(glm::vec3(-300, 0, -250));
-      offsetEqualizedEntity->getTransform().setScale(glm::vec3(300, 1, 300));
+      offsetEqualizedEntity->getTransform()->setPosition(glm::vec3(-300, 0, -250));
+      offsetEqualizedEntity->getTransform()->setScale(glm::vec3(300, 1, 300));
       rootScene->addChild(offsetEqualizedEntity);
     }
 

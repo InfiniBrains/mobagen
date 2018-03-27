@@ -11,7 +11,7 @@ Entity *Component::getParent(void) const
   return m_parentEntity;
 }
 
-Transform& Component::getTransform(void) const
+Transform* Component::getTransform(void) const
 {
   return m_parentEntity->getTransform();
 }

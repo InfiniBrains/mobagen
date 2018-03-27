@@ -84,17 +84,17 @@ void CoolGame::init(GLManager *glManager)
   auto backgroundMesh = Plane::getMesh();
   auto planeEntity = std::make_shared<Entity>();
   planeEntity->addComponent<MeshRenderer>(backgroundMesh, backgroundMat);
-  planeEntity->getTransform().setPosition(glm::vec3(0, -10, 0));
-  planeEntity->getTransform().setScale(glm::vec3(755, 1, 600));
+  planeEntity->getTransform()->setPosition(glm::vec3(0, -10, 0));
+  planeEntity->getTransform()->setScale(glm::vec3(755, 1, 600));
   addToScene(planeEntity);
 
   getRootScene()->addComponent<Menu>();
 
   auto cam = std::make_shared<Entity>();
   cam->addComponent<PerspectiveCamera>(glm::pi<float>() / 4.0f * 0.96f, getEngine()->getWindow()->getWidth() / (float)getEngine()->getWindow()->getHeight(), 0.01f, 10000.0f);
-  cam->getTransform().setPosition(glm::vec3(0, getEngine()->getWindow()->getWidth(), 0));
-  cam->getTransform().setScale(glm::vec3(0.8, 0.8, 0.8));
-  cam->getTransform().setRotation(glm::quat(0, 0, 0.707, 0.707));
+  cam->getTransform()->setPosition(glm::vec3(0, getEngine()->getWindow()->getWidth(), 0));
+  cam->getTransform()->setScale(glm::vec3(0.8, 0.8, 0.8));
+  cam->getTransform()->setRotation(glm::quat(0, 0, 0.707, 0.707));
   cam->addComponent<DirectionalLight>(glm::vec3(1,1,1), 0.5);
   addToScene(cam);
 

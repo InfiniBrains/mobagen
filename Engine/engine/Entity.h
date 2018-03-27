@@ -64,7 +64,7 @@ public:
   void deregisterFromEngineAll(void);
   Entity* getParent();
 
-  Transform& getTransform(void);
+  Transform* getTransform(void);
 
   std::vector<std::shared_ptr<Entity>> getChildren(void);
   std::vector<std::shared_ptr<Component>> getComponents(void);
@@ -110,7 +110,7 @@ public:
   Engine * getEngine();
 
 private:
-  Transform transform;
+  std::unique_ptr<Transform> transform;
 
   Entity *parentEntity;
 
