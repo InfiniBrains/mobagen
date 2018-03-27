@@ -13,7 +13,6 @@
 #include <string>
 #include "Material.h"
 #include <imgui.h>
-#include <imgui_user.h>
 
 static float histogramDataOriginal[256];
 static float transferOriginal[256];
