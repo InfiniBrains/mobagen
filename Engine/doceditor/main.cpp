@@ -72,7 +72,7 @@ void DocEditor::init(GLManager *glManager)
 
 int main(int argc, char *argv[]) {
   DocEditor game;
-  Engine gameEngine(&game, "DocEditor", glm::vec2(1024,1024));
+  Engine gameEngine(&game, "DocEditor", glm::vec2(800,800));
 
   gameEngine.start();
 

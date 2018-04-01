@@ -171,3 +171,5 @@ glm::vec4 Entity::getDirection(void)
 Engine *Entity::getEngine() {
   return m_engine;
 }
+
+Engine * Entity::m_engine;

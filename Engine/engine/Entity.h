@@ -121,7 +121,7 @@ private:
 
   std::string m_tag;
 
-  Engine *m_engine;
+  static Engine *m_engine;
 
   static void setTag(Entity *entity, const std::string& tag);
 

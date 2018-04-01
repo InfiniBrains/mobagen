@@ -26,6 +26,8 @@ static float maxValueOffsetEqualized=0;
 static float maxValueEqualized=0;
 static int imageOffset=0;
 
+ImVec2 windowFactor;
+
 static bool applied = false;
 
 //std::vector<int> histogram(std::shared_ptr<Texture> originalImage)
@@ -74,12 +76,13 @@ static bool applied = false;
 
 void EditorGUI::onGUI(ImGuiContext* context)
 {
+
   mainMenu();
 
   if(applied == false) {
     // options
-    ImGui::Begin("Options", nullptr, ImVec2(128, 128), 0, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove);
-    ImGui::SetWindowPos(ImVec2(370, 20), 0);
+    ImGui::Begin("Options", nullptr, ImVec2(128*windowFactor.x, 128*windowFactor.y), 0, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove);
+    ImGui::SetWindowPos(ImVec2(370*windowFactor.x, 20*windowFactor.y), 0);
     if (option == 0)
       options();
 
@@ -92,23 +95,23 @@ void EditorGUI::onGUI(ImGuiContext* context)
   }
 
   ImGui::Begin("Histogram", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove);
-  ImGui::SetWindowPos(ImVec2(50,20),0);
-  ImGui::PlotHistogram("", histogramDataOriginal, IM_ARRAYSIZE(histogramDataOriginal), 0, "Original", 0.f, maxValueOriginal, ImVec2(300,80));
+  ImGui::SetWindowPos(ImVec2(50*windowFactor.x,20*windowFactor.y),0);
+  ImGui::PlotHistogram("", histogramDataOriginal, IM_ARRAYSIZE(histogramDataOriginal), 0, "Original", 0.f, maxValueOriginal, ImVec2(300*windowFactor.x,80*windowFactor.y));
   ImGui::End();
 
   ImGui::Begin("Histogram2", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove);
-  ImGui::SetWindowPos(ImVec2(653,20),0);
-  ImGui::PlotHistogram("", histogramDataOffset, IM_ARRAYSIZE(histogramDataOffset), 0, "Offset", 0.f, maxValueOffset, ImVec2(300,80));
+  ImGui::SetWindowPos(ImVec2(653*windowFactor.x,20*windowFactor.y),0);
+  ImGui::PlotHistogram("", histogramDataOffset, IM_ARRAYSIZE(histogramDataOffset), 0, "Offset", 0.f, maxValueOffset, ImVec2(300*windowFactor.x,80*windowFactor.y));
   ImGui::End();
 
   ImGui::Begin("Histogram3", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove);
-  ImGui::SetWindowPos(ImVec2(50,500),0);
-  ImGui::PlotHistogram("", histogramDataEqualized, IM_ARRAYSIZE(histogramDataEqualized), 0, "Equalized", 0.f, maxValueEqualized, ImVec2(300,80));
+  ImGui::SetWindowPos(ImVec2(50*windowFactor.x, 500*windowFactor.y),0);
+  ImGui::PlotHistogram("", histogramDataEqualized, IM_ARRAYSIZE(histogramDataEqualized), 0, "Equalized", 0.f, maxValueEqualized, ImVec2(300*windowFactor.x,80*windowFactor.y));
   ImGui::End();
 
   ImGui::Begin("Histogram4", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove);
-  ImGui::SetWindowPos(ImVec2(653,500),0);
-  ImGui::PlotHistogram("", histogramDataOffsetEqualized, IM_ARRAYSIZE(histogramDataOffsetEqualized), 0, "Offset Equalized", 0.f, maxValueOffsetEqualized, ImVec2(300,80));
+  ImGui::SetWindowPos(ImVec2(653*windowFactor.x,500*windowFactor.y),0);
+  ImGui::PlotHistogram("", histogramDataOffsetEqualized, IM_ARRAYSIZE(histogramDataOffsetEqualized), 0, "Offset Equalized", 0.f, maxValueOffsetEqualized, ImVec2(300*windowFactor.x,80*windowFactor.y));
   ImGui::End();
 }
 
@@ -131,6 +134,9 @@ void EditorGUI::update(double delta) {}
 
 EditorGUI::EditorGUI() : Component()
 {
+  windowFactor.y = getEngine()->getWindow()->getHeight()/1024.0f;
+  windowFactor.x = getEngine()->getWindow()->getWidth()/1024.0f;
+
   memset(histogramDataOriginal,0, sizeof(histogramDataOriginal));
   memset(histogramDataOffset,0, sizeof(histogramDataOffset));
   memset(histogramDataOffsetEqualized,0, sizeof(histogramDataOffsetEqualized));
