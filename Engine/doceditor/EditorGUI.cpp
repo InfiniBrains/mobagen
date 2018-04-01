@@ -76,7 +76,6 @@ static bool applied = false;
 
 void EditorGUI::onGUI(ImGuiContext* context)
 {
-
   mainMenu();
 
   if(applied == false) {
@@ -257,8 +256,8 @@ void EditorGUI::equalize() {
       auto modifiedMat = std::make_shared<Material>(secondImage, normalTexture, specularTexture);
       auto modifiedMesh = Plane::getMesh();
       secondEntity->addComponent<MeshRenderer>(modifiedMesh, modifiedMat);
-      secondEntity->getTransform()->setPosition(glm::vec3(-300, 0, 250));
-      secondEntity->getTransform()->setScale(glm::vec3(300, 1, 300));
+      secondEntity->getTransform()->setPosition(glm::vec3(-300, 0, 200));
+      secondEntity->getTransform()->setScale(glm::vec3(400, 1, 400));
       rootScene->addChild(secondEntity);
     }
 
@@ -313,8 +312,8 @@ void EditorGUI::equalize() {
       auto modifiedMat = std::make_shared<Material>(thirdImage, normalTexture, specularTexture);
       auto modifiedMesh = Plane::getMesh();
       thirdEntity->addComponent<MeshRenderer>(modifiedMesh, modifiedMat);
-      thirdEntity->getTransform()->setPosition(glm::vec3(300, 0, -250));
-      thirdEntity->getTransform()->setScale(glm::vec3(300, 1, 300));
+      thirdEntity->getTransform()->setPosition(glm::vec3(300, 0, -300));
+      thirdEntity->getTransform()->setScale(glm::vec3(400, 1, 400));
       rootScene->addChild(thirdEntity);
     }
 
@@ -341,8 +340,8 @@ void EditorGUI::equalize() {
       auto modifiedMat = std::make_shared<Material>(forthImage, normalTexture, specularTexture);
       auto modifiedMesh = Plane::getMesh();
       forthEntity->addComponent<MeshRenderer>(modifiedMesh, modifiedMat);
-      forthEntity->getTransform()->setPosition(glm::vec3(-300, 0, -250));
-      forthEntity->getTransform()->setScale(glm::vec3(300, 1, 300));
+      forthEntity->getTransform()->setPosition(glm::vec3(-300, 0, -300));
+      forthEntity->getTransform()->setScale(glm::vec3(400, 1, 400));
       rootScene->addChild(forthEntity);
     }
 

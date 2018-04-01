@@ -48,8 +48,8 @@ void DocEditor::init(GLManager *glManager)
   auto backgroundMat = std::make_shared<Material>(getRootScene()->getComponent<EditorGUI>()->firstImage, getRootScene()->getComponent<EditorGUI>()->normalTexture, getRootScene()->getComponent<EditorGUI>()->specularTexture);
   auto backgroundMesh = Plane::getMesh();
   planeEntity->addComponent<MeshRenderer>(backgroundMesh, backgroundMat);
-  planeEntity->getTransform()->setPosition(glm::vec3(300, 0, 250));
-  planeEntity->getTransform()->setScale(glm::vec3(300, 1, 300));
+  planeEntity->getTransform()->setPosition(glm::vec3(300, 0, 200));
+  planeEntity->getTransform()->setScale(glm::vec3(400, 1, 400));
   addToScene(planeEntity);
 
   auto planeSpotLight =  std::make_shared<Entity>();
