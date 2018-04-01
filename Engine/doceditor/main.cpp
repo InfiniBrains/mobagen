@@ -43,9 +43,9 @@ void DocEditor::init(GLManager *glManager)
   getRootScene()->getComponent<EditorGUI>()->specularTexture = std::make_shared<Texture>(Asset("black.jpg"));
 
   auto planeEntity = std::make_shared<Entity>();
-  getRootScene()->getComponent<EditorGUI>()->originalImage = std::make_shared<Texture>(Asset("boat.png"));
-  getRootScene()->getComponent<EditorGUI>()->originalEntity = planeEntity;
-  auto backgroundMat = std::make_shared<Material>(getRootScene()->getComponent<EditorGUI>()->originalImage, getRootScene()->getComponent<EditorGUI>()->normalTexture, getRootScene()->getComponent<EditorGUI>()->specularTexture);
+  getRootScene()->getComponent<EditorGUI>()->firstImage = std::make_shared<Texture>(Asset("boat.png"));
+  getRootScene()->getComponent<EditorGUI>()->firstEntity = planeEntity;
+  auto backgroundMat = std::make_shared<Material>(getRootScene()->getComponent<EditorGUI>()->firstImage, getRootScene()->getComponent<EditorGUI>()->normalTexture, getRootScene()->getComponent<EditorGUI>()->specularTexture);
   auto backgroundMesh = Plane::getMesh();
   planeEntity->addComponent<MeshRenderer>(backgroundMesh, backgroundMat);
   planeEntity->getTransform()->setPosition(glm::vec3(300, 0, 250));

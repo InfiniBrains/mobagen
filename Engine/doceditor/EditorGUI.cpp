@@ -145,9 +145,8 @@ EditorGUI::EditorGUI() : Component()
   auto dicomAsset = Asset("brain.dcm");
   gdcm::ImageReader imageReader;
 
-  int fileSize = dicomAsset.getIOStream()->fileSize();
+  auto fileSize = dicomAsset.getIOStream()->fileSize();
 
-  // todo: check for size greater than 4gb
   auto dicomFileData = new char[fileSize];
   dicomAsset.getIOStream()->read(dicomFileData,1,fileSize);
 
@@ -241,7 +240,7 @@ void EditorGUI::equalize() {
     // apply offset
     applied = true;
     {
-      auto modifiedData = originalImage->getTextureData()->data;
+      auto modifiedData = firstImage->getTextureData()->data;
       for (int i = 0; i < modifiedData.size(); i += 4) {
         int newValue = modifiedData[i] + imageOffset;
         newValue = MIN(255, MAX(0, newValue));
@@ -251,23 +250,23 @@ void EditorGUI::equalize() {
       }
       unsigned char *newData = &modifiedData[0];
 
-      auto newTextureData = std::make_shared<TextureData>(originalImage->width(), originalImage->height(), newData, GL_TEXTURE_2D, GL_LINEAR);
-      offsetImage = std::make_shared<Texture>(newTextureData);
+      auto newTextureData = std::make_shared<TextureData>(firstImage->width(), firstImage->height(), newData, GL_TEXTURE_2D, GL_LINEAR);
+      secondImage = std::make_shared<Texture>(newTextureData);
 
-      offsetEntity = std::make_shared<Entity>();
-      auto modifiedMat = std::make_shared<Material>(offsetImage, normalTexture, specularTexture);
+      secondEntity = std::make_shared<Entity>();
+      auto modifiedMat = std::make_shared<Material>(secondImage, normalTexture, specularTexture);
       auto modifiedMesh = Plane::getMesh();
-      offsetEntity->addComponent<MeshRenderer>(modifiedMesh, modifiedMat);
-      offsetEntity->getTransform()->setPosition(glm::vec3(-300, 0, 250));
-      offsetEntity->getTransform()->setScale(glm::vec3(300, 1, 300));
-      rootScene->addChild(offsetEntity);
+      secondEntity->addComponent<MeshRenderer>(modifiedMesh, modifiedMat);
+      secondEntity->getTransform()->setPosition(glm::vec3(-300, 0, 250));
+      secondEntity->getTransform()->setScale(glm::vec3(300, 1, 300));
+      rootScene->addChild(secondEntity);
     }
 
     // set histogram original
     {
       memset(histogramDataOriginal, 0, sizeof(histogramDataOriginal));
-      for (int i = 0; i < originalImage->height() * originalImage->width(); i++) {
-        auto color = originalImage->getTextureData()->data[i * 4]; // get the red channel of the grayscale rgba image
+      for (int i = 0; i < firstImage->height() * firstImage->width(); i++) {
+        auto color = firstImage->getTextureData()->data[i * 4]; // get the red channel of the grayscale rgba image
         histogramDataOriginal[color] += 1;
       }
       maxValueOriginal = 0;
@@ -279,8 +278,8 @@ void EditorGUI::equalize() {
     // set histogram offset
     {
       memset(histogramDataOffset, 0, sizeof(histogramDataOffset));
-      for (int i = 0; i < offsetImage->height() * offsetImage->width(); i++) {
-        auto color = offsetImage->getTextureData()->data[i * 4]; // get the red channel of the grayscale rgba image
+      for (int i = 0; i < secondImage->height() * secondImage->width(); i++) {
+        auto color = secondImage->getTextureData()->data[i * 4]; // get the red channel of the grayscale rgba image
         histogramDataOffset[color] += 1;
       }
       maxValueOffset = 0;
@@ -293,11 +292,11 @@ void EditorGUI::equalize() {
     {
       memset(transferOriginal, 0, sizeof(transferOriginal));
       transferOriginal[0] =
-          255.0f * histogramDataOriginal[0] / (float) (originalImage->height() * originalImage->width());
+          255.0f * histogramDataOriginal[0] / (float) (firstImage->height() * firstImage->width());
       for (int i = 1; i < 256; i++)
         transferOriginal[i] = transferOriginal[i - 1] + 255.0f * histogramDataOriginal[i] /
-                                                        (float) (originalImage->height() * originalImage->width());
-      auto equalizedData = originalImage->getTextureData()->data;
+                                                        (float) (firstImage->height() * firstImage->width());
+      auto equalizedData = firstImage->getTextureData()->data;
       for (int i = 0; i < equalizedData.size(); i += 4) {
         int newValue = (int) floor(transferOriginal[equalizedData[i]]);
         newValue = MIN(255, MAX(0, newValue));
@@ -307,25 +306,25 @@ void EditorGUI::equalize() {
       }
       unsigned char *newEqualizedData = &equalizedData[0];
 
-      auto newTextureData = std::make_shared<TextureData>(originalImage->width(),originalImage->height(), newEqualizedData ,GL_TEXTURE_2D,GL_LINEAR);
-      equalizedImage = std::make_shared<Texture>(newTextureData);
+      auto newTextureData = std::make_shared<TextureData>(firstImage->width(),firstImage->height(), newEqualizedData ,GL_TEXTURE_2D,GL_LINEAR);
+      thirdImage = std::make_shared<Texture>(newTextureData);
 
-      equalizedEntity = std::make_shared<Entity>();
-      auto modifiedMat = std::make_shared<Material>(equalizedImage, normalTexture, specularTexture);
+      thirdEntity = std::make_shared<Entity>();
+      auto modifiedMat = std::make_shared<Material>(thirdImage, normalTexture, specularTexture);
       auto modifiedMesh = Plane::getMesh();
-      equalizedEntity->addComponent<MeshRenderer>(modifiedMesh, modifiedMat);
-      equalizedEntity->getTransform()->setPosition(glm::vec3(300, 0, -250));
-      equalizedEntity->getTransform()->setScale(glm::vec3(300, 1, 300));
-      rootScene->addChild(equalizedEntity);
+      thirdEntity->addComponent<MeshRenderer>(modifiedMesh, modifiedMat);
+      thirdEntity->getTransform()->setPosition(glm::vec3(300, 0, -250));
+      thirdEntity->getTransform()->setScale(glm::vec3(300, 1, 300));
+      rootScene->addChild(thirdEntity);
     }
 
     // new equalized image from offset
     {
       memset(transferOffset, 0, sizeof(transferOffset));
-      transferOffset[0] = 255.0f * histogramDataOffset[0] / (float) (originalImage->height() * originalImage->width());
+      transferOffset[0] = 255.0f * histogramDataOffset[0] / (float) (firstImage->height() * firstImage->width());
       for (int i = 1; i < 256; i++)
-        transferOffset[i] = transferOffset[i - 1] + 255.0f * histogramDataOffset[i] / (float) (originalImage->height() * originalImage->width());
-      auto equalizedData = offsetImage->getTextureData()->data;
+        transferOffset[i] = transferOffset[i - 1] + 255.0f * histogramDataOffset[i] / (float) (firstImage->height() * firstImage->width());
+      auto equalizedData = secondImage->getTextureData()->data;
       for (int i = 0; i < equalizedData.size(); i += 4) {
         int newValue = (int) floor(transferOffset[equalizedData[i]]);
         newValue = MIN(255, MAX(0, newValue));
@@ -335,23 +334,23 @@ void EditorGUI::equalize() {
       }
       unsigned char *newEqualizedData = &equalizedData[0];
 
-      auto newTextureData = std::make_shared<TextureData>(originalImage->width(),originalImage->height(), newEqualizedData ,GL_TEXTURE_2D,GL_LINEAR);
-      offsetEqualizedImage = std::make_shared<Texture>(newTextureData);
+      auto newTextureData = std::make_shared<TextureData>(firstImage->width(),firstImage->height(), newEqualizedData ,GL_TEXTURE_2D,GL_LINEAR);
+      forthImage = std::make_shared<Texture>(newTextureData);
 
-      offsetEqualizedEntity = std::make_shared<Entity>();
-      auto modifiedMat = std::make_shared<Material>(offsetEqualizedImage, normalTexture, specularTexture);
+      forthEntity = std::make_shared<Entity>();
+      auto modifiedMat = std::make_shared<Material>(forthImage, normalTexture, specularTexture);
       auto modifiedMesh = Plane::getMesh();
-      offsetEqualizedEntity->addComponent<MeshRenderer>(modifiedMesh, modifiedMat);
-      offsetEqualizedEntity->getTransform()->setPosition(glm::vec3(-300, 0, -250));
-      offsetEqualizedEntity->getTransform()->setScale(glm::vec3(300, 1, 300));
-      rootScene->addChild(offsetEqualizedEntity);
+      forthEntity->addComponent<MeshRenderer>(modifiedMesh, modifiedMat);
+      forthEntity->getTransform()->setPosition(glm::vec3(-300, 0, -250));
+      forthEntity->getTransform()->setScale(glm::vec3(300, 1, 300));
+      rootScene->addChild(forthEntity);
     }
 
     // set histogram equalized
     {
       memset(histogramDataEqualized, 0, sizeof(histogramDataEqualized));
-      for (int i = 0; i < offsetImage->height() * offsetImage->width(); i++) {
-        auto color = equalizedImage->getTextureData()->data[i * 4]; // get the red channel of the grayscale rgba image
+      for (int i = 0; i < secondImage->height() * secondImage->width(); i++) {
+        auto color = thirdImage->getTextureData()->data[i * 4]; // get the red channel of the grayscale rgba image
         histogramDataEqualized[color] += 1;
       }
       maxValueEqualized = 0;
@@ -363,8 +362,8 @@ void EditorGUI::equalize() {
     // set histogram offset equalized
     {
       memset(histogramDataOffsetEqualized, 0, sizeof(histogramDataOffsetEqualized));
-      for (int i = 0; i < offsetEqualizedImage->height() * offsetEqualizedImage->width(); i++) {
-        auto color = offsetEqualizedImage->getTextureData()->data[i * 4]; // get the red channel of the grayscale rgba image
+      for (int i = 0; i < forthImage->height() * forthImage->width(); i++) {
+        auto color = forthImage->getTextureData()->data[i * 4]; // get the red channel of the grayscale rgba image
         histogramDataOffsetEqualized[color] += 1;
       }
       maxValueOffsetEqualized = 0;
@@ -379,21 +378,60 @@ void EditorGUI::equalize() {
 
 void EditorGUI::highPass() {
   applied = true;
+  auto outputdata = new unsigned char[firstImage->getTextureData()->data.size()];
+  Laplace(& (firstImage->getTextureData()->data[0]),outputdata,firstImage->width(),firstImage->height());
+
+
+  auto newTextureData = std::make_shared<TextureData>(firstImage->width(), firstImage->height(), outputdata, GL_TEXTURE_2D, GL_LINEAR);
+  secondImage = std::make_shared<Texture>(newTextureData);
+
+  secondEntity = std::make_shared<Entity>();
+  auto modifiedMat = std::make_shared<Material>(secondImage, normalTexture, specularTexture);
+  auto modifiedMesh = Plane::getMesh();
+  secondEntity->addComponent<MeshRenderer>(modifiedMesh, modifiedMat);
+  secondEntity->getTransform()->setPosition(glm::vec3(-300, 0, 250));
+  secondEntity->getTransform()->setScale(glm::vec3(300, 1, 300));
+  rootScene->addChild(secondEntity);
+  
+  delete[] outputdata;
 }
 
-void EditorGUI::Laplace(unsigned char * input, unsigned char * output, int width, int height, int bytesPerChannels=1, int numberOfChannels=4)
+void EditorGUI::Laplace(unsigned char * input, unsigned char * output, int width, int height, int bytesPerChannels, int numberOfChannels)
 {
   if(numberOfChannels!=4 || bytesPerChannels!=1)
     throw NotImplementedException();
 
   for(int line =0;line<height;line++){
     for(int column =0;column<width;column++){
-      int pos = line * column * numberOfChannels * bytesPerChannels;
-      unsigned char color = input[pos];
+      int pos = (line * width + column) * numberOfChannels * bytesPerChannels;
+	  unsigned char color = LaplaceMask(input, width, height, line, column);
       output[pos]  =color;
       output[pos+1]=color;
       output[pos+2]=color;
       output[pos+3]=255;
     }
   }
+}
+
+unsigned char EditorGUI::LaplaceMask(unsigned char* input, int width, int height, int line, int column, int bytesPerChannels, int numberOfChannels)
+{
+  // TODO: handle borders
+  if (column >= width || column <= 0 || line >= height || line <= 0)
+    return 0;
+
+  float laplace[] = {-1,-1,-1,-1,8,-1,-1,-1,-1};
+  float ret = 0;
+  for (int y = -1; y <= 1; y++) {
+	for (int x = -1; x <= 1; x++) {
+	  int pos = ((line+y) * width + column+x) * numberOfChannels * bytesPerChannels;
+	  float color = 0;
+	  for (auto i = 0; i < numberOfChannels - 1; i++)
+		color += input[pos + i];
+	  color /= numberOfChannels - 1;
+	  color *= laplace[x + 1 + (y + 1) * 3];
+	  ret += color;
+	}
+  }
+  
+  return (unsigned char) MIN(MAX(ret,0),255);
 }

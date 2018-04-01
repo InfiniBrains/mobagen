@@ -20,17 +20,17 @@ public:
   void deregisterFromEngine(Engine* engine) override {};
   void onGUI(ImGuiContext* context) override;
 
-  std::shared_ptr<Texture> originalImage;
-  std::shared_ptr<Entity> originalEntity;
+  std::shared_ptr<Texture> firstImage;
+  std::shared_ptr<Entity> firstEntity;
 
-  std::shared_ptr<Texture> offsetImage;
-  std::shared_ptr<Entity> offsetEntity;
+  std::shared_ptr<Texture> secondImage;
+  std::shared_ptr<Entity> secondEntity;
 
-  std::shared_ptr<Texture> equalizedImage;
-  std::shared_ptr<Entity> equalizedEntity;
+  std::shared_ptr<Texture> thirdImage;
+  std::shared_ptr<Entity> thirdEntity;
 
-  std::shared_ptr<Texture> offsetEqualizedImage;
-  std::shared_ptr<Entity> offsetEqualizedEntity;
+  std::shared_ptr<Texture> forthImage;
+  std::shared_ptr<Entity> forthEntity;
 
   std::shared_ptr<Texture> normalTexture;
   std::shared_ptr<Texture> specularTexture;
@@ -41,7 +41,8 @@ private:
   void options();
   void equalize();
   void highPass();
-  void Laplace(unsigned char * input, unsigned char * output, int width, int height,int bytesPerChannels, int numberOfChannels);
+  void Laplace(unsigned char * input, unsigned char * output, int width, int height, int bytesPerChannels = 1, int numberOfChannels = 4);
+  unsigned char LaplaceMask(unsigned char * input, int width, int height, int line, int column, int bytesPerChannels = 1, int numberOfChannels = 4);
 
   // 0 -> not chosen
   // 1 -> equalization
