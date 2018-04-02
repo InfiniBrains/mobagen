@@ -327,7 +327,7 @@ void EditorGUI::equalize() {
       for (int i = 0; i < equalizedData.size(); i += 4) {
         int newValue = (int) floor(transferOffset[equalizedData[i]]);
         newValue = MIN(255, MAX(0, newValue));
-        equalizedData[i] = newValue;   // r
+        equalizedData[i] = newValue;     // r
         equalizedData[i + 1] = newValue; // g
         equalizedData[i + 2] = newValue; // b
       }
@@ -380,7 +380,6 @@ void EditorGUI::highPass() {
   auto outputdata = new unsigned char[firstImage->getTextureData()->data.size()];
   Laplace(& (firstImage->getTextureData()->data[0]),outputdata,firstImage->width(),firstImage->height());
 
-
   auto newTextureData = std::make_shared<TextureData>(firstImage->width(), firstImage->height(), outputdata, GL_TEXTURE_2D, GL_LINEAR);
   secondImage = std::make_shared<Texture>(newTextureData);
 
@@ -388,10 +387,10 @@ void EditorGUI::highPass() {
   auto modifiedMat = std::make_shared<Material>(secondImage, normalTexture, specularTexture);
   auto modifiedMesh = Plane::getMesh();
   secondEntity->addComponent<MeshRenderer>(modifiedMesh, modifiedMat);
-  secondEntity->getTransform()->setPosition(glm::vec3(-300, 0, 250));
-  secondEntity->getTransform()->setScale(glm::vec3(300, 1, 300));
+  secondEntity->getTransform()->setPosition(glm::vec3(-300, 0, 200));
+  secondEntity->getTransform()->setScale(glm::vec3(400, 1, 400));
   rootScene->addChild(secondEntity);
-  
+
   delete[] outputdata;
 }
 
