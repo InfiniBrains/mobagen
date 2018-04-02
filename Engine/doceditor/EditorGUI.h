@@ -11,7 +11,7 @@ class EditorGUI : public Component
 {
 public:
   EditorGUI();
-  ~EditorGUI(){};
+  ~EditorGUI() = default;;
   const char* getType() override;
   void updateInput(Input* input, double delta) override {};
   void update(double delta) override;

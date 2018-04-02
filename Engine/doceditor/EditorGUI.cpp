@@ -78,40 +78,43 @@ void EditorGUI::onGUI(ImGuiContext* context)
 {
   mainMenu();
 
-  if(applied == false) {
+  if(!applied) {
     // options
     ImGui::Begin("Options", nullptr, ImVec2(128*windowFactor.x, 128*windowFactor.y), 0, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove);
     ImGui::SetWindowPos(ImVec2(370*windowFactor.x, 20*windowFactor.y), 0);
     if (option == 0)
       options();
 
-    if (option == 1 && applied == false)
+    if (option == 1 && !applied)
       equalize();
 
-    if (option == 2 && applied == false)
+    if (option == 2 && !applied)
       highPass();
     ImGui::End();
   }
 
-  ImGui::Begin("Histogram", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove);
-  ImGui::SetWindowPos(ImVec2(50*windowFactor.x,20*windowFactor.y),0);
-  ImGui::PlotHistogram("", histogramDataOriginal, IM_ARRAYSIZE(histogramDataOriginal), 0, "Original", 0.f, maxValueOriginal, ImVec2(300*windowFactor.x,80*windowFactor.y));
-  ImGui::End();
+  if (option == 1)
+  {
+    ImGui::Begin("Histogram", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove);
+    ImGui::SetWindowPos(ImVec2(50 * windowFactor.x, 20 * windowFactor.y), 0);
+    ImGui::PlotHistogram("", histogramDataOriginal, IM_ARRAYSIZE(histogramDataOriginal), 0, "Original", 0.f, maxValueOriginal, ImVec2(300 * windowFactor.x, 80 * windowFactor.y));
+    ImGui::End();
 
-  ImGui::Begin("Histogram2", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove);
-  ImGui::SetWindowPos(ImVec2(653*windowFactor.x,20*windowFactor.y),0);
-  ImGui::PlotHistogram("", histogramDataOffset, IM_ARRAYSIZE(histogramDataOffset), 0, "Offset", 0.f, maxValueOffset, ImVec2(300*windowFactor.x,80*windowFactor.y));
-  ImGui::End();
+    ImGui::Begin("Histogram2", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove);
+    ImGui::SetWindowPos(ImVec2(653 * windowFactor.x, 20 * windowFactor.y), 0);
+    ImGui::PlotHistogram("", histogramDataOffset, IM_ARRAYSIZE(histogramDataOffset), 0, "Offset", 0.f, maxValueOffset, ImVec2(300 * windowFactor.x, 80 * windowFactor.y));
+    ImGui::End();
 
-  ImGui::Begin("Histogram3", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove);
-  ImGui::SetWindowPos(ImVec2(50*windowFactor.x, 500*windowFactor.y),0);
-  ImGui::PlotHistogram("", histogramDataEqualized, IM_ARRAYSIZE(histogramDataEqualized), 0, "Equalized", 0.f, maxValueEqualized, ImVec2(300*windowFactor.x,80*windowFactor.y));
-  ImGui::End();
+    ImGui::Begin("Histogram3", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove);
+    ImGui::SetWindowPos(ImVec2(50 * windowFactor.x, 500 * windowFactor.y), 0);
+    ImGui::PlotHistogram("", histogramDataEqualized, IM_ARRAYSIZE(histogramDataEqualized), 0, "Equalized", 0.f, maxValueEqualized, ImVec2(300 * windowFactor.x, 80 * windowFactor.y));
+    ImGui::End();
 
-  ImGui::Begin("Histogram4", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove);
-  ImGui::SetWindowPos(ImVec2(653*windowFactor.x,500*windowFactor.y),0);
-  ImGui::PlotHistogram("", histogramDataOffsetEqualized, IM_ARRAYSIZE(histogramDataOffsetEqualized), 0, "Offset Equalized", 0.f, maxValueOffsetEqualized, ImVec2(300*windowFactor.x,80*windowFactor.y));
-  ImGui::End();
+    ImGui::Begin("Histogram4", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove);
+    ImGui::SetWindowPos(ImVec2(653 * windowFactor.x, 500 * windowFactor.y), 0);
+    ImGui::PlotHistogram("", histogramDataOffsetEqualized, IM_ARRAYSIZE(histogramDataOffsetEqualized), 0, "Offset Equalized", 0.f, maxValueOffsetEqualized, ImVec2(300 * windowFactor.x, 80 * windowFactor.y));
+    ImGui::End();
+  }
 }
 
 // show image
@@ -131,7 +134,7 @@ const char* EditorGUI::getType()
 
 void EditorGUI::update(double delta) {}
 
-EditorGUI::EditorGUI() : Component()
+EditorGUI::EditorGUI() 
 {
   windowFactor.y = getEngine()->getWindow()->getHeight()/1024.0f;
   windowFactor.x = getEngine()->getWindow()->getWidth()/1024.0f;
