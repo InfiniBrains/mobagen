@@ -115,6 +115,29 @@ void EditorGUI::onGUI(ImGuiContext* context)
     ImGui::PlotHistogram("", histogramDataOffsetEqualized, IM_ARRAYSIZE(histogramDataOffsetEqualized), 0, "Offset Equalized", 0.f, maxValueOffsetEqualized, ImVec2(300 * windowFactor.x, 80 * windowFactor.y));
     ImGui::End();
   }
+
+  if (option == 2)
+  {
+    ImGui::Begin("Original", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove);
+    ImGui::SetWindowPos(ImVec2(50 * windowFactor.x, 50 * windowFactor.y), 0);
+    ImGui::Text("Original");
+    ImGui::End();
+
+    ImGui::Begin("Laplacian", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove);
+    ImGui::SetWindowPos(ImVec2(653 * windowFactor.x, 50 * windowFactor.y), 0);
+    ImGui::Text("Laplacian");
+    ImGui::End();
+
+    ImGui::Begin("Sobel", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove);
+    ImGui::SetWindowPos(ImVec2(50 * windowFactor.x, 550 * windowFactor.y), 0);
+    ImGui::Text("Sobel");
+    ImGui::End();
+
+    ImGui::Begin("Kirsch", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove);
+    ImGui::SetWindowPos(ImVec2(653 * windowFactor.x, 550 * windowFactor.y), 0);
+    ImGui::Text("Kirsch");
+    ImGui::End();
+  }
 }
 
 // show image
@@ -380,21 +403,61 @@ void EditorGUI::equalize() {
 
 void EditorGUI::highPass() {
   applied = true;
-  auto outputdata = new unsigned char[firstImage->getTextureData()->data.size()];
-  Laplace(& (firstImage->getTextureData()->data[0]),outputdata,firstImage->width(),firstImage->height());
+  {
+    auto outputdata = new unsigned char[firstImage->getTextureData()->data.size()];
+    Laplace(&(firstImage->getTextureData()->data[0]), outputdata, firstImage->width(), firstImage->height());
 
-  auto newTextureData = std::make_shared<TextureData>(firstImage->width(), firstImage->height(), outputdata, GL_TEXTURE_2D, GL_LINEAR);
-  secondImage = std::make_shared<Texture>(newTextureData);
+    auto newTextureData = std::make_shared<TextureData>(firstImage->width(), firstImage->height(), outputdata,
+                                                        GL_TEXTURE_2D, GL_LINEAR);
+    secondImage = std::make_shared<Texture>(newTextureData);
 
-  secondEntity = std::make_shared<Entity>();
-  auto modifiedMat = std::make_shared<Material>(secondImage, normalTexture, specularTexture);
-  auto modifiedMesh = Plane::getMesh();
-  secondEntity->addComponent<MeshRenderer>(modifiedMesh, modifiedMat);
-  secondEntity->getTransform()->setPosition(glm::vec3(-300, 0, 200));
-  secondEntity->getTransform()->setScale(glm::vec3(400, 1, 400));
-  rootScene->addChild(secondEntity);
+    secondEntity = std::make_shared<Entity>();
+    auto modifiedMat = std::make_shared<Material>(secondImage, normalTexture, specularTexture);
+    auto modifiedMesh = Plane::getMesh();
+    secondEntity->addComponent<MeshRenderer>(modifiedMesh, modifiedMat);
+    secondEntity->getTransform()->setPosition(glm::vec3(-300, 0, 200));
+    secondEntity->getTransform()->setScale(glm::vec3(400, 1, 400));
+    rootScene->addChild(secondEntity);
+    delete[] outputdata;
+  }
 
-  delete[] outputdata;
+  {
+    auto outputdata = new unsigned char[firstImage->getTextureData()->data.size()];
+    Sobel(&(firstImage->getTextureData()->data[0]), outputdata, firstImage->width(), firstImage->height());
+
+    auto newTextureData = std::make_shared<TextureData>(firstImage->width(), firstImage->height(), outputdata,
+                                                        GL_TEXTURE_2D, GL_LINEAR);
+    thirdImage = std::make_shared<Texture>(newTextureData);
+
+    thirdEntity = std::make_shared<Entity>();
+    auto modifiedMat = std::make_shared<Material>(thirdImage, normalTexture, specularTexture);
+    auto modifiedMesh = Plane::getMesh();
+    thirdEntity->addComponent<MeshRenderer>(modifiedMesh, modifiedMat);
+    thirdEntity->getTransform()->setPosition(glm::vec3(300, 0, -300));
+    thirdEntity->getTransform()->setScale(glm::vec3(400, 1, 400));
+    rootScene->addChild(thirdEntity);
+
+    delete[] outputdata;
+  }
+
+  {
+    auto outputdata = new unsigned char[firstImage->getTextureData()->data.size()];
+    Kirsch(&(firstImage->getTextureData()->data[0]), outputdata, firstImage->width(), firstImage->height());
+
+    auto newTextureData = std::make_shared<TextureData>(firstImage->width(), firstImage->height(), outputdata,
+                                                        GL_TEXTURE_2D, GL_LINEAR);
+    forthImage = std::make_shared<Texture>(newTextureData);
+
+    forthEntity = std::make_shared<Entity>();
+    auto modifiedMat = std::make_shared<Material>(forthImage, normalTexture, specularTexture);
+    auto modifiedMesh = Plane::getMesh();
+    forthEntity->addComponent<MeshRenderer>(modifiedMesh, modifiedMat);
+    forthEntity->getTransform()->setPosition(glm::vec3(-300, 0, -300));
+    forthEntity->getTransform()->setScale(glm::vec3(400, 1, 400));
+    rootScene->addChild(forthEntity);
+
+    delete[] outputdata;
+  }
 }
 
 void EditorGUI::Laplace(unsigned char * input, unsigned char * output, int width, int height, int bytesPerChannels, int numberOfChannels)
@@ -402,10 +465,17 @@ void EditorGUI::Laplace(unsigned char * input, unsigned char * output, int width
   if(numberOfChannels!=4 || bytesPerChannels!=1)
     throw NotImplementedException();
 
+  float laplace[] = {-1,-1,-1,
+                     -1, 8,-1,
+                     -1,-1,-1};
+
   for(int line =0;line<height;line++){
     for(int column =0;column<width;column++){
       int pos = (line * width + column) * numberOfChannels * bytesPerChannels;
-	  unsigned char color = LaplaceMask(input, width, height, line, column);
+
+      auto value = ApplyMask(input,width,height,line,column,laplace,3,3);
+      auto color = (unsigned char) MIN(MAX(value,0),255);
+
       output[pos]  =color;
       output[pos+1]=color;
       output[pos+2]=color;
@@ -414,25 +484,111 @@ void EditorGUI::Laplace(unsigned char * input, unsigned char * output, int width
   }
 }
 
-unsigned char EditorGUI::LaplaceMask(unsigned char* input, int width, int height, int line, int column, int bytesPerChannels, int numberOfChannels)
+
+void EditorGUI::Sobel(unsigned char *input, unsigned char *output, int width, int height, int bytesPerChannels, int numberOfChannels)
 {
+  if(numberOfChannels!=4 || bytesPerChannels!=1)
+    throw NotImplementedException();
+
+  float vert[] = {-1,0,+1,
+                  -2,0,2,
+                  -1,0,1};
+  float hor[] = { 1, 2, 1,
+                  0, 0, 0,
+                 -1,-2,-1};
+
+  for(int line =0;line<height;line++){
+    for(int column =0;column<width;column++){
+      int pos = (line * width + column) * numberOfChannels * bytesPerChannels;
+
+      auto vertvalue = ApplyMask(input,width,height,line,column,vert,3,3);
+      auto horivalue = ApplyMask(input,width,height,line,column,hor,3,3);
+
+      auto color = (unsigned char) MIN(MAX(sqrt(vertvalue*vertvalue + horivalue*horivalue),0),255);
+
+      output[pos]  =color;
+      output[pos+1]=color;
+      output[pos+2]=color;
+      output[pos+3]=255;
+    }
+  }
+}
+
+void EditorGUI::Kirsch(unsigned char *input, unsigned char *output, int width, int height, int bytesPerChannels, int numberOfChannels)
+{
+  if(numberOfChannels!=4 || bytesPerChannels!=1)
+    throw NotImplementedException();
+
+  float v1[] = { 5,  5,  5,
+                -3,  0, -3,
+                -3, -3, -3};
+  float v2[] = { 5,  5, -3,
+                 5,  0, -3,
+                -3, -3, -3};
+  float v3[] = { 5, -3, -3,
+                 5,  0, -3,
+                 5, -3, -3};
+  float v4[] = {-3, -3, -3,
+                 5,  0, -3,
+                 5,  5, -3};
+  float v5[] = {-3, -3, -3,
+                -3,  0, -3,
+                 5,  5,  5};
+  float v6[] = {-3, -3, -3,
+                -3,  0,  5,
+                -3,  5,  5};
+  float v7[] = {-3, -3,  5,
+                -3,  0,  5,
+                -3, -3,  5};
+  float v8[] = {-3,  5,  5,
+                -3,  0,  5,
+                -3, -3, -3};
+
+  for(int line =0;line<height;line++){
+    for(int column =0;column<width;column++){
+      int pos = (line * width + column) * numberOfChannels * bytesPerChannels;
+
+      auto r1 = ApplyMask(input,width,height,line,column,v1,3,3);
+      auto r2 = ApplyMask(input,width,height,line,column,v2,3,3);
+      auto r3 = ApplyMask(input,width,height,line,column,v3,3,3);
+      auto r4 = ApplyMask(input,width,height,line,column,v4,3,3);
+      auto r5 = ApplyMask(input,width,height,line,column,v5,3,3);
+      auto r6 = ApplyMask(input,width,height,line,column,v6,3,3);
+      auto r7 = ApplyMask(input,width,height,line,column,v7,3,3);
+      auto r8 = ApplyMask(input,width,height,line,column,v8,3,3);
+
+      // 765 == 3*255 -> this is used to clamp the maximum pixel value properly
+      auto max = MIN(MAX(MAX(MAX(MAX(r1,r2),MAX(r3,r4)), MAX(MAX(r5,r6),MAX(r7,r8))),0),765)/3;
+      auto color = (unsigned char) max;
+
+      output[pos]  =color;
+      output[pos+1]=color;
+      output[pos+2]=color;
+      output[pos+3]=255;
+    }
+  }
+}
+
+float EditorGUI::ApplyMask(unsigned char *input, int width, int height, int line, int column, float *mask, int maskWidth,
+                     int maskHeight, int bytesPerChannels, int numberOfChannels) {
   // TODO: handle borders
-  if (column >= width || column <= 0 || line >= height || line <= 0)
+  if (column >= width - maskWidth/2 + 1 || column <= maskWidth/2 - 1 || line >= height - maskHeight/2 + 1 || line <= maskHeight/2 - 1)
     return 0;
 
-  float laplace[] = {-1,-1,-1,-1,8,-1,-1,-1,-1};
   float ret = 0;
-  for (int y = -1; y <= 1; y++) {
-	for (int x = -1; x <= 1; x++) {
-	  int pos = ((line+y) * width + column+x) * numberOfChannels * bytesPerChannels;
-	  float color = 0;
-	  for (auto i = 0; i < numberOfChannels - 1; i++)
-		color += input[pos + i];
-	  color /= numberOfChannels - 1;
-	  color *= laplace[x + 1 + (y + 1) * 3];
-	  ret += color;
-	}
+  for (int y = -maskHeight/2; y <= maskHeight/2; y++) {
+    for (int x = -maskWidth/2; x <= maskWidth/2; x++) {
+      int pos = ((line+y) * width + column+x) * numberOfChannels * bytesPerChannels;
+      float color = 0;
+      for (auto i = 0; i < numberOfChannels - 1; i++)
+        color += input[pos + i];
+      color /= numberOfChannels - 1;
+      color *= mask[x + maskWidth/2 + (y + maskHeight/2) * maskWidth];
+      ret += color;
+    }
   }
-  
-  return (unsigned char) MIN(MAX(ret,0),255);
+
+  return ret;
 }
+
+

@@ -41,8 +41,12 @@ private:
   void options();
   void equalize();
   void highPass();
+
+  float ApplyMask(unsigned char * input, int width, int height, int line, int column, float *mask, int maskWidth, int maskHeight, int bytesPerChannels = 1, int numberOfChannels = 4);
   void Laplace(unsigned char * input, unsigned char * output, int width, int height, int bytesPerChannels = 1, int numberOfChannels = 4);
-  unsigned char LaplaceMask(unsigned char * input, int width, int height, int line, int column, int bytesPerChannels = 1, int numberOfChannels = 4);
+  void Sobel(unsigned char * input, unsigned char * output, int width, int height, int bytesPerChannels = 1, int numberOfChannels = 4);
+  void Kirsch(unsigned char * input, unsigned char * output, int width, int height, int bytesPerChannels = 1, int numberOfChannels = 4);
+
 
   // 0 -> not chosen
   // 1 -> equalization
