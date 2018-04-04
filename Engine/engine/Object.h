@@ -8,6 +8,8 @@
 #include <vector>
 #include <memory>
 #include "Error.h"
+#include <typeindex>
+#include <typeinfo>
 
 class Object {
 public:
@@ -15,10 +17,10 @@ public:
   virtual ~Object();
 
   /// Should the object be hidden, saved with the scene or modifiable by the user?
-  HideFlags hideFlags;
+  HideFlags hideFlags = HideFlags::None;
 
   /// Returns the instance id of the object.
-  int GetInstanceID();
+  uint64_t GetInstanceID();
 
   /// Removes a gameobject, component or asset.
   static void Destroy(std::shared_ptr<Object>) {
@@ -63,6 +65,7 @@ public:
   inline bool operator != (const Object & other);
 
 private:
-  int m_InstanceID;
+  uint64_t _id;
+  static uint64_t _counter_;
 };
 

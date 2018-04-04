@@ -569,8 +569,7 @@ void EditorGUI::Kirsch(unsigned char *input, unsigned char *output, int width, i
   }
 }
 
-float EditorGUI::ApplyMask(unsigned char *input, int width, int height, int line, int column, float *mask, int maskWidth,
-                     int maskHeight, int bytesPerChannels, int numberOfChannels) {
+float EditorGUI::ApplyMask(unsigned char *input, int width, int height, int line, int column, float *mask, int maskWidth, int maskHeight, int bytesPerChannels, int numberOfChannels) {
   // TODO: handle borders
   if (column >= width - maskWidth/2 + 1 || column <= maskWidth/2 - 1 || line >= height - maskHeight/2 + 1 || line <= maskHeight/2 - 1)
     return 0;

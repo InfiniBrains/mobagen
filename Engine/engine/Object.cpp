@@ -5,24 +5,24 @@
 #include "Object.h"
 #include "Error.h"
 
-int Object::GetInstanceID(){
-  return m_InstanceID;
+uint64_t Object::GetInstanceID(){
+  return _id;
 }
 
 bool Object::operator==(const Object &other)
 {
   // todo: improve this operator with type check, and make it tolerant to any type of object
-  return m_InstanceID == other.m_InstanceID;
+  return _id == other._id;
 }
 
 bool Object::operator!=(const Object &other)
 {
   // todo: improve this operator with type check, and make it tolerant to any type of object
-  return m_InstanceID != other.m_InstanceID;
+  return _id != other._id;
 }
 
-Object::Object() {}
+Object::Object() : _id(++_counter_) {}
 
-Object::~Object() {
+Object::~Object() = default;
 
-}
+uint64_t Object::_counter_ = 0;
