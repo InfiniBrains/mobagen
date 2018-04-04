@@ -21,7 +21,7 @@ bool Object::operator!=(const Object &other)
   return _id != other._id;
 }
 
-Object::Object() : _id(++_counter_) {}
+Object::Object() : _oid(++_counter_) {}
 
 Object::~Object() = default;
 

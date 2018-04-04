@@ -66,8 +66,11 @@ public:
   inline bool operator != (const Object & other);
 
 private:
-  uint64_t _id;
+  // object id
+  uint64_t _oid;
   static uint64_t _counter_;
+
+  // todo: create class id
 
   static std::unordered_multimap<size_t, std::unique_ptr<Object>> objects;
 };
