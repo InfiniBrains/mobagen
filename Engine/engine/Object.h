@@ -10,6 +10,7 @@
 #include "Error.h"
 #include <typeindex>
 #include <typeinfo>
+#include <unordered_map>
 
 class Object {
 public:
@@ -67,5 +68,7 @@ public:
 private:
   uint64_t _id;
   static uint64_t _counter_;
+
+  static std::unordered_multimap<size_t, std::unique_ptr<Object>> objects;
 };
 

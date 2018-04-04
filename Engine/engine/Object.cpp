@@ -26,3 +26,4 @@ Object::Object() : _id(++_counter_) {}
 Object::~Object() = default;
 
 uint64_t Object::_counter_ = 0;
+std::unordered_multimap<size_t, std::unique_ptr<Object>> Object::objects;
