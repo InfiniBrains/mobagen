@@ -1,7 +1,7 @@
 # MoBaGEn
 Welcome to the **MoBaGEn**. The **MO**dule **BA**sed **G**ame **EN**gine. 
 
-**MoBaGEn** is a free lightweight, cross-platform 3D Game Engine implemented in C++ and scripted in C#(Mono), Javascript(V8) and Lua.
+**MoBaGEn** is a free lightweight, cross-platform 3D Game Engine implemented in C++. I will support beind scripted in C#(Mono), Javascript(V8), python and Lua.
 
 [![Coverity](https://scan.coverity.com/projects/14798/badge.svg)](https://scan.coverity.com/projects/infinibrains-mobagen) [![Build Status](https://api.travis-ci.org/InfiniBrains/mobagen.svg?branch=master)](https://travis-ci.org/InfiniBrains/mobagen) [![Coverage Status](https://coveralls.io/repos/github/InfiniBrains/mobagen/badge.svg?branch=master)](https://coveralls.io/github/InfiniBrains/mobagen?branch=master)
 [![Waffle.io - Columns and their card count](https://badge.waffle.io/InfiniBrains/mobagen.svg?columns=all)](https://waffle.io/InfiniBrains/mobagen)
@@ -10,12 +10,12 @@ Welcome to the **MoBaGEn**. The **MO**dule **BA**sed **G**ame **EN**gine.
 ## Feature:
 - Scene Graph
 - 3D model loading (most common file formats)
-- Entity/Component Object Model
+- Entity/Component Object Model (WiP - Migrating to use something similar to Unity3D)
 - Lighting system (ambient/spot/point/directional lights) - Forward rendering
 - Bump mapping
 - Perspective/Ortho camera
-- Object picking (basic ray tracing/sphere collider collision detection)
-- Fully cross platform
+- Object picking (basic ray tracing/sphere collider collision detection) (WiP - We plan to integrate bullet physics to do it)
+- Fully cross platform - Windows (Tested: Visual Studio, MinGW; Continous integrated: MinGW on linux), HTML5 (via Emscripten), Linux (gcc and clang), Android (NDK, not integrated to CI yet), iOS(WiP - [Planned](https://github.com/InfiniBrains/mobagen/issues/39)), OSX(Xcode and terminal tools).
 
 ## License
 Licensed under the [![WTFPL](http://www.wtfpl.net/wp-content/uploads/2012/12/wtfpl-badge-4.png)](http://www.wtfpl.net/). In short: you can do whatever you want to do, and we kindly ask you for a contribution to pay our bills. See [LICENSE](LICENSE.md) for details.
