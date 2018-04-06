@@ -6,6 +6,7 @@
 
 std::map<std::string, std::vector<Entity*> > Entity::taggedEntities;
 
+
 Entity::Entity(const std::string& tag)
 {
   Entity::setTag(this, tag);

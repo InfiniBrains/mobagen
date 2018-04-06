@@ -1,5 +1,7 @@
 #include "GameComponent.h"
 
+class GameComponent;
+
 class GameTransform : public GameComponent
 {
 //  childCount	The number of children the Transform has.

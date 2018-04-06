@@ -26,7 +26,7 @@ struct Property {
   float max;
 };
 
-class Component : public Object
+class Component
 {
 public:
   Component();

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "GameBehaviour.h"
+#include "Behaviour.h"
 
-class GameScriptedBehaviour : public GameBehaviour
+class GameScriptedBehaviour : public Behaviour
 {
 //  runInEditMode	Allow a specific instance of a MonoBehaviour to run in edit mode (only available in the editor).
 //  useGUILayout	Disabling this lets you skip the GUI layout phase.

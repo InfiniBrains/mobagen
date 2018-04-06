@@ -4,9 +4,85 @@
 
 #include "Object.h"
 #include "Error.h"
+#include "Logger.h"
+
+std::unordered_map<uint64_t, Object*> Object::m_ObjectsById;
+std::vector<Object*> Object::m_ObjectsToBeDestroyed;
 
 uint64_t Object::GetInstanceID(){
   return _oid;
+}
+
+Object::Object() : _oid(++_counter_) {
+  m_ObjectsById[_oid] = this;
+}
+
+Object::~Object() = default;
+
+uint64_t Object::_counter_ = 0;
+
+void Object::Destroy (Object* obj)
+{
+  // todo: create a manager to destroy at the end of the frame
+  DestroyImmediate(obj);
+}
+
+void Object::DestroyImmediate (Object* obj)
+{
+  if(m_ObjectsById.size()==0)
+  {
+    delete(obj);
+    obj = nullptr;
+    return;
+  }
+
+  auto oid = obj->GetInstanceID();
+  auto it = m_ObjectsById.find(oid);
+
+  if(it!=m_ObjectsById.end())
+    m_ObjectsById.erase(it);
+
+  delete(obj);
+  obj = nullptr;
+  // todo: check if object is component, if so, remove it from gameobject attached
+}
+
+void Object::DontDestroyOnLoad (std::shared_ptr<Object>)
+{
+  throw NotImplementedException("Object DontDestroyOnLoad");
+}
+
+template<typename T>
+T* Object::FindObjectOfType ()
+{
+  // todo: find object by typeid instead of iterating over every object
+  for(auto it = m_ObjectsById.begin(); it!=m_ObjectsById.end(); it++)
+  {
+    auto item = dynamic_cast<T*>(it->second);
+    if(item!= nullptr)
+      return item;
+  }
+  return nullptr;
+}
+
+template<typename T>
+std::vector<T*> Object::FindObjectsOfType ()
+{
+  std::vector<T*> ret;
+  // todo: find object by typeid instead of iterating over every object
+  for(auto it = m_ObjectsById.begin(); it!=m_ObjectsById.end(); it++)
+  {
+    auto item = dynamic_cast<T*>(it->second);
+    if(item!= nullptr)
+      ret.push_back(item);
+  }
+  return ret;
+}
+
+template<class T, class... _Types>
+std::shared_ptr<T> Object::Instantiate (_Types &&... _Args) {
+  throw NotImplementedException("Object Instantiate");
+  return nullptr;
 }
 
 bool Object::operator==(const Object &other)
@@ -21,40 +97,19 @@ bool Object::operator!=(const Object &other)
   return _oid != other._oid;
 }
 
-Object::Object() : _oid(++_counter_) {}
-
-Object::~Object() = default;
-
-uint64_t Object::_counter_ = 0;
-
-void Object::Destroy (std::shared_ptr<Object>) {
-  throw NotImplementedException("Object Destroy");
+bool Object::operator<(const Object &other) {
+  return _oid < other._oid;
 }
 
-void Object::DestroyImmediate (std::shared_ptr<Object>) {
-  throw NotImplementedException("Object DestroyImmediate");
+bool Object::operator<=(const Object &other) {
+  return _oid <= other._oid;
 }
 
-void Object::DontDestroyOnLoad (std::shared_ptr<Object>) {
-  throw NotImplementedException("Object DontDestroyOnLoad");
+bool Object::operator>(const Object &other) {
+  return _oid > other._oid;
 }
 
-template<class T>
-std::shared_ptr<T> Object::FindObjectOfType () {
-  throw NotImplementedException("Object FindObjectOfType");
-  return std::shared_ptr<T>();
+bool Object::operator>=(const Object &other) {
+  return _oid >= other._oid;
 }
 
-template<typename T>
-std::vector<std::shared_ptr<T>> Object::FindObjectsOfType () {
-  throw NotImplementedException("Object FindObjectsOfType");
-  return nullptr;
-}
-
-template<class T, class... _Types>
-std::shared_ptr<T> Object::Instantiate (_Types &&... _Args) {
-  auto obj = std::make_shared<T>(_Args...);
-  throw NotImplementedException("Object Instantiate");
-}
-
-std::unordered_multimap<std::type_index, std::shared_ptr<Object>> Object::objects;

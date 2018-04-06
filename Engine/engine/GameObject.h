@@ -2,9 +2,13 @@
 
 #include "Object.h"
 #include "Transform.h"
+#include "SendMessageOptions.h"
+#include "PrimitiveType.h"
+#include "GameTransform.h"
 
 class GameObject : public Object
 {
+public:
   explicit GameObject(std::string name);
   ~GameObject();
 
@@ -24,31 +28,69 @@ class GameObject : public Object
 //  tag	The tag of this game object.
 
   /// The Transform attached to this GameObject.
-  Transform transform;
+  GameTransform* transform;
 
   /// @brief Adds a component class named className to the game object.
   template <class T, class... _Types>
   void AddComponent(_Types&&... _Args);
-//  BroadcastMessage	Calls the method named methodName on every MonoBehaviour in this game object or any of its children.
+
+  /// \brief Calls the method named methodName on every MonoBehaviour in this game object or any of its children.
+  void BroadcastMessage(std::string methodName, void * parameter = nullptr, SendMessageOptions options = SendMessageOptions::RequireReceiver);
+
+  /// \brief Calls the method named methodName on every MonoBehaviour in this game object or any of its children.
+  void BroadcastMessage(std::string methodName, SendMessageOptions options = SendMessageOptions::RequireReceiver);
+
 //  CompareTag	Is this game object tagged with tag ?
 
   /// @brief Returns the component of Type type if the game object has one attached, null if it doesn't.
-  template <class T>
-  std::shared_ptr<T> GetComponent();
+  template <typename T> T* GetComponent();
 
-//  GetComponentInChildren	Returns the component of Type type in the GameObject or any of its children using depth first search.
-//  GetComponentInParent	Returns the component of Type type in the GameObject or any of its parents.
-//  GetComponents	Returns all components of Type type in the GameObject.
-//  GetComponentsInChildren	Returns all components of Type type in the GameObject or any of its children.
-//  GetComponentsInParent	Returns all components of Type type in the GameObject or any of its parents.
-//  SendMessage	Calls the method named methodName on every MonoBehaviour in this game object.
-//  SendMessageUpwards	Calls the method named methodName on every MonoBehaviour in this game object and on every ancestor of the behaviour.
-//  SetActive	Activates/Deactivates the GameObject.
+  /// \brief Returns the component of Type type in the GameObject or any of its children using depth first search.
+  template <typename T> T* GetComponentInChildren();
 
+  /// \brief Returns the component of Type type in the GameObject or any of its parents.
+  template <typename T> T* GetComponentInParent();
 
-//  CreatePrimitive	Creates a game object with a primitive mesh renderer and appropriate collider.
-//  Find	Finds a GameObject by name and returns it.
-//  FindGameObjectsWithTag	Returns a list of active GameObjects tagged tag. Returns empty array if no GameObject was found.
-//  FindWithTag	Returns one active GameObject tagged tag. Returns null if no GameObject was found.
+  /// \brief Returns all components of Type type in the GameObject.
+  template <typename T> std::vector<T*> GetComponents();
+
+  /// \brief Returns all components of Type type in the GameObject or any of its children.
+  template <typename T> std::vector<T*> GetComponentsInChildren();
+
+  /// \brief Returns all components of Type type in the GameObject or any of its parents.
+  template <typename T> std::vector<T*> GetComponentsInParent();
+
+  /// \brief Calls the method named methodName on every MonoBehaviour in this game object.
+  void SendMessage(std::string methodName);
+
+  /// \brief Calls the method named methodName on every MonoBehaviour in this game object.
+  void SendMessage(std::string methodName, void* value);
+
+  /// \brief Calls the method named methodName on every MonoBehaviour in this game object.
+  void SendMessage(std::string methodName, void* value, SendMessageOptions options);
+
+  /// \brief Calls the method named methodName on every MonoBehaviour in this game object.
+  void SendMessage(std::string methodName, SendMessageOptions options);
+
+  /// \brief Calls the method named methodName on every MonoBehaviour in this game object and on every ancestor of the behaviour
+  void SendMessageUpwards(std::string methodName, SendMessageOptions options = SendMessageOptions::RequireReceiver);
+
+  /// \brief Calls the method named methodName on every MonoBehaviour in this game object and on every ancestor of the behaviour
+  void SendMessageUpwards(std::string methodName, void* value = nullptr, SendMessageOptions options = SendMessageOptions::RequireReceiver);
+
+  /// \brief Activates/Deactivates the GameObject.
+  void SetActive(bool value);
+
+  /// \brief Creates a game object with a primitive mesh renderer and appropriate collider.
+  static GameObject* CreatePrimitive(PrimitiveType type);
+
+  /// \brief Finds a GameObject by name and returns it.
+  static GameObject* Find(std::string name);
+
+  /// \brief Returns a list of active GameObjects tagged tag. Returns empty array if no GameObject was found.
+  static std::vector<GameObject*> FindGameObjectsWithTag(std::string tag);
+
+  /// \brief Returns one active GameObject tagged tag. Returns null if no GameObject was found.
+  static GameObject* FindWithTag(std::string tag);
 };
 

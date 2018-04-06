@@ -9,7 +9,6 @@
 #include <Logger.h>
 #include "components/MeshRenderer.h"
 #include <Plane.h>
-#include <gdcmImageReader.h>
 #include <string>
 #include "Material.h"
 #include <imgui.h>
@@ -157,8 +156,12 @@ const char* EditorGUI::getType()
 
 void EditorGUI::update(double delta) {}
 
-EditorGUI::EditorGUI() 
+EditorGUI::EditorGUI()
 {
+  auto object = new Object();
+  Object::Destroy(object);
+  log_info("%x",object->GetInstanceID());
+
   windowFactor.y = getEngine()->getWindow()->getHeight()/1024.0f;
   windowFactor.x = getEngine()->getWindow()->getWidth()/1024.0f;
 
@@ -167,33 +170,33 @@ EditorGUI::EditorGUI()
   memset(histogramDataOffsetEqualized,0, sizeof(histogramDataOffsetEqualized));
   memset(histogramDataEqualized,0, sizeof(histogramDataEqualized));
 
-  auto dicomAsset = Asset("brain.dcm");
-  gdcm::ImageReader imageReader;
-
-  auto fileSize = dicomAsset.getIOStream()->fileSize();
-
-  auto dicomFileData = new char[fileSize];
-  dicomAsset.getIOStream()->read(dicomFileData,1,fileSize);
-
-  std::stringstream str;
-
-  str.write(dicomFileData,fileSize);
-  imageReader.SetStream(str);
-  imageReader.Read();
-
-  auto image = imageReader.GetImage();
-
-  auto photometric = image.GetPhotometricInterpretation();
-
-  auto pixelformat = image.GetPixelFormat();
-
-  char * imageBuffer = new char[pixelformat.GetPixelSize()*image.GetColumns()*image.GetRows()];
-  image.GetBuffer(imageBuffer);
-
-  log_info("format %d", pixelformat.GetBitsAllocated());
-
-  delete []dicomFileData;
-  delete []imageBuffer;
+//  auto dicomAsset = Asset("brain.dcm");
+//  gdcm::ImageReader imageReader;
+//
+//  auto fileSize = dicomAsset.getIOStream()->fileSize();
+//
+//  auto dicomFileData = new char[fileSize];
+//  dicomAsset.getIOStream()->read(dicomFileData,1,fileSize);
+//
+//  std::stringstream str;
+//
+//  str.write(dicomFileData,fileSize);
+//  imageReader.SetStream(str);
+//  imageReader.Read();
+//
+//  auto image = imageReader.GetImage();
+//
+//  auto photometric = image.GetPhotometricInterpretation();
+//
+//  auto pixelformat = image.GetPixelFormat();
+//
+//  char * imageBuffer = new char[pixelformat.GetPixelSize()*image.GetColumns()*image.GetRows()];
+//  image.GetBuffer(imageBuffer);
+//
+//  log_info("format %d", pixelformat.GetBitsAllocated());
+//
+//  delete []dicomFileData;
+//  delete []imageBuffer;
 
   //auto normal = std::make_shared<Texture>(Asset("default_normal.jpg"));
   //auto specular = std::make_shared<Texture>(Asset("default_specular.jpg"));

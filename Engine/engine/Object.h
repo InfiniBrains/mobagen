@@ -11,6 +11,7 @@
 #include <typeindex>
 #include <typeinfo>
 #include <unordered_map>
+#include <set>
 
 class Object {
 public:
@@ -24,21 +25,21 @@ public:
   uint64_t GetInstanceID();
 
   /// \brief Removes a gameobject, component or asset.
-  static void Destroy(std::shared_ptr<Object>);
+  static void Destroy(Object* obj);
 
   /// \brief Destroys the object obj immediately. You are strongly recommended to use Destroy instead.
-  static void DestroyImmediate(std::shared_ptr<Object>);
+  static void DestroyImmediate(Object * obj);
 
   /// \brief Makes the object target not be destroyed automatically when loading a new scene.
   static void DontDestroyOnLoad(std::shared_ptr<Object>);
 
   /// \brief Returns the first active loaded object of Type type.
-  template <class T>
-  static std::shared_ptr<T> FindObjectOfType();
+  template <typename T>
+  static T* FindObjectOfType();
 
   /// \brief Returns a list of all active loaded objects of Type type.
   template <typename T>
-  static std::vector<std::shared_ptr<T>> FindObjectsOfType();
+  static std::vector<T*> FindObjectsOfType();
 
   /// \brief Clones the object original and returns the clone.
   template <class T, class... _Types>
@@ -50,11 +51,20 @@ public:
   /// \brief Compares if two objects refer to a different object.
   inline bool operator != (const Object & other);
 
+  // todo: check if this could be private
+  inline bool operator < (const Object & other);
+  inline bool operator <= (const Object & other);
+  inline bool operator > (const Object & other);
+  inline bool operator >= (const Object & other);
+
 private:
   // object id
   uint64_t _oid;
   static uint64_t _counter_;
 
-  static std::unordered_multimap<std::type_index, std::shared_ptr<Object>> objects;
+  /// \brief container to store all objects
+  static std::unordered_map<uint64_t, Object*> m_ObjectsById;
+
+  static std::vector<Object*> m_ObjectsToBeDestroyed;
 };
 
