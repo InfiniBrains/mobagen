@@ -10,7 +10,7 @@ class GameObject : public Object
 {
 public:
   explicit GameObject(std::string name);
-  ~GameObject();
+  ~GameObject() override;
 
   /// The name of the gameObject.
   std::string name;

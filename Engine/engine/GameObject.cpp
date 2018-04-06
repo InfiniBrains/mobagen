@@ -1,5 +1,7 @@
 #include "GameObject.h"
 #include "Error.h"
+#include "GameComponent.h"
+#include "Error.h"
 
 GameObject::GameObject(std::string name) : Object() {
   this->name = std::move(name);
@@ -9,8 +11,13 @@ GameObject::~GameObject() = default;
 
 template<class T, class... _Types>
 void GameObject::AddComponent(_Types &&... _Args) {
-  auto component = std::make_shared<T>(_Args...);
-  component->setParent(this);
+  // todo: insert safety checks
+  auto component = new T(_Args...);
+  GameComponent * go = dynamic_cast<GameComponent*>(component);
+  if(go== nullptr)
+    throw GenericException();
+
+  //go->transform()
   throw NotImplementedException("GameObject AddComponent");
 //  componentsByTypeid[typeid(T)].push_back(std::dynamic_pointer_cast<Component>(component));
 //  components.push_back(component);
@@ -43,6 +50,12 @@ template<typename T>
 std::vector<T *> GameObject::GetComponentsInChildren() {
   throw NotImplementedException("GameObject GetComponents");
 }
+
+template<typename T>
+std::vector<T *> GameObject::GetComponentsInParent () {
+  throw NotImplementedException("GameObject GetComponentsInParent");
+}
+
 
 void GameObject::SendMessage(std::string methodName) {
   throw NotImplementedException("GameObject SendMessage");
@@ -87,3 +100,4 @@ std::vector<GameObject *> GameObject::FindGameObjectsWithTag(std::string tag) {
 GameObject *GameObject::FindWithTag(std::string tag) {
   throw NotImplementedException("GameObject FindWithTag");
 }
+
