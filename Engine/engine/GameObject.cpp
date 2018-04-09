@@ -12,15 +12,14 @@ GameObject::~GameObject() = default;
 template<class T, class... _Types>
 void GameObject::AddComponent(_Types &&... _Args) {
   // todo: insert safety checks
-  auto component = new T(_Args...);
-  GameComponent * go = dynamic_cast<GameComponent*>(component);
-  if(go== nullptr)
-    throw GenericException();
+  auto newcomp = new T(_Args...);
+  GameComponent * gc = dynamic_cast<GameComponent*>(newcomp);
+  if(gc == nullptr)
+    throw GenericException("Type must be Component");
 
-  //go->transform()
-  throw NotImplementedException("GameObject AddComponent");
-//  componentsByTypeid[typeid(T)].push_back(std::dynamic_pointer_cast<Component>(component));
-//  components.push_back(component);
+  gc->gameObject = this;
+
+  m_components.push_back(gc);
 }
 
 void GameObject::BroadcastMessage(std::string methodName, void *parameter, SendMessageOptions options) {
@@ -33,7 +32,15 @@ void GameObject::BroadcastMessage(std::string methodName, SendMessageOptions opt
 
 template<typename T>
 T* GameObject::GetComponent() {
-  throw NotImplementedException("GameObject GetComponent");
+  // todo: improve velocity
+  for(auto c:m_components)
+  {
+    T * gc = dynamic_cast<T*>(c);
+    if(gc != nullptr)
+      return gc;
+  }
+
+  return nullptr;
 }
 
 template<typename T>
@@ -101,3 +108,9 @@ GameObject *GameObject::FindWithTag(std::string tag) {
   throw NotImplementedException("GameObject FindWithTag");
 }
 
+template<typename T>
+T *GameObject::GetComponentInParent() {
+  throw NotImplementedException("GameObject GetComponentInParent");
+}
+
+std::vector<GameComponent*> GameObject::m_components;

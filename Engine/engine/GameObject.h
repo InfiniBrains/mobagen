@@ -92,5 +92,8 @@ public:
 
   /// \brief Returns one active GameObject tagged tag. Returns null if no GameObject was found.
   static GameObject* FindWithTag(std::string tag);
+
+private:
+  static std::vector<GameComponent*> m_components;
 };
 

@@ -70,5 +70,5 @@ void GameComponent::SendMessageUpwards(std::string methodName, void *value, Send
 }
 
 GameTransform *GameComponent::transform() {
-  return (gameObject->transform);
+  return gameObject->transform;
 }
