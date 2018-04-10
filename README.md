@@ -56,6 +56,7 @@ This project is sponsored via [![Donate](https://img.shields.io/badge/Donate-Pay
 - Bruno Aragão
 - Joel Oliveira
 - Rafael Dalmazo
+- [Samuel Carlos](http://linkedin.com/in/samuelkarlos/)
 
 ## Finance Report
 In order to report our costs properly via [OpenCollective](https://opencollective.com/) we need to achieve at least 100 stars in this repository. So please star us!
