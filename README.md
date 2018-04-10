@@ -26,10 +26,9 @@ Before making pull requests, please read the [Contribution checklist](CONTRIBUTI
 ## Branches
 We publish source for the engine in three rolling branches:
 
-The **[master branch](https://github.com/InfiniBrains/mobagen/tree/master)** tracks [live changes](https://github.com/InfiniBrains/mobagen/commits/master) by our engine team. 
-This is the cutting edge and may be buggy - it may not even compile. Battle-hardened developers eager to work lock-step with us on the latest and greatest should head here.
+The **[master branch](https://github.com/InfiniBrains/mobagen/tree/master)** tracks [release changes](https://github.com/InfiniBrains/mobagen/commits/master) by our engine team. It is extensively tested by our QA team and makes a great starting point for learning the engine or making your own games. We work hard to make releases stable and reliable, and aim to publish new releases every few months.
 
-The **[release branch](https://github.com/InfiniBrains/mobagen/tree/release)** is extensively tested by our QA team and makes a great starting point for learning the engine or making your own games. We work hard to make releases stable and reliable, and aim to publish new releases every few months.
+The **[development branch](https://github.com/InfiniBrains/mobagen/tree/development)** This is the cutting edge and may be buggy - it may not even compile. Battle-hardened developers eager to work lock-step with us on the latest and greatest should head here.
 
 The **_feature_ branch** where _feature_ is the name of a given feature being developed. When it is done, it will merge its differences into the **[master branch](https://github.com/InfiniBrains/mobagen/tree/master)**.
 
