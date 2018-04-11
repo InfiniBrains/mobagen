@@ -31,8 +31,17 @@ public:
   GameTransform* transform;
 
   /// @brief Adds a component class named className to the game object.
-  template <class T, class... _Types>
-  void AddComponent(_Types&&... _Args);
+  template<class T, class... _Types>
+  inline void AddComponent(_Types &&... _Args) {
+    // todo: insert safety checks
+    auto newcomp = new T(_Args...);
+    GameComponent * gc = dynamic_cast<GameComponent*>(newcomp);
+    if(gc == nullptr)
+      throw GenericException("Type must be Component");
+
+    gc->gameObject = this;
+    m_components.push_back(gc);
+  }
 
   /// \brief Calls the method named methodName on every MonoBehaviour in this game object or any of its children.
   void BroadcastMessage(std::string methodName, void * parameter = nullptr, SendMessageOptions options = SendMessageOptions::RequireReceiver);
@@ -43,7 +52,17 @@ public:
 //  CompareTag	Is this game object tagged with tag ?
 
   /// @brief Returns the component of Type type if the game object has one attached, null if it doesn't.
-  template <typename T> T* GetComponent();
+  template<class T> inline T* GetComponent() {
+    // todo: improve velocity
+    for(auto c:m_components)
+    {
+      T* gc = dynamic_cast<T*>(c);
+      if(gc != nullptr)
+        return gc;
+    }
+
+    return nullptr;
+  }
 
   /// \brief Returns the component of Type type in the GameObject or any of its children using depth first search.
   template <typename T> T* GetComponentInChildren();

@@ -3,23 +3,15 @@
 #include "GameComponent.h"
 #include "Error.h"
 
-GameObject::GameObject(std::string name) : Object() {
+GameObject::GameObject(std::string name) : Object()
+{
   this->name = std::move(name);
+  this->transform = new GameTransform();
 }
 
-GameObject::~GameObject() = default;
-
-template<class T, class... _Types>
-void GameObject::AddComponent(_Types &&... _Args) {
-  // todo: insert safety checks
-  auto newcomp = new T(_Args...);
-  GameComponent * gc = dynamic_cast<GameComponent*>(newcomp);
-  if(gc == nullptr)
-    throw GenericException("Type must be Component");
-
-  gc->gameObject = this;
-
-  m_components.push_back(gc);
+GameObject::~GameObject()
+{
+  delete transform;
 }
 
 void GameObject::BroadcastMessage(std::string methodName, void *parameter, SendMessageOptions options) {
@@ -30,18 +22,7 @@ void GameObject::BroadcastMessage(std::string methodName, SendMessageOptions opt
   throw NotImplementedException(typeid(this).name());
 }
 
-template<typename T>
-T* GameObject::GetComponent() {
-  // todo: improve velocity
-  for(auto c:m_components)
-  {
-    T * gc = dynamic_cast<T*>(c);
-    if(gc != nullptr)
-      return gc;
-  }
 
-  return nullptr;
-}
 
 template<typename T>
 T *GameObject::GetComponentInChildren() {
