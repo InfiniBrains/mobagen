@@ -69,8 +69,7 @@ set ( WHEREAMI_LIBRARY whereami )
 set ( IMGUI_INCLUDE_DIRS
   ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/imgui/
   ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/imgui/addons
-  ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/imgui/addons/imguifilesystem
-  ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/imgui/addons/imguifilesystem/minizip)
+  ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/imgui/addons/imguifilesystem)
 
 set ( IMGUI_LIBRARY imgui )
 

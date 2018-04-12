@@ -178,21 +178,14 @@ add_definitions(-DASSIMP_BUILD_NO_3MF_EXPORTER)
 
 add_subdirectory( assimp )
 
+set(IMGUI_USE_MINIZIP OFF CACHE BOOL "IMGUI_USE_MINIZIP")
+add_definitions(-DYES_IMGUIADDONS_ALL)
+
 INCLUDE_DIRECTORIES(
     ${CMAKE_CURRENT_SOURCE_DIR}/imgui/addons/
     ${CMAKE_CURRENT_SOURCE_DIR}/imgui/
     ${CMAKE_CURRENT_SOURCE_DIR}/imgui/addons/imguifilesystem/
 )
-
-add_definitions(-DYES_IMGUIADDONS_ALL)
-
-file(GLOB_RECURSE IMGUIHDR
-    ${CMAKE_CURRENT_SOURCE_DIR}/imgui/addons/imguifilesystem/*.h)
-file(GLOB_RECURSE IMGUISRC
-    ${CMAKE_CURRENT_SOURCE_DIR}/imgui/addons/imguifilesystem/*.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/imgui/addons/imguifilesystem/*.cpp)
-
-set(IMGUIFILES ${IMGUIHDR} ${IMGUISRC})
 
 add_library (imgui STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui.h
@@ -200,6 +193,8 @@ add_library (imgui STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui_demo.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui_draw.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/imgui/addons/imgui_user.h
-    ${IMGUIFILES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/imgui/addons/imguifilesystem/dirent_portable.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/imgui/addons/imguifilesystem/imguifilesystem.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/imgui/addons/imguifilesystem/imguifilesystem.cpp
     )
 
