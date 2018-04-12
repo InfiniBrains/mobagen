@@ -11,7 +11,9 @@
 #include <Plane.h>
 #include <string>
 #include "Material.h"
-#include <imgui.h>
+#include "addons/imgui_user.h"
+#include <imguifilesystem.h>
+#include "Logger.h"
 
 static float histogramDataOriginal[256];
 static float transferOriginal[256];
@@ -75,6 +77,13 @@ static bool applied = false;
 
 void EditorGUI::onGUI(ImGuiContext* context)
 {
+  ImGui::Begin("Histogram", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove);
+  ImGui::SetWindowPos(ImVec2(getEngine()->getWindow()->getWidth()/2, getEngine()->getWindow()->getHeight()/2), 0);
+  const bool browseButtonPressed = ImGui::Button("OpenFile...");                          // we need a trigger boolean variable
+  static ImGuiFs::Dialog dlg;                                                     // one per dialog (and must be static)
+  const char* chosenPath = dlg.chooseFileDialog(browseButtonPressed);
+  ImGui::End();
+
   mainMenu();
 
   if(!applied) {

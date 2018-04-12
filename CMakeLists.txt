@@ -66,7 +66,12 @@ set ( GLM_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/glm/ )
 set ( WHEREAMI_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/whereami/src/ )
 set ( WHEREAMI_LIBRARY whereami )
 
-set ( IMGUI_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/imgui/ )
+set ( IMGUI_INCLUDE_DIRS
+  ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/imgui/
+  ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/imgui/addons
+  ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/imgui/addons/imguifilesystem
+  ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/imgui/addons/imguifilesystem/minizip)
+
 set ( IMGUI_LIBRARY imgui )
 
 IF (EMSCRIPTEN)
@@ -152,3 +157,4 @@ add_subdirectory( ${CMAKE_CURRENT_SOURCE_DIR}/Engine )
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT midasminer)
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT doceditor)
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT tests)
+

@@ -178,8 +178,28 @@ add_definitions(-DASSIMP_BUILD_NO_3MF_EXPORTER)
 
 add_subdirectory( assimp )
 
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/imgui/)
+INCLUDE_DIRECTORIES(
+    ${CMAKE_CURRENT_SOURCE_DIR}/imgui/addons/
+    ${CMAKE_CURRENT_SOURCE_DIR}/imgui/
+    ${CMAKE_CURRENT_SOURCE_DIR}/imgui/addons/imguifilesystem/
+)
+
 add_definitions(-DYES_IMGUIADDONS_ALL)
 
-add_library (imgui STATIC ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui.cpp ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui_demo.cpp ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui_draw.cpp)
+file(GLOB_RECURSE IMGUIHDR
+    ${CMAKE_CURRENT_SOURCE_DIR}/imgui/addons/imguifilesystem/*.h)
+file(GLOB_RECURSE IMGUISRC
+    ${CMAKE_CURRENT_SOURCE_DIR}/imgui/addons/imguifilesystem/*.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/imgui/addons/imguifilesystem/*.cpp)
+
+set(IMGUIFILES ${IMGUIHDR} ${IMGUISRC})
+
+add_library (imgui STATIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui_demo.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui_draw.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/imgui/addons/imgui_user.h
+    ${IMGUIFILES}
+    )
 

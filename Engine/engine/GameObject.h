@@ -35,9 +35,9 @@ public:
   inline void AddComponent(_Types &&... _Args) {
     // todo: insert safety checks
     auto newcomp = new T(_Args...);
-    GameComponent * gc = dynamic_cast<GameComponent*>(newcomp);
+    auto * gc = dynamic_cast<GameComponent*>(newcomp);
     if(gc == nullptr)
-      throw GenericException("Type must be Component");
+      throw GenericException("Type must be GameComponent");
 
     gc->gameObject = this;
     m_components.push_back(gc);
