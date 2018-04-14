@@ -37,7 +37,7 @@ void EditorGUI::onGUI(ImGuiContext* context)
         const char *chosenPath = dlg.chooseFileDialog(browseButtonPressed2,startingFolder,optionalFileExtensionFilterString);
         ImGui::PopStyleColor(1);
 
-        if (strlen(dlg.getChosenPath())>0) ImGui::Text("Chosen path: \"%s\"",dlg.);
+        if (strlen(dlg.getChosenPath())>0) ImGui::Text("Chosen path: \"%s\"",dlg.getChosenPath());
 
         if(ImGui::Button("GET FROM CD"))
         {
