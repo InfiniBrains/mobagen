@@ -209,44 +209,45 @@ EditorGUI::EditorGUI()
 }
 
 void EditorGUI::mainMenu() {
-  ImGui::BeginMainMenuBar();
+    ImGui::BeginMainMenuBar();
 
-  bool browseButtonPressed = false;
-  if (ImGui::BeginMenu("File"))   {
-    browseButtonPressed = ImGui::MenuItem("Open...", "CTRL+O");
-    ImGui::EndMenu();
-  }
-  static ImGuiFs::Dialog dlg;
-  const char* chosenPath = dlg.chooseFileDialog(browseButtonPressed);
-
-  if (ImGui::BeginMenu("File"))
-  {
-    ImGui::PushStyleColor(ImGuiCol_Button,ImVec4(0,0,0,0));
-    const bool browseButtonPressed = ImGui::Button("New Scene");
-    static ImGuiFs::Dialog dlg;                                                     // one per dialog (and must be static)
-    const char* chosenPath = dlg.chooseFileDialog(browseButtonPressed, nullptr, nullptr);
-    ImGui::PopStyleColor(1);
-
-    if (ImGui::MenuItem("Open Scene")) {}
-    ImGui::Separator();
-    if (ImGui::MenuItem("Save Scene")) {}
-    if (ImGui::MenuItem("Save Scene as...")) {}
-    ImGui::Separator();
-    if (ImGui::MenuItem("New Project")) {}
-    if (ImGui::MenuItem("Open Project")) {}
-    if (ImGui::MenuItem("Save Project")) {}
-    ImGui::Separator();
-    if (ImGui::MenuItem("Build Settings")) {}
-    if (ImGui::MenuItem("Build and Run")) {}
-    ImGui::Separator();
-    if (ImGui::MenuItem("Close")) {
-#ifndef EMSCRIPTEN
-      exit(0);
-#endif
+    bool browseButtonPressed = false;
+    if (ImGui::BeginMenu("File"))   {
+        browseButtonPressed = ImGui::MenuItem("Open...", "CTRL+O");
+        ImGui::EndMenu();
     }
+    static ImGuiFs::Dialog dlg;
+    const char* chosenPath = dlg.chooseFileDialog(browseButtonPressed);
 
-    ImGui::EndMenu();
-  }
+//  if (ImGui::BeginMenu("File"))
+//  {
+//    ImGui::PushStyleColor(ImGuiCol_Button,ImVec4(0,0,0,0));
+//    const bool browseButtonPressed = ImGui::Button("New Scene");
+//    static ImGuiFs::Dialog dlg;                                                     // one per dialog (and must be static)
+//    const char* chosenPath = dlg.chooseFileDialog(browseButtonPressed, nullptr, nullptr);
+//    ImGui::PopStyleColor(1);
+//
+//    if (ImGui::MenuItem("Open Scene")) {}
+//    ImGui::Separator();
+//    if (ImGui::MenuItem("Save Scene")) {}
+//    if (ImGui::MenuItem("Save Scene as...")) {}
+//    ImGui::Separator();
+//    if (ImGui::MenuItem("New Project")) {}
+//    if (ImGui::MenuItem("Open Project")) {}
+//    if (ImGui::MenuItem("Save Project")) {}
+//    ImGui::Separator();
+//    if (ImGui::MenuItem("Build Settings")) {}
+//    if (ImGui::MenuItem("Build and Run")) {}
+//    ImGui::Separator();
+//    if (ImGui::MenuItem("Close")) {
+//#ifndef EMSCRIPTEN
+//      exit(0);
+//#endif
+//    }
+//
+//    ImGui::EndMenu();
+//  }
+// }
 
   if (ImGui::BeginMenu("Edit"))
   {
