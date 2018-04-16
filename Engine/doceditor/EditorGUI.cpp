@@ -209,15 +209,15 @@ EditorGUI::EditorGUI()
 }
 
 void EditorGUI::mainMenu() {
-  ImGui::BeginMainMenuBar();
+    ImGui::BeginMainMenuBar();
 
-  bool browseButtonPressed = false;
-  if (ImGui::BeginMenu("File"))   {
-    browseButtonPressed = ImGui::MenuItem("Open...", "CTRL+O");
-    ImGui::EndMenu();
-  }
-  static ImGuiFs::Dialog dlg;
-  const char* chosenPath = dlg.chooseFileDialog(browseButtonPressed);
+    bool browseButtonPressed = false;
+    if (ImGui::BeginMenu("File"))   {
+        browseButtonPressed = ImGui::MenuItem("Open...", "CTRL+O");
+        ImGui::EndMenu();
+    }
+    static ImGuiFs::Dialog dlg;
+    const char* chosenPath = dlg.chooseFileDialog(browseButtonPressed);
 
 //  if (ImGui::BeginMenu("File"))
 //  {
@@ -247,6 +247,7 @@ void EditorGUI::mainMenu() {
 //
 //    ImGui::EndMenu();
 //  }
+// }
 
   if (ImGui::BeginMenu("Edit"))
   {
