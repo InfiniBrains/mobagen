@@ -34,3 +34,7 @@
 	path = dependencies/mingw-std-threads
 	url = https://github.com/meganz/mingw-std-threads.git
 	branch = 3a5361a3e9308ce854dd2761d2a9416e21ad489d
+[submodule "dependencies/openssl"]
+	path = dependencies/openssl
+	url = https://github.com/openssl/openssl.git
+	branch = b7fb239438fb289a69e9420ad1edacf3bd1c5d69

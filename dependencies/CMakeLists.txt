@@ -175,7 +175,6 @@ add_definitions(-DASSIMP_BUILD_NO_GLTF_EXPORTER)
 set( ASSIMP_BUILD_3MF_IMPORTER OFF CACHE BOOL "Build importer" )
 add_definitions(-DASSIMP_BUILD_NO_3MF_EXPORTER)
 
-
 add_subdirectory( assimp )
 
 set(IMGUI_USE_MINIZIP OFF CACHE BOOL "IMGUI_USE_MINIZIP")
@@ -198,3 +197,15 @@ add_library (imgui STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/imgui/addons/imguifilesystem/imguifilesystem.cpp
     )
 
+
+include(${CMAKE_ROOT}/Modules/ExternalProject.cmake)
+ExternalProject_Add(
+    openssl
+    DOWNLOAD_COMMAND git submodule update --init --recursive
+    DOWNLOAD_DIR ${CMAKE_CURRENT_SOURCE_DIR}/openssl
+    SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/openssl
+    CONFIGURE_COMMAND ./config no-shared no-idea no-mdc2 no-rc5 --prefix=${CMAKE_BINARY_DIR}
+    BUILD_COMMAND make depend -j9 && make -j9
+    INSTALL_COMMAND make install_sw
+    BUILD_IN_SOURCE 1
+)
