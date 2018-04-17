@@ -13,6 +13,7 @@
 #include "Material.h"
 #include <imguifilesystem.h>
 #include "Logger.h"
+#include <curl/curl.h>
 
 static float histogramDataOriginal[256];
 static float transferOriginal[256];
@@ -157,8 +158,40 @@ const char* EditorGUI::getType()
 
 void EditorGUI::update(double delta) {}
 
+size_t writefunc(void *ptr, size_t size, size_t nmemb, std::string *s)
+{
+  s->append((char*)ptr,size*nmemb);
+
+  return size*nmemb;
+}
+
 EditorGUI::EditorGUI()
 {
+  CURL *curl;
+  CURLcode res;
+
+  curl = curl_easy_init();
+
+  if(curl) {
+    std::string s;
+    curl_easy_setopt(curl, CURLOPT_URL, "http://ip.jsontest.com/");
+    curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writefunc);
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &s);
+
+    /* Perform the request, res will get the return code */
+    res = curl_easy_perform(curl);
+    /* Check for errors */
+    if(res != CURLE_OK)
+      fprintf(stderr, "curl_easy_perform() failed: %s\n",
+              curl_easy_strerror(res));
+
+    log_info("%s",s);
+
+    /* always cleanup */
+    curl_easy_cleanup(curl);
+  }
+
   auto object = new Object();
   Object::Destroy(object);
   log_info("%x",object->GetInstanceID());

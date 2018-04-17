@@ -1,6 +1,15 @@
 cmake_minimum_required(VERSION 2.8)
 
+include(cmake/HunterGate.cmake)
+HunterGate(
+    URL "https://github.com/ruslo/hunter/archive/v0.20.42.tar.gz"
+    SHA1 "44c5a98e5e6efc99671af45dbcba2ac6711fde1d"
+)
+
 project (Engine)
+
+hunter_add_package(CURL)
+find_package(CURL CONFIG REQUIRED)
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
@@ -31,6 +40,13 @@ add_definitions(-DGLEW_STATIC)
 add_definitions(-UGLEW_BUILD)
 
 add_subdirectory(dependencies)
+
+#add_definitions ( -DOPENSSL_ROOT_DIR ${CMAKE_SOURCE_DIR}/dependencies/openssl/)
+#OPENSSL_CRYPTO_LIBRARY
+#OPENSSL_SSL_LIBRARY
+#add_definitions ( -DOPENSSL_LIBRARIES "${CMAKE_BINARY_DIR}/lib/")
+
+#find_package(OpenSSL)
 
 include(${CMAKE_CURRENT_BINARY_DIR}/dependencies/gdcm/GDCMConfig.cmake )
 
@@ -131,6 +147,8 @@ ELSE ()
     ${WHEREAMI_LIBRARY}
     ${IMGUI_LIBRARY}
     ${GDCM_LIBRARIES}
+    CURL::libcurl
+#    ${OPENSSL_LIBRARIES}
   )
 
   set(ENGINE_INCLUDES
@@ -144,6 +162,7 @@ ELSE ()
     ${IMGUI_INCLUDE_DIRS}
     ${CMAKE_CURRENT_SOURCE_DIR}/Engine/engine/
     ${GDCM_INCLUDE_DIRS}
+#    ${OPENSSL_INCLUDE_DIRS}
 #    ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/mingw-std-threads
   )
 ENDIF ()
