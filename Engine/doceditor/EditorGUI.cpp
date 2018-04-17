@@ -13,7 +13,9 @@
 #include "Material.h"
 #include <imguifilesystem.h>
 #include "Logger.h"
+#ifndef EMSCRIPTEN
 #include <curl/curl.h>
+#endif
 #include <iostream>
 
 static float histogramDataOriginal[256];
@@ -159,15 +161,19 @@ const char* EditorGUI::getType()
 
 void EditorGUI::update(double delta) {}
 
+#ifndef EMSCRIPTEN
 size_t writefunc(void *ptr, size_t size, size_t nmemb, std::string *s)
 {
   s->append((char*)ptr,size*nmemb);
 
   return size*nmemb;
 }
+#endif
+
 
 EditorGUI::EditorGUI()
 {
+#ifndef EMSCRIPTEN
   CURL *curl;
   CURLcode res;
 
@@ -192,6 +198,7 @@ EditorGUI::EditorGUI()
     /* always cleanup */
     curl_easy_cleanup(curl);
   }
+#endif
 
   auto object = new Object();
   Object::Destroy(object);

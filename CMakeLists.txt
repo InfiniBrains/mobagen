@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 
+set (HUNTER_SKIP_LOCK ON CACHE BOOL "HUNTER_SKIP_LOCK")
+
 include(cmake/HunterGate.cmake)
 HunterGate(
     URL "https://github.com/ruslo/hunter/archive/v0.20.42.tar.gz"
