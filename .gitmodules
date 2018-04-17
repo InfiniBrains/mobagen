@@ -38,3 +38,6 @@
 	path = dependencies/openssl
 	url = https://github.com/openssl/openssl.git
 	branch = b7fb239438fb289a69e9420ad1edacf3bd1c5d69
+[submodule "dependencies/cpr"]
+	path = dependencies/cpr
+	url = https://github.com/whoshuu/cpr.git

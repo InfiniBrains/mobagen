@@ -14,6 +14,7 @@
 #include <imguifilesystem.h>
 #include "Logger.h"
 #include <curl/curl.h>
+#include <iostream>
 
 static float histogramDataOriginal[256];
 static float transferOriginal[256];
@@ -186,7 +187,7 @@ EditorGUI::EditorGUI()
       fprintf(stderr, "curl_easy_perform() failed: %s\n",
               curl_easy_strerror(res));
 
-    log_info("%s",s);
+    std::cout << s << std::endl;
 
     /* always cleanup */
     curl_easy_cleanup(curl);

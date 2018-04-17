@@ -32,6 +32,10 @@ ELSE ()
   add_library (whereami STATIC ${CMAKE_CURRENT_SOURCE_DIR}/whereami/src/whereami.c ${CMAKE_CURRENT_SOURCE_DIR}/whereami/src/whereami.h)
   add_subdirectory( SDL )
 
+  
+#  set( USE_SYSTEM_CURL OFF CACHE BOOL "USE_SYSTEM_CURL" )
+#  set( BUILD_CPR_TESTS OFF CACHE BOOL "BUILD_CPR_TESTS" )
+#  add_subdirectory( cpr )
 ENDIF ()
 
 set(GDCM_BUILD_DOCBOOK_MANPAGES OFF CACHE BOOL "Do not build gdcm manpages")
