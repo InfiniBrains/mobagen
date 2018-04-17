@@ -1,17 +1,20 @@
 cmake_minimum_required(VERSION 2.8)
 
-set (HUNTER_SKIP_LOCK ON CACHE BOOL "HUNTER_SKIP_LOCK")
-
-include(cmake/HunterGate.cmake)
-HunterGate(
+IF (NOT EMSCRIPTEN)
+  set (HUNTER_SKIP_LOCK ON CACHE BOOL "HUNTER_SKIP_LOCK")
+  include(cmake/HunterGate.cmake)
+  HunterGate(
     URL "https://github.com/ruslo/hunter/archive/v0.20.42.tar.gz"
     SHA1 "44c5a98e5e6efc99671af45dbcba2ac6711fde1d"
-)
+  )
+ENDIF()
 
 project (Engine)
 
-hunter_add_package(CURL)
-find_package(CURL CONFIG REQUIRED)
+IF (NOT EMSCRIPTEN)
+  hunter_add_package(CURL)
+  find_package(CURL CONFIG REQUIRED)
+ENDIF()
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
