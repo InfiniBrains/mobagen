@@ -6,13 +6,13 @@
 #define MIN(x, y) (((x) < (y)) ? (x) : (y))
 
 #include "EditorGUI.h"
-#include <Logger.h>
-#include "components/MeshRenderer.h"
-#include <Plane.h>
+#include <Logger.hpp>
+#include "components/MeshRenderer.hpp"
+#include <Plane.hpp>
 #include <string>
-#include "Material.h"
+#include "Material.hpp"
 #include <imguifilesystem.h>
-#include "Logger.h"
+#include "Logger.hpp"
 
 ImVec2 windowFactor;
 
