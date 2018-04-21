@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "Engine.h"
-#include "Texture.h"
+#include "Engine.hpp"
+#include "Texture.hpp"
 
 class EditorGUI : public Component
 {

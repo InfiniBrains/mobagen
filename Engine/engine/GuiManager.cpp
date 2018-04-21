@@ -1,8 +1,8 @@
-#include "GuiManager.h"
+#include "GuiManager.hpp"
 
-#include "Shader.h"
-#include "TextureData.h"
-#include "Component.h"
+#include "Shader.hpp"
+#include "TextureData.hpp"
+#include "Component.hpp"
 
 #if defined(GLES2)
   #include <GLES2/gl2.h>

@@ -1,7 +1,7 @@
-#include "Engine.h"
-#include "Logger.h"
-#include "Ray.h"
-#include "GuiManager.h"
+#include "Engine.hpp"
+#include "Logger.hpp"
+#include "Ray.hpp"
+#include "GuiManager.hpp"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>

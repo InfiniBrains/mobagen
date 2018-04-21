@@ -1,5 +1,5 @@
-#include "Input.h"
-#include "Logger.h"
+#include "Input.hpp"
+#include "Logger.hpp"
 
 Input::Input(void)
 {

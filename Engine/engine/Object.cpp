@@ -2,9 +2,9 @@
 // Created by Alexandre Tolstenko Nogueira on 3/20/18.
 //
 
-#include "Object.h"
-#include "Error.h"
-#include "Logger.h"
+#include "Object.hpp"
+#include "Error.hpp"
+#include "Logger.hpp"
 
 std::unordered_map<uint64_t, Object*> Object::m_ObjectsById;
 std::vector<Object*> Object::m_ObjectsToBeDestroyed;

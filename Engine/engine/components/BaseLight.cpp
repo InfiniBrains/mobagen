@@ -1,4 +1,4 @@
-#include "BaseLight.h"
+#include "BaseLight.hpp"
 
 BaseLight::BaseLight(glm::vec3 color, float intensity) : Component()
 {

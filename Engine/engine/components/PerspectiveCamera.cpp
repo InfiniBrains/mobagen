@@ -1,7 +1,7 @@
 #define GLM_FORCE_RADIANS
 #include <glm/gtx/transform.hpp>
 
-#include "PerspectiveCamera.h"
+#include "PerspectiveCamera.hpp"
 
 PerspectiveCamera::PerspectiveCamera(float fov, float aspect, float zNear, float zFar) : Camera("PerspectiveCamera")
 {

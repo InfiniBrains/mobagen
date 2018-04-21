@@ -1,6 +1,6 @@
-#include "Entity.h"
+#include "Entity.hpp"
 
-#include "Component.h"
+#include "Component.hpp"
 
 #include <algorithm>
 

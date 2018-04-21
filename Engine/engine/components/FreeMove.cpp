@@ -1,6 +1,6 @@
-#include "FreeMove.h"
+#include "FreeMove.hpp"
 
-#include "../Transform.h"
+#include "Transform.hpp"
 
 FreeMove::FreeMove(bool moveForwards, float speed) : Component()
 {

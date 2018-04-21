@@ -1,9 +1,9 @@
 #include "Crystal.h"
-#include "Engine.h"
-#include "Logger.h"
+#include "Engine.hpp"
+#include "Logger.hpp"
 #include "CrystalPicker.h"
-#include "Plane.h"
-#include "components/MeshRenderer.h"
+#include "Plane.hpp"
+#include "components/MeshRenderer.hpp"
 #include <random>
 #include "Matrix.h"
 

@@ -1,4 +1,4 @@
-#include "Attenuation.h"
+#include "Attenuation.hpp"
 
 Attenuation::Attenuation(float constant, float linear, float exponent)
 {

@@ -1,7 +1,7 @@
 
-#include "GameComponent.h"
-#include "Error.h"
-#include "GameObject.h"
+#include "GameComponent.hpp"
+#include "Error.hpp"
+#include "GameObject.hpp"
 
 void GameComponent::BroadcastMessage(std::string methodName, void* parameter, SendMessageOptions options) {
   gameObject->BroadcastMessage(methodName,parameter,options);

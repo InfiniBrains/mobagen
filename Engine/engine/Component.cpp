@@ -1,5 +1,5 @@
-#include "Component.h"
-#include "Engine.h"
+#include "Component.hpp"
+#include "Engine.hpp"
 
 void Component::setParent(Entity *parentEntity)
 {

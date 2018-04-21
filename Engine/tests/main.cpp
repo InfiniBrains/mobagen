@@ -1,24 +1,24 @@
-#include "components/MeshRenderer.h"
-#include "components/PerspectiveCamera.h"
-#include "components/OrthoCamera.h"
-#include "components/FreeMove.h"
-#include "components/FreeLook.h"
-#include "components/DirectionalLight.h"
-#include "components/SpotLight.h"
-#include "components/PointLight.h"
-#include "components/Sphere.h"
+#include "components/MeshRenderer.hpp"
+#include "components/PerspectiveCamera.hpp"
+#include "components/OrthoCamera.hpp"
+#include "components/FreeMove.hpp"
+#include "components/FreeLook.hpp"
+#include "components/DirectionalLight.hpp"
+#include "components/SpotLight.hpp"
+#include "components/PointLight.hpp"
+#include "components/Sphere.hpp"
 
-#include "Plane.h"
-#include "Mesh.h"
-#include "Texture.h"
-#include "Logger.h"
-#include "MeshLoader.h"
-#include "Engine.h"
+#include "Plane.hpp"
+#include "Mesh.hpp"
+#include "Texture.hpp"
+#include "Logger.hpp"
+#include "MeshLoader.hpp"
+#include "Engine.hpp"
 #include <SDL_main.h>
 #include <iostream>
 #include <map>
 #include <random>
-#include <GameObject.h>
+#include <GameObject.hpp>
 
 class DocEditor : public Game
 {

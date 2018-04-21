@@ -1,4 +1,4 @@
-#include "Asset.h"
+#include "Asset.hpp"
 
 Asset::Asset(const std::string &fileName)
 {

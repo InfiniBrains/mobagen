@@ -1,4 +1,4 @@
-#include "MeshData.h"
+#include "MeshData.hpp"
 
 MeshData::MeshData(Vertex vertices[], int vertSize, unsigned int indices[], int indexSize)
 {

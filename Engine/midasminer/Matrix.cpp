@@ -1,7 +1,7 @@
 #include "Matrix.h"
 #include <vector>
 #include "CrystalPicker.h"
-#include "Logger.h"
+#include "Logger.hpp"
 #include "Menu.h"
 
 Matrix::Matrix()

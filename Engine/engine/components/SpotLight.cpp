@@ -1,6 +1,6 @@
-#include "SpotLight.h"
+#include "SpotLight.hpp"
 
-#include "../Engine.h"
+#include "Engine.hpp"
 
 SpotLight::SpotLight(glm::vec3 color, float intensity, float cutoff, std::shared_ptr<Attenuation> attenuation) : PointLight(color, intensity, attenuation)
 {

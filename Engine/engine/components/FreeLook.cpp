@@ -1,4 +1,4 @@
-#include "FreeLook.h"
+#include "FreeLook.hpp"
 
 FreeLook::FreeLook(float speed) : Component()
 {

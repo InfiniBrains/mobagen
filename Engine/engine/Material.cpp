@@ -1,4 +1,4 @@
-#include "Material.h"
+#include "Material.hpp"
 
 Material::Material(std::shared_ptr<Texture> diffuseMap, std::shared_ptr<Texture> normalMap, std::shared_ptr<Texture> specularMap)
 {

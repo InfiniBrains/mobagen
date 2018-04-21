@@ -1,7 +1,7 @@
-#include "GameObject.h"
-#include "Error.h"
-#include "GameComponent.h"
-#include "Error.h"
+#include "GameObject.hpp"
+#include "Error.hpp"
+#include "GameComponent.hpp"
+#include "Error.hpp"
 
 GameObject::GameObject(std::string name) : Object()
 {

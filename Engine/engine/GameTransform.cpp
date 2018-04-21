@@ -1,5 +1,5 @@
-#include "GameTransform.h"
-#include "Error.h"
+#include "GameTransform.hpp"
+#include "Error.hpp"
 
 void GameTransform::SetParent (GameTransform *parent) {
   if(m_parent != nullptr) {
