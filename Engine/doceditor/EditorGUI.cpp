@@ -12,7 +12,7 @@
 #include <string>
 #include "Material.hpp"
 #include <imguifilesystem.h>
-#include "Logger.h"
+#include "Logger.hpp"
 #ifndef EMSCRIPTEN
 #include <curl/curl.h>
 #endif
@@ -190,10 +190,9 @@ EditorGUI::EditorGUI()
     res = curl_easy_perform(curl);
     /* Check for errors */
     if(res != CURLE_OK)
-      fprintf(stderr, "curl_easy_perform() failed: %s\n",
-              curl_easy_strerror(res));
+      log_err("curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
 
-    std::cout << s << std::endl;
+    log_info("%s",s.data());
 
     /* always cleanup */
     curl_easy_cleanup(curl);
