@@ -14,7 +14,7 @@
 #include <imguifilesystem.h>
 #include "Logger.hpp"
 #ifndef EMSCRIPTEN
-#include <curl/curl.h>
+//#include <curl/curl.h>
 #endif
 #include <iostream>
 
@@ -174,29 +174,29 @@ size_t writefunc(void *ptr, size_t size, size_t nmemb, std::string *s)
 EditorGUI::EditorGUI()
 {
 #ifndef EMSCRIPTEN
-  CURL *curl;
-  CURLcode res;
-
-  curl = curl_easy_init();
-
-  if(curl) {
-    std::string s;
-    curl_easy_setopt(curl, CURLOPT_URL, "http://ip.jsontest.com/");
-    curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
-    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writefunc);
-    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &s);
-
-    /* Perform the request, res will get the return code */
-    res = curl_easy_perform(curl);
-    /* Check for errors */
-    if(res != CURLE_OK)
-      log_err("curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
-
-    log_info("%s",s.data());
-
-    /* always cleanup */
-    curl_easy_cleanup(curl);
-  }
+//  CURL *curl;
+//  CURLcode res;
+//
+//  curl = curl_easy_init();
+//
+//  if(curl) {
+//    std::string s;
+//    curl_easy_setopt(curl, CURLOPT_URL, "http://ip.jsontest.com/");
+//    curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
+//    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writefunc);
+//    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &s);
+//
+//    /* Perform the request, res will get the return code */
+//    res = curl_easy_perform(curl);
+//    /* Check for errors */
+//    if(res != CURLE_OK)
+//      log_err("curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
+//
+//    log_info("%s",s.data());
+//
+//    /* always cleanup */
+//    curl_easy_cleanup(curl);
+//  }
 #endif
 
   auto object = new Object();

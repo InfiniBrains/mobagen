@@ -1,20 +1,20 @@
 cmake_minimum_required(VERSION 2.8)
 
-IF (NOT EMSCRIPTEN)
-  set (HUNTER_SKIP_LOCK ON CACHE BOOL "HUNTER_SKIP_LOCK")
-  include(cmake/HunterGate.cmake)
-  HunterGate(
-    URL "https://github.com/ruslo/hunter/archive/v0.20.52.tar.gz"
-    SHA1 "105ba83077617079f99300d8e672997366a0ce24"
-  )
-ENDIF()
+#IF (NOT EMSCRIPTEN)
+#  set (HUNTER_SKIP_LOCK ON CACHE BOOL "HUNTER_SKIP_LOCK")
+#  include(cmake/HunterGate.cmake)
+#  HunterGate(
+#    URL "https://github.com/ruslo/hunter/archive/v0.20.52.tar.gz"
+#    SHA1 "105ba83077617079f99300d8e672997366a0ce24"
+#  )
+#ENDIF()
 
 project (Engine)
 
-IF (NOT EMSCRIPTEN)
-  hunter_add_package(cpr)
-  find_package(cpr CONFIG REQUIRED)
-ENDIF()
+#IF (NOT EMSCRIPTEN)
+#  hunter_add_package(cpr)
+#  find_package(cpr CONFIG REQUIRED)
+#ENDIF()
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
@@ -152,7 +152,7 @@ ELSE ()
     ${WHEREAMI_LIBRARY}
     ${IMGUI_LIBRARY}
     ${GDCM_LIBRARIES}
-    cpr::cpr
+#    cpr::cpr
 #    ${OPENSSL_LIBRARIES}
   )
 

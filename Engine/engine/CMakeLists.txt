@@ -18,7 +18,8 @@ SET(TARGET_SRC ${TARGET_SRC} ${TARGET_SRC_COMPONENTS} ${TARGET_INC} ${TARGET_INC
 
 add_library (engine STATIC ${TARGET_SRC})
 
-target_link_libraries (engine PUBLIC CURL::libcurl ${ENGINE_LIBS})
+#target_link_libraries (engine PUBLIC CURL::libcurl ${ENGINE_LIBS})
+target_link_libraries (engine PUBLIC ${ENGINE_LIBS})
 
 install (TARGETS engine DESTINATION lib)
 install (FILES ${TARGET_INC} DESTINATION include/engine)
