@@ -4,16 +4,16 @@ IF (NOT EMSCRIPTEN)
   set (HUNTER_SKIP_LOCK ON CACHE BOOL "HUNTER_SKIP_LOCK")
   include(cmake/HunterGate.cmake)
   HunterGate(
-    URL "https://github.com/ruslo/hunter/archive/v0.20.42.tar.gz"
-    SHA1 "44c5a98e5e6efc99671af45dbcba2ac6711fde1d"
+    URL "https://github.com/ruslo/hunter/archive/v0.20.52.tar.gz"
+    SHA1 "105ba83077617079f99300d8e672997366a0ce24"
   )
 ENDIF()
 
 project (Engine)
 
 IF (NOT EMSCRIPTEN)
-  hunter_add_package(CURL)
-  find_package(CURL CONFIG REQUIRED)
+  hunter_add_package(cpr)
+  find_package(cpr CONFIG REQUIRED)
 ENDIF()
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
@@ -152,7 +152,7 @@ ELSE ()
     ${WHEREAMI_LIBRARY}
     ${IMGUI_LIBRARY}
     ${GDCM_LIBRARIES}
-    CURL::libcurl
+    cpr::cpr
 #    ${OPENSSL_LIBRARIES}
   )
 
