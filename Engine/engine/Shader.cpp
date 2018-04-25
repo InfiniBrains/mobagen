@@ -1,9 +1,9 @@
-#include "Shader.h"
-#include "Logger.h"
+#include "Shader.hpp"
+#include "Logger.hpp"
 
-#include "components/DirectionalLight.h"
-#include "components/PointLight.h"
-#include "components/SpotLight.h"
+#include "components/DirectionalLight.hpp"
+#include "components/PointLight.hpp"
+#include "components/SpotLight.hpp"
 
 Shader::Shader(void)
 {

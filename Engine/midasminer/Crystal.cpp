@@ -1,9 +1,9 @@
 #include "Crystal.h"
-#include "Engine.h"
-#include "Logger.h"
+#include "Engine.hpp"
+#include "Logger.hpp"
 #include "CrystalPicker.h"
-#include "Plane.h"
-#include "components/MeshRenderer.h"
+#include "Plane.hpp"
+#include "components/MeshRenderer.hpp"
 #include <random>
 #include "Matrix.h"
 
@@ -23,8 +23,8 @@ std::shared_ptr<Entity> Crystal::CrystalFactory(std::map<Crystal::CrystalType, s
 	auto material = materials[color];
 
 	entity->addComponent<MeshRenderer>(mesh, material);
-	entity->getTransform().setPosition(CrystalPicker::MatrixPositionToVec3(x,y));
-	entity->getTransform().setScale(glm::vec3(38, 1, 38));
+	entity->getTransform()->setPosition(CrystalPicker::MatrixPositionToVec3(x,y));
+	entity->getTransform()->setScale(glm::vec3(38, 1, 38));
 	entity->addComponent<Sphere>(38 / 2);
 	entity->addComponent<Crystal>(38, 38, color);
 	return entity;
@@ -38,7 +38,7 @@ void Crystal::randomize()
 	auto color = (CrystalType)dis(gen);
 	getParent()->getComponent<MeshRenderer>()->setMaterial(getParent()->getParent()->getComponent<CrystalPicker>()->getMaterial(color));
 	auto tex = getParent()->getParent()->getComponent<CrystalPicker>()->getTexture(color);
-	getTransform().setScale(glm::vec3(38, 1, 38));
+	getTransform()->setScale(glm::vec3(38, 1, 38));
 	m_cystalType = color;
 }
 
@@ -58,16 +58,16 @@ void Crystal::decreaseSizeNow()
 {
 	m_scaleNeedsUpdate = false;
 	m_targetScale = 1;
-	auto scale = getTransform().getScale();
+	auto scale = getTransform()->getScale();
 	scale.x = m_targetScale * m_scaleX;
 	scale.z = m_targetScale * m_scaleY;
-	getTransform().setScale(scale);
+	getTransform()->setScale(scale);
 }
 
 void Crystal::swapPositions(std::shared_ptr<Crystal> neighbor, bool regress)
 { 
-	m_targetPosition = neighbor->getTransform().getPosition().xyz();
-	m_originalPosition = getTransform().getPosition().xyz();
+	m_targetPosition = neighbor->getTransform()->getPosition().xyz();
+	m_originalPosition = getTransform()->getPosition().xyz();
 	m_isSwapReturn = regress;
 	m_isSwapping = true;
 }
@@ -94,7 +94,7 @@ const char * Crystal::getType()
 
 void Crystal::updateScale(double delta)
 {
-	auto scale = getParent()->getTransform().getScale();
+	auto scale = getParent()->getTransform()->getScale();
 
 	auto targetX = m_targetScale * m_scaleX;
 	auto deltaX = targetX - scale.x;
@@ -111,15 +111,15 @@ void Crystal::updateScale(double delta)
 
 	if (fabs(deltaX) < 1 && fabs(deltaY) < 1) {
 		m_scaleNeedsUpdate = false;
-		getParent()->getTransform().setScale(scale);
+		getParent()->getTransform()->setScale(scale);
 	}
 	
-	getParent()->getTransform().setScale(scale);
+	getParent()->getTransform()->setScale(scale);
 }
 
 void Crystal::updateSwap(double delta)
 {
-	auto position = getParent()->getTransform().getPosition().xyz();
+	auto position = getParent()->getTransform()->getPosition().xyz();
 
 	auto targetX = m_targetPosition.x;
 	auto deltaX = targetX - position.x;
@@ -151,20 +151,20 @@ void Crystal::updateSwap(double delta)
 		{
 			m_isSwapping = false;
 			getParent()->getParent()->getComponent<CrystalPicker>()->deselect();
-			getTransform().setPosition(m_targetPosition);
-			auto pos = CrystalPicker::Vec3ToMatrixPosition(getTransform().getPosition().xyz());
+			getTransform()->setPosition(m_targetPosition);
+			auto pos = CrystalPicker::Vec3ToMatrixPosition(getTransform()->getPosition().xyz());
 			getParent()->getParent()->getComponent<Matrix>()->consume(pos.x,pos.y);
 			return;
 		}
 	}
 
-	getTransform().setPosition(position);
+	getTransform()->setPosition(position);
 }
 
 void Crystal::updateDrop(double delta)
 {
-	auto position = getParent()->getTransform().getPosition().xyz();
-	auto matrixpos = CrystalPicker::Vec3ToMatrixPosition(getTransform().getPosition().xyz());
+	auto position = getParent()->getTransform()->getPosition().xyz();
+	auto matrixpos = CrystalPicker::Vec3ToMatrixPosition(getTransform()->getPosition().xyz());
 	m_velocity -= 50 + matrixpos.x*0.4 + matrixpos.y*0.1;
 	auto targetZ = m_targetPosition.z;
 	position.z += m_velocity * delta;
@@ -177,7 +177,7 @@ void Crystal::updateDrop(double delta)
 			getParent()->getParent()->getComponent<Matrix>()->scheduleGlobalSolve(0.5);
 	}
 
-	getParent()->getTransform().setPosition(position);
+	getParent()->getTransform()->setPosition(position);
 }
 
 void Crystal::dropTo(glm::vec3 target)

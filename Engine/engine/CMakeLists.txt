@@ -1,7 +1,7 @@
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
 
 file(GLOB TARGET_INC ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
-list(REMOVE_ITEM TARGET_INC ${CMAKE_CURRENT_SOURCE_DIR}/stdafx.h)
+list(REMOVE_ITEM TARGET_INC ${CMAKE_CURRENT_SOURCE_DIR}/stdafx.hpp)
 file(GLOB TARGET_INC_COMPONENTS ${CMAKE_CURRENT_SOURCE_DIR}/components/*.h)
 
 file(GLOB TARGET_SRC
@@ -18,9 +18,8 @@ SET(TARGET_SRC ${TARGET_SRC} ${TARGET_SRC_COMPONENTS} ${TARGET_INC} ${TARGET_INC
 
 add_library (engine STATIC ${TARGET_SRC})
 
-target_link_libraries (engine ${ENGINE_LIBS})
-#set_target_properties(engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "stdafx.h")
-#cotire(engine)
+#target_link_libraries (engine PUBLIC CURL::libcurl ${ENGINE_LIBS})
+target_link_libraries (engine PUBLIC ${ENGINE_LIBS})
 
 install (TARGETS engine DESTINATION lib)
 install (FILES ${TARGET_INC} DESTINATION include/engine)

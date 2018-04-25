@@ -1,6 +1,6 @@
-#include "CustomIOSystem.h"
+#include "CustomIOSystem.hpp"
 
-#include "CustomIOStream.h"
+#include "CustomIOStream.hpp"
 
 #include <string>
 #include <stdio.h>

@@ -2,8 +2,8 @@
 // Created by alexandre on 21/03/18.
 //
 
-#include "Scene.h"
-#include "Error.h"
+#include "Scene.hpp"
+#include "Error.hpp"
 
 int Scene::rootCount () {
   throw NotImplementedException("SCENE rootCount");

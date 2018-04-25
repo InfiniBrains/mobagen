@@ -2,8 +2,8 @@
   #include <GL/glew.h>
 #endif
 
-#include "GLEWManager.h"
-#include "Logger.h"
+#include "GLEWManager.hpp"
+#include "Logger.hpp"
 
 GLEWManager::GLEWManager(void)
 {

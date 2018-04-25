@@ -1,11 +1,10 @@
 #pragma once
 
-#include "Engine.h"
+#include "Engine.hpp"
 
 class Menu : public Component
 {
 public:
-	~Menu() override{};
 	const char* getType() override;
 	void updateInput(Input* input, double delta) override {};
 	void update(double delta) override;

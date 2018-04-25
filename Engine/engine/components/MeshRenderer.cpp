@@ -1,4 +1,4 @@
-#include "MeshRenderer.h"
+#include "MeshRenderer.hpp"
 #include <iostream>
 
 MeshRenderer::MeshRenderer(std::shared_ptr<Mesh> mesh, std::shared_ptr<Material> material) : Component()

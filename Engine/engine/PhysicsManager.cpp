@@ -1,4 +1,4 @@
-#include "PhysicsManager.h"
+#include "PhysicsManager.hpp"
 
 #include <glm/gtx/norm.hpp>
 

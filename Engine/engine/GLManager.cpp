@@ -1,5 +1,5 @@
-#include "GLManager.h"
-#include "Logger.h"
+#include "GLManager.hpp"
+#include "Logger.hpp"
 
 #include <algorithm>
 

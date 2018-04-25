@@ -1,5 +1,5 @@
 #include "CrystalPicker.h"
-#include "Logger.h"
+#include "Logger.hpp"
 #include "Crystal.h"
 #include "Matrix.h"
 #include "Menu.h"

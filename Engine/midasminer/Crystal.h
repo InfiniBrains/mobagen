@@ -1,7 +1,7 @@
 #pragma once
-#include "Engine.h"
-#include "Texture.h"
-#include "Material.h"
+#include "Engine.hpp"
+#include "Texture.hpp"
+#include "Material.hpp"
 
 class Crystal : public Component {
 public:

@@ -1,5 +1,5 @@
-#include "Component.h"
-#include "Engine.h"
+#include "Component.hpp"
+#include "Engine.hpp"
 
 void Component::setParent(Entity *parentEntity)
 {
@@ -11,7 +11,7 @@ Entity *Component::getParent(void) const
   return m_parentEntity;
 }
 
-Transform& Component::getTransform(void) const
+Transform* Component::getTransform(void) const
 {
   return m_parentEntity->getTransform();
 }
@@ -47,4 +47,4 @@ double Component::getDeltaTime()
 	return m_parentEntity->getEngine()->getDeltaTime();
 }
 
-Component::Component() : Object(){}
+Component::Component(){}

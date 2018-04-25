@@ -1,19 +1,19 @@
-#include "components/MeshRenderer.h"
-#include "components/PerspectiveCamera.h"
-#include "components/OrthoCamera.h"
-#include "components/FreeMove.h"
-#include "components/FreeLook.h"
-#include "components/DirectionalLight.h"
-#include "components/SpotLight.h"
-#include "components/PointLight.h"
-#include "components/Sphere.h"
+#include "components/MeshRenderer.hpp"
+#include "components/PerspectiveCamera.hpp"
+#include "components/OrthoCamera.hpp"
+#include "components/FreeMove.hpp"
+#include "components/FreeLook.hpp"
+#include "components/DirectionalLight.hpp"
+#include "components/SpotLight.hpp"
+#include "components/PointLight.hpp"
+#include "components/Sphere.hpp"
 
-#include "Plane.h"
-#include "Mesh.h"
-#include "Texture.h"
-#include "Logger.h"
-#include "MeshLoader.h"
-#include "Engine.h"
+#include "Plane.hpp"
+#include "Mesh.hpp"
+#include "Texture.hpp"
+#include "Logger.hpp"
+#include "MeshLoader.hpp"
+#include "Engine.hpp"
 #include "CrystalPicker.h"
 #include "Crystal.h"
 #include <SDL_main.h>
@@ -84,17 +84,17 @@ void CoolGame::init(GLManager *glManager)
   auto backgroundMesh = Plane::getMesh();
   auto planeEntity = std::make_shared<Entity>();
   planeEntity->addComponent<MeshRenderer>(backgroundMesh, backgroundMat);
-  planeEntity->getTransform().setPosition(glm::vec3(0, -10, 0));
-  planeEntity->getTransform().setScale(glm::vec3(755, 1, 600));
+  planeEntity->getTransform()->setPosition(glm::vec3(0, -10, 0));
+  planeEntity->getTransform()->setScale(glm::vec3(755, 1, 600));
   addToScene(planeEntity);
 
   getRootScene()->addComponent<Menu>();
 
   auto cam = std::make_shared<Entity>();
   cam->addComponent<PerspectiveCamera>(glm::pi<float>() / 4.0f * 0.96f, getEngine()->getWindow()->getWidth() / (float)getEngine()->getWindow()->getHeight(), 0.01f, 10000.0f);
-  cam->getTransform().setPosition(glm::vec3(0, getEngine()->getWindow()->getWidth(), 0));
-  cam->getTransform().setScale(glm::vec3(0.8, 0.8, 0.8));
-  cam->getTransform().setRotation(glm::quat(0, 0, 0.707, 0.707));
+  cam->getTransform()->setPosition(glm::vec3(0, getEngine()->getWindow()->getWidth(), 0));
+  cam->getTransform()->setScale(glm::vec3(0.8, 0.8, 0.8));
+  cam->getTransform()->setRotation(glm::quat(0, 0, 0.707, 0.707));
   cam->addComponent<DirectionalLight>(glm::vec3(1,1,1), 0.5);
   addToScene(cam);
 

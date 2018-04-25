@@ -1,4 +1,4 @@
-#include "Plane.h"
+#include "Plane.hpp"
 
 // hack to invert image x-y, just invert signal of x value
 Vertex vertices[] = {

@@ -1,6 +1,20 @@
 cmake_minimum_required(VERSION 2.8)
 
+#IF (NOT EMSCRIPTEN)
+#  set (HUNTER_SKIP_LOCK ON CACHE BOOL "HUNTER_SKIP_LOCK")
+#  include(cmake/HunterGate.cmake)
+#  HunterGate(
+#    URL "https://github.com/ruslo/hunter/archive/v0.20.52.tar.gz"
+#    SHA1 "105ba83077617079f99300d8e672997366a0ce24"
+#  )
+#ENDIF()
+
 project (Engine)
+
+#IF (NOT EMSCRIPTEN)
+#  hunter_add_package(cpr)
+#  find_package(cpr CONFIG REQUIRED)
+#ENDIF()
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
@@ -31,6 +45,13 @@ add_definitions(-DGLEW_STATIC)
 add_definitions(-UGLEW_BUILD)
 
 add_subdirectory(dependencies)
+
+#add_definitions ( -DOPENSSL_ROOT_DIR ${CMAKE_SOURCE_DIR}/dependencies/openssl/)
+#OPENSSL_CRYPTO_LIBRARY
+#OPENSSL_SSL_LIBRARY
+#add_definitions ( -DOPENSSL_LIBRARIES "${CMAKE_BINARY_DIR}/lib/")
+
+#find_package(OpenSSL)
 
 include(${CMAKE_CURRENT_BINARY_DIR}/dependencies/gdcm/GDCMConfig.cmake )
 
@@ -66,7 +87,11 @@ set ( GLM_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/glm/ )
 set ( WHEREAMI_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/whereami/src/ )
 set ( WHEREAMI_LIBRARY whereami )
 
-set ( IMGUI_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/imgui/ )
+set ( IMGUI_INCLUDE_DIRS
+  ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/imgui/
+  ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/imgui/addons
+  ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/imgui/addons/imguifilesystem)
+
 set ( IMGUI_LIBRARY imgui )
 
 IF (EMSCRIPTEN)
@@ -127,6 +152,8 @@ ELSE ()
     ${WHEREAMI_LIBRARY}
     ${IMGUI_LIBRARY}
     ${GDCM_LIBRARIES}
+#    cpr::cpr
+#    ${OPENSSL_LIBRARIES}
   )
 
   set(ENGINE_INCLUDES
@@ -140,6 +167,7 @@ ELSE ()
     ${IMGUI_INCLUDE_DIRS}
     ${CMAKE_CURRENT_SOURCE_DIR}/Engine/engine/
     ${GDCM_INCLUDE_DIRS}
+#    ${OPENSSL_INCLUDE_DIRS}
 #    ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/mingw-std-threads
   )
 ENDIF ()
@@ -151,3 +179,6 @@ add_subdirectory( ${CMAKE_CURRENT_SOURCE_DIR}/Engine )
 #projects
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT midasminer)
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT doceditor)
+set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT tests)
+set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT uploader)
+

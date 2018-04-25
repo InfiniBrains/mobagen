@@ -2,7 +2,7 @@
 //  Author: Shervin Aflatooni
 //
 
-#include "TextureData.h"
+#include "TextureData.hpp"
 
 TextureData::TextureData(int width_, int height_, const unsigned char* data, GLenum textureTarget, GLfloat filter)
 {

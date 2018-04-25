@@ -1,8 +1,8 @@
-#include "GuiManager.h"
+#include "GuiManager.hpp"
 
-#include "Shader.h"
-#include "TextureData.h"
-#include "Component.h"
+#include "Shader.hpp"
+#include "TextureData.hpp"
+#include "Component.hpp"
 
 #if defined(GLES2)
   #include <GLES2/gl2.h>
@@ -350,7 +350,7 @@ void renderSceneGraph(Entity *sceneGraph)
     ImGui::Selectable("translation");
     ImGui::NextColumn();
     ImGui::PushItemWidth(-1);
-    ImGui::SliderFloat3("##value", &(sceneGraph->getTransform().m_position.x), -10.0f, 10.0f);
+    ImGui::SliderFloat3("##value", &(sceneGraph->getTransform()->m_position.x), -10.0f, 10.0f);
     ImGui::PopItemWidth();
     ImGui::NextColumn();
 
@@ -361,7 +361,7 @@ void renderSceneGraph(Entity *sceneGraph)
     ImGui::Selectable("rotation");
     ImGui::NextColumn();
     ImGui::PushItemWidth(-1);
-    ImGui::SliderFloat4("##value", &(sceneGraph->getTransform().m_rotation.x), -1.0f, 1.0f);
+    ImGui::SliderFloat4("##value", &(sceneGraph->getTransform()->m_rotation.x), -1.0f, 1.0f);
     ImGui::PopItemWidth();
     ImGui::NextColumn();
 
@@ -372,7 +372,7 @@ void renderSceneGraph(Entity *sceneGraph)
     ImGui::Selectable("scale");
     ImGui::NextColumn();
     ImGui::PushItemWidth(-1);
-    ImGui::SliderFloat3("##value", &(sceneGraph->getTransform().m_scale.x), 0.0f, 10.0f);
+    ImGui::SliderFloat3("##value", &(sceneGraph->getTransform()->m_scale.x), 0.0f, 10.0f);
     ImGui::PopItemWidth();
     ImGui::NextColumn();
 

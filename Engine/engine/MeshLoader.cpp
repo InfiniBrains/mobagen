@@ -1,11 +1,11 @@
-#include "CustomIOSystem.h"
-#include "MeshLoader.h"
-#include "Mesh.h"
-#include "components/MeshRenderer.h"
-#include "Material.h"
-#include "Texture.h"
+#include "CustomIOSystem.hpp"
+#include "MeshLoader.hpp"
+#include "Mesh.hpp"
+#include "components/MeshRenderer.hpp"
+#include "Material.hpp"
+#include "Texture.hpp"
 
-#include "Logger.h"
+#include "Logger.hpp"
 
 #include <vector>
 

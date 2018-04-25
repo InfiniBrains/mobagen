@@ -32,11 +32,15 @@ ELSE ()
   add_library (whereami STATIC ${CMAKE_CURRENT_SOURCE_DIR}/whereami/src/whereami.c ${CMAKE_CURRENT_SOURCE_DIR}/whereami/src/whereami.h)
   add_subdirectory( SDL )
 
+  
+#  set( USE_SYSTEM_CURL OFF CACHE BOOL "USE_SYSTEM_CURL" )
+#  set( BUILD_CPR_TESTS OFF CACHE BOOL "BUILD_CPR_TESTS" )
+#  add_subdirectory( cpr )
 ENDIF ()
 
 set(GDCM_BUILD_DOCBOOK_MANPAGES OFF CACHE BOOL "Do not build gdcm manpages")
 set(GDCM_DOCUMENTATION OFF CACHE BOOL "Do not build gdcm manpages")
-set(DBUILD_DOC OFF CACHE BOOL "Do not build gdcm manpages")
+set(BUILD_DOC OFF CACHE BOOL "Do not build gdcm manpages")
 add_subdirectory( gdcm )
 
 set( ASSIMP_BUILD_ASSIMP_TOOLS OFF CACHE BOOL "Build assimp tools" )
@@ -175,10 +179,50 @@ add_definitions(-DASSIMP_BUILD_NO_GLTF_EXPORTER)
 set( ASSIMP_BUILD_3MF_IMPORTER OFF CACHE BOOL "Build importer" )
 add_definitions(-DASSIMP_BUILD_NO_3MF_EXPORTER)
 
-
 add_subdirectory( assimp )
 
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/imgui/)
+set(IMGUI_USE_MINIZIP OFF CACHE BOOL "IMGUI_USE_MINIZIP")
+add_definitions(-DYES_IMGUIADDONS_ALL)
 
-add_library (imgui STATIC ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui.cpp ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui_demo.cpp ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui_draw.cpp)
+INCLUDE_DIRECTORIES(
+    ${CMAKE_CURRENT_SOURCE_DIR}/imgui/addons/
+    ${CMAKE_CURRENT_SOURCE_DIR}/imgui/
+    ${CMAKE_CURRENT_SOURCE_DIR}/imgui/addons/imguifilesystem/
+)
+
+add_library (imgui STATIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui_demo.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui_draw.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/imgui/addons/imgui_user.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/imgui/addons/imguifilesystem/dirent_portable.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/imgui/addons/imguifilesystem/imguifilesystem.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/imgui/addons/imguifilesystem/imguifilesystem.cpp
+    )
+
+
+#execute_process( COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/openssl/config no-shared no-engine no-hw no-dso --prefix=${CMAKE_BINARY_DIR} )
+#execute_process( COMMAND make -C ${CMAKE_CURRENT_SOURCE_DIR}/openssl depend -j9 && make -C ${CMAKE_CURRENT_SOURCE_DIR}/openssl -j9 && make -C ${CMAKE_CURRENT_SOURCE_DIR}/openssl install_sw )
+
+#include(ExternalProject)
+#ExternalProject_Add(
+#    openssl
+#    SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/openssl"
+#    CONFIGURE_COMMAND ${CMAKE_SOURCE_DIR}/dependencies/openssl/config no-shared no-engine no-hw no-dso --prefix=${CMAKE_BINARY_DIR}
+#    BUILD_COMMAND make depend -j9 && make -j9
+#    INSTALL_COMMAND make install_sw
+#    BUILD_IN_SOURCE 1
+#)
+
+#include(${CP_CMAKE_DIR}/HunterGate.cmake)
+#hunter_add_package(OpenSSL)
+#find_package(OpenSSL REQUIRED)
+#target_link_libraries(foo PUBLIC OpenSSL::SSL OpenSSL::Crypto)
+
+
+
+#
+#set( OPENSSL_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/openssl/ CACHE PATH "OPENSSL_ROOT_DIR" )
+#set( OPENSSL_LIBRARIES ${CMAKE_BINARY_DIR}/lib/ CACHE PATH "OPENSSL_LIBRARIES" )
 

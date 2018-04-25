@@ -24,3 +24,5 @@ emscripten.zip
 bin-mingw/
 
 win64mingw\.zip
+
+*.TMP

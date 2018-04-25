@@ -1,7 +1,7 @@
 #define GLM_FORCE_RADIANS
 #include <glm/gtx/transform.hpp>
 
-#include "OrthoCamera.h"
+#include "OrthoCamera.hpp"
 
 OrthoCamera::OrthoCamera(float aspect, float scale, float zNear, float zFar) : Camera("OrthoCamera")
 {

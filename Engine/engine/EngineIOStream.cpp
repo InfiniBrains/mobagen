@@ -1,4 +1,4 @@
-#include "EngineIOStream.h"
+#include "EngineIOStream.hpp"
 
 #ifdef EMSCRIPTEN
 #elif ANDROID

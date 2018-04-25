@@ -1,7 +1,7 @@
-#include "PointLight.h"
+#include "PointLight.hpp"
 
-#include "../Engine.h"
-#include "../settings.h"
+#include "Engine.hpp"
+#include "settings.hpp"
 
 PointLight::PointLight(glm::vec3 color, float intensity, std::shared_ptr<Attenuation> attenuation) : BaseLight(color, intensity)
 {

@@ -4,9 +4,9 @@
 
 #include <stdio.h>
 
-#include "Window.h"
-#include "GuiManager.h"
-#include "Logger.h"
+#include "Window.hpp"
+#include "GuiManager.hpp"
+#include "Logger.hpp"
 
 Window::Window(char * title, glm::vec2 windowSize)
 {
