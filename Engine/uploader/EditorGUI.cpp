@@ -11,7 +11,7 @@
 #include <Plane.hpp>
 #include <string>
 #include "Material.hpp"
-#include <imguifilesystem.h>
+//#include <imguifilesystem.h>
 #include "Logger.hpp"
 
 ImVec2 windowFactor;
@@ -33,11 +33,11 @@ void EditorGUI::onGUI(ImGuiContext* context)
         ImGui::Text("Choose the form you want to upload your files to:");
         const bool browseButtonPressed2 = ImGui::Button("LOAD FILES");
         ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-        static ImGuiFs::Dialog dlg;
-        const char *chosenPath = dlg.chooseFileDialog(browseButtonPressed2,startingFolder,optionalFileExtensionFilterString);
+        //static ImGuiFs::Dialog dlg;
+        //const char *chosenPath = dlg.chooseFileDialog(browseButtonPressed2,startingFolder,optionalFileExtensionFilterString);
         ImGui::PopStyleColor(1);
 
-        if (strlen(dlg.getChosenPath())>0) ImGui::Text("Chosen path: \"%s\"",dlg.getChosenPath());
+        //if (strlen(dlg.getChosenPath())>0) ImGui::Text("Chosen path: \"%s\"",dlg.getChosenPath());
 
         if(ImGui::Button("GET FROM CD"))
         {

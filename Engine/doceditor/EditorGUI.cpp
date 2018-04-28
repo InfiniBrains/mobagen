@@ -11,7 +11,6 @@
 #include <Plane.hpp>
 #include <string>
 #include "Material.hpp"
-#include <imguifilesystem.h>
 #include "Logger.hpp"
 #ifndef EMSCRIPTEN
 //#include <curl/curl.h>
@@ -256,9 +255,9 @@ void EditorGUI::mainMenu() {
         browseButtonPressed = ImGui::MenuItem("Open...", "CTRL+O");
         ImGui::EndMenu();
     }
-    static ImGuiFs::Dialog dlg;
-    const char* chosenPath = dlg.chooseFileDialog(browseButtonPressed);
-
+//    static ImGuiFs::Dialog dlg;
+//    const char* chosenPath = dlg.chooseFileDialog(browseButtonPressed);
+//
 //  if (ImGui::BeginMenu("File"))
 //  {
 //    ImGui::PushStyleColor(ImGuiCol_Button,ImVec4(0,0,0,0));

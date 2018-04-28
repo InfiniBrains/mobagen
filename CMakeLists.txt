@@ -11,10 +11,11 @@ cmake_minimum_required(VERSION 2.8)
 
 project (Engine)
 
-#IF (NOT EMSCRIPTEN)
+IF (NOT EMSCRIPTEN)
 #  hunter_add_package(cpr)
 #  find_package(cpr CONFIG REQUIRED)
-#ENDIF()
+  set(LIBC ON CACHE BOOL "LIBC")
+ENDIF()
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
