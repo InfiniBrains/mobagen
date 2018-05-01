@@ -1,13 +1,13 @@
 cmake_minimum_required(VERSION 2.8)
 
-#IF (NOT EMSCRIPTEN)
-#  set (HUNTER_SKIP_LOCK ON CACHE BOOL "HUNTER_SKIP_LOCK")
-#  include(cmake/HunterGate.cmake)
-#  HunterGate(
-#    URL "https://github.com/ruslo/hunter/archive/v0.20.52.tar.gz"
-#    SHA1 "105ba83077617079f99300d8e672997366a0ce24"
-#  )
-#ENDIF()
+IF (NOT EMSCRIPTEN)
+  set (HUNTER_SKIP_LOCK ON CACHE BOOL "HUNTER_SKIP_LOCK")
+  include(cmake/HunterGate.cmake)
+  HunterGate(
+    URL "https://github.com/ruslo/hunter/archive/v0.20.62.tar.gz"
+    SHA1 "10ffae63cf7b07193d6d7b459c1d0cfa242fad5b"
+  )
+ENDIF()
 
 project (Engine)
 
@@ -77,8 +77,8 @@ SET(GDCM_LIBRARIES
 set ( SDL2_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/SDL/include )
 set ( SDL2_LIBRARY SDL2-static )
 
-set ( GLEW_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/glew/include )
-set ( GLEW_LIBRARIES libglew_static )
+#set ( GLEW_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/glew/include )
+#set ( GLEW_LIBRARIES libglew_static )
 
 set ( ASSIMP_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/assimp/include )
 set ( ASSIMP_LIBRARY assimp )
@@ -149,7 +149,7 @@ ELSE ()
     ${OPENGL_LIBRARY}
     ${SDL2_LIBRARY}
     ${ASSIMP_LIBRARY}
-    ${GLEW_LIBRARIES}
+    #${GLEW_LIBRARIES}
     ${WHEREAMI_LIBRARY}
     ${IMGUI_LIBRARY}
     ${GDCM_LIBRARIES}
@@ -163,7 +163,6 @@ ELSE ()
     ${ASSIMP_INCLUDE_DIR}
     ${CMAKE_BINARY_DIR}/dependencies/assimp/include
     ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/stb
-    ${GLEW_INCLUDE_DIRS}
     ${WHEREAMI_INCLUDE_DIRS}
     ${IMGUI_INCLUDE_DIRS}
     ${CMAKE_CURRENT_SOURCE_DIR}/Engine/engine/

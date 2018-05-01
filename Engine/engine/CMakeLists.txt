@@ -18,8 +18,21 @@ SET(TARGET_SRC ${TARGET_SRC} ${TARGET_SRC_COMPONENTS} ${TARGET_INC} ${TARGET_INC
 
 add_library (engine STATIC ${TARGET_SRC})
 
-#target_link_libraries (engine PUBLIC CURL::libcurl ${ENGINE_LIBS})
-target_link_libraries (engine PUBLIC ${ENGINE_LIBS})
+If(NOT EMSCRIPTEN AND NOT ANDROID)
+  add_definitions(-DGLEW_STATIC)
+  add_definitions(-UGLEW_BUILD)
+  set(GLEW_USE_STATIC_LIBS ON CACHE BOOL "bla")
+  set(BUILD_SHARED_LIBS OFF CACHE BOOL "bla")
+  set( glew-cmake_BUILD_SHARED OFF CACHE BOOL "Build the shared glew library" )
+  set( glew-cmake_BUILD_STATIC ON CACHE BOOL "Build the static glew library" )
+  set( glew-cmake_BUILD_SINGLE_CONTEXT ON CACHE BOOL "Build the single context glew library" )
+  set( glew-cmake_BUILD_MULTI_CONTEXT OFF CACHE BOOL "Build the multi context glew library" )
+  hunter_add_package(glew)
+  find_package(glew CONFIG REQUIRED)
+  target_link_libraries (engine PUBLIC ${ENGINE_LIBS} glew::glew)
+ELSE()
+  target_link_libraries (engine PUBLIC ${ENGINE_LIBS})
+ENDIF()
 
 install (TARGETS engine DESTINATION lib)
 install (FILES ${TARGET_INC} DESTINATION include/engine)
