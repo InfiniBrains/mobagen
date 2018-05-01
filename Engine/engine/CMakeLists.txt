@@ -18,6 +18,8 @@ SET(TARGET_SRC ${TARGET_SRC} ${TARGET_SRC_COMPONENTS} ${TARGET_INC} ${TARGET_INC
 
 add_library (engine STATIC ${TARGET_SRC})
 
+
+
 If(NOT EMSCRIPTEN AND NOT ANDROID)
   add_definitions(-DGLEW_STATIC)
   add_definitions(-UGLEW_BUILD)
@@ -27,9 +29,14 @@ If(NOT EMSCRIPTEN AND NOT ANDROID)
   set( glew-cmake_BUILD_STATIC ON CACHE BOOL "Build the static glew library" )
   set( glew-cmake_BUILD_SINGLE_CONTEXT ON CACHE BOOL "Build the single context glew library" )
   set( glew-cmake_BUILD_MULTI_CONTEXT OFF CACHE BOOL "Build the multi context glew library" )
+
+  hunter_add_package(curl)
+  find_package(curl CONFIG REQUIRED)
+
   hunter_add_package(glew)
   find_package(glew CONFIG REQUIRED)
-  target_link_libraries (engine PUBLIC ${ENGINE_LIBS} glew::glew)
+
+  target_link_libraries (engine PUBLIC ${ENGINE_LIBS} glew::glew CURL::libcurl)
 ELSE()
   target_link_libraries (engine PUBLIC ${ENGINE_LIBS})
 ENDIF()
