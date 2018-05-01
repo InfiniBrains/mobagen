@@ -1,8 +1,11 @@
 cmake_minimum_required(VERSION 2.8)
 
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
 IF (NOT EMSCRIPTEN)
   set (HUNTER_SKIP_LOCK ON CACHE BOOL "HUNTER_SKIP_LOCK")
   include(cmake/HunterGate.cmake)
+
   HunterGate(
     URL "https://github.com/ruslo/hunter/archive/v0.20.62.tar.gz"
     SHA1 "10ffae63cf7b07193d6d7b459c1d0cfa242fad5b"
@@ -142,7 +145,8 @@ ELSEIF (ANDROID)
     ${GDCM_INCLUDE_DIRS}
   )
 ELSE ()
-  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -std=c++14")
+  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -std=c++14 -fPIC")
+  SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -std=c++14 -fPIC")
   find_package(OpenGL REQUIRED)
 
   set(ENGINE_LIBS
