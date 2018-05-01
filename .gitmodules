@@ -34,3 +34,7 @@
 	path = dependencies/mingw-std-threads
 	url = https://github.com/meganz/mingw-std-threads.git
 	branch = 3a5361a3e9308ce854dd2761d2a9416e21ad489d
+[submodule "dependencies/polly"]
+	path = dependencies/polly
+	url = https://github.com/ruslo/polly.git
+	branch = bab5efa79b2016ad227a1ff065e70df3460e03d7

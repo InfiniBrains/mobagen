@@ -8,6 +8,11 @@ set(SDL_SHARED_ENABLED_BY_DEFAULT OFF CACHE BOOL "bla")
 set(SDL_SHARED OFF CACHE BOOL "Build a shared version of the library")
 set(SDL_STATIC ON CACHE BOOL "Build a static version of the library")
 
+# set opengl only rendering
+set(DIRECTX OFF CACHE BOOL "use directx")
+set(VIDEO_OPENGL ON CACHE BOOL "use opengl")
+set(VIDEO_OPENGLES OFF CACHE BOOL "use opengles")
+
 IF (EMSCRIPTEN)
 
 ELSEIF (ANDROID)
