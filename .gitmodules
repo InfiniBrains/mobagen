@@ -17,7 +17,7 @@
 [submodule "dependencies/imgui"]
 	path = dependencies/imgui
 	url = https://github.com/Flix01/imgui.git
-	branch = efba251754e081ac8cc24ec8d0f7cbe0e9fc51e9
+	branch = fd6e6effeb264c1abe64877d996e9d38e7ccf4e6
 [submodule "dependencies/gdcm"]
 	path = dependencies/gdcm
 	url = https://github.com/malaterre/GDCM.git
