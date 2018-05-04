@@ -1,6 +1,7 @@
 #pragma once
-
+#ifndef EMSCRIPTEN
 #include <curl/curl.h>
+#endif
 #include <string>
 class WWW {
 public:
