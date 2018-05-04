@@ -22,23 +22,23 @@ matrix:
 
 
     # windows cross compile
-    - os: linux
-      services:
-        - docker
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - cmake
-            - wine
-      env:
-        - MATRIX_EVAL="CC=x86_64-w64-mingw32-gcc && CXX=x86_64-w64-mingw32-g++ && AR=x86_64-w64-mingw32-ar"
-        - BUILD_TYPE=windows
-      group: travis_latest
-      dist: trusty
-      language: cpp
-      compiler: mingw
+#    - os: linux
+#      services:
+#        - docker
+#      addons:
+#        apt:
+#          sources:
+#            - ubuntu-toolchain-r-test
+#          packages:
+#            - cmake
+#            - wine
+#      env:
+#        - MATRIX_EVAL="CC=x86_64-w64-mingw32-gcc && CXX=x86_64-w64-mingw32-g++ && AR=x86_64-w64-mingw32-ar"
+#        - BUILD_TYPE=windows
+#      group: travis_latest
+#      dist: trusty
+#      language: cpp
+#      compiler: mingw
 
 
     # linux emscripten
