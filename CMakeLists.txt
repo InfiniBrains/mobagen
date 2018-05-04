@@ -5,16 +5,16 @@ IF (NOT EMSCRIPTEN)
   include(cmake/HunterGate.cmake)
 
   HunterGate(
-    URL "https://github.com/ruslo/hunter/archive/v0.20.63.tar.gz"
-    SHA1 "358385a57457e5276f9e9db6e8e2bc80c53287ad"
+      URL "https://github.com/ruslo/hunter/archive/v0.20.66.tar.gz"
+      SHA1 "bd907a0c2faf15071144ecca5a6d72d443375f64"
   )
 ENDIF()
 
 project (Engine)
 
 IF (NOT EMSCRIPTEN)
-#  hunter_add_package(cpr)
-#  find_package(cpr CONFIG REQUIRED)
+  hunter_add_package(CURL)
+  find_package(CURL CONFIG REQUIRED)
   set(LIBC ON CACHE BOOL "LIBC")
 ENDIF()
 
@@ -156,7 +156,8 @@ ELSE ()
     ${IMGUI_LIBRARY}
     ${GDCM_LIBRARIES}
 #    cpr::cpr
-#    ${OPENSSL_LIBRARIES}
+    ${OPENSSL_LIBRARIES}
+    CURL::libcurl
   )
 
   set(ENGINE_INCLUDES
@@ -169,7 +170,7 @@ ELSE ()
     ${IMGUI_INCLUDE_DIRS}
     ${CMAKE_CURRENT_SOURCE_DIR}/Engine/engine/
     ${GDCM_INCLUDE_DIRS}
-#    ${OPENSSL_INCLUDE_DIRS}
+    ${OPENSSL_INCLUDE_DIRS}
 #    ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/mingw-std-threads
   )
 ENDIF ()
