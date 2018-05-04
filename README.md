@@ -47,8 +47,9 @@ This project was made using these open-sourced [third parties](THIRDPARTIES.md).
 
 ## Contributors
 MoBaGEn development is made by these [People](PEOPLE.md), and the top contributors are:
-- [Alexandre Tolstenko](linkedin.com/in/aletolstenko/)
+- [Alexandre Tolstenko](http://linkedin.com/in/aletolstenko/)
 - [Samuel Carlos](http://linkedin.com/in/samuelkarlos/)
+- [Marcos Soares](http://www.linkedin.com/in/marcos-soares-391718141/)
 
 ## Sponsorship
 This project is sponsored via [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=tolstenko@gmail.com) and [Patreon](https://www.patreon.com/tolstenko) by these kind people:
