@@ -212,7 +212,7 @@ build:
 # scripts to run before build
 before_build:
 #  - git config --global core.autocrlf input
-  - cmd: |-
+  - |-
     git submodule update --init --recursive
     if "%arch%"=="Win64" ( set arch= Win64 )
     echo %arch%
