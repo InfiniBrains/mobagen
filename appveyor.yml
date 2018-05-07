@@ -70,16 +70,6 @@ image:
 
 # scripts that are called at very beginning, before repo cloning
 init:
-#  - git config --global core.autocrlf input
-  - git submodule update --init --recursive
-  - set arch=
-  - if "%arch%"=="Win64" ( set arch= Win64 )
-  - echo %arch%
-  - echo %APPVEYOR_BUILD_WORKER_IMAGE%
-  - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2017" ( set generator="Visual Studio 15 2017%arch%" )
-  - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2015" ( set generator="Visual Studio 14 2015%arch%" )
-  - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2013" ( set generator="Visual Studio 12 2013%arch%" )
-  - echo %generator%
 
 # clone directory
 clone_folder: c:\projects\mobagen
@@ -207,7 +197,7 @@ configuration: Release
 
 build:
   parallel: true                  # enable MSBuild parallel builds
-  project: MyTestAzureCS.sln      # path to Visual Studio solution or project
+  project: c:\projects\mobagen\build\mobagen.sln      # path to Visual Studio solution or project
 #  publish_wap: true               # package Web Application Projects (WAP) for Web Deploy
 #  publish_wap_xcopy: true         # package Web Application Projects (WAP) for XCopy deployment
 #  publish_azure: true             # package Azure Cloud Service projects and push to artifacts
@@ -221,7 +211,17 @@ build:
 
 # scripts to run before build
 before_build:
-- cmd: |-
+#  - git config --global core.autocrlf input
+  - git submodule update --init --recursive
+  - set arch=
+  - if "%arch%"=="Win64" ( set arch= Win64 )
+  - echo %arch%
+  - echo %APPVEYOR_BUILD_WORKER_IMAGE%
+  - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2017" ( set generator="Visual Studio 15 2017%arch%" )
+  - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2015" ( set generator="Visual Studio 14 2015%arch%" )
+  - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2013" ( set generator="Visual Studio 12 2013%arch%" )
+  - echo %generator%
+  - cmd: |-
     cmake --version
     cmake -Bbuild -H. -G %generator%
     cmake --build build
