@@ -213,6 +213,7 @@ build:
 before_build:
 #  - git config --global core.autocrlf input
   - |-
+    git clone --recursive https://github.com/InfiniBrains/mobagen.git c:\projects\mobagen
     git submodule update --init --recursive
     if "%arch%"=="Win64" ( set arch= Win64 )
     echo %arch%
