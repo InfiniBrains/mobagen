@@ -75,7 +75,7 @@ init:
 clone_folder: c:\projects\mobagen
 
 # fetch repository as zip archive
-shallow_clone: true                 # default is "false"
+shallow_clone: false                 # default is "false"
 
 # set clone depth
 #clone_depth: 10                      # clone entire repository history if not defined
@@ -215,8 +215,7 @@ before_build:
   - |-
     cd c:\projects\mobagen
     echo %cd%
-    dir 
-    git clone --recursive https://github.com/InfiniBrains/mobagen.git .
+    dir
     git submodule update --init --recursive
     if "%arch%"=="Win64" ( set arch= Win64 )
     echo %arch%
