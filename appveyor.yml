@@ -215,6 +215,7 @@ before_build:
   - |-
     cd c:\projects\mobagen
     echo %cd%
+    dir 
     git clone --recursive https://github.com/InfiniBrains/mobagen.git .
     git submodule update --init --recursive
     if "%arch%"=="Win64" ( set arch= Win64 )
