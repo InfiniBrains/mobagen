@@ -214,7 +214,6 @@ before_build:
 #  - git config --global core.autocrlf input
   - cmd: |-
     git submodule update --init --recursive
-    set arch=
     if "%arch%"=="Win64" ( set arch= Win64 )
     echo %arch%
     echo %APPVEYOR_BUILD_WORKER_IMAGE%
