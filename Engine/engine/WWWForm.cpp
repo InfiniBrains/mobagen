@@ -49,6 +49,8 @@ std::map<std::string, std::string>* WWWForm::headers()
 }
 
 std::vector<char> WWWForm::data() {
+  std::vector<char> a;
+  return a;
 //  std::stringstream data;
 //
 //  if (containsFiles)
