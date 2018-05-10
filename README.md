@@ -1,7 +1,8 @@
 # MoBaGEn
 Welcome to the **MoBaGEn**. The **MO**dule **BA**sed **G**ame **EN**gine. 
 
-**MoBaGEn** is a free lightweight, cross-platform 3D Game Engine implemented in C++. I will support beind scripted in C#(Mono), Javascript(V8), python and Lua.
+**MoBaGEn** is a free lightweight, cross-platform 3D Game Engine implemented in C++. It will support scripts in C#(Mono), Javascript(V8), python and Lua.
+
 
 [![Build Status](https://api.travis-ci.org/InfiniBrains/mobagen.svg?branch=master)](https://travis-ci.org/InfiniBrains/mobagen) [![Active Contributors](https://api.gitential.com/accounts/758/projects/809/badges/active-contributors.svg)](https://gitential.com/accounts/758/projects/809/share?uuid=7533eb0d-42e1-41f1-8f8f-a8f8f1fdce70&utm_source=shield&utm_medium=shield&utm_campaign=809) [![Code Volume](https://api.gitential.com/accounts/758/projects/809/badges/code-volume.svg)](https://gitential.com/accounts/758/projects/809/share?uuid=7533eb0d-42e1-41f1-8f8f-a8f8f1fdce70&utm_source=shield&utm_medium=shield&utm_campaign=809) [![Coding Hours](https://api.gitential.com/accounts/758/projects/809/badges/coding-hours.svg)](https://gitential.com/accounts/758/projects/809/share?uuid=7533eb0d-42e1-41f1-8f8f-a8f8f1fdce70&utm_source=shield&utm_medium=shield&utm_campaign=809) [![Efficiency](https://api.gitential.com/accounts/758/projects/809/badges/efficiency.svg)](https://gitential.com/accounts/758/projects/809/share?uuid=7533eb0d-42e1-41f1-8f8f-a8f8f1fdce70&utm_source=shield&utm_medium=shield&utm_campaign=809) [![Utilization](https://api.gitential.com/accounts/758/projects/809/badges/utilization.svg)](https://gitential.com/accounts/758/projects/809/share?uuid=7533eb0d-42e1-41f1-8f8f-a8f8f1fdce70&utm_source=shield&utm_medium=shield&utm_campaign=809) [![Coverity](https://scan.coverity.com/projects/14798/badge.svg)](https://scan.coverity.com/projects/infinibrains-mobagen)  [![Coverage Status](https://coveralls.io/repos/github/InfiniBrains/mobagen/badge.svg?branch=master)](https://coveralls.io/github/InfiniBrains/mobagen?branch=master)
 [![Waffle.io - Columns and their card count](https://badge.waffle.io/InfiniBrains/mobagen.svg?columns=all)](https://waffle.io/InfiniBrains/mobagen)
@@ -21,6 +22,9 @@ Welcome to the **MoBaGEn**. The **MO**dule **BA**sed **G**ame **EN**gine.
 Licensed under the [![WTFPL](http://www.wtfpl.net/wp-content/uploads/2012/12/wtfpl-badge-4.png)](http://www.wtfpl.net/). In short: you can do whatever you want to do, and we kindly ask you for a contribution to pay our bills. See [LICENSE](LICENSE.md) for details.
 
 ## Contributing
+
+[Join us](https://infinibrains-team-inviter.herokuapp.com/) on Slack [![Slack Status](https://infinibrains-inviter.herokuapp.com/badge.svg)](https://infinibrains-team-inviter.herokuapp.com/)!
+ 
 Before making pull requests, please read the [Contribution checklist](CONTRIBUTION.md) and [Coding Conventions](CODINGCONVENTION.md) pages from the documentation.
 
 ## Branches
@@ -48,15 +52,10 @@ This project was made using these open-sourced [third parties](THIRDPARTIES.md).
 ## Contributors
 MoBaGEn development is made by these [People](PEOPLE.md), and the top contributors are:
 - [Alexandre Tolstenko](linkedin.com/in/aletolstenko/)
-- [Samuel Carlos](http://linkedin.com/in/samuelkarlos/)
 
 ## Sponsorship
 This project is sponsored via [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=tolstenko@gmail.com) and [Patreon](https://www.patreon.com/tolstenko) by these kind people:
 - [Alexandre Tolstenko](http://linkedin.com/in/aletolstenko/)
-- Aurus Dourado
-- Bruno Aragão
-- Joel Oliveira
-- Rafael Dalmazo
 
 ## Finance Report
 In order to report our costs properly via [OpenCollective](https://opencollective.com/) we need to achieve at least 100 stars in this repository. So please star us!
