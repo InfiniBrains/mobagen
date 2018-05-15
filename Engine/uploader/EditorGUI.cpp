@@ -11,6 +11,8 @@
 #include <Plane.hpp>
 #include <string>
 #include "Material.hpp"
+#include "WWWForm.h"
+#include "WWW.h"
 //#include <imguifilesystem.h>
 #include "Logger.hpp"
 
@@ -20,8 +22,6 @@ static bool applied = false;
 
 void EditorGUI::onGUI(ImGuiContext* context)
 {
-
-
   if(!applied) {
 
     ImGui::Begin("UPLOADER", nullptr, ImVec2(128*windowFactor.x, 128*windowFactor.y), 0, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove);
@@ -66,6 +66,10 @@ EditorGUI::EditorGUI()
   windowFactor.y = getEngine()->getWindow()->getHeight()/2000.0f;
   windowFactor.x = getEngine()->getWindow()->getWidth()/2000.0f;
 
+  WWW www("http://www.example.com");
+  www.fetch();
+
+  log_info("curl: %s",www.Text().c_str());
 }
 
 

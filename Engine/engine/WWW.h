@@ -3,19 +3,28 @@
 #include <curl/curl.h>
 #endif
 #include <string>
+#include <vector>
+
 class WWW {
 public:
   WWW(std::string url);
 
+  CURLcode fetch();
+
+  void fetchAsync();
 
 //  assetBundle	Streams an AssetBundle that can contain any kind of asset from the project folder.
 //  bytes	Returns the contents of the fetched web page as a byte array (Read Only).
 //  bytesDownloaded	The number of bytes downloaded by this WWW query (read only).
-//  error	Returns an error message if there was an error during the download (Read Only).
-//  isDone	Is the download already finished? (Read Only)
+  /// @brief Returns an error message if there was an error during the download (Read Only).
+  std::string Error();
+
+  ///@brief  Is the download already finished? (Read Only)
+  bool IsDone();
 //  progress	How far has the download progressed (Read Only).
 //  responseHeaders	Dictionary of headers returned by the request.
-//  text	Returns the contents of the fetched web page as a string (Read Only).
+  /// @brief 	Returns the contents of the fetched web page as a string (Read Only).
+  std::string Text();
 //  texture	Returns a Texture2D generated from the downloaded data (Read Only).
 //  textureNonReadable	Returns a non-readable Texture2D generated from the downloaded data (Read Only).
 //  threadPriority	Obsolete, has no effect.
@@ -35,4 +44,11 @@ public:
 
 
 //  keepWaiting	Indicates if coroutine should be kept suspended.
+private:
+  std::string url;
+  bool isDone = false;
+  std::string error;
+  std::vector<char> data;
+
+
 };
