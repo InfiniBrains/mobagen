@@ -4,12 +4,16 @@
 #endif
 #include <string>
 #include <vector>
+#include <map>
+#include "WWWForm.h"
 
 class WWW {
 public:
   WWW(std::string url);
+  WWW(std::string url, WWWForm form);
+  WWW(std::string url, std::vector<char> data, std::map<std::string, std::string> headers);
 
-  CURLcode fetch();
+  int fetch();
 
   void fetchAsync();
 
@@ -29,7 +33,8 @@ public:
 //  textureNonReadable	Returns a non-readable Texture2D generated from the downloaded data (Read Only).
 //  threadPriority	Obsolete, has no effect.
 //  uploadProgress	How far has the upload progressed (Read Only).
-//  url	The URL of this WWW request (Read Only).
+  /// @brief The URL of this WWW request (Read Only).
+  std::string Url();
 
 //  Dispose	Disposes of an existing WWW object.
 //  GetAudioClip	Returns an AudioClip generated from the downloaded data (Read Only).
@@ -49,6 +54,4 @@ private:
   bool isDone = false;
   std::string error;
   std::vector<char> data;
-
-
 };

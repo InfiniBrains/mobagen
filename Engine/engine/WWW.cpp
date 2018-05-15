@@ -1,5 +1,7 @@
 #include "WWW.h"
+#ifndef EMSCRIPTEN
 #include <curl/curl.h>
+#endif
 #include <sstream>
 
 WWW::WWW(std::string url) {
@@ -14,7 +16,8 @@ size_t write_data(char *ptr, size_t size, size_t nmemb, void *userdata) {
   return static_cast<int>(count);
 }
 
-CURLcode WWW::fetch() {
+int WWW::fetch() {
+#ifndef EMSCRIPTEN
   CURL *curl;
   CURLcode res;
 
@@ -41,6 +44,9 @@ CURLcode WWW::fetch() {
   }
   else
     return CURLE_FAILED_INIT;
+#else
+
+#endif
 }
 
 std::string WWW::Error() {
@@ -49,6 +55,14 @@ std::string WWW::Error() {
 
 std::string WWW::Text() {
   return std::string (data.begin(),data.end());
+}
+
+std::string WWW::Url() {
+  return url;
+}
+
+bool WWW::IsDone() {
+  return isDone;
 }
 
 
