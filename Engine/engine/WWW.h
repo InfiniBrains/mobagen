@@ -10,7 +10,7 @@
 class WWW {
 public:
   WWW(std::string url);
-  WWW(std::string url, WWWForm form);
+  WWW(std::string url, WWWForm *form);
   WWW(std::string url, std::vector<char> data, std::map<std::string, std::string> headers);
 
   int fetch();
@@ -54,4 +54,5 @@ private:
   bool isDone = false;
   std::string error;
   std::vector<char> data;
+  WWWForm *form = nullptr;
 };

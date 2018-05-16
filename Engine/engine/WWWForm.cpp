@@ -23,7 +23,7 @@ WWWForm::WWWForm() {
 
 void WWWForm::AddField(std::string fieldName, std::string value) {
   fieldNames.push_back(fieldName);
-  fileNames.emplace_back(nullptr);
+  fileNames.emplace_back("");
   // todo: deal with another encodings
   formData.emplace_back(value.begin(),value.end());
   types.emplace_back("text/plain; charset=\"UTF-8\"");
@@ -49,75 +49,73 @@ std::map<std::string, std::string>* WWWForm::headers()
 }
 
 std::vector<char> WWWForm::data() {
-  std::vector<char> a;
-  return a;
-//  std::stringstream data;
-//
-//  if (containsFiles)
-//  {
-//    std::string bytes1 = "--";
-//    std::string bytes2 = "\r\n";
-//    std::string bytes3 = "Content-Type: ";
-//    std::string bytes4 = "Content-disposition: form-data; name=\"";
-//    std::string bytes5 = "\"";
-//    std::string bytes6 = "; filename=\"";
-//
-//    for (int index = 0; index < formData.size(); ++index)
-//    {
-//      data << bytes2;
-//      data << bytes1;
-//      data << boundary;
-//      data << bytes2;
-//      data << bytes3;
-//      data << types[index];
-//      data << bytes2;
-//      data << bytes4;
-//      std::string headerName = "utf-8";
-//      data << "=?" << headerName << "?Q?" << fieldNames[index] << "?=";
-//      data << bytes5;
-//      if (!fileNames[index].empty())
-//      {
-//        data << bytes6;
-//        data << "=?" << headerName << "?Q?" << fileNames[index] << "?=";
-//        data << bytes5;
-//      }
-//      data << bytes2;
-//      data << bytes2;
-//      data.write(formData[index].data(), formData[index].size());
-//    }
-//    data << bytes2;
-//    data << bytes1;
-//    data << boundary;
-//    data << bytes1;
-//    data << bytes2;
-//
-//    data.seekg(0, data.end);
-//    auto length = data.tellg();
-//    data.seekg (0, data.beg);
-//    char buff[(int)length];
-//    data.read(buff,length);
-//    return std::vector<char>(buff, buff + length);
-//  }
-//  else
-//  {
-//    std::string bytes1 = "&";
-//    std::string bytes2 = "=";
-//
-//    for (int index = 0; index < formData.size(); ++index) {
-//      if (index > 0)
-//        data << bytes1;
-//      data << fieldNames[index];
-//      data << bytes2;
-//      data.write(formData[index].data(),formData[index].size());
-//    }
-//
-//    data.seekg(0, data.end);
-//    auto length = data.tellg();
-//    data.seekg (0, data.beg);
-//    char buff[(int)length];
-//    data.read(buff,length);
-//    return std::vector<char>(buff, buff + length);
-//  }
+  std::stringstream data;
+
+  if (containsFiles)
+  {
+    std::string bytes1 = "--";
+    std::string bytes2 = "\r\n";
+    std::string bytes3 = "Content-Type: ";
+    std::string bytes4 = "Content-disposition: form-data; name=\"";
+    std::string bytes5 = "\"";
+    std::string bytes6 = "; filename=\"";
+
+    for (int index = 0; index < formData.size(); ++index)
+    {
+      data << bytes2;
+      data << bytes1;
+      data << boundary;
+      data << bytes2;
+      data << bytes3;
+      data << types[index];
+      data << bytes2;
+      data << bytes4;
+      std::string headerName = "utf-8";
+      data << "=?" << headerName << "?Q?" << fieldNames[index] << "?=";
+      data << bytes5;
+      if (!fileNames[index].empty())
+      {
+        data << bytes6;
+        data << "=?" << headerName << "?Q?" << fileNames[index] << "?=";
+        data << bytes5;
+      }
+      data << bytes2;
+      data << bytes2;
+      data.write(formData[index].data(), formData[index].size());
+    }
+    data << bytes2;
+    data << bytes1;
+    data << boundary;
+    data << bytes1;
+    data << bytes2;
+
+    data.seekg(0, data.end);
+    auto length = data.tellg();
+    data.seekg (0, data.beg);
+    char buff[(int)length];
+    data.read(buff,length);
+    return std::vector<char>(buff, buff + length);
+  }
+  else
+  {
+    std::string bytes1 = "&";
+    std::string bytes2 = "=";
+
+    for (int index = 0; index < formData.size(); ++index) {
+      if (index > 0)
+        data << bytes1;
+      data << fieldNames[index];
+      data << bytes2;
+      data.write(formData[index].data(),formData[index].size());
+    }
+
+    data.seekg(0, data.end);
+    auto length = data.tellg();
+    data.seekg (0, data.beg);
+    char buff[(int)length];
+    data.read(buff,length);
+    return std::vector<char>(buff, buff + length);
+  }
 }
 
 

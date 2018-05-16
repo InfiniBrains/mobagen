@@ -66,7 +66,9 @@ EditorGUI::EditorGUI()
   windowFactor.y = getEngine()->getWindow()->getHeight()/2000.0f;
   windowFactor.x = getEngine()->getWindow()->getWidth()/2000.0f;
 
-  WWW www("http://www.example.com");
+  WWWForm * form = new WWWForm();
+  form->AddField("oi","oi");
+  WWW www("http://httpbin.org/post",form);
   www.fetch();
 
   log_info("curl: %s",www.Text().c_str());

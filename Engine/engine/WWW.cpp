@@ -8,6 +8,11 @@ WWW::WWW(std::string url) {
   this->url = url;
 }
 
+WWW::WWW(std::string url, WWWForm *form) {
+  this->url = url;
+  this->form = form;
+}
+
 size_t write_data(char *ptr, size_t size, size_t nmemb, void *userdata) {
   auto data = (std::vector<char> *)userdata;
   size_t count = size * nmemb;
@@ -17,32 +22,46 @@ size_t write_data(char *ptr, size_t size, size_t nmemb, void *userdata) {
 }
 
 int WWW::fetch() {
+
 #ifndef EMSCRIPTEN
   CURL *curl;
   CURLcode res;
 
   curl = curl_easy_init();
-  if(curl) {
+  if (curl) {
     curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
     /* example.com is redirected, so we tell libcurl to follow redirection */
     curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &data);
 
-    /* Perform the request, res will get the return code */
+    if(form!= nullptr) {
+      struct curl_slist *chunk = nullptr;
+
+      for(auto it : *(form->headers()))
+      {
+        std::string entry = it.first + ": " + it.second;
+        chunk = curl_slist_append(chunk, entry.c_str());
+      }
+
+      curl_easy_setopt(curl, CURLOPT_HTTPHEADER, chunk);
+
+      auto x = form->data();
+
+      curl_easy_setopt(curl, CURLOPT_POSTFIELDS, &x[0]);
+    }
+
     res = curl_easy_perform(curl);
-    /* Check for errors */
-    if(res != CURLE_OK)
+
+    if (res != CURLE_OK)
       error = std::string(curl_easy_strerror(res));
 
-    /* always cleanup */
     curl_easy_cleanup(curl);
     curl = nullptr;
 
     isDone = true;
     return res;
-  }
-  else
+  } else
     return CURLE_FAILED_INIT;
 #else
 
@@ -64,6 +83,8 @@ std::string WWW::Url() {
 bool WWW::IsDone() {
   return isDone;
 }
+
+
 
 
 
