@@ -13,8 +13,8 @@ ENDIF()
 project (Engine)
 
 IF (NOT EMSCRIPTEN)
-  hunter_add_package(CURL)
-  find_package(CURL CONFIG REQUIRED)
+  hunter_add_package(cpr)
+  find_package(cpr CONFIG REQUIRED)
   set(LIBC ON CACHE BOOL "LIBC")
 ENDIF()
 
@@ -155,9 +155,8 @@ ELSE ()
     ${WHEREAMI_LIBRARY}
     ${IMGUI_LIBRARY}
     ${GDCM_LIBRARIES}
-#    cpr::cpr
-    ${OPENSSL_LIBRARIES}
-    CURL::libcurl
+#    ${OPENSSL_LIBRARIES}
+    cpr::cpr
   )
 
   set(ENGINE_INCLUDES
@@ -170,7 +169,7 @@ ELSE ()
     ${IMGUI_INCLUDE_DIRS}
     ${CMAKE_CURRENT_SOURCE_DIR}/Engine/engine/
     ${GDCM_INCLUDE_DIRS}
-    ${OPENSSL_INCLUDE_DIRS}
+#    ${OPENSSL_INCLUDE_DIRS}
 #    ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/mingw-std-threads
   )
 ENDIF ()
