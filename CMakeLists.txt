@@ -5,8 +5,8 @@ IF (NOT EMSCRIPTEN)
   include(cmake/HunterGate.cmake)
 
   HunterGate(
-      URL "https://github.com/ruslo/hunter/archive/v0.20.66.tar.gz"
-      SHA1 "bd907a0c2faf15071144ecca5a6d72d443375f64"
+      URL "https://github.com/ruslo/hunter/archive/v0.21.1.tar.gz"
+      SHA1 "b885803a4752767e792380f087f3cc04bd67abb1"
   )
 ENDIF()
 

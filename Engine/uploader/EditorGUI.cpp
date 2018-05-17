@@ -12,7 +12,6 @@
 #include <string>
 #include "Material.hpp"
 //#include <imguifilesystem.h>
-#include <cpr/cpr.h>
 #include "Logger.hpp"
 
 ImVec2 windowFactor;
@@ -65,16 +64,6 @@ EditorGUI::EditorGUI()
   windowFactor.y = getEngine()->getWindow()->getHeight()/2000.0f;
   windowFactor.x = getEngine()->getWindow()->getWidth()/2000.0f;
 
-  auto x = cpr::GetAsync(cpr::Url{ "http://www.httpbin.org/get" });
-
-  auto future = cpr::GetAsync(cpr::Url{ "http://www.httpbin.org/get" });
-
-  auto r = future.get();
-
-  log_info("%s",r.url.c_str());
-  log_info("%d",r.status_code);
-  log_info("%s",r.header["content-type"].c_str());
-  log_info("%s",r.text.c_str());
 }
 
 
