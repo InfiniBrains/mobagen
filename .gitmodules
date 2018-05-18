@@ -34,3 +34,6 @@
 	path = dependencies/polly
 	url = https://github.com/ruslo/polly.git
 	branch = bab5efa79b2016ad227a1ff065e70df3460e03d7
+[submodule "dependencies/emsdk"]
+	path = dependencies/emsdk
+	url = https://github.com/juj/emsdk.git

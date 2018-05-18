@@ -9,7 +9,10 @@ WebRequest::WebRequest() {
 
 void WebRequest::AddHeader(const std::string &key, const std::string &value)
 {
+#ifndef EMSCRIPTEN
   m_header[key] = value;
+#else
+#endif
 }
 
 void WebRequest::SetAuth(const std::string &username, const std::string &password)
