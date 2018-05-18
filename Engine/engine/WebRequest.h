@@ -4,6 +4,7 @@
 #include <cpr/cpr.h>
 #endif
 #include <string>
+#include <map>
 
 enum class WebErrorCode {
   OK = 0,
