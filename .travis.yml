@@ -22,23 +22,23 @@ matrix:
 
 
     # windows cross compile
-    - os: linux
-      services:
-        - docker
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - cmake
-            - wine
-      env:
-        - MATRIX_EVAL="CC=x86_64-w64-mingw32-gcc && CXX=x86_64-w64-mingw32-g++ && AR=x86_64-w64-mingw32-ar"
-        - BUILD_TYPE=windows
-      group: travis_latest
-      dist: trusty
-      language: cpp
-      compiler: mingw
+#    - os: linux
+#      services:
+#        - docker
+#      addons:
+#        apt:
+#          sources:
+#            - ubuntu-toolchain-r-test
+#          packages:
+#            - cmake
+#            - wine
+#      env:
+#        - MATRIX_EVAL="CC=x86_64-w64-mingw32-gcc && CXX=x86_64-w64-mingw32-g++ && AR=x86_64-w64-mingw32-ar"
+#        - BUILD_TYPE=windows
+#      group: travis_latest
+#      dist: trusty
+#      language: cpp
+#      compiler: mingw
 
 
     # linux emscripten
@@ -195,3 +195,7 @@ deploy:
       branches:
         only:
           - master
+
+notifications:
+  slack:
+    secure: JF/jKEEB8HW8eoi0NgGvLcLKV/wg/Nf8K4+CLRc+fdvrIN7fTgZv1nzompuSu7TBiJv4o4hqVUAoM0PNRQe/rNtByF1dZN7YO46Z9X9mI882euhEGx99dNZeifgTgiq/e9LaZy8S/5CuX6Wna8s4kNmrYVHOXtrYb1mRKWX8OaLaVni77CvacnUJZ5l0HS9cGTY9fw5ERNrefMnYHWTsXhKeM+BzMt+/uQavg/lBG8VN9yQx6mLi9XAqJSGQcNLti0iczFIirmHgJdTh7EMSrO/Lneo7lT3tx5Ql7tJXHHacRM3Hlsz3zNwKd0ZXunjPKEoY394YWnT/mbKYKAV8e4MJflSmJEwDezY6BhZbeEXLIpFtxoQ+yMoIYMKJczfqd0DY5Y8YlkQvtFBK3WE68Z8rfJG8TqJzdQ0WcaGOIFRUIqB5cyI2O+/Wm/mGD6IUeY4Sjx7dbZmV0ZejZCx3iHFqDjLUClNTT8EktdjAhVrWC3dPuYFzs8FoqiryM8unX4FfBu0uSL1rlbg/ZIKeKaklZJcyLbsi8RVpd+9nqbPdlmVervC/aXwdVXpJL7QCbRmTBlZN1Apn01r15Mv5xih2zjK46dAezkBomXfBnjFsPoFM7r11lZfij/Mj0M0UJb8NYB/ETFuHvlr0gAmCqmym8TeQy+lDcqaNi8ygN0g=

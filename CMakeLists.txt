@@ -3,17 +3,18 @@ cmake_minimum_required(VERSION 2.8)
 IF (NOT EMSCRIPTEN)
   set (HUNTER_SKIP_LOCK ON CACHE BOOL "HUNTER_SKIP_LOCK")
   include(cmake/HunterGate.cmake)
+  option(HUNTER_STATUS_DEBUG "Hunter debug info" ON)
   HunterGate(
-    URL "https://github.com/ruslo/hunter/archive/v0.20.62.tar.gz"
-    SHA1 "10ffae63cf7b07193d6d7b459c1d0cfa242fad5b"
+      URL "https://github.com/ruslo/hunter/archive/v0.22.3.tar.gz"
+      SHA1 "46089aabb7c8cc181a70a7a61699f526c116cedf"
   )
 ENDIF()
 
 project (Engine)
 
 IF (NOT EMSCRIPTEN)
-#  hunter_add_package(cpr)
-#  find_package(cpr CONFIG REQUIRED)
+  hunter_add_package(cpr)
+  find_package(cpr CONFIG REQUIRED)
   set(LIBC ON CACHE BOOL "LIBC")
 ENDIF()
 
@@ -142,7 +143,8 @@ ELSEIF (ANDROID)
     ${GDCM_INCLUDE_DIRS}
   )
 ELSE ()
-  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -std=c++14")
+  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -std=c++14 -fPIC")
+  SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -std=c++14 -fPIC")
   find_package(OpenGL REQUIRED)
 
   set(ENGINE_LIBS
@@ -153,8 +155,8 @@ ELSE ()
     ${WHEREAMI_LIBRARY}
     ${IMGUI_LIBRARY}
     ${GDCM_LIBRARIES}
-#    cpr::cpr
 #    ${OPENSSL_LIBRARIES}
+    cpr::cpr
   )
 
   set(ENGINE_INCLUDES

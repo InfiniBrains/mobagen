@@ -16,8 +16,7 @@
 	branch = 574cea670800e402c9c8325b159aa4361b645566
 [submodule "dependencies/imgui"]
 	path = dependencies/imgui
-	url = https://github.com/Flix01/imgui.git
-	branch = efba251754e081ac8cc24ec8d0f7cbe0e9fc51e9
+	url = https://github.com/ocornut/imgui.git
 [submodule "dependencies/gdcm"]
 	path = dependencies/gdcm
 	url = https://github.com/malaterre/GDCM.git
@@ -34,3 +33,6 @@
 	path = dependencies/polly
 	url = https://github.com/ruslo/polly.git
 	branch = bab5efa79b2016ad227a1ff065e70df3460e03d7
+[submodule "dependencies/emsdk"]
+	path = dependencies/emsdk
+	url = https://github.com/juj/emsdk.git

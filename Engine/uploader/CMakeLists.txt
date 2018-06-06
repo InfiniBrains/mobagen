@@ -24,7 +24,17 @@ IF (ANDROID)
             COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/ ${ANDROID_BIN_ROOT}/libs/${ANDROID_NDK_ABI_NAME})
 ELSE ()
     add_executable (uploader main.cpp EditorGUI.cpp EditorGUI.h)
+  IF (EMSCRIPTEN)
     target_link_libraries (uploader engine)
+  ELSEIF (MINGW)
+    hunter_add_package(CURL)
+    find_package(CURL CONFIG REQUIRED)
+    target_link_libraries (uploader engine CURL::libcurl wsock32 ws2_32)
+  ELSE()
+    hunter_add_package(CURL)
+    find_package(CURL CONFIG REQUIRED)
+    target_link_libraries (uploader engine CURL::libcurl)
+  ENDIF()
 
     add_custom_command(TARGET uploader PRE_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy_directory
