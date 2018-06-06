@@ -3,10 +3,10 @@ cmake_minimum_required(VERSION 2.8)
 IF (NOT EMSCRIPTEN)
   set (HUNTER_SKIP_LOCK ON CACHE BOOL "HUNTER_SKIP_LOCK")
   include(cmake/HunterGate.cmake)
-
+  option(HUNTER_STATUS_DEBUG "Hunter debug info" ON)
   HunterGate(
-      URL "https://github.com/ruslo/hunter/archive/v0.21.1.tar.gz"
-      SHA1 "b885803a4752767e792380f087f3cc04bd67abb1"
+      URL "https://github.com/ruslo/hunter/archive/v0.22.3.tar.gz"
+      SHA1 "46089aabb7c8cc181a70a7a61699f526c116cedf"
   )
 ENDIF()
 
