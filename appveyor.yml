@@ -57,7 +57,7 @@ skip_non_tags: true
 skip_branch_with_pr: true
 
 # Maximum number of concurrent jobs for the project
-max_jobs: 1
+max_jobs: 8
 
 #---------------------------------#
 #    environment configuration    #
@@ -65,7 +65,7 @@ max_jobs: 1
 
 # Build worker image (VM template)
 image:
- - Visual Studio 2015
+# - Visual Studio 2015
  - Visual Studio 2017
 
 # scripts that are called at very beginning, before repo cloning
@@ -195,18 +195,18 @@ configuration: Release
 #  - Debug
 #  - Release
 
-build:
-  parallel: true                  # enable MSBuild parallel builds
-  project: c:\projects\mobagen\build\mobagen.sln      # path to Visual Studio solution or project
+#build:
+#  parallel: true                  # enable MSBuild parallel builds
+#  project: c:\projects\mobagen\build\mobagen.sln      # path to Visual Studio solution or project
 #  publish_wap: true               # package Web Application Projects (WAP) for Web Deploy
 #  publish_wap_xcopy: true         # package Web Application Projects (WAP) for XCopy deployment
 #  publish_azure: true             # package Azure Cloud Service projects and push to artifacts
 #  publish_nuget: true             # package projects with .nuspec files and push to artifacts
 #  publish_nuget_symbols: true     # generate and publish NuGet symbol packages
 #  include_nuget_references: true  # add -IncludeReferencedProjects option while packaging NuGet artifacts
-
-  # MSBuild verbosity level
-  verbosity: detailed
+#
+#  # MSBuild verbosity level
+#  verbosity: detailed
 
 
 # scripts to run before build
@@ -224,7 +224,7 @@ before_build:
     echo %generator%
     cmake --version
     cmake -Bbuild -H. -G %generator%
-    cmake --build build
+#   cmake --build build
 
 # scripts to run *after* solution is built and *before* automatic packaging occurs (web apps, NuGet packages, Azure Cloud Services)
 before_package:
@@ -234,7 +234,7 @@ after_build:
 
 # to run your custom scripts instead of automatic MSBuild
 build_script:
-
+  - cmake --build build
 # to disable automatic builds
 #build: off
 
