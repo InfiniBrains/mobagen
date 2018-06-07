@@ -26,10 +26,10 @@ branches:
     - gh-pages
 
 # Do not build on tags (GitHub and BitBucket)
-skip_tags: true
+#skip_tags: true
 
 # Start builds on tags only (GitHub and BitBucket)
-skip_non_tags: true
+#skip_non_tags: true
 
 # Skipping commits with particular message or from specific user
 #skip_commits:
