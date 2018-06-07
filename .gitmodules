@@ -6,10 +6,6 @@
 	path = dependencies/SDL
 	url = https://github.com/spurious/SDL-mirror.git
 	branch = 8b84c36b11009130c18c9490ff3c171210ef92e7
-[submodule "dependencies/glew"]
-	path = dependencies/glew
-	url = https://github.com/Perlmint/glew-cmake.git
-	branch = 0ba2fb54c61d1ba9b4757ca4c1b7288869addd12
 [submodule "dependencies/glm"]
 	path = dependencies/glm
 	url = https://github.com/g-truc/glm.git
@@ -20,8 +16,8 @@
 	branch = 574cea670800e402c9c8325b159aa4361b645566
 [submodule "dependencies/imgui"]
 	path = dependencies/imgui
-	url = https://github.com/Flix01/imgui.git
-	branch = efba251754e081ac8cc24ec8d0f7cbe0e9fc51e9
+	url = https://github.com/ocornut/imgui.git
+	branch = 78b28d545f79c5c5ed3e0ebae4099e44bdc6c5a6
 [submodule "dependencies/gdcm"]
 	path = dependencies/gdcm
 	url = https://github.com/malaterre/GDCM.git
@@ -34,3 +30,10 @@
 	path = dependencies/mingw-std-threads
 	url = https://github.com/meganz/mingw-std-threads.git
 	branch = 3a5361a3e9308ce854dd2761d2a9416e21ad489d
+[submodule "dependencies/polly"]
+	path = dependencies/polly
+	url = https://github.com/ruslo/polly.git
+	branch = bab5efa79b2016ad227a1ff065e70df3460e03d7
+[submodule "dependencies/emsdk"]
+	path = dependencies/emsdk
+	url = https://github.com/juj/emsdk.git

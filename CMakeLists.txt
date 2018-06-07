@@ -1,20 +1,22 @@
 cmake_minimum_required(VERSION 2.8)
 
-#IF (NOT EMSCRIPTEN)
-#  set (HUNTER_SKIP_LOCK ON CACHE BOOL "HUNTER_SKIP_LOCK")
-#  include(cmake/HunterGate.cmake)
-#  HunterGate(
-#    URL "https://github.com/ruslo/hunter/archive/v0.20.52.tar.gz"
-#    SHA1 "105ba83077617079f99300d8e672997366a0ce24"
-#  )
-#ENDIF()
+IF (NOT EMSCRIPTEN)
+  set (HUNTER_SKIP_LOCK ON CACHE BOOL "HUNTER_SKIP_LOCK")
+  include(cmake/HunterGate.cmake)
+  option(HUNTER_STATUS_DEBUG "Hunter debug info" ON)
+  HunterGate(
+      URL "https://github.com/ruslo/hunter/archive/v0.22.3.tar.gz"
+      SHA1 "46089aabb7c8cc181a70a7a61699f526c116cedf"
+  )
+ENDIF()
 
 project (Engine)
 
-#IF (NOT EMSCRIPTEN)
-#  hunter_add_package(cpr)
-#  find_package(cpr CONFIG REQUIRED)
-#ENDIF()
+IF (NOT EMSCRIPTEN)
+  hunter_add_package(cpr)
+  find_package(cpr CONFIG REQUIRED)
+  set(LIBC ON CACHE BOOL "LIBC")
+ENDIF()
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
@@ -76,8 +78,8 @@ SET(GDCM_LIBRARIES
 set ( SDL2_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/SDL/include )
 set ( SDL2_LIBRARY SDL2-static )
 
-set ( GLEW_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/glew/include )
-set ( GLEW_LIBRARIES libglew_static )
+#set ( GLEW_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/glew/include )
+#set ( GLEW_LIBRARIES libglew_static )
 
 set ( ASSIMP_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/assimp/include )
 set ( ASSIMP_LIBRARY assimp )
@@ -141,19 +143,20 @@ ELSEIF (ANDROID)
     ${GDCM_INCLUDE_DIRS}
   )
 ELSE ()
-  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -std=c++14")
+  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -std=c++14 -fPIC")
+  SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -std=c++14 -fPIC")
   find_package(OpenGL REQUIRED)
 
   set(ENGINE_LIBS
     ${OPENGL_LIBRARY}
     ${SDL2_LIBRARY}
     ${ASSIMP_LIBRARY}
-    ${GLEW_LIBRARIES}
+    #${GLEW_LIBRARIES}
     ${WHEREAMI_LIBRARY}
     ${IMGUI_LIBRARY}
     ${GDCM_LIBRARIES}
-#    cpr::cpr
 #    ${OPENSSL_LIBRARIES}
+    cpr::cpr
   )
 
   set(ENGINE_INCLUDES
@@ -162,7 +165,6 @@ ELSE ()
     ${ASSIMP_INCLUDE_DIR}
     ${CMAKE_BINARY_DIR}/dependencies/assimp/include
     ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/stb
-    ${GLEW_INCLUDE_DIRS}
     ${WHEREAMI_INCLUDE_DIRS}
     ${IMGUI_INCLUDE_DIRS}
     ${CMAKE_CURRENT_SOURCE_DIR}/Engine/engine/

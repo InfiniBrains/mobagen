@@ -26,3 +26,7 @@ bin-mingw/
 win64mingw\.zip
 
 *.TMP
+
+bin_mingw/
+
+build-emscripten/

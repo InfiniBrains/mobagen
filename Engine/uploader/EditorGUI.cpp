@@ -10,8 +10,9 @@
 #include "components/MeshRenderer.hpp"
 #include <Plane.hpp>
 #include <string>
+#include <WebRequest.h>
 #include "Material.hpp"
-#include <imguifilesystem.h>
+//#include <imguifilesystem.h>
 #include "Logger.hpp"
 
 ImVec2 windowFactor;
@@ -20,8 +21,6 @@ static bool applied = false;
 
 void EditorGUI::onGUI(ImGuiContext* context)
 {
-
-
   if(!applied) {
 
     ImGui::Begin("UPLOADER", nullptr, ImVec2(128*windowFactor.x, 128*windowFactor.y), 0, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove);
@@ -33,11 +32,11 @@ void EditorGUI::onGUI(ImGuiContext* context)
         ImGui::Text("Choose the form you want to upload your files to:");
         const bool browseButtonPressed2 = ImGui::Button("LOAD FILES");
         ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-        static ImGuiFs::Dialog dlg;
-        const char *chosenPath = dlg.chooseFileDialog(browseButtonPressed2,startingFolder,optionalFileExtensionFilterString);
+        //static ImGuiFs::Dialog dlg;
+        //const char *chosenPath = dlg.chooseFileDialog(browseButtonPressed2,startingFolder,optionalFileExtensionFilterString);
         ImGui::PopStyleColor(1);
 
-        if (strlen(dlg.getChosenPath())>0) ImGui::Text("Chosen path: \"%s\"",dlg.getChosenPath());
+        //if (strlen(dlg.getChosenPath())>0) ImGui::Text("Chosen path: \"%s\"",dlg.getChosenPath());
 
         if(ImGui::Button("GET FROM CD"))
         {
@@ -66,6 +65,21 @@ EditorGUI::EditorGUI()
   windowFactor.y = getEngine()->getWindow()->getHeight()/2000.0f;
   windowFactor.x = getEngine()->getWindow()->getWidth()/2000.0f;
 
+  WebRequest request;
+
+  std::string data;
+  data.push_back('d');
+  data.push_back('\0');
+  data.push_back('a');
+  data.push_back('t');
+  data.push_back('\0');
+
+  log_info("%d",data.size());
+  log_info("%d",data.size());
+  request.SetUrl("http://httpbin.org/post");
+  request.AddMultiPart("field","filename.txt",data,"text/plain");
+  auto resp =request.Post();
+  log_info("%s",resp.text.data());
 }
 
 

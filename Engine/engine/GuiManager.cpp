@@ -243,7 +243,8 @@ GuiManager::~GuiManager(void)
 {
   invalidateDeviceObjects();
   delete m_textureData;
-  ImGui::DestroyContext();
+  // todo: destroy context
+  //ImGui::DestroyContext();
 }
 
 void GuiManager::tick(Window *window, double deltaTime)
