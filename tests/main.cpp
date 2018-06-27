@@ -19,6 +19,7 @@
 #include <map>
 #include <random>
 #include <GameObject.hpp>
+#include "GameScriptedBehaviourTest.h"
 
 class DocEditor : public Game
 {
@@ -40,6 +41,9 @@ void DocEditor::init(GLManager *glManager)
 
   auto primary_camera = cam->getComponent<OrthoCamera>();
   getEngine()->getGLManager()->setActiveCamera(primary_camera);
+
+  auto go = std::make_shared<GameObject>();
+  go->AddComponent<GameScriptedBehaviourTest>();
 }
 
 int main(int argc, char *argv[]) {

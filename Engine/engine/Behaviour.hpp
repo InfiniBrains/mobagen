@@ -1,7 +1,7 @@
 #pragma once
-#include "Component.hpp"
+#include "GameComponent.hpp"
 
-class Behaviour : public Component{
+class Behaviour : public GameComponent{
 
 //  enabled	Enabled Behaviours are Updated, disabled Behaviours are not.
 //  isActiveAndEnabled	Has the Behaviour had enabled called.

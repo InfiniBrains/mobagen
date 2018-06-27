@@ -11,13 +11,13 @@ class GameComponent : public Object
 {
 public:
   /// \brief The game object this component is attached to. A component is always attached to a game object.
-  GameObject* gameObject;
+  std::shared_ptr<GameObject> gameObject;
 
   /// \brief The tag of this game object.
   std::string  tag;
 
   /// \brief The Transform attached to this GameObject.
-  GameTransform* transform();
+  std::shared_ptr<GameTransform> transform();
 
   /// \brief Calls the method named methodName on every MonoBehaviour in this game object or any of its children.
   void BroadcastMessage(std::string methodName, void * parameter = nullptr, SendMessageOptions options = SendMessageOptions::RequireReceiver);

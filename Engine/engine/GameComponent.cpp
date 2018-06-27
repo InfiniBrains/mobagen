@@ -69,6 +69,6 @@ void GameComponent::SendMessageUpwards(std::string methodName, void *value, Send
   return gameObject->SendMessageUpwards(methodName, value, options);
 }
 
-GameTransform *GameComponent::transform() {
+std::shared_ptr<GameTransform> GameComponent::transform() {
   return gameObject->transform;
 }

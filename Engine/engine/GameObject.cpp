@@ -6,13 +6,10 @@
 GameObject::GameObject(std::string name) : Object()
 {
   this->name = std::move(name);
-  this->transform = new GameTransform();
+  this->transform =  std::make_shared<GameTransform>();
 }
 
-GameObject::~GameObject()
-{
-  delete transform;
-}
+GameObject::~GameObject() = default;
 
 void GameObject::BroadcastMessage(std::string methodName, void *parameter, SendMessageOptions options) {
   throw NotImplementedException(typeid(this).name());
@@ -21,7 +18,6 @@ void GameObject::BroadcastMessage(std::string methodName, void *parameter, SendM
 void GameObject::BroadcastMessage(std::string methodName, SendMessageOptions options) {
   throw NotImplementedException(typeid(this).name());
 }
-
 
 
 template<typename T>
@@ -94,4 +90,4 @@ T *GameObject::GetComponentInParent() {
   throw NotImplementedException("GameObject GetComponentInParent");
 }
 
-std::vector<GameComponent*> GameObject::m_components;
+std::vector<std::shared_ptr<GameComponent>> GameObject::m_components;

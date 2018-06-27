@@ -6,10 +6,10 @@
 #include "PrimitiveType.hpp"
 #include "GameTransform.hpp"
 
-class GameObject : public Object
+class GameObject : public Object, public std::enable_shared_from_this<GameObject>
 {
 public:
-  explicit GameObject(std::string name);
+  explicit GameObject(std::string name = "");
   ~GameObject() override;
 
   /// The name of the gameObject.
@@ -28,18 +28,18 @@ public:
 //  tag	The tag of this game object.
 
   /// The Transform attached to this GameObject.
-  GameTransform* transform;
+  std::shared_ptr<GameTransform> transform;
 
   /// @brief Adds a component class named className to the game object.
   template<class T, class... _Types>
   inline void AddComponent(_Types &&... _Args) {
     // todo: insert safety checks
-    auto newcomp = new T(_Args...);
-    auto * gc = dynamic_cast<GameComponent*>(newcomp);
+    auto newcomp = std::make_shared<T>(_Args...);
+    auto gc = std::dynamic_pointer_cast<GameComponent>(newcomp);
     if(gc == nullptr)
       throw GenericException("Type must be GameComponent");
 
-    gc->gameObject = this;
+    gc->gameObject = shared_from_this();
     m_components.push_back(gc);
   }
 
@@ -52,11 +52,11 @@ public:
 //  CompareTag	Is this game object tagged with tag ?
 
   /// @brief Returns the component of Type type if the game object has one attached, null if it doesn't.
-  template<class T> inline T* GetComponent() {
+  template<class T> inline std::shared_ptr<T> GetComponent() {
     // todo: improve velocity
     for(auto c:m_components)
     {
-      T* gc = dynamic_cast<T*>(c);
+      auto gc = std::dynamic_pointer_cast<T>(c);
       if(gc != nullptr)
         return gc;
     }
@@ -113,6 +113,6 @@ public:
   static GameObject* FindWithTag(std::string tag);
 
 private:
-  static std::vector<GameComponent*> m_components;
+  static std::vector<std::shared_ptr<GameComponent>> m_components;
 };
 
