@@ -1,5 +1,8 @@
 #pragma once
 
-class Player {
+#include "Scene.hpp"
+
+class Player
+{
 
 };

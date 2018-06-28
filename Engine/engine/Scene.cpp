@@ -6,11 +6,23 @@ int Scene::rootCount () {
   return 0;
 }
 
-void Scene::GetRootGameObjects (std::vector<std::shared_ptr<GameObject>> * objs) {
-  objs = &rootGameObjects;
-}
-
 bool Scene::IsValid () {
   throw NotImplementedException("SCENE IsValid");
   return false;
 }
+
+void Scene::GetRootGameObjects(std::vector<std::shared_ptr<GameObject>> * objs) {
+  objs = &rootGameObjects;
+}
+
+bool Scene::isDirty() {
+  throw NotImplementedException("SCENE isDirty");
+  return false;
+}
+
+bool Scene::isLoaded() {
+  throw NotImplementedException("SCENE isLoaded");
+  return false;
+}
+
+

@@ -9,14 +9,20 @@
 class Scene
 {
 public:
-//  buildIndex	Returns the index of the scene in the Build Settings. Always returns -1 if the scene was loaded through an AssetBundle.
-//  isDirty	Returns true if the scene is modifed.
-//  isLoaded	Returns true if the scene is loaded.
+  /// @brief Returns the index of the scene in the Build Settings. Always returns -1 if the scene was loaded through an AssetBundle.
+  int buildIndex = -1;
+
+  /// @brief Returns true if the scene is modifed.
+  bool isDirty();
+
+  /// @brief Returns true if the scene is loaded.
+  bool isLoaded();
 
   /// @brief Returns the name of the scene.
   std::string name;
 
-  //  path	Returns the relative path of the scene. Like: "Assets/MyScenes/MyScene.unity".
+  /// @brief Returns the relative path of the scene. Like: "Assets/MyScenes/MyScene.unity".
+  std::string path;
 
   /// @brief The number of root transforms of this scene.
   int rootCount();
