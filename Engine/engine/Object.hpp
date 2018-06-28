@@ -64,6 +64,7 @@ private:
 
   /// \brief container to store all objects
   static std::unordered_map<uint64_t, Object*> m_ObjectsById;
+  static std::vector<std::shared_ptr<Object>> m_objects;
 
   static std::vector<Object*> m_ObjectsToBeDestroyed;
 };

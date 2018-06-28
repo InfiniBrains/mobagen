@@ -1,4 +1,5 @@
 #include "Game.hpp"
+#include "GameObject.hpp"
 
 Game::Game(void)
 {
@@ -36,6 +37,9 @@ void Game::updateInput(Input *input, double delta)
 void Game::update(double delta)
 {
   rootScene->updateAll(delta);
+//  for(auto go : GameObject::){
+//
+//  }
 }
 
 void Game::render(GLManager *glManager)

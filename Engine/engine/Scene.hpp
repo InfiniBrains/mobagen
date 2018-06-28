@@ -22,7 +22,7 @@ public:
   int rootCount();
 
   /// @brief Returns all the root game objects in the scene.
-  std::vector<std::shared_ptr<GameObject>>* GetRootGameObjects();
+  void GetRootGameObjects(std::vector<std::shared_ptr<GameObject>>*);
 
   /// @brief Whether this is a valid scene. A scene may be invalid if, for example, you tried to open a scene that does not exist. In this case, the scene returned from EditorSceneManager.OpenScene would return False for IsValid.
   bool IsValid();

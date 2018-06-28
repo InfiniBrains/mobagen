@@ -1,4 +1,4 @@
-#include "WebRequest.h"
+#include "WebRequest.hpp"
 
 WebRequest::WebRequest() {
 #ifndef EMSCRIPTEN

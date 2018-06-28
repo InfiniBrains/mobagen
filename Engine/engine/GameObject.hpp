@@ -112,8 +112,7 @@ public:
   /// \brief Returns one active GameObject tagged tag. Returns null if no GameObject was found.
   static GameObject* FindWithTag(std::string tag);
 
-  // todo: make it private
-public:
-  static std::vector<std::shared_ptr<GameComponent>> m_components;
+  std::vector<std::shared_ptr<GameComponent>> m_components;
+private:
 };
 

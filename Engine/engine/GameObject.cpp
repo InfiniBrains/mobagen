@@ -3,7 +3,7 @@
 #include "GameComponent.hpp"
 #include "Error.hpp"
 
-GameObject::GameObject(std::string name) : Object()
+GameObject::GameObject(std::string name) : Object(), std::enable_shared_from_this<GameObject>()
 {
   this->name = std::move(name);
   this->transform =  std::make_shared<GameTransform>();

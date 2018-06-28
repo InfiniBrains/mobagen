@@ -1,4 +1,4 @@
-#include "Random.h"
+#include "Random.hpp"
 
 std::mt19937_64 Random::mt = std::mt19937_64(time(nullptr));
 

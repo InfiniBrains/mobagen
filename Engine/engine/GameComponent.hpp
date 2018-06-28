@@ -63,8 +63,5 @@ public:
 
   /// \brief Calls the method named methodName on every MonoBehaviour in this game object and on every ancestor of the behaviour
   void SendMessageUpwards(std::string methodName, void* value = nullptr, SendMessageOptions options = SendMessageOptions::RequireReceiver);
-
-private:
-
 };
 
