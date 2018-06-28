@@ -31,7 +31,7 @@ public:
 void DocEditor::update(double delta)
 {
   Game::update(delta);
-  log_info("%llu",GameObject::m_components.size());
+  //log_info("%llu",GameObject::m_components.size());
 }
 
 void DocEditor::init(GLManager *glManager)

@@ -89,5 +89,3 @@ template<typename T>
 T *GameObject::GetComponentInParent() {
   throw NotImplementedException("GameObject GetComponentInParent");
 }
-
-std::vector<std::shared_ptr<GameComponent>> GameObject::m_components;
