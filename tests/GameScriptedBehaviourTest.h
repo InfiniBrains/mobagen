@@ -4,5 +4,6 @@
 
 class GameScriptedBehaviourTest: public GameScriptedBehaviour
 {
+public:
 
 };

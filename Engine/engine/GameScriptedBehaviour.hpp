@@ -4,9 +4,9 @@
 
 class GameScriptedBehaviour : public Behaviour
 {
+public:
 //  runInEditMode	Allow a specific instance of a MonoBehaviour to run in edit mode (only available in the editor).
 //  useGUILayout	Disabling this lets you skip the GUI layout phase.
-
 
 //  CancelInvoke	Cancels all Invoke calls on this MonoBehaviour.
 //  Invoke	Invokes the method methodName in time seconds.
@@ -16,12 +16,10 @@ class GameScriptedBehaviour : public Behaviour
 //  StopAllCoroutines	Stops all coroutines running on this behaviour.
 //  StopCoroutine	Stops the first coroutine named methodName, or the coroutine stored in routine running on this behaviour.
 
-
 //  print	Logs message to the Unity Console (identical to Debug.Log).
 
-
-
-//  Awake	Awake is called when the script instance is being loaded.
+  /// @brief Awake is called when the script instance is being loaded.
+  virtual void Awake(){};
 //  FixedUpdate	This function is called every fixed framerate frame, if the MonoBehaviour is enabled.
 //  LateUpdate	LateUpdate is called every frame, if the Behaviour is enabled.
 //  OnAnimatorIK	Callback for setting up animation IK (inverse kinematics).
@@ -48,7 +46,9 @@ class GameScriptedBehaviour : public Behaviour
 //  OnEnable	This function is called when the object becomes enabled and active.
 //  OnFailedToConnect	Called on the client when a connection attempt fails for some reason.
 //  OnFailedToConnectToMasterServer	Called on clients or servers when there is a problem connecting to the MasterServer.
-//  OnGUI	OnGUI is called for rendering and handling GUI events.
+
+  /// @brief OnGUI is called for rendering and handling GUI events.
+  virtual void OnGUI(){};
 //  OnJointBreak	Called when a joint attached to the same game object broke.
 //  OnJointBreak2D	Called when a Joint2D attached to the same game object breaks.
 //  OnMasterServerEvent	Called on clients or servers when reporting events from the MasterServer.
@@ -82,6 +82,9 @@ class GameScriptedBehaviour : public Behaviour
 //  OnValidate	This function is called when the script is loaded or a value is changed in the inspector (Called in the editor only).
 //  OnWillRenderObject	OnWillRenderObject is called for each camera if the object is visible and not a UI element.
 //  Reset	Reset to default values.
-//  Start	Start is called on the frame when a script is enabled just before any of the Update methods is called the first time.
-//  Update	Update is called every frame, if the MonoBehaviour is enabled.
+  /// @brief Start is called on the frame when a script is enabled just before any of the Update methods is called the first time.
+  virtual void Start(){};
+
+  /// @brief Update is called every frame, if the MonoBehaviour is enabled.
+  virtual void Update(){};
 };
