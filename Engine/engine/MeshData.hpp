@@ -7,24 +7,26 @@
 #else
   #include <GL/glew.h>
 #endif
-
 #include "Vertex.hpp"
 
-class MeshData
-{
-public:
-  MeshData(Vertex vertices[], int vertSize, unsigned int indices[], int indexSize);
-  virtual ~MeshData(void);
-  void render(void) const;
+namespace mobagen {
+  class MeshData {
+  public:
+    MeshData(Vertex vertices[], int vertSize, unsigned int indices[], int indexSize);
 
-private:
-  void createMesh(Vertex vertices[], int vertSize, unsigned int indices[], int indexSize);
+    virtual ~MeshData(void);
+
+    void render(void) const;
+
+  private:
+    void createMesh(Vertex vertices[], int vertSize, unsigned int indices[], int indexSize);
 
 #if !defined(GLES2)
-  GLuint m_vao;
+    GLuint m_vao;
 #endif
-  GLuint m_vbo;
-  GLuint m_ibo;
+    GLuint m_vbo;
+    GLuint m_ibo;
 
-  int m_indexSize, m_vertSize;
-};
+    int m_indexSize, m_vertSize;
+  };
+}

@@ -1,22 +1,24 @@
 #pragma once
-
 #include "components/Sphere.hpp"
 #include "Entity.hpp"
 #include "Ray.hpp"
 
 #include <vector>
 
-class PhysicsManager
-{
-public:
-  PhysicsManager(void);
-  ~PhysicsManager(void);
+namespace mobagen {
+  class PhysicsManager {
+  public:
+    PhysicsManager(void);
 
-  void registerCollider(std::shared_ptr<Sphere> sphere);
-  void deregisterCollider(std::shared_ptr<Sphere> sphere);
+    ~PhysicsManager(void);
 
-  Entity *pick(Ray *ray) const;
+    void registerCollider(std::shared_ptr<Sphere> sphere);
 
-private:
-  std::vector<std::shared_ptr<Sphere>> m_colliders;
-};
+    void deregisterCollider(std::shared_ptr<Sphere> sphere);
+
+    Entity *pick(Ray *ray) const;
+
+  private:
+    std::vector<std::shared_ptr<Sphere>> m_colliders;
+  };
+}

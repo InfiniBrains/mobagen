@@ -5,12 +5,12 @@
 #define MAX(x, y) (((x) > (y)) ? (x) : (y))
 #define MIN(x, y) (((x) < (y)) ? (x) : (y))
 
-#include "EditorGUI.h"
+#include "EditorGUI.hpp"
 #include <Logger.hpp>
 #include "components/MeshRenderer.hpp"
 #include <Plane.hpp>
 #include <string>
-#include <WebRequest.h>
+#include <WebRequest.hpp>
 #include "Material.hpp"
 //#include <imguifilesystem.h>
 #include "Logger.hpp"

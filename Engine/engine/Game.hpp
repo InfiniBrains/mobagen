@@ -1,32 +1,36 @@
 #pragma once
-
 #include "Entity.hpp"
 #include "GLManager.hpp"
 #include "Input.hpp"
 
-class Engine;
+namespace mobagen {
+  class Engine;
 
-class Game
-{
-public:
-  Game(void);
-  virtual ~Game(void);
+  class Game {
+  public:
+    Game(void);
 
-  void setEngine(Engine *engine);
+    virtual ~Game(void);
 
-  virtual void init(GLManager *glManager);
+    void setEngine(Engine *engine);
 
-  virtual void updateInput(Input *input, double delta);
-  virtual void update(double delta);
-  virtual void render(GLManager *glManager);
+    virtual void init(GLManager *glManager);
 
-  inline std::shared_ptr<Entity> getRootScene(void) { return rootScene; };
+    virtual void updateInput(Input *input, double delta);
 
-protected:
-  void addToScene(std::shared_ptr<Entity> entity);
-  Engine *getEngine(void) const;
+    virtual void update(double delta);
 
-private:
-  std::shared_ptr<Entity> rootScene;
-  Engine *engine;
-};
+    virtual void render(GLManager *glManager);
+
+    inline std::shared_ptr<Entity> getRootScene(void) { return rootScene; };
+
+  protected:
+    void addToScene(std::shared_ptr<Entity> entity);
+
+    Engine *getEngine(void) const;
+
+  private:
+    std::shared_ptr<Entity> rootScene;
+    Engine *engine;
+  };
+}

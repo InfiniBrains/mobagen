@@ -1,9 +1,14 @@
 #pragma once
-#include "Component.hpp"
+#include "GameComponent.hpp"
 
-class Behaviour : public Component{
+namespace mobagen {
+  class Behaviour : public GameComponent {
 
-//  enabled	Enabled Behaviours are Updated, disabled Behaviours are not.
-//  isActiveAndEnabled	Has the Behaviour had enabled called.
+  public:
+    /// @brief Enabled Behaviours are Updated, disabled Behaviours are not.
+    bool enabled = false;
 
-};
+    /// @brief 	Has the Behaviour had enabled called.
+    bool isActiveAndEnabled = false;
+  };
+}

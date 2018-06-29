@@ -1,19 +1,20 @@
 #pragma once
-
 #include "Vertex.hpp"
 #include "MeshData.hpp"
 
 #include <string>
 #include <memory>
 
-class Mesh
-{
-public:
-  Mesh(std::string identifier, Vertex vertices[], int vertSize, unsigned int indices[], int indexSize);
-  virtual ~Mesh(void);
+namespace mobagen {
+  class Mesh {
+  public:
+    Mesh(std::string identifier, Vertex vertices[], int vertSize, unsigned int indices[], int indexSize);
 
-  void render(void) const;
+    virtual ~Mesh(void);
 
-private:
-  std::shared_ptr<MeshData> m_meshData;
-};
+    void render(void) const;
+
+  private:
+    std::shared_ptr<MeshData> m_meshData;
+  };
+}

@@ -7,7 +7,6 @@
 #include "components/SpotLight.hpp"
 #include "components/PointLight.hpp"
 #include "components/Sphere.hpp"
-
 #include "Plane.hpp"
 #include "Mesh.hpp"
 #include "Texture.hpp"
@@ -19,6 +18,7 @@
 #include <map>
 #include <random>
 #include <GameObject.hpp>
+#include "GameScriptedBehaviourTest.hpp"
 
 class DocEditor : public Game
 {
@@ -30,22 +30,20 @@ public:
 void DocEditor::update(double delta)
 {
   Game::update(delta);
+  //log_info("%llu",GameObject::m_components.size());
 }
 
 void DocEditor::init(GLManager *glManager)
 {
-  auto cam = new GameObject("MainCamera");
-  cam->AddComponent<OrthoCamera>(getEngine()->getWindow()->getWidth() / (float)getEngine()->getWindow()->getHeight(), 512, 0.01f, 10000.0f);
+  auto cam = std::make_shared<Entity>();
+  cam->addComponent<OrthoCamera>(getEngine()->getWindow()->getWidth() / (float)getEngine()->getWindow()->getHeight(), 512, 0.01f, 10000.0f);
+  addToScene(cam);
 
-//  cam->getTransform()->setPosition(glm::vec3(0, 512, 0));
-//  cam->getTransform()->setScale(glm::vec3(1, 1, 1));
-//  cam->getTransform()->setRotation(glm::quat(0, 0, 0.707, 0.707));
-//  cam->addComponent<DirectionalLight>(glm::vec3(1,1,1), 0.5);
-//  addToScene(cam);
+  auto primary_camera = cam->getComponent<OrthoCamera>();
+  getEngine()->getGLManager()->setActiveCamera(primary_camera);
 
-  //auto primary_camera = cam->getComponent<OrthoCamera>();
-  std::shared_ptr<OrthoCamera> o(cam->GetComponent<OrthoCamera>());
-  getEngine()->getGLManager()->setActiveCamera(o);
+  auto go = std::make_shared<GameObject>();
+  go->AddComponent<GameScriptedBehaviourTest>();
 }
 
 int main(int argc, char *argv[]) {

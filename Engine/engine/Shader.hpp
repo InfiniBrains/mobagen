@@ -1,61 +1,77 @@
 #pragma once
-
 #include <map>
 #include <string>
 #include <memory>
-
 #define GLM_SWIZZLE
 #include <glm/glm.hpp>
 
 #include "Asset.hpp"
 #include "Attenuation.hpp"
 
-class DirectionalLight;
-class PointLight;
-class SpotLight;
+namespace mobagen {
+  class DirectionalLight;
+
+  class PointLight;
+
+  class SpotLight;
 
 #if defined(GLES2)
-  #include <GLES2/gl2.h>
+#include <GLES2/gl2.h>
 #elif defined(GLES3)
-  #include <GLES3/gl3.h>
+#include <GLES3/gl3.h>
 #else
-  #include <GL/glew.h>
+
+#include <GL/glew.h>
+
 #endif
 
-class Shader
-{
-public:
-  Shader(void);
-  Shader(std::string shaderAssetName);
-  Shader(const char* vert_src, const char* frag_src);
-  ~Shader(void);
+  class Shader {
+  public:
+    Shader(void);
 
-  void addVertex(const char *vert_src);
-  void addFragment(const char *frag_src);
-  void link(void);
+    Shader(std::string shaderAssetName);
 
-  void createUniform(const std::string& uniformName);
-  GLuint getUniformLocation(const std::string& uniformName);
+    Shader(const char *vert_src, const char *frag_src);
 
-  void setAttribLocation(const char* name, int i);
+    ~Shader(void);
 
-  GLuint getProgram(void);
+    void addVertex(const char *vert_src);
 
-  void bind(void) const;
+    void addFragment(const char *frag_src);
 
-  void updateUniformDirectionalLight(const std::string &uniformName, DirectionalLight *directionalLight);
-  void updateUniformPointLight(const std::string &uniformName, PointLight *pointLight);
-  void updateUniformSpotLight(const std::string &uniformName, SpotLight *spotLight);
+    void link(void);
 
-  void setUniformAttenuation(const std::string &uniformName, std::shared_ptr<Attenuation> attenuation);
-  void setUniformVec3f(const std::string &uniformName, glm::vec3 vector);
-  void setUniform1i(const std::string &uniformName, int value);
-  void setUniform1f(const std::string &uniformName, float value);
-  void setUniformMatrix4f(const std::string &uniformName, const glm::mat4 &matrix);
-private:
-  GLuint  g_shVert;
-  GLuint  g_shFrag;
-  GLuint  g_shProg;
+    void createUniform(const std::string &uniformName);
 
-  std::map <std::string, GLuint> uniformLocation;
-};
+    GLuint getUniformLocation(const std::string &uniformName);
+
+    void setAttribLocation(const char *name, int i);
+
+    GLuint getProgram(void);
+
+    void bind(void) const;
+
+    void updateUniformDirectionalLight(const std::string &uniformName, DirectionalLight *directionalLight);
+
+    void updateUniformPointLight(const std::string &uniformName, PointLight *pointLight);
+
+    void updateUniformSpotLight(const std::string &uniformName, SpotLight *spotLight);
+
+    void setUniformAttenuation(const std::string &uniformName, std::shared_ptr<Attenuation> attenuation);
+
+    void setUniformVec3f(const std::string &uniformName, glm::vec3 vector);
+
+    void setUniform1i(const std::string &uniformName, int value);
+
+    void setUniform1f(const std::string &uniformName, float value);
+
+    void setUniformMatrix4f(const std::string &uniformName, const glm::mat4 &matrix);
+
+  private:
+    GLuint g_shVert;
+    GLuint g_shFrag;
+    GLuint g_shProg;
+
+    std::map<std::string, GLuint> uniformLocation;
+  };
+}

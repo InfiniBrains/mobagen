@@ -14,14 +14,14 @@
 #include "Logger.hpp"
 #include "MeshLoader.hpp"
 #include "Engine.hpp"
-#include "CrystalPicker.h"
-#include "Crystal.h"
+#include "CrystalPicker.hpp"
+#include "Crystal.hpp"
 #include <SDL_main.h>
 #include <iostream>
 #include <map>
-#include "Matrix.h"
+#include "Matrix.hpp"
 #include <random>
-#include "Menu.h"
+#include "Menu.hpp"
 
 
 class CoolGame : public Game

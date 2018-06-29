@@ -1,17 +1,17 @@
 #pragma once
-
 #include <random>
 #include "time.h"
 
-class Random {
-public:
-  typedef struct{
+namespace mobagen {
+  class Random {
   public:
-    int s0;
-    int s1;
-    int s2;
-    int s3;
-  } State;
+    typedef struct {
+    public:
+      int s0;
+      int s1;
+      int s2;
+      int s3;
+    } State;
 
 //  insideUnitCircle	Returns a random point inside a circle with radius 1 (Read Only).
 //  insideUnitSphere	Returns a random point inside a sphere with radius 1 (Read Only).
@@ -22,14 +22,17 @@ public:
 //  value	Returns a random number between 0.0 [inclusive] and 1.0 [inclusive] (Read Only).
 
 //  ColorHSV	Generates a random color from HSV and alpha ranges.
-  /// @brief Initializes the random number generator state with a seed.
-  static void InitState(int seed);
-  /// @brief Returns a random int number between and min [inclusive] and max [inclusive] (Read Only).
-  static int Range(int min, int max);
+    /// @brief Initializes the random number generator state with a seed.
+    static void InitState(int seed);
 
-  /// @brief Returns a random float number between and min [inclusive] and max [inclusive] (Read Only).
-  static float Range(float min, float max);
-private:
-  // todo: fix this abomination
-  static std::mt19937_64 mt;
-};
+    /// @brief Returns a random int number between and min [inclusive] and max [inclusive] (Read Only).
+    static int Range(int min, int max);
+
+    /// @brief Returns a random float number between and min [inclusive] and max [inclusive] (Read Only).
+    static float Range(float min, float max);
+
+  private:
+    // todo: fix this abomination
+    static std::mt19937_64 mt;
+  };
+}

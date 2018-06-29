@@ -1,31 +1,37 @@
 #pragma once
-
 #include "Window.hpp"
 #include "Entity.hpp"
 
 #include <imgui.h>
 
-class GuiManager
-{
-public:
-  GuiManager(const glm::vec2& drawableSize, const glm::vec2& displaySize, SDL_Window *sdlWindow);
-  ~GuiManager(void);
+namespace mobagen {
+  class GuiManager {
+  public:
+    GuiManager(const glm::vec2 &drawableSize, const glm::vec2 &displaySize, SDL_Window *sdlWindow);
 
-  void render(Entity *sceneGraph);
-  void tick(Window *window, double deltaTime);
+    ~GuiManager(void);
 
-  void addInputCharactersUTF8(const char *text);
-  void setKeyEvent(int key, bool keydown);
+    void render(Entity *sceneGraph);
 
-  void togglePropertyEditor(void);
-  void renderComponents(Entity* entity);
+    void tick(Window *window, double deltaTime);
 
-private:
-  void createDeviceObjects(void);
-  void invalidateDeviceObjects(void);
-  static void renderDrawLists(ImDrawData* draw_data);
+    void addInputCharactersUTF8(const char *text);
 
-  bool showProps;
+    void setKeyEvent(int key, bool keydown);
 
-  SDL_Window *m_sdlWindow;
-};
+    void togglePropertyEditor(void);
+
+    void renderComponents(Entity *entity);
+
+  private:
+    void createDeviceObjects(void);
+
+    void invalidateDeviceObjects(void);
+
+    static void renderDrawLists(ImDrawData *draw_data);
+
+    bool showProps;
+
+    SDL_Window *m_sdlWindow;
+  };
+}

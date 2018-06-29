@@ -1,11 +1,7 @@
-//
-// Created by Alexandre Tolstenko Nogueira on 3/18/18.
-//
-
 #pragma once
-
 #include "Engine.hpp"
 #include "Texture.hpp"
+using namespace mobagen;
 
 class EditorGUI : public Component
 {

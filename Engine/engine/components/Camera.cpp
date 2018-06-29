@@ -1,8 +1,9 @@
 #include "Camera.hpp"
 
-glm::mat4 Camera::getViewMatrix(void) const
-{
-  return glm::inverse(m_parentEntity->getWorldMatrix());
-}
+namespace mobagen {
+  glm::mat4 Camera::getViewMatrix(void) const {
+    return glm::inverse(m_parentEntity->getWorldMatrix());
+  }
 
-Camera::Camera(std::string name) : Component() {}
+  Camera::Camera(std::string name) : Component() {}
+}

@@ -23,7 +23,7 @@ IF (ANDROID)
   add_custom_command(TARGET tests POST_BUILD
           COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/ ${ANDROID_BIN_ROOT}/libs/${ANDROID_NDK_ABI_NAME})
 ELSE ()
-  add_executable (tests main.cpp)
+  add_executable (tests main.cpp GameScriptedBehaviourTest.cpp GameScriptedBehaviourTest.hpp)
   target_link_libraries (tests engine)
 
   add_custom_command(TARGET tests PRE_BUILD

@@ -1,21 +1,24 @@
 #pragma once
 
 #include <string>
-
 #include "EngineIOStream.hpp"
 
-class Asset
-{
-public:
-  Asset(const std::string &fileName);
-  ~Asset(void);
+namespace mobagen {
 
-  const char *read(void) const;
+  class Asset {
+  public:
+    Asset(const std::string &fileName);
 
-  EngineIOStream *getIOStream(void) const;
+    ~Asset(void);
 
-private:
-  char *m_buffer;
-  EngineIOStream *m_ioStream;
-  size_t m_fileSize;
-};
+    const char *read(void) const;
+
+    EngineIOStream *getIOStream(void) const;
+
+  private:
+    char *m_buffer;
+    EngineIOStream *m_ioStream;
+    size_t m_fileSize;
+  };
+
+}

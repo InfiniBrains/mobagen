@@ -1,7 +1,8 @@
 #pragma once
 #include "Engine.hpp"
-#include "Crystal.h"
+#include "Crystal.hpp"
 
+using namespace mobagen;
 class Matrix : public Component {
 public:
 	Matrix();

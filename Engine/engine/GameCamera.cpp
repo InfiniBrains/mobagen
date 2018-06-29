@@ -1,2 +1,5 @@
+#include "GameCamera.hpp"
 
-#include "GameCamera.h"
+namespace mobagen {
+
+}

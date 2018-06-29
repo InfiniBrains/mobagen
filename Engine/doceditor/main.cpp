@@ -14,7 +14,7 @@
 #include "Logger.hpp"
 #include "MeshLoader.hpp"
 #include "Engine.hpp"
-#include "EditorGUI.h"
+#include "EditorGUI.hpp"
 #include <SDL_main.h>
 #include <iostream>
 #include <map>
