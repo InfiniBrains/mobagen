@@ -18,7 +18,7 @@
 #include <map>
 #include <random>
 #include <GameObject.hpp>
-#include "GameScriptedBehaviourTest.h"
+#include "GameScriptedBehaviourTest.hpp"
 
 class DocEditor : public Game
 {

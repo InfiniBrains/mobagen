@@ -23,7 +23,7 @@ IF (ANDROID)
     add_custom_command(TARGET uploader POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/ ${ANDROID_BIN_ROOT}/libs/${ANDROID_NDK_ABI_NAME})
 ELSE ()
-    add_executable (uploader main.cpp EditorGUI.cpp EditorGUI.h)
+    add_executable (uploader main.cpp EditorGUI.cpp EditorGUI.hpp)
   IF (EMSCRIPTEN)
     target_link_libraries (uploader engine)
   ELSEIF (MINGW)
