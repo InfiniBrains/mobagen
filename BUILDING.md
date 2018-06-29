@@ -24,61 +24,40 @@ sudo apt-get install git cmake clang build-essential
 ```
 
 ## Windows
-- Installing [MSYS2](http://www.msys2.org/) to install linux tools on Windows terminal;
-- Open *MSYS2* terminal and install the i686 or x64 versions of *gcc*(or *clang*), *git*, *make* and *cmake*:
-``` bash
-pacman -S mingw-w64-x86_64-gcc git mingw-w64-x86_64-make mingw-w64-x86_64-cmake
-```
-If this fails, try to search the right package name using:
-``` bash
-pacman -Ss packagename
-```
-Where *packagename* is the package you want to search for the right name.
+- [Microsoft Visual Studio Community](https://www.visualstudio.com/downloads/) as IDE and Compiler;
+- [CMake addon](https://marketplace.visualstudio.com/items?itemName=vector-of-bool.cmake-tools) as CMake tool helper;
+- [JetBrains Resharper C++](https://www.jetbrains.com/resharper-cpp/) to follow our coding style.
 
 # Clonning
-In every platform already preparated you will have git installed, so open your terminal and type:
+In every platform already preparated you must have `git` installed, so open your terminal and type:
 ```
 git clone --recursive -j8 https://github.com/InfiniBrains/mobagen.git
 ``` 
 This will clone the repo and all submodules.
 
 # Building
-If you are platform agnostic, you can use VScode or CLion: 
-## Visual Studio Code
-- Install [Visual Studio Code](https://code.visualstudio.com/);
-- Install all C++ extensions that may help you:
--- C++ Intellisense
--- C++ Lint (this will enforce code style)
--- CMake tools
--- CMake
+If you are platform agnostic, you can use CLion: 
 
 ## CLion 
 - [JetBrains CLion](https://www.jetbrains.com/clion/)
-- Toolchain will be automatically set on Linux and OSX. But in Windows, if you follow our way of work, point it to: *C:\msys64\mingw64* . 
+- Toolchain will be automatically set on Linux, OSX and Windows(you must install the Visual Studio 2017 toolchain first).
 
-## Windows
-But if you prefer Microsoft development tools:
-- [Microsoft Visual Studio Community](https://www.visualstudio.com/downloads/) as IDE and Compiler;
-- [CMake addon](https://marketplace.visualstudio.com/items?itemName=vector-of-bool.cmake-tools) as CMake tool helper;
-- [JetBrains Resharper C++](https://www.jetbrains.com/resharper-cpp/) to follow our coding style.
-
-
-## Usage
-
+# Usage
 First clone repo with the following command to download all submodules (which are located in the dependencies folder):
 `git clone --recursive -j8 https://github.com/InfiniBrains/mobagen.git`
 
 All builds require cmake 3.6.0, so the first step is to download that [here](https://cmake.org/download/)
 
-#### Windows Build
-
-1. Run the cmake gui and point it to this projects folder, configure and then generate a project using whatever toolchain you want. Tested with visual studio 2015
+## Windows Build
+1. Run the cmake gui and point it to this projects folder, configure and then generate a project using whatever toolchain you want. Tested with visual studio 2017
 2. Build the project
 
-#### Mac/Linux Build
+or
 
+You can use `CMake addon` with `Visual Studio` to open the project, and build it.
+
+## Mac/Linux Build
 Run:
-
 ```bash
 ./scripts/cmake-make.sh -j8
 ```
@@ -94,26 +73,18 @@ cd bin
 make -j8
 ```
 
-#### HTML 5 WebGL engine Build
-
-To build the html5 engine:
-
-First install emscripten:
-```bash
-brew install emscripten
-```
+## HTML 5 WebGL engine Build
+To build the HTML5 engine on OSX or Ubuntu:
 
 Then build the engine:
 ```bash
-./scripts/cmake-emscripten.sh -j8
+./scripts/emscripten-build.sh -j8
 ```
 
-Then run with:
+Then serve it on OSX:
 ```bash
 cd bin-emscripten/bin
-
 python -m SimpleHTTPServer
-
 open http://localhost:8000/
 ```
 
@@ -123,8 +94,7 @@ cd bin-emscripten/
 make -j8
 ```
 
-#### Android Build
-
+## Android Build
 To build for android do the following:
 
 First download the android ndk and sdk (https://developer.android.com/tools/sdk/ndk/) and (https://developer.android.com/sdk/index.html)
