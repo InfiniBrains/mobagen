@@ -44,7 +44,7 @@ The documentation is also available online at [Documentation](docs/HEAD/index.ht
 Documentation on how to build MoBaGEn: [Building](BUILDING.md)
 
 ## Samples
-
+[Midas Miner](https://infinibrains.github.io/mobagen/midasminer.html):
 ![Midas Miner](https://i.imgur.com/t1Vp8RV.jpg)
 
 ## History
