@@ -18,6 +18,8 @@ IF (NOT EMSCRIPTEN)
   set(LIBC ON CACHE BOOL "LIBC")
 ENDIF()
 
+set(NOMINMAX ON CACHE BOOL "workaround for minmax problem with windows.h")
+
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 set(CMAKE_CXX_STANDARD 14)
