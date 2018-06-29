@@ -10,7 +10,7 @@
 
 #ifdef EMSCRIPTEN
   #include <emscripten.h>
-  static Engine *instance = NULL;
+  static mobagen::Engine *instance = NULL;
 #else
 #include <thread>
 #endif
