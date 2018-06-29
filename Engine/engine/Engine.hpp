@@ -10,35 +10,42 @@
 #include "components/Sphere.hpp"
 #include <chrono>
 
-class Engine
-{
-public:
-  Engine(Game *game, char * windowTitle, glm::vec2 windowSize);
-  ~Engine(void);
+namespace mobagen {
+  class Engine {
+  public:
+    Engine(Game *game, char *windowTitle, glm::vec2 windowSize);
+
+    ~Engine(void);
 
 #ifdef EMSCRIPTEN
-  static void loop(void);
+    static void loop(void);
 #endif
 
-  void tick(void);
-  void start(void);
+    void tick(void);
 
-  Window         *getWindow(void) const;
-  GLManager      *getGLManager(void) const;
-  PhysicsManager *getPhysicsManager(void) const;
-  double         getDeltaTime();
-private:
-  std::unique_ptr<Window> m_window;
-  std::unique_ptr<GLEWManager> m_glewManager;
-  std::unique_ptr<GLManager> m_glManager;
-  std::unique_ptr<PhysicsManager> m_physicsManager;
+    void start(void);
 
-  std::chrono::time_point<std::chrono::high_resolution_clock> lastUpdateTime;
+    Window *getWindow(void) const;
 
-  Game *game;
+    GLManager *getGLManager(void) const;
 
-  Input input;
+    PhysicsManager *getPhysicsManager(void) const;
 
-  bool quit;
-  double m_deltaTime;
-};
+    double getDeltaTime();
+
+  private:
+    std::unique_ptr<Window> m_window;
+    std::unique_ptr<GLEWManager> m_glewManager;
+    std::unique_ptr<GLManager> m_glManager;
+    std::unique_ptr<PhysicsManager> m_physicsManager;
+
+    std::chrono::time_point<std::chrono::high_resolution_clock> lastUpdateTime;
+
+    Game *game;
+
+    Input input;
+
+    bool quit;
+    double m_deltaTime;
+  };
+}

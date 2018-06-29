@@ -1,10 +1,12 @@
 #pragma once
 
-enum class PrimitiveType {
-  Sphere,
-  Capsule,
-  Cylinder,
-  Cube,
-  Plane,
-  Quad,
-};
+namespace mobagen {
+  enum class PrimitiveType {
+    Sphere,
+    Capsule,
+    Cylinder,
+    Cube,
+    Plane,
+    Quad,
+  };
+}

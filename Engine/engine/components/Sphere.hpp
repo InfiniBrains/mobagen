@@ -1,20 +1,23 @@
 #pragma once
-
 #include "Component.hpp"
 
-class Sphere : public Component, public std::enable_shared_from_this<Sphere>
-{
-public:
-  Sphere(float radius = 0);
-  virtual ~Sphere(void);
+namespace mobagen {
+  class Sphere : public Component, public std::enable_shared_from_this<Sphere> {
+  public:
+    // todo: explicit?
+    Sphere(float radius = 0);
 
-  virtual void registerWithEngine(Engine *engine);
-  virtual void deregisterFromEngine(Engine *engine);
+    // todo: switch from virtual to final or override
+    virtual void registerWithEngine(Engine *engine);
 
-  inline virtual const char *getType(void) { return "SPHERE"; }
+    // todo: switch from virtual to final or override
+    virtual void deregisterFromEngine(Engine *engine);
 
-  float getRadius(void) const;
+    inline virtual const char *getType() { return "SPHERE"; }
 
-private:
-  float m_radius;
-};
+    float getRadius() const;
+
+  private:
+    float m_radius;
+  };
+}

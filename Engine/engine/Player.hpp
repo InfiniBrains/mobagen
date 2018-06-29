@@ -1,8 +1,8 @@
 #pragma once
-
 #include "Scene.hpp"
 
-class Player
-{
+namespace mobagen {
+  class Player : public std::enable_shared_from_this<Player> {
 
-};
+  };
+}

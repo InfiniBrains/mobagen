@@ -1,27 +1,31 @@
 #pragma once
-
 #include "Component.hpp"
 #include "Mesh.hpp"
 #include "Material.hpp"
 
-class MeshRenderer : public Component
-{
-public:
-  MeshRenderer(std::shared_ptr<Mesh> mesh, std::shared_ptr<Material> material);
-  virtual ~MeshRenderer(void);
+namespace mobagen {
+  class MeshRenderer : public Component {
+  public:
+    MeshRenderer(std::shared_ptr<Mesh> mesh, std::shared_ptr<Material> material);
 
-  virtual void update(double delta);
-  virtual void render(Shader *shader);
+    virtual ~MeshRenderer(void);
 
-  void setMaterial(std::shared_ptr<Material> material);
-  std::shared_ptr<Material> getMaterial();
+    virtual void update(double delta);
 
-  void setMesh(std::shared_ptr<Mesh> mesh);
-  std::shared_ptr<Mesh> getMesh();
+    virtual void render(Shader *shader);
 
-  inline virtual const char *getType(void) { return "MESH_RENDERER"; }
+    void setMaterial(std::shared_ptr<Material> material);
 
-protected:
-  std::shared_ptr<Mesh> m_mesh;
-  std::shared_ptr<Material> m_material;
-};
+    std::shared_ptr<Material> getMaterial();
+
+    void setMesh(std::shared_ptr<Mesh> mesh);
+
+    std::shared_ptr<Mesh> getMesh();
+
+    inline virtual const char *getType(void) { return "MESH_RENDERER"; }
+
+  protected:
+    std::shared_ptr<Mesh> m_mesh;
+    std::shared_ptr<Material> m_material;
+  };
+}

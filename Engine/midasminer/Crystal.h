@@ -3,6 +3,7 @@
 #include "Texture.hpp"
 #include "Material.hpp"
 
+using namespace mobagen;
 class Crystal : public Component {
 public:
   enum CrystalType

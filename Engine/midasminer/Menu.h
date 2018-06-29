@@ -1,7 +1,7 @@
 #pragma once
-
 #include "Engine.hpp"
 
+using namespace mobagen;
 class Menu : public Component
 {
 public:

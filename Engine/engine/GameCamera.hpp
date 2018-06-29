@@ -1,12 +1,12 @@
 #pragma once
-
 #include "GameBehaviour.hpp"
 
+namespace mobagen {
 /// \brief A Camera is a device through which the player views the world.
 ///  A screen space point is defined in pixels. The bottom-left of the screen is (0,0); the right-top is (pixelWidth,pixelHeight). The z position is in world units from the Camera.
 ///  A viewport space point is normalized and relative to the Camera. The bottom-left of the Camera is (0,0); the top-right is (1,1). The z position is in world units from the Camera.
 ///  A world space point is defined in global coordinates (for example, Transform.position).
-class GameCamera : public GameBehaviour {
+  class GameCamera : public GameBehaviour {
 //  Description
 //      A Camera is a device through which the player views the world.
 //
@@ -127,6 +127,5 @@ class GameCamera : public GameBehaviour {
 //  Delegates
 //      CameraCallback	Delegate type for camera callbacks.
 
-};
-
-
+  };
+}

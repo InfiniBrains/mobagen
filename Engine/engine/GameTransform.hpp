@@ -2,11 +2,11 @@
 #include <vector>
 #include <unordered_set>
 
-class GameComponent;
+namespace mobagen {
+  class GameComponent;
 
-class GameTransform : public GameComponent
-{
-public:
+  class GameTransform : public GameComponent {
+  public:
 //  childCount	The number of children the Transform has.
 //  eulerAngles	The rotation as Euler angles in degrees.
 //  forward	The blue axis of the transform in world space.
@@ -27,8 +27,9 @@ public:
 //  up	The green axis of the transform in world space.
 //  worldToLocalMatrix	Matrix that transforms a point from world space into local space (Read Only).
 
-  /// \brief Unparents all children.
-  void DetachChildren();
+    /// \brief Unparents all children.
+    void DetachChildren();
+
 //  Find	Finds a child by n and returns it.
 //  GetChild	Returns a transform child by index.
 //  GetSiblingIndex	Gets the sibling index.
@@ -41,8 +42,9 @@ public:
 //  RotateAround	Rotates the transform about axis passing through point in world coordinates by angle degrees.
 //  SetAsFirstSibling	Move the transform to the start of the local transform list.
 //  SetAsLastSibling	Move the transform to the end of the local transform list.
-  void SetParent(GameTransform* parent);
-  void SetParent(GameTransform* parent, bool worldPositionStays);
+    void SetParent(GameTransform *parent);
+
+    void SetParent(GameTransform *parent, bool worldPositionStays);
 //  SetParent	Set the parent of the transform.
 //  SetPositionAndRotation	Sets the world space position and rotation of the Transform component.
 //  SetSiblingIndex	Sets the sibling index.
@@ -51,8 +53,8 @@ public:
 //  TransformVector	Transforms vector from local space to world space.
 //  Translate	Moves the transform in the direction and distance of translation.
 
-private:
-  GameTransform * m_parent;
-  std::unordered_set<GameTransform *> m_children;
-};
-
+  private:
+    GameTransform *m_parent;
+    std::unordered_set<GameTransform *> m_children;
+  };
+}

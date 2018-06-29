@@ -1,17 +1,18 @@
 #pragma once
-
 #include "Component.hpp"
 
-class FreeLook : public Component
-{
-public:
-  FreeLook(float speed = 0.001f);
-  ~FreeLook(void);
+namespace mobagen {
+  class FreeLook : public Component {
+  public:
+    FreeLook(float speed = 0.001f);
 
-  virtual void updateInput(Input *input, double delta);
+    ~FreeLook(void);
 
-  inline virtual const char *getType(void) { return "FREE_LOOK"; }
+    virtual void updateInput(Input *input, double delta);
 
-private:
-  float m_speed;
-};
+    inline virtual const char *getType(void) { return "FREE_LOOK"; }
+
+  private:
+    float m_speed;
+  };
+}

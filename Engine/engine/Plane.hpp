@@ -1,12 +1,13 @@
 #pragma once
-
 #include "Mesh.hpp"
 
-class Plane
-{
-public:
-  Plane(void);
-  ~Plane(void);
+namespace mobagen {
+  class Plane {
+  public:
+    Plane(void) = default;
 
-  static std::shared_ptr<Mesh> getMesh(void);
-};
+    ~Plane(void) = default;
+
+    static std::shared_ptr<Mesh> getMesh(void);
+  };
+}

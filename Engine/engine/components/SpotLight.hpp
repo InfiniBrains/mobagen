@@ -1,20 +1,22 @@
 #pragma once
-
 #include "PointLight.hpp"
 
-class SpotLight : public PointLight
-{
-public:
-  SpotLight(glm::vec3 color, float intensity, float cutoff, std::shared_ptr<Attenuation> attenuation);
-  virtual void registerWithEngine(Engine *engine);
-  virtual void deregisterFromEngine(Engine *engine);
+namespace mobagen {
+  class SpotLight : public PointLight {
+  public:
+    SpotLight(glm::vec3 color, float intensity, float cutoff, std::shared_ptr<Attenuation> attenuation);
 
-  inline virtual const char *getType(void) { return "SPOT_LIGHT"; }
+    virtual void registerWithEngine(Engine *engine);
 
-  virtual void updateShader(Shader *shader);
+    virtual void deregisterFromEngine(Engine *engine);
 
-  float getCutoff(void) const;
+    inline virtual const char *getType(void) { return "SPOT_LIGHT"; }
 
-private:
-  float m_cutoff;
-};
+    virtual void updateShader(Shader *shader);
+
+    float getCutoff() const;
+
+  private:
+    float m_cutoff;
+  };
+}

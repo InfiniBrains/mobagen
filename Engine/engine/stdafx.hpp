@@ -13,11 +13,8 @@
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-
 #include <imgui.h>
-
 #include <SDL.h>
-
 #include <memory>
 #include <limits>
 #include <vector>

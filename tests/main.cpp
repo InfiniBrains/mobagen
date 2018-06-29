@@ -7,7 +7,6 @@
 #include "components/SpotLight.hpp"
 #include "components/PointLight.hpp"
 #include "components/Sphere.hpp"
-
 #include "Plane.hpp"
 #include "Mesh.hpp"
 #include "Texture.hpp"

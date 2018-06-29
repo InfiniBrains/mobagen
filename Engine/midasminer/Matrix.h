@@ -2,6 +2,7 @@
 #include "Engine.hpp"
 #include "Crystal.h"
 
+using namespace mobagen;
 class Matrix : public Component {
 public:
 	Matrix();

@@ -3,20 +3,20 @@
 
 #include "OrthoCamera.hpp"
 
-OrthoCamera::OrthoCamera(float aspect, float scale, float zNear, float zFar) : Camera("OrthoCamera")
-{
-  m_scale = scale;
-  m_aspect = aspect;
-  m_zNear = zNear;
-  m_zFar = zFar;
+namespace mobagen {
+  OrthoCamera::OrthoCamera(float aspect, float scale, float zNear, float zFar) : Camera("OrthoCamera") {
+    m_scale = scale;
+    m_aspect = aspect;
+    m_zNear = zNear;
+    m_zFar = zFar;
 
-  setProperty("scale", FLOAT, &m_scale, 0, 200);
-  setProperty("aspect", FLOAT, &m_aspect, 0, 10);
-  setProperty("zNear", FLOAT, &m_zNear, 0, 1);
-  setProperty("zFar", FLOAT, &m_zFar, 0, 1000);
-}
+    setProperty("scale", FLOAT, &m_scale, 0, 200);
+    setProperty("aspect", FLOAT, &m_aspect, 0, 10);
+    setProperty("zNear", FLOAT, &m_zNear, 0, 1);
+    setProperty("zFar", FLOAT, &m_zFar, 0, 1000);
+  }
 
-glm::mat4 OrthoCamera::getProjectionMatrix(void) const
-{
-  return glm::ortho(-m_aspect * m_scale, m_aspect * m_scale, -1.0f * m_scale, 1.0f * m_scale, m_zNear, m_zFar);
+  glm::mat4 OrthoCamera::getProjectionMatrix(void) const {
+    return glm::ortho(-m_aspect * m_scale, m_aspect * m_scale, -1.0f * m_scale, 1.0f * m_scale, m_zNear, m_zFar);
+  }
 }

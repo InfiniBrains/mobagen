@@ -1,9 +1,4 @@
-//
-//  Author: Shervin Aflatooni
-//
-
 #pragma once
-
 #include "settings.hpp"
 #include "Input.hpp"
 
@@ -12,54 +7,63 @@
 
 #include <glm/glm.hpp>
 #include <SDL.h>
-
 #if _WIN32
   // https://stackoverflow.com/questions/4845410/error-lnk2019-unresolved-external-symbol-main-referenced-in-function-tmainc
   #undef main
 #endif
 
-class GuiManager;
+namespace mobagen {
+  class GuiManager;
 
-class Window
-{
-public:
-  Window(char * title, glm::vec2 windowSize);
-  ~Window(void);
+  class Window {
+  public:
+    Window(char *title, glm::vec2 windowSize);
 
-  void init(void);
+    ~Window(void);
 
-  void tick(double deltaTime);
-  void swapBuffer(void);
-  int poll_event(SDL_Event *event);
+    void init(void);
 
-  int getWidth(void) const;
-  int getHeight(void) const;
-  glm::vec4 getViewport(void) const;
-  glm::vec2 getDisplaySize(void) const;
-  glm::vec2 getDrawableSize(void) const;
+    void tick(double deltaTime);
 
-  GuiManager *getGuiManager(void) const;
+    void swapBuffer(void);
 
-  static const char* getClipboardText();
-  static void setClipboardText(const char* text);
+    int poll_event(SDL_Event *event);
 
-  void makeCurrentContext(void) const;
+    int getWidth(void) const;
 
-  Input* getInput(void);
-  SDL_Window* getSDLWindow(void);
+    int getHeight(void) const;
 
-  bool shouldQuit(void) const;
+    glm::vec4 getViewport(void) const;
 
-  void drawCursor(bool enabled);
+    glm::vec2 getDisplaySize(void) const;
 
-private:
-  SDL_Window    *m_window;
-  SDL_GLContext m_glContext;
-  std::unique_ptr<GuiManager> m_guiManager;
+    glm::vec2 getDrawableSize(void) const;
 
-  int m_width, m_height;
+    GuiManager *getGuiManager(void) const;
 
-  Input m_input;
+    static const char *getClipboardText();
 
-  bool m_quit;
-};
+    static void setClipboardText(const char *text);
+
+    void makeCurrentContext(void) const;
+
+    Input *getInput(void);
+
+    SDL_Window *getSDLWindow(void);
+
+    bool shouldQuit(void) const;
+
+    void drawCursor(bool enabled);
+
+  private:
+    SDL_Window *m_window;
+    SDL_GLContext m_glContext;
+    std::unique_ptr<GuiManager> m_guiManager;
+
+    int m_width, m_height;
+
+    Input m_input;
+
+    bool m_quit;
+  };
+}

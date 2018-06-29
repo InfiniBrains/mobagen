@@ -2,6 +2,7 @@
 #include "Engine.hpp"
 #include "Crystal.h"
 
+using namespace mobagen;
 class CrystalPicker : public Component {
 public:
   CrystalPicker(std::map<Crystal::CrystalType, std::shared_ptr<Texture>> textures, std::map<Crystal::CrystalType, std::shared_ptr<Material>> materials);

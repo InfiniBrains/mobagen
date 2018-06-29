@@ -1,9 +1,4 @@
-//
-//  Author: Shervin Aflatooni
-//
-
 #pragma once
-
 #define GLM_SWIZZLE
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -11,22 +6,26 @@
 #include "components/Sphere.hpp"
 #include "Line.hpp"
 
-class Ray
-{
-public:
-  Ray(glm::vec3 position, glm::vec3 direction);
-  ~Ray(void);
+namespace mobagen {
+  class Ray {
+  public:
+    Ray(glm::vec3 position, glm::vec3 direction);
 
-  static Ray getPickRay(glm::vec2 mousePosition, const glm::vec4 &viewport, const glm::mat4 &viewMatrix, const glm::mat4 &projectionMatrix);
+    ~Ray(void);
 
-  bool intersects(const Sphere *sphere, glm::vec3 & intersectionPosition) const;
+    static Ray getPickRay(glm::vec2 mousePosition, const glm::vec4 &viewport, const glm::mat4 &viewMatrix,
+                          const glm::mat4 &projectionMatrix);
 
-  glm::vec3 getPosition(void) const;
-  glm::vec3 getDirection(void) const;
+    bool intersects(const Sphere *sphere, glm::vec3 &intersectionPosition) const;
 
-  Line getLine(float length) const;
+    glm::vec3 getPosition(void) const;
 
-private:
-  glm::vec3 m_position;
-  glm::vec3 m_direction;
-};
+    glm::vec3 getDirection(void) const;
+
+    Line getLine(float length) const;
+
+  private:
+    glm::vec3 m_position;
+    glm::vec3 m_direction;
+  };
+}

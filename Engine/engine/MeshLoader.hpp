@@ -1,22 +1,23 @@
 #pragma once
-
 #include "Entity.hpp"
 #include <string>
 
 #include <assimp/scene.h>
 
-class MeshLoader
-{
-public:
-  MeshLoader(const std::string file);
-  ~MeshLoader(void);
+namespace mobagen {
+  class MeshLoader {
+  public:
+    MeshLoader(const std::string file);
 
-  std::shared_ptr<Entity> getEntity(void) const;
+    ~MeshLoader(void);
 
-protected:
-  void loadScene(const aiScene* scene);
+    std::shared_ptr<Entity> getEntity(void) const;
 
-  std::string m_fileName;
+  protected:
+    void loadScene(const aiScene *scene);
 
-  std::shared_ptr<Entity> m_entity;
-};
+    std::string m_fileName;
+
+    std::shared_ptr<Entity> m_entity;
+  };
+}

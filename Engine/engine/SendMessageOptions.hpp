@@ -1,7 +1,8 @@
 #pragma once
 
-enum class SendMessageOptions
-{
-  RequireReceiver,
-  DontRequireReceiver,
-};
+namespace mobagen {
+  enum class SendMessageOptions {
+    RequireReceiver,
+    DontRequireReceiver,
+  };
+}
