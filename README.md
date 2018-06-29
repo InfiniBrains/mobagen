@@ -23,7 +23,7 @@ Licensed under the [![WTFPL](http://www.wtfpl.net/wp-content/uploads/2012/12/wtf
 
 ## Contributing
 
-[Join us](https://infinibrains-team-inviter.herokuapp.com/) on Slack [![Slack Status](https://infinibrains-inviter.herokuapp.com/badge.svg)](https://infinibrains-team-inviter.herokuapp.com/)!
+[Join us](https://infinibrains-inviter.herokuapp.com/) on Slack [![Slack Status](https://infinibrains-inviter.herokuapp.com/badge.svg)](https://infinibrains-team-inviter.herokuapp.com/)!
  
 Before making pull requests, please read the [Contribution checklist](CONTRIBUTION.md) and [Coding Conventions](CODINGCONVENTION.md) pages from the documentation.
 
