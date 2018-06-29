@@ -1,8 +1,8 @@
-#include "CrystalPicker.h"
+#include "CrystalPicker.hpp"
 #include "Logger.hpp"
-#include "Crystal.h"
-#include "Matrix.h"
-#include "Menu.h"
+#include "Crystal.hpp"
+#include "Matrix.hpp"
+#include "Menu.hpp"
 
 CrystalPicker::CrystalPicker(std::map<Crystal::CrystalType, std::shared_ptr<Texture>> textures, std::map<Crystal::CrystalType, std::shared_ptr<Material>> materials)
 {

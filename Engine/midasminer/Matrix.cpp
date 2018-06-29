@@ -1,8 +1,8 @@
-#include "Matrix.h"
+#include "Matrix.hpp"
 #include <vector>
-#include "CrystalPicker.h"
+#include "CrystalPicker.hpp"
 #include "Logger.hpp"
-#include "Menu.h"
+#include "Menu.hpp"
 
 Matrix::Matrix()
 {

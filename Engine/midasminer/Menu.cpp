@@ -1,4 +1,4 @@
-#include "Menu.h"
+#include "Menu.hpp"
 #include <imgui.h>
 
 const char* Menu::getType()

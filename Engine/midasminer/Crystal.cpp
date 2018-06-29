@@ -1,11 +1,11 @@
-#include "Crystal.h"
+#include "Crystal.hpp"
 #include "Engine.hpp"
 #include "Logger.hpp"
-#include "CrystalPicker.h"
+#include "CrystalPicker.hpp"
 #include "Plane.hpp"
 #include "components/MeshRenderer.hpp"
 #include <random>
-#include "Matrix.h"
+#include "Matrix.hpp"
 
 Crystal::Crystal(float scaleX, float scaleY, Crystal::CrystalType color)
 {  
