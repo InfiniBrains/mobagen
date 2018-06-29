@@ -1,5 +1,5 @@
 #pragma once
-namespace mobagen {
+
 #ifdef ANDROID
 #include <android/log.h>
 #else
@@ -8,7 +8,8 @@ namespace mobagen {
 #endif
 
 #include <errno.h>
-#include <string.h>
+#include <cstring>
+#include <string>
 
 #ifndef DEBUG
 #define debug(M, ...)
@@ -47,4 +48,3 @@ namespace mobagen {
 #define check_mem(A) check((A), "Out of memory.")
 
 #define check_debug(A, M, ...) if(!(A)) { debug(M, ##__VA_ARGS__); errno=0; goto error; }
-}

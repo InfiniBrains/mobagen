@@ -23,7 +23,7 @@
 #include <algorithm>
 #include <string>
 #include <typeindex>
-#include <string.h>
+#include <cstring>
 #include <stdio.h>
 #include <errno.h>
 

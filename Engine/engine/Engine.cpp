@@ -2,10 +2,8 @@
 #include "Logger.hpp"
 #include "Ray.hpp"
 #include "GuiManager.hpp"
-
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>
-
 #include <limits>
 
 #ifdef EMSCRIPTEN

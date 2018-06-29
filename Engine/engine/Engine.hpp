@@ -3,12 +3,11 @@
 #include "Window.hpp"
 #include "GLEWManager.hpp"
 #include "PhysicsManager.hpp"
-
 #include "Game.hpp"
-
 #include "Input.hpp"
 #include "components/Sphere.hpp"
 #include <chrono>
+#include <cstring>
 
 namespace mobagen {
   class Engine {
