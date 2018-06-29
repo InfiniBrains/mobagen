@@ -23,7 +23,7 @@ Licensed under the [![WTFPL](http://www.wtfpl.net/wp-content/uploads/2012/12/wtf
 
 ## Contributing
 
-[Join us](https://infinibrains-team-inviter.herokuapp.com/) on Slack [![Slack Status](https://infinibrains-inviter.herokuapp.com/badge.svg)](https://infinibrains-team-inviter.herokuapp.com/)!
+[Join us](https://infinibrains-inviter.herokuapp.com/) on Slack [![Slack Status](https://infinibrains-inviter.herokuapp.com/badge.svg)](https://infinibrains-inviter.herokuapp.com)!
  
 Before making pull requests, please read the [Contribution checklist](CONTRIBUTION.md) and [Coding Conventions](CODINGCONVENTION.md) pages from the documentation.
 
@@ -42,6 +42,10 @@ Other short-lived branches may pop-up from time to time as we stabilize new rele
 The documentation is also available online at [Documentation](docs/HEAD/index.html) (Work in Progress. Help Needed.)
 
 Documentation on how to build MoBaGEn: [Building](BUILDING.md)
+
+## Samples
+[Midas Miner](https://infinibrains.github.io/mobagen/midasminer.html):
+![Midas Miner](https://i.imgur.com/t1Vp8RV.jpg)
 
 ## History
 The change history is available online at [History](docs/HEAD/history.html) (Work in Progress. Help Needed.)
