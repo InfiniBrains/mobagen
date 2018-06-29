@@ -43,6 +43,10 @@ The documentation is also available online at [Documentation](docs/HEAD/index.ht
 
 Documentation on how to build MoBaGEn: [Building](BUILDING.md)
 
+## Samples
+
+![Midas Miner](https://i.imgur.com/t1Vp8RV.jpg)
+
 ## History
 The change history is available online at [History](docs/HEAD/history.html) (Work in Progress. Help Needed.)
 
