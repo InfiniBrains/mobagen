@@ -178,13 +178,14 @@ ENDIF ()
 
 include_directories(${ENGINE_INCLUDES})
 
-option(BUILD_TESTS "BUILD TESTS" ON)
+add_subdirectory( ${CMAKE_CURRENT_SOURCE_DIR}/Engine )
 
-IF (BUILD_TESTS)
-  add_subdirectory( ${CMAKE_CURRENT_SOURCE_DIR}/Engine )
+IF (NOT ANDROID)
+  option(BUILD_TESTS "BUILD TESTS" ON)
+  IF (BUILD_TESTS)
+    add_subdirectory( ${CMAKE_CURRENT_SOURCE_DIR}/tests )
+  ENDIF ()
 ENDIF ()
-
-add_subdirectory( ${CMAKE_CURRENT_SOURCE_DIR}/tests )
 
 #projects
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT midasminer)
