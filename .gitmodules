@@ -17,7 +17,7 @@
 [submodule "dependencies/gdcm"]
 	path = dependencies/gdcm
 	url = https://github.com/malaterre/GDCM.git
-	branch = 380888084accc38a4b96177ffb2bd6e9d70ced5a
+	branch = af81d4448a4c5159a9b0bbb67e7b4fd7f9121c7d
 [submodule "dependencies/stb"]
 	path = dependencies/stb
 	url = https://github.com/nothings/stb.git
