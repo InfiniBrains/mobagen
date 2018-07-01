@@ -2,10 +2,6 @@
 	path = dependencies/assimp
 	url = https://github.com/assimp/assimp.git
 	branch = 80799bdbf90ce626475635815ee18537718a05b1
-[submodule "dependencies/SDL"]
-	path = dependencies/SDL
-	url = https://github.com/spurious/SDL-mirror.git
-	branch = 8b84c36b11009130c18c9490ff3c171210ef92e7
 [submodule "dependencies/glm"]
 	path = dependencies/glm
 	url = https://github.com/g-truc/glm.git
@@ -21,7 +17,7 @@
 [submodule "dependencies/gdcm"]
 	path = dependencies/gdcm
 	url = https://github.com/malaterre/GDCM.git
-	branch = 380888084accc38a4b96177ffb2bd6e9d70ced5a
+	branch = af81d4448a4c5159a9b0bbb67e7b4fd7f9121c7d
 [submodule "dependencies/stb"]
 	path = dependencies/stb
 	url = https://github.com/nothings/stb.git
@@ -33,7 +29,11 @@
 [submodule "dependencies/polly"]
 	path = dependencies/polly
 	url = https://github.com/ruslo/polly.git
-	branch = bab5efa79b2016ad227a1ff065e70df3460e03d7
+	branch = 12435ba7d3d106e3f71448b431c2fa8a0c0756e6
 [submodule "dependencies/emsdk"]
 	path = dependencies/emsdk
 	url = https://github.com/juj/emsdk.git
+[submodule "dependencies/SDL"]
+	path = dependencies/SDL
+	url = https://github.com/SDL-mirror/SDL.git
+    branch = 014a8fa3d78ea8e721b808976a264dc6ba6360ed

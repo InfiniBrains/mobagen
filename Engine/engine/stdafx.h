@@ -22,8 +22,8 @@
 #include <fstream>
 #include <algorithm>
 #include <string>
+#include <cstring>
 #include <typeindex>
-#include <string.h>
 #include <stdio.h>
 #include <errno.h>
 
