@@ -3,7 +3,7 @@
      com.gamemaker.game
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="org.libsdl.app"
+      package="net.tolstenko.teste"
       android:versionCode="1"
       android:versionName="1.0"
       android:installLocation="auto">
@@ -35,7 +35,7 @@
     </application>
 
     <!-- Android 2.3.3 -->
-    <uses-sdk android:minSdkVersion="10" android:targetSdkVersion="12" />
+    <uses-sdk android:minSdkVersion="19" android:targetSdkVersion="24" />
 
     <!-- OpenGL ES 2.0 -->
     <uses-feature android:glEsVersion="0x00030000" />
