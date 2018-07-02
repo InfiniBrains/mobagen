@@ -305,7 +305,7 @@ test_script:
 #---------------------------------#
 
 artifacts:
-  - path: c:\projects\mobagen\build\bin
+  - path: build\bin
     name: win64
 #
 #  # pushing a single file with environment variable in path and "Deployment name" specified
