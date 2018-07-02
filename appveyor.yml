@@ -198,7 +198,7 @@ configuration: Release
 
 #build:
 #  parallel: true                  # enable MSBuild parallel builds
-#  project: c:\projects\mobagen\build\mobagen.sln      # path to Visual Studio solution or project
+#  project: c:\projects\mobagen\build\Engine.sln      # path to Visual Studio solution or project
 #  publish_wap: true               # package Web Application Projects (WAP) for Web Deploy
 #  publish_wap_xcopy: true         # package Web Application Projects (WAP) for XCopy deployment
 #  publish_azure: true             # package Azure Cloud Service projects and push to artifacts
@@ -232,10 +232,20 @@ before_package:
 
 # scripts to run after build
 after_build:
+ - |-
+    For /f "tokens=2-4 delims=/ " %%a in ('date /t') do (set DEPLOY_TAG=%%c-%%a-%%b)
+    echo %DEPLOY_TAG%
+ - |-
+    cd c:\projects\mobagen
+    dir build
+    dir build\bin
+    dir build\x64
+    7z a -r WindowsVs2017x86_64 ./build/bin
 
 # to run your custom scripts instead of automatic MSBuild
 build_script:
   - cmake --build build
+
 # to disable automatic builds
 #build: off
 
@@ -294,10 +304,12 @@ test_script:
 #      artifacts configuration    #
 #---------------------------------#
 
-#artifacts:
+artifacts:
 #
 #  # pushing a single file
-#  - path: test.zip
+  - path: c:\projects\mobagen\WindowsVs2017x86_64.7z
+  - name: Win64bits
+  - type: Auto
 #
 #  # pushing a single file with environment variable in path and "Deployment name" specified
 #  - path: MyProject\bin\$(configuration)
@@ -416,15 +428,6 @@ test_script:
 
 # scripts to run before deployment
 before_deploy:
- - |-
-   For /f "tokens=2-4 delims=/ " %%a in ('date /t') do (set DEPLOY_TAG=%%c-%%a-%%b)
-   echo %DEPLOY_TAG%
- - |-
-    cd c:\projects\mobagen
-    dir build
-    dir build\bin
-    dir build\x64
-    7z a -r WindowsVs2017x86_64 ./build/bin
 
 # scripts to run after deployment
 after_deploy:
@@ -438,7 +441,7 @@ deploy:
   provider: GitHub
   auth_token:
     secure: VjcEIbOJkQLk/ko43lz+7y+cmSrNSPUWs5EKNwlwuLf6O34EQq4tUet1elam62bW
-  artifact: c:\projects\mobagen\WindowsVs2017x86_64.7z
+  artifact: WindowsVs2017x86_64.7z
   draft: false
   prerelease: false
 #  on:
