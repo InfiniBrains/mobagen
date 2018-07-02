@@ -305,11 +305,8 @@ test_script:
 #---------------------------------#
 
 artifacts:
-#
-#  # pushing a single file
-  - path: c:\projects\mobagen\WindowsVs2017x86_64.7z
-  - name: Win64bits
-  - type: Auto
+  - path: c:\projects\mobagen\build\bin
+    name: win64
 #
 #  # pushing a single file with environment variable in path and "Deployment name" specified
 #  - path: MyProject\bin\$(configuration)
@@ -441,7 +438,7 @@ deploy:
   provider: GitHub
   auth_token:
     secure: VjcEIbOJkQLk/ko43lz+7y+cmSrNSPUWs5EKNwlwuLf6O34EQq4tUet1elam62bW
-  artifact: WindowsVs2017x86_64.7z
+  artifact: win64
   draft: false
   prerelease: false
 #  on:
