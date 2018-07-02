@@ -196,9 +196,9 @@ configuration: Release
 #  - Debug
 #  - Release
 
-#build:
-#  parallel: true                  # enable MSBuild parallel builds
-#  project: c:\projects\mobagen\build\Engine.sln      # path to Visual Studio solution or project
+build:
+  parallel: true                  # enable MSBuild parallel builds
+  project: c:\projects\mobagen\build\Engine.sln      # path to Visual Studio solution or project
 #  publish_wap: true               # package Web Application Projects (WAP) for Web Deploy
 #  publish_wap_xcopy: true         # package Web Application Projects (WAP) for XCopy deployment
 #  publish_azure: true             # package Azure Cloud Service projects and push to artifacts
@@ -206,8 +206,8 @@ configuration: Release
 #  publish_nuget_symbols: true     # generate and publish NuGet symbol packages
 #  include_nuget_references: true  # add -IncludeReferencedProjects option while packaging NuGet artifacts
 #
-#  # MSBuild verbosity level
-#  verbosity: detailed
+  # MSBuild verbosity level
+  verbosity: detailed
 
 
 # scripts to run before build
@@ -243,8 +243,8 @@ after_build:
     7z a -r WindowsVs2017x86_64 ./build/bin
 
 # to run your custom scripts instead of automatic MSBuild
-build_script:
-  - cmake --build build
+#build_script:
+#  - cmake --build build
 
 # to disable automatic builds
 #build: off
@@ -434,7 +434,7 @@ deploy_script:
 
 deploy:
   tag: $(DEPLOY_TAG)
-  description: 'Release Description'
+  description: $(APPVEYOR_REPO_COMMIT_MESSAGE)
   provider: GitHub
   auth_token:
     secure: VjcEIbOJkQLk/ko43lz+7y+cmSrNSPUWs5EKNwlwuLf6O34EQq4tUet1elam62bW
