@@ -128,7 +128,6 @@ matrix:
 # build cache to preserve files/folders between builds
 cache:
  - c:\.hunter
- - c:\hunter
 #  - packages -> **\packages.config  # preserve "packages" directory in the root of build folder but will reset it if packages.config is modified
 #  - projectA\libs
 #  - node_modules                    # local npm modules
@@ -434,7 +433,7 @@ after_deploy:
 deploy_script:
 
 deploy:
-  tag: %DEPLOY_TAG%
+  tag: %(DEPLOY_TAG)
   description: 'Release Description'
   provider: GitHub
   auth_token:
