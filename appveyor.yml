@@ -441,8 +441,8 @@ deploy:
   artifact: win64
   draft: false
   prerelease: false
-#  on:
-#    branch: master                 # release from master branch only
+  on:
+    branch: master                 # release from master branch only
 
 # to disable deployment
 #deploy: off
