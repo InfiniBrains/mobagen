@@ -22,10 +22,6 @@
 	path = dependencies/stb
 	url = https://github.com/nothings/stb.git
 	branch = e6afb9cbae4064da8c3e69af3ff5c4629579c1d2
-[submodule "dependencies/mingw-std-threads"]
-	path = dependencies/mingw-std-threads
-	url = https://github.com/meganz/mingw-std-threads.git
-	branch = 3a5361a3e9308ce854dd2761d2a9416e21ad489d
 [submodule "dependencies/polly"]
 	path = dependencies/polly
 	url = https://github.com/ruslo/polly.git
