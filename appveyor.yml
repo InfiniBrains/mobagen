@@ -224,7 +224,7 @@ before_build:
     if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2013" ( set generator="Visual Studio 12 2013 %arch%" )
     echo %generator%
     cmake --version
-    cmake -Bbuild -H. -G %generator%
+    cmake -Bbuild -H. -G %generator% -DCMAKE_BUILD_TYPE=Release
 #   cmake --build build
 
 # scripts to run *after* solution is built and *before* automatic packaging occurs (web apps, NuGet packages, Azure Cloud Services)
