@@ -7,7 +7,7 @@ if(LSB_RELEASE_EXEC)
     OUTPUT_STRIP_TRAILING_WHITESPACE 
   ) 
   IF(LSB_RELEASE_ID_SHORT) 
-    message(STATUS "ubuntu found") 
+    message(STATUS "ubuntu detected") 
  
   ENDIF() 
 ENDIF() 

@@ -20,7 +20,7 @@ emsdk-portable.tar.gz
 imgui.ini
 .idea/workspace.xml
 emscripten.zip
-
+buildclion/
 bin-mingw/
 
 win64mingw\.zip

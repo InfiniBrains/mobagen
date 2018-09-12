@@ -2,5 +2,16 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/dependencies/SDL" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/dependencies/assimp" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/dependencies/emsdk" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/dependencies/gdcm" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/dependencies/gdcm/Testing/Data" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/dependencies/glm" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/dependencies/imgui" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/dependencies/polly" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/dependencies/polly/docs/rtfd-css" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/dependencies/stb" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/dependencies/whereami" vcs="Git" />
   </component>
 </project>
