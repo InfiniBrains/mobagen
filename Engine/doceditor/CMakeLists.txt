@@ -7,6 +7,7 @@ IF (ANDROID)
 
     add_library (doceditor ${CMAKE_CURRENT_SOURCE_DIR}/../../dependencies/SDL/src/main/android/SDL_android_main.c main.cpp)
     target_link_libraries (doceditor engine)
+	# cotire(doceditor)
 
     # add_custom_command(TARGET doceditor POST_BUILD COMMAND ${ANDROID_ANT} ${ANT_FLAGS} ${ANT_TARGET} WORKING_DIRECTORY ${ANDROID_BIN_ROOT})
 

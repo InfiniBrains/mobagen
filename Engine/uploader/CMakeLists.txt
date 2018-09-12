@@ -7,6 +7,7 @@ IF (ANDROID)
 
     add_library (uploader ${CMAKE_CURRENT_SOURCE_DIR}/../../dependencies/SDL/src/main/android/SDL_android_main.c main.cpp)
     target_link_libraries (uploader engine)
+	#cotire(uploader)
 
     # add_custom_command(TARGET uploader POST_BUILD COMMAND ${ANDROID_ANT} ${ANT_FLAGS} ${ANT_TARGET} WORKING_DIRECTORY ${ANDROID_BIN_ROOT})
 
@@ -26,14 +27,17 @@ ELSE ()
     add_executable (uploader main.cpp EditorGUI.cpp EditorGUI.hpp)
   IF (EMSCRIPTEN)
     target_link_libraries (uploader engine)
+	#cotire(uploader)
   ELSEIF (MINGW)
     hunter_add_package(CURL)
     find_package(CURL CONFIG REQUIRED)
     target_link_libraries (uploader engine CURL::libcurl wsock32 ws2_32)
+	#cotire(uploader)
   ELSE()
     hunter_add_package(CURL)
     find_package(CURL CONFIG REQUIRED)
     target_link_libraries (uploader engine CURL::libcurl)
+	#cotire(uploader)
   ENDIF()
 
     add_custom_command(TARGET uploader PRE_BUILD

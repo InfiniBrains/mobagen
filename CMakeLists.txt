@@ -18,14 +18,14 @@ IF (NOT perl_path)
 ELSE() 
     message(STATUS "Perl was found in PATH") 
 ENDIF() 
-
+  
 IF (NOT EMSCRIPTEN)
   set (HUNTER_SKIP_LOCK ON CACHE BOOL "HUNTER_SKIP_LOCK")
   include(cmake/HunterGate.cmake)
   option(HUNTER_STATUS_DEBUG "Hunter debug info" ON)
   HunterGate(
-	URL "https://github.com/ruslo/hunter/archive/v0.23.22.tar.gz" 
-    SHA1 "dffc6269efd60e79ea2e28a927cce94d3e4a6e03" 
+    URL "https://github.com/ruslo/hunter/archive/v0.23.25.tar.gz"
+    SHA1 "cb75cce9a3a8d552e70e7118f3203eb4ac05c201"
   )
 ENDIF()
 
@@ -48,7 +48,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 set(ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR} CACHE STRING "Root dir")
 
 set(CP_CMAKE_DIR ${PROJECT_SOURCE_DIR}/cmake)
-#include(cotire)
+include(cotire)
 include(${CP_CMAKE_DIR}/macros.cmake)
 
 set(BUILD_STATIC_LIBS TRUE)

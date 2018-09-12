@@ -36,8 +36,10 @@ If(NOT EMSCRIPTEN AND NOT ANDROID)
 
 #  target_link_libraries (engine PUBLIC ${ENGINE_LIBS} glew::glew CURL::libcurl)
   target_link_libraries (engine PUBLIC ${ENGINE_LIBS} glew::glew)
+  #cotire(engine)
 ELSE()
   target_link_libraries (engine PUBLIC ${ENGINE_LIBS})
+  #cotire(engine)
 ENDIF()
 
 install (TARGETS engine DESTINATION lib)
