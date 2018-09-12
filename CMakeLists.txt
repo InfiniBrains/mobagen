@@ -16,7 +16,7 @@ find_program (perl_path NAMES perl perl.exe)
 IF (NOT perl_path) 
   message(FATAL_ERROR "You must install PERL and add it to PATH") 
 ELSE() 
-    message(STATUS "Perl was found in PATH") 
+    message(STATUS "Perl was found in PATH: ${perl_path}") 
 ENDIF() 
   
 IF (NOT EMSCRIPTEN)
