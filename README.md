@@ -59,7 +59,7 @@ MoBaGEn development is made by these [People](PEOPLE.md), and the top contributo
 - [Marcos Soares](http://linkedin.com/in/marcos-soares-391718141/)
 
 ## Sponsorship
-This project is sponsored via [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=tolstenko@gmail.com) and [Patreon](https://www.patreon.com/tolstenko) by these kind people:
+This project is sponsored via [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=tolstenko@gmail.com) and [Patreon](https://www.patreon.com/infinibrains) by these kind people:
 - [Alexandre Tolstenko](http://linkedin.com/in/aletolstenko/)
 
 ## Finance Report
