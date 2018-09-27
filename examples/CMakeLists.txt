@@ -1,4 +1,3 @@
-add_subdirectory( engine )
 add_subdirectory( midasminer )
 IF (NOT ANDROID)
   add_subdirectory( doceditor )
