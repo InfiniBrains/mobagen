@@ -134,7 +134,7 @@ IF (EMSCRIPTEN)
     ${CMAKE_BINARY_DIR}/dependencies/assimp/include
     ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/stb
     ${IMGUI_INCLUDE_DIRS}
-    ${CMAKE_CURRENT_SOURCE_DIR}/Engine/engine/
+    ${CMAKE_CURRENT_SOURCE_DIR}/engine/
     ${GDCM_INCLUDE_DIRS}
   )
 
@@ -160,7 +160,7 @@ ELSEIF (ANDROID)
     ${CMAKE_BINARY_DIR}/dependencies/assimp/include
     ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/stb
     ${IMGUI_INCLUDE_DIRS}
-    ${CMAKE_CURRENT_SOURCE_DIR}/Engine/engine/
+    ${CMAKE_CURRENT_SOURCE_DIR}/engine/
     ${GDCM_INCLUDE_DIRS}
   )
 ELSE ()
@@ -188,7 +188,7 @@ ELSE ()
     ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/stb
     ${WHEREAMI_INCLUDE_DIRS}
     ${IMGUI_INCLUDE_DIRS}
-    ${CMAKE_CURRENT_SOURCE_DIR}/Engine/engine/
+    ${CMAKE_CURRENT_SOURCE_DIR}/engine/
     ${GDCM_INCLUDE_DIRS}
 #    ${OPENSSL_INCLUDE_DIRS}
 #    ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/mingw-std-threads
@@ -197,7 +197,8 @@ ENDIF ()
 
 include_directories(${ENGINE_INCLUDES})
 
-add_subdirectory( ${CMAKE_CURRENT_SOURCE_DIR}/Engine )
+add_subdirectory( ${CMAKE_CURRENT_SOURCE_DIR}/engine )
+add_subdirectory( ${CMAKE_CURRENT_SOURCE_DIR}/examples )
 
 IF (NOT ANDROID)
   option(BUILD_TESTS "BUILD TESTS" ON)
