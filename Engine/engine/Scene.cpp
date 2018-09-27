@@ -2,6 +2,10 @@
 #include "Error.hpp"
 
 namespace mobagen {
+  std::map<uint64_t, Object*> Scene::m_objects;
+  std::map<uint64_t, GameComponent*> Scene::m_gameComponents;
+  std::map<uint64_t, GameObject*> Scene::m_gameObjects;
+
   int Scene::rootCount() {
     throw NotImplementedException("SCENE rootCount");
     return 0;

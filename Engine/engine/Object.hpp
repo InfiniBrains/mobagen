@@ -23,7 +23,7 @@ namespace mobagen {
     uint64_t GetInstanceID();
 
     /// \brief Removes a gameobject, component or asset.
-    static void Destroy(Object *obj);
+    static void Destroy(Object* obj);
 
     /// \brief Destroys the object obj immediately. You are strongly recommended to use Destroy instead.
     static void DestroyImmediate(Object *obj);
