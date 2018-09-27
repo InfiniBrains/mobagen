@@ -1,12 +1,31 @@
 cmake_minimum_required(VERSION 2.8)
 
+find_program(LSB_RELEASE_EXEC lsb_release) 
+if(LSB_RELEASE_EXEC) 
+  execute_process(COMMAND ${LSB_RELEASE_EXEC} -is 
+    OUTPUT_VARIABLE LSB_RELEASE_ID_SHORT 
+    OUTPUT_STRIP_TRAILING_WHITESPACE 
+  ) 
+  IF(LSB_RELEASE_ID_SHORT) 
+    message(STATUS "ubuntu found") 
+ 
+  ENDIF() 
+ENDIF() 
+
+find_program (perl_path NAMES perl perl.exe) 
+IF (NOT perl_path) 
+  message(FATAL_ERROR "You must install PERL and add it to PATH") 
+ELSE() 
+    message(STATUS "Perl was found in PATH") 
+ENDIF() 
+
 IF (NOT EMSCRIPTEN)
   set (HUNTER_SKIP_LOCK ON CACHE BOOL "HUNTER_SKIP_LOCK")
   include(cmake/HunterGate.cmake)
   option(HUNTER_STATUS_DEBUG "Hunter debug info" ON)
   HunterGate(
-      URL "https://github.com/ruslo/hunter/archive/v0.22.3.tar.gz"
-      SHA1 "46089aabb7c8cc181a70a7a61699f526c116cedf"
+	URL "https://github.com/ruslo/hunter/archive/v0.23.22.tar.gz" 
+    SHA1 "dffc6269efd60e79ea2e28a927cce94d3e4a6e03" 
   )
 ENDIF()
 
