@@ -17,7 +17,7 @@ namespace mobagen {
   }
 
   void Scene::GetRootGameObjects(std::vector<std::shared_ptr<GameObject>> *objs) {
-    objs = &rootGameObjects;
+//    objs = &rootGameObjects;
   }
 
   bool Scene::isDirty() {

@@ -5,6 +5,7 @@
 #include "PrimitiveType.hpp"
 #include "GameTransform.hpp"
 #include <type_traits>
+#include <vector>
 
 namespace mobagen {
   class GameObject : public Object, public std::enable_shared_from_this<GameObject> {
@@ -37,7 +38,7 @@ namespace mobagen {
 		class = std::enable_if_t<std::is_base_of<GameComponent,T>::value>
 	>
     inline void AddComponent() {
-	  GameComponent gc = std::make_shared<T>();
+	  auto gc = std::make_shared<T>();
 	  
       gc.gameObject = shared_from_this();
       m_components.push_back(gc);
