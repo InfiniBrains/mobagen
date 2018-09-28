@@ -31,7 +31,10 @@ ENDIF()
 
 project (Engine)
 
-IF (NOT EMSCRIPTEN)
+set(USE_CURL OFF CACHE BOOL "USE CURL")
+set(USE_GDCM OFF CACHE BOOL "USE GDCM")
+
+IF (NOT EMSCRIPTEN AND USE_CURL)
   hunter_add_package(cpr)
   find_package(cpr CONFIG REQUIRED)
   set(LIBC ON CACHE BOOL "LIBC")
@@ -75,8 +78,9 @@ add_subdirectory(dependencies)
 #add_definitions ( -DOPENSSL_LIBRARIES "${CMAKE_BINARY_DIR}/lib/")
 
 #find_package(OpenSSL)
-
-include(${CMAKE_CURRENT_BINARY_DIR}/dependencies/gdcm/GDCMConfig.cmake )
+if(USE_GDCM)
+  include(${CMAKE_CURRENT_BINARY_DIR}/dependencies/gdcm/GDCMConfig.cmake )
+endif()
 
 SET(GDCM_LIBRARIES
         gdcmCommon
@@ -98,9 +102,6 @@ SET(GDCM_LIBRARIES
 
 set ( SDL2_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/SDL/include )
 set ( SDL2_LIBRARY SDL2-static )
-
-#set ( GLEW_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/glew/include )
-#set ( GLEW_LIBRARIES libglew_static )
 
 set ( ASSIMP_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/assimp/include )
 set ( ASSIMP_LIBRARY assimp )
@@ -168,17 +169,26 @@ ELSE ()
   SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -std=c++14 -fPIC")
   find_package(OpenGL REQUIRED)
 
-  set(ENGINE_LIBS
-    ${OPENGL_LIBRARY}
-    ${SDL2_LIBRARY}
-    ${ASSIMP_LIBRARY}
-    #${GLEW_LIBRARIES}
-    ${WHEREAMI_LIBRARY}
-    ${IMGUI_LIBRARY}
-    ${GDCM_LIBRARIES}
-#    ${OPENSSL_LIBRARIES}
-    cpr::cpr
-  )
+  IF(USE_CURL)
+    set(ENGINE_LIBS
+      ${OPENGL_LIBRARY}
+      ${SDL2_LIBRARY}
+      ${ASSIMP_LIBRARY}
+      ${WHEREAMI_LIBRARY}
+      ${IMGUI_LIBRARY}
+      ${GDCM_LIBRARIES}
+      cpr::cpr
+    )
+  ELSE()
+    set(ENGINE_LIBS
+      ${OPENGL_LIBRARY}
+      ${SDL2_LIBRARY}
+      ${ASSIMP_LIBRARY}
+      ${WHEREAMI_LIBRARY}
+      ${IMGUI_LIBRARY}
+      ${GDCM_LIBRARIES}
+    )
+  ENDIF()
 
   set(ENGINE_INCLUDES
     ${GLM_INCLUDE_DIRS}
@@ -190,8 +200,6 @@ ELSE ()
     ${IMGUI_INCLUDE_DIRS}
     ${CMAKE_CURRENT_SOURCE_DIR}/engine/
     ${GDCM_INCLUDE_DIRS}
-#    ${OPENSSL_INCLUDE_DIRS}
-#    ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/mingw-std-threads
   )
 ENDIF ()
 
