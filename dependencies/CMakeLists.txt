@@ -39,10 +39,12 @@ ELSE ()
   add_subdirectory( SDL )
 ENDIF ()
 
-set(GDCM_BUILD_DOCBOOK_MANPAGES OFF CACHE BOOL "Do not build gdcm manpages")
-set(GDCM_DOCUMENTATION OFF CACHE BOOL "Do not build gdcm manpages")
-set(BUILD_DOC OFF CACHE BOOL "Do not build gdcm manpages")
-add_subdirectory( gdcm )
+IF(USE_GDCM)
+  set(GDCM_BUILD_DOCBOOK_MANPAGES OFF CACHE BOOL "Do not build gdcm manpages")
+  set(GDCM_DOCUMENTATION OFF CACHE BOOL "Do not build gdcm manpages")
+  set(BUILD_DOC OFF CACHE BOOL "Do not build gdcm manpages")
+  add_subdirectory( gdcm )
+ENDIF()
 
 set( ASSIMP_BUILD_ASSIMP_TOOLS OFF CACHE BOOL "Build assimp tools" )
 set( ASSIMP_BUILD_TESTS OFF CACHE BOOL "Build assimp tests" )
@@ -188,11 +190,11 @@ add_subdirectory( assimp )
 INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/imgui/ )
 
 add_library (imgui STATIC 
-    ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui.h 
-    ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui.cpp 
-    ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui_demo.cpp 
-    ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui_draw.cpp 
-    ) 
+  ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui.h 
+  ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui.cpp 
+  ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui_demo.cpp 
+  ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui_draw.cpp 
+) 
 
 
 

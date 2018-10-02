@@ -37,6 +37,8 @@ set(USE_GDCM OFF CACHE BOOL "USE GDCM")
 IF (NOT EMSCRIPTEN AND USE_CURL)
   hunter_add_package(cpr)
   find_package(cpr CONFIG REQUIRED)
+  hunter_add_package(CURL)
+  find_package(CURL CONFIG REQUIRED)
   set(LIBC ON CACHE BOOL "LIBC")
 ENDIF()
 
@@ -72,33 +74,26 @@ add_definitions(-UGLEW_BUILD)
 
 add_subdirectory(dependencies)
 
-#add_definitions ( -DOPENSSL_ROOT_DIR ${CMAKE_SOURCE_DIR}/dependencies/openssl/)
-#OPENSSL_CRYPTO_LIBRARY
-#OPENSSL_SSL_LIBRARY
-#add_definitions ( -DOPENSSL_LIBRARIES "${CMAKE_BINARY_DIR}/lib/")
-
-#find_package(OpenSSL)
 if(USE_GDCM)
   include(${CMAKE_CURRENT_BINARY_DIR}/dependencies/gdcm/GDCMConfig.cmake )
+  SET(GDCM_LIBRARIES
+    gdcmCommon
+    gdcmDICT
+    gdcmDSED
+    gdcmIOD
+    gdcmMSFF
+    gdcmMEXD
+    gdcmjpeg8
+    gdcmjpeg12
+    gdcmjpeg16
+    gdcmexpat
+    gdcmopenjp2
+    gdcmcharls
+    gdcmzlib
+    #gdcmuuid
+    socketxx
+  )
 endif()
-
-SET(GDCM_LIBRARIES
-        gdcmCommon
-        gdcmDICT
-        gdcmDSED
-        gdcmIOD
-        gdcmMSFF
-        gdcmMEXD
-        gdcmjpeg8
-        gdcmjpeg12
-        gdcmjpeg16
-        gdcmexpat
-        gdcmopenjp2
-        gdcmcharls
-        gdcmzlib
-        #gdcmuuid
-        socketxx
-        )
 
 set ( SDL2_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/SDL/include )
 set ( SDL2_LIBRARY SDL2-static )
@@ -123,6 +118,7 @@ IF (EMSCRIPTEN)
   SET(CMAKE_CXX_FLAGS "--closure 1 --preload-file ${CMAKE_CURRENT_SOURCE_DIR}/assets/ -s TOTAL_MEMORY=536870912 -s USE_SDL=2 -std=c++14 -Oz")
   add_definitions(-DASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets/")
 
+  # CHECK FOR CURL AND GDCM
   set(ENGINE_LIBS
     ${ASSIMP_LIBRARY}
     ${IMGUI_LIBRARY}
@@ -147,6 +143,7 @@ ELSEIF (ANDROID)
   add_definitions( -DGLES2=1 )
   SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 
+  # CHECK FOR CURL AND GDCM
   set(ENGINE_LIBS
     ${SDL2_LIBRARY}
     ${ASSIMP_LIBRARY}
@@ -169,39 +166,42 @@ ELSE ()
   SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -std=c++14 -fPIC")
   find_package(OpenGL REQUIRED)
 
-  IF(USE_CURL)
-    set(ENGINE_LIBS
-      ${OPENGL_LIBRARY}
-      ${SDL2_LIBRARY}
-      ${ASSIMP_LIBRARY}
-      ${WHEREAMI_LIBRARY}
-      ${IMGUI_LIBRARY}
-      ${GDCM_LIBRARIES}
-      cpr::cpr
+  set(ENGINE_LIBS
+    ${OPENGL_LIBRARY}
+    ${SDL2_LIBRARY}
+    ${ASSIMP_LIBRARY}
+    ${WHEREAMI_LIBRARY}
+    ${IMGUI_LIBRARY}
+  )
+  set(ENGINE_INCLUDES
+      ${GLM_INCLUDE_DIRS}
+      ${SDL2_INCLUDE_DIR}
+      ${ASSIMP_INCLUDE_DIR}
+      ${CMAKE_BINARY_DIR}/dependencies/assimp/include
+      ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/stb
+      ${WHEREAMI_INCLUDE_DIRS}
+      ${IMGUI_INCLUDE_DIRS}
+      ${CMAKE_CURRENT_SOURCE_DIR}/engine/
     )
-  ELSE()
-    set(ENGINE_LIBS
-      ${OPENGL_LIBRARY}
-      ${SDL2_LIBRARY}
-      ${ASSIMP_LIBRARY}
-      ${WHEREAMI_LIBRARY}
-      ${IMGUI_LIBRARY}
-      ${GDCM_LIBRARIES}
+
+  IF(USE_CURL)
+    SET(ENGINE_LIBS
+      ${ENGINE_LIBS}
+      cpr::cpr
+    ) 
+  ENDIF()
+  
+  IF(USE_GDCM)
+    SET(ENGINE_LIBS
+      ${ENGINE_LIBS}
+	  ${GDCM_LIBRARIES}
+    )
+	SET(ENGINE_INCLUDES
+      ${ENGINE_INCLUDES}
+	  ${GDCM_INCLUDE_DIRS}
     )
   ENDIF()
-
-  set(ENGINE_INCLUDES
-    ${GLM_INCLUDE_DIRS}
-    ${SDL2_INCLUDE_DIR}
-    ${ASSIMP_INCLUDE_DIR}
-    ${CMAKE_BINARY_DIR}/dependencies/assimp/include
-    ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/stb
-    ${WHEREAMI_INCLUDE_DIRS}
-    ${IMGUI_INCLUDE_DIRS}
-    ${CMAKE_CURRENT_SOURCE_DIR}/engine/
-    ${GDCM_INCLUDE_DIRS}
-  )
-ENDIF ()
+ENDIF()
 
 include_directories(${ENGINE_INCLUDES})
 
