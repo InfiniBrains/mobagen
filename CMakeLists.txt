@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 2.8)
 
+set(USE_CURL OFF CACHE BOOL "USE CURL")
+set(USE_GDCM OFF CACHE BOOL "USE GDCM")
+
 find_program(LSB_RELEASE_EXEC lsb_release) 
 if(LSB_RELEASE_EXEC) 
   execute_process(COMMAND ${LSB_RELEASE_EXEC} -is 
@@ -12,13 +15,15 @@ if(LSB_RELEASE_EXEC)
   ENDIF() 
 ENDIF() 
 
-find_program (perl_path NAMES perl perl.exe) 
-IF (NOT perl_path) 
-  message(FATAL_ERROR "You must install PERL and add it to PATH") 
-ELSE() 
+IF(USE_CURL)
+  find_program (perl_path NAMES perl perl.exe)
+  IF (NOT perl_path)
+    message(FATAL_ERROR "You must install PERL and add it to PATH")
+  ELSE()
     message(STATUS "Perl was found in PATH: ${perl_path}") 
-ENDIF() 
-  
+  ENDIF()
+ENDIF()
+
 IF (NOT EMSCRIPTEN)
   set (HUNTER_SKIP_LOCK ON CACHE BOOL "HUNTER_SKIP_LOCK")
   include(cmake/HunterGate.cmake)
@@ -31,8 +36,7 @@ ENDIF()
 
 project (Engine)
 
-set(USE_CURL OFF CACHE BOOL "USE CURL")
-set(USE_GDCM OFF CACHE BOOL "USE GDCM")
+
 
 IF (NOT EMSCRIPTEN AND USE_CURL)
   hunter_add_package(cpr)

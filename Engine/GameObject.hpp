@@ -38,10 +38,10 @@ namespace mobagen {
 		class = std::enable_if_t<std::is_base_of<GameComponent,T>::value>
 	>
     inline void AddComponent() {
-	  auto gc = std::make_shared<T>();
+	  //auto gc = std::make_shared<T>();
 	  
-      gc.gameObject = shared_from_this();
-      m_components.push_back(gc);
+      //gc.gameObject = shared_from_this();
+      //m_components.push_back(gc);
     }
 
     /// \brief Calls the method named methodName on every MonoBehaviour in this game object or any of its children.
