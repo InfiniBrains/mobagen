@@ -30,6 +30,10 @@ set(ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR} CACHE STRING "Root dir")
 set(CP_CMAKE_DIR ${PROJECT_SOURCE_DIR}/cmake)
 include(${CP_CMAKE_DIR}/macros.cmake)
 
+IF(NOT EXISTS "${PROJECT_SOURCE_DIR}/buildconfig.txt")
+  message(FATAL_ERROR "The file buildconfig.txt must exists to load build configurations from it.")
+ENDIF()
+
 IF(NOT DEFINED USE_GDCM)
   readSettingFile("USE_GDCM=" "OFF" STRING_RESULT )
   set( USE_GDCM "${STRING_RESULT}" CACHE STRING "USE GDCM?" )
