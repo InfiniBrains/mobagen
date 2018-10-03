@@ -140,8 +140,7 @@ namespace mobagen {
     m_response.url = resp.url;
     return m_response;
 #endif
-#else
-    return WebResponse();
 #endif
+    return WebResponse();
   }
 }
