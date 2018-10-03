@@ -1,8 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
 
-set(USE_CURL OFF CACHE BOOL "USE CURL")
-set(USE_GDCM OFF CACHE BOOL "USE GDCM")
-
 find_program(LSB_RELEASE_EXEC lsb_release) 
 if(LSB_RELEASE_EXEC) 
   execute_process(COMMAND ${LSB_RELEASE_EXEC} -is 
@@ -13,15 +10,6 @@ if(LSB_RELEASE_EXEC)
     message(STATUS "ubuntu detected") 
  
   ENDIF() 
-ENDIF() 
-
-IF(USE_CURL)
-  find_program (perl_path NAMES perl perl.exe)
-  IF (NOT perl_path)
-    message(FATAL_ERROR "You must install PERL and add it to PATH")
-  ELSE()
-    message(STATUS "Perl was found in PATH: ${perl_path}") 
-  ENDIF()
 ENDIF()
 
 IF (NOT EMSCRIPTEN)
@@ -36,29 +24,42 @@ ENDIF()
 
 project (Engine)
 
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+set(ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR} CACHE STRING "Root dir")
 
+set(CP_CMAKE_DIR ${PROJECT_SOURCE_DIR}/cmake)
+include(${CP_CMAKE_DIR}/macros.cmake)
+
+readSettingFile("USE_GDCM=" "OFF" STRING_RESULT )
+set( USE_GDCM "${STRING_RESULT}" CACHE STRING "USE GDCM?" )
+
+readSettingFile("USE_CURL=" "OFF" STRING_RESULT )
+set( USE_CURL "${STRING_RESULT}" CACHE STRING "USE CURL?" )
+
+IF(USE_CURL)
+  find_program (perl_path NAMES perl perl.exe)
+  IF (NOT perl_path)
+    message(FATAL_ERROR "You must install PERL and add it to PATH in order to build CURL")
+  ELSE()
+    message(STATUS "Perl was found in PATH: ${perl_path}")
+  ENDIF()
+ENDIF()
 
 IF (NOT EMSCRIPTEN AND USE_CURL)
+  set(LIBC ON CACHE BOOL "LIBC")
   hunter_add_package(cpr)
   find_package(cpr CONFIG REQUIRED)
   hunter_add_package(CURL)
   find_package(CURL CONFIG REQUIRED)
-  set(LIBC ON CACHE BOOL "LIBC")
 ENDIF()
 
 set(NOMINMAX ON CACHE BOOL "workaround for minmax problem with windows.h")
-
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
-set(ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR} CACHE STRING "Root dir")
-
-set(CP_CMAKE_DIR ${PROJECT_SOURCE_DIR}/cmake)
 include(cotire)
-include(${CP_CMAKE_DIR}/macros.cmake)
 
 set(BUILD_STATIC_LIBS TRUE)
 set(BUILD_SHARED_LIBS FALSE)
