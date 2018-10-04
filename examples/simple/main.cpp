@@ -7,6 +7,7 @@
 #include "components/SpotLight.hpp"
 #include "components/PointLight.hpp"
 #include "components/Sphere.hpp"
+#include "SimpleBehaviour.h"
 
 #include "Plane.hpp"
 #include "Mesh.hpp"
@@ -43,11 +44,13 @@ void Simple::init(GLManager *glManager)
 
 	auto primary_camera = cam->getComponent<OrthoCamera>();
 	getEngine()->getGLManager()->setActiveCamera(primary_camera);
+
+    getRootScene()->addComponent<SimpleBehaviour>();
 }
 
 int main(int argc, char *argv[]) {
 	Simple game;
-	Engine gameEngine(&game, "SIMPLE EXAMPLE", glm::vec2(800, 400));
+	Engine gameEngine(&game, "SIMPLE EXAMPLE", glm::vec2(800, 600));
 
 	gameEngine.start();
 
