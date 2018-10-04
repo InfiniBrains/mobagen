@@ -4,9 +4,6 @@ set_directory_properties( PROPERTIES CLEAN_NO_CUSTOM 1)
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE CACHE BOOL "bla")
 
 set(BUILD_SHARED_LIBS OFF CACHE BOOL "bla")
-set(SDL_SHARED_ENABLED_BY_DEFAULT OFF CACHE BOOL "bla")
-set(SDL_SHARED OFF CACHE BOOL "Build a shared version of the library")
-set(SDL_STATIC ON CACHE BOOL "Build a static version of the library")
 
 # set opengl only rendering
 set(DIRECTX OFF CACHE BOOL "use directx")
@@ -19,7 +16,6 @@ ELSEIF (ANDROID)
   # set( SDL_FILESYSTEM FALSE )
   set( PTHREADS OFF CACHE BOOL "Pthread support" )
   add_definitions(-DGL_GLEXT_PROTOTYPES)
-  add_subdirectory( SDL )
 ELSE ()
 #  add_definitions(-DGLEW_STATIC)
 #  add_definitions(-UGLEW_BUILD)
@@ -36,7 +32,6 @@ ELSE ()
 
   INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/whereami/src/)
   add_library (whereami STATIC ${CMAKE_CURRENT_SOURCE_DIR}/whereami/src/whereami.c ${CMAKE_CURRENT_SOURCE_DIR}/whereami/src/whereami.h)
-  add_subdirectory( SDL )
 ENDIF ()
 
 IF(USE_GDCM)

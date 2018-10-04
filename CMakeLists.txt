@@ -63,6 +63,11 @@ IF (NOT EMSCRIPTEN AND USE_CURL)
   find_package(CURL CONFIG REQUIRED)
 ENDIF()
 
+IF (NOT EMSCRIPTEN)
+  hunter_add_package(SDL2)
+  find_package(SDL2 CONFIG REQUIRED)
+ENDIF()
+
 set(NOMINMAX ON CACHE BOOL "workaround for minmax problem with windows.h")
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
@@ -109,9 +114,6 @@ if(USE_GDCM)
     socketxx
   )
 endif()
-
-set ( SDL2_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/SDL/include )
-set ( SDL2_LIBRARY SDL2-static )
 
 set ( ASSIMP_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/assimp/include )
 set ( ASSIMP_LIBRARY assimp )
@@ -160,14 +162,13 @@ ELSEIF (ANDROID)
 
   # CHECK FOR CURL AND GDCM
   set(ENGINE_LIBS
-    ${SDL2_LIBRARY}
+    SDL2::SDL2
     ${ASSIMP_LIBRARY}
     ${IMGUI_LIBRARY}
     ${GDCM_LIBRARIES}
   )
 
   set(ENGINE_INCLUDES
-    ${SDL2_INCLUDE_DIR}
     ${GLM_INCLUDE_DIRS}
     ${ASSIMP_INCLUDE_DIR}
     ${CMAKE_BINARY_DIR}/dependencies/assimp/include
@@ -182,15 +183,14 @@ ELSE ()
   find_package(OpenGL REQUIRED)
 
   set(ENGINE_LIBS
+    SDL2::SDL2
     ${OPENGL_LIBRARY}
-    ${SDL2_LIBRARY}
     ${ASSIMP_LIBRARY}
     ${WHEREAMI_LIBRARY}
     ${IMGUI_LIBRARY}
   )
   set(ENGINE_INCLUDES
       ${GLM_INCLUDE_DIRS}
-      ${SDL2_INCLUDE_DIR}
       ${ASSIMP_INCLUDE_DIR}
       ${CMAKE_BINARY_DIR}/dependencies/assimp/include
       ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/stb
