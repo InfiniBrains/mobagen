@@ -17,8 +17,8 @@ IF (NOT EMSCRIPTEN)
   include(cmake/HunterGate.cmake)
   option(HUNTER_STATUS_DEBUG "Hunter debug info" ON)
   HunterGate(
-    URL "https://github.com/ruslo/hunter/archive/v0.23.25.tar.gz"
-    SHA1 "cb75cce9a3a8d552e70e7118f3203eb4ac05c201"
+    URL "https://github.com/ruslo/hunter/archive/v0.23.29.tar.gz"
+    SHA1 "797be99a8a4f4666766257563fad8aa3aa032da2"
   )
 ENDIF()
 
