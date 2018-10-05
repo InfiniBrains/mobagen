@@ -4,6 +4,8 @@
 #include "SendMessageOptions.hpp"
 #include "PrimitiveType.hpp"
 #include "GameTransform.hpp"
+#include <type_traits>
+#include <vector>
 
 namespace mobagen {
   class GameObject : public Object, public std::enable_shared_from_this<GameObject> {
@@ -29,18 +31,17 @@ namespace mobagen {
 
     /// The Transform attached to this GameObject.
     std::shared_ptr<GameTransform> transform;
-
+   
     /// @brief Adds a component class named className to the game object.
-    template<class T, class... _Types>
-    inline void AddComponent(_Types &&... _Args) {
-      // todo: insert safety checks
-      auto newcomp = std::make_shared<T>(_Args...);
-      auto gc = std::dynamic_pointer_cast<GameComponent>(newcomp);
-      if (gc == nullptr)
-        throw GenericException("Type must be GameComponent");
-
-      gc->gameObject = shared_from_this();
-      m_components.push_back(gc);
+	template<
+		class T,
+		class = std::enable_if_t<std::is_base_of<GameComponent,T>::value>
+	>
+    inline void AddComponent() {
+	  //auto gc = std::make_shared<T>();
+	  
+      //gc.gameObject = shared_from_this();
+      //m_components.push_back(gc);
     }
 
     /// \brief Calls the method named methodName on every MonoBehaviour in this game object or any of its children.

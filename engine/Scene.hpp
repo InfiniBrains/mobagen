@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include "GameObject.hpp"
+#include <map>
 
 namespace mobagen {
   class Scene {
@@ -30,6 +31,9 @@ namespace mobagen {
     bool IsValid();
 
   private:
-    std::vector<std::shared_ptr<GameObject>> rootGameObjects;
+    static std::vector<GameObject*> rootGameObjects;
+	static std::map<uint64_t, Object*> m_objects;
+	static std::map<uint64_t, GameComponent*> m_gameComponents;
+	static std::map<uint64_t, GameObject*> m_gameObjects;
   };
 }

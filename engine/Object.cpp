@@ -1,6 +1,7 @@
 #include "Object.hpp"
 #include "Error.hpp"
 #include "Logger.hpp"
+#include "GameComponent.hpp"
 
 namespace mobagen {
   std::unordered_map<uint64_t, Object *> Object::m_ObjectsById;
@@ -18,7 +19,9 @@ namespace mobagen {
 
   uint64_t Object::_counter_ = 0;
 
-  void Object::Destroy(Object *obj) {
+  void Object::Destroy(Object* obj) {
+	auto gc = dynamic_cast<GameComponent*>(obj);
+    
     // todo: create a manager to destroy at the end of the frame
     DestroyImmediate(obj);
   }

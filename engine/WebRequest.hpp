@@ -1,6 +1,8 @@
 #pragma once
 #ifndef EMSCRIPTEN
+#ifdef USE_CURL
 #include <cpr/cpr.h>
+#endif
 #endif
 #include <string>
 #include <map>
@@ -73,6 +75,7 @@ namespace mobagen {
   private:
 
 #ifndef EMSCRIPTEN
+#ifdef USE_CURL
     cpr::Session m_session;
 
     cpr::Cookies m_cookies;
@@ -81,6 +84,7 @@ namespace mobagen {
     cpr::Multipart m_multipart = cpr::Multipart(std::initializer_list<cpr::Part>());
     cpr::Payload m_payload = cpr::Payload(std::initializer_list<cpr::Pair>());
     WebResponse m_response;
+#endif
 #else
 
 #endif

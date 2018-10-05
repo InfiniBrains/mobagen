@@ -25,6 +25,7 @@ IF (ANDROID)
 ELSE ()
   add_executable (midasminer main.cpp Menu.cpp CrystalPicker.cpp Crystal.cpp Matrix.cpp)
   target_link_libraries (midasminer engine)
+  #cotire(midasminder)
 
   add_custom_command(TARGET midasminer PRE_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory

@@ -16,11 +16,11 @@ brew install git
 ```
 
 ## Linux
-You will need to install *git* and *build-essentials* using your package manager. 
+You will need to install *git*, *build-essentials* and *cmake* using your package manager. 
 
 ### Ubuntu
 ``` bash
-sudo apt-get install git cmake clang build-essential
+sudo apt-get install git cmake clang build-essential libgl1-mesa-dev
 ```
 
 ## Windows
