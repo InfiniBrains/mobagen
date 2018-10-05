@@ -29,7 +29,3 @@
 [submodule "dependencies/emsdk"]
 	path = dependencies/emsdk
 	url = https://github.com/juj/emsdk.git
-[submodule "dependencies/SDL"]
-	path = dependencies/SDL
-	url = https://github.com/SDL-mirror/SDL.git
-    branch = 014a8fa3d78ea8e721b808976a264dc6ba6360ed
