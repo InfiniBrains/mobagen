@@ -1,3 +1,11 @@
+file(GLOB TARGET_INC ${CMAKE_CURRENT_SOURCE_DIR}/*.h ${CMAKE_CURRENT_SOURCE_DIR}/*.hpp)
+list(REMOVE_ITEM TARGET_INC ${CMAKE_CURRENT_SOURCE_DIR}/stdafx.h)
+
+file(GLOB TARGET_SRC ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/*.c )
+
+SET(TARGET_SRC ${TARGET_SRC} ${TARGET_INC} )
+
+
 IF (ANDROID)
     set(ANDROID_BIN_ROOT ${CMAKE_BINARY_DIR}/android-project)
     add_custom_target(android-install ${ANDROID_ANT} ${ANT_INSTALL_TARGET} WORKING_DIRECTORY ${ANDROID_BIN_ROOT})
@@ -25,7 +33,7 @@ IF (ANDROID)
             COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/ ${ANDROID_BIN_ROOT}/libs/${ANDROID_NDK_ABI_NAME})
 ELSE ()
   IF(NOT EMSCRIPTEN AND USE_CURL)
-    add_executable (simple main.cpp SimpleBehaviour.cpp SimpleBehaviour.h)
+    add_executable (simple ${TARGET_SRC})
     hunter_add_package(CURL)
     find_package(CURL CONFIG REQUIRED)
     target_link_libraries (simple engine CURL::libcurl)
@@ -35,7 +43,7 @@ ELSE ()
       ${CMAKE_SOURCE_DIR}/assets
       $<TARGET_FILE_DIR:simple>/assets)
   ELSE()
-    add_executable (simple main.cpp SimpleBehaviour.cpp SimpleBehaviour.h)
+    add_executable (simple ${TARGET_SRC})
     target_link_libraries (simple engine)
     #cotire(simple)
     add_custom_command(TARGET simple PRE_BUILD

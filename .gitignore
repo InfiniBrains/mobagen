@@ -30,3 +30,5 @@ win64mingw\.zip
 bin_mingw/
 
 build-emscripten/
+
+\.idea/
