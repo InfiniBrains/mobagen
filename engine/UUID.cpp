@@ -8,7 +8,7 @@
 UUID UUID::Generate() {
 	UUID id;
 
-	static std::atomic_uint64_t cnt{ 0 };
+	static std::atomic<std::uint64_t> cnt{ 0 };
 	++cnt;
 
 	id.count = cnt;
