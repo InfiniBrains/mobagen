@@ -22,6 +22,9 @@ imgui.ini
 emscripten.zip
 buildclion/
 bin-mingw/
+build2/
+build3/
+buildmingw/
 
 win64mingw\.zip
 
