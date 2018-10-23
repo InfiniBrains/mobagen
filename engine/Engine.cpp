@@ -71,7 +71,7 @@ namespace mobagen {
 #ifndef __MINGW32__
         std::this_thread::sleep_for(sleepTime);
 #else
-      SDL_Delay(sleepTime.count());
+        SDL_Delay(sleepTime.count());
 #endif
       // get the sleep error and store the lastFrame time duration
       auto now = std::chrono::high_resolution_clock::now();
