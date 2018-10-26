@@ -56,9 +56,9 @@ C:\msys64\mingw64\bin
 2. Configure Toolchain. File -> Settings -> Build, Execution, Deployment -> ToolChains -> Add
 - Environment -> `MinGW`
 - CMake -> `Bundled`
-- Make -> `C:\msys64\mingw64\bin\mingw32-make`
-- C Compiler -> `C:\msys64\mingw64\bin\gcc`
-- C++ Compiler -> `C:\msys64\mingw64\bin\g++`
+- Make -> `C:\msys64\mingw64\bin\mingw32-make.exe`
+- C Compiler -> `C:\msys64\mingw64\bin\gcc.exe`
+- C++ Compiler -> `C:\msys64\mingw64\bin\g++.exe`
 
 # Clonning
 In every platform already preparated you must have `git` installed, so open your terminal and type:
