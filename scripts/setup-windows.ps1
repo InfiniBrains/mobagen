@@ -1,29 +1,14 @@
-$msys64downloadurl = 'http://repo.msys2.org/distrib/x86_64/msys2-x86_64-20180531.exe'
 
-
-
-#specifically use the API to get the latest version (below)
-$url = ''
-
-$chocolateyVersion = $env:chocolateyVersion
-if (![string]::IsNullOrEmpty($chocolateyVersion)){
-  Write-Output "Downloading specific version of Chocolatey: $chocolateyVersion"
-  $url = "https://chocolatey.org/api/v2/package/chocolatey/$chocolateyVersion"
-}
-
-$chocolateyDownloadUrl = $env:chocolateyDownloadUrl
-if (![string]::IsNullOrEmpty($chocolateyDownloadUrl)){
-  Write-Output "Downloading Chocolatey from : $chocolateyDownloadUrl"
-  $url = "$chocolateyDownloadUrl"
-}
+$url = 'http://repo.msys2.org/distrib/x86_64/msys2-x86_64-20180531.exe'
+Write-Output "Downloading MSYS2-x86_64 from : $url"
 
 if ($env:TEMP -eq $null) {
   $env:TEMP = Join-Path $env:SystemDrive 'temp'
 }
-$chocTempDir = Join-Path $env:TEMP "chocolatey"
-$tempDir = Join-Path $chocTempDir "chocInstall"
+$chocTempDir = Join-Path $env:TEMP "msys"
+$tempDir = Join-Path $chocTempDir "msysInstall"
 if (![System.IO.Directory]::Exists($tempDir)) {[void][System.IO.Directory]::CreateDirectory($tempDir)}
-$file = Join-Path $tempDir "chocolatey.zip"
+$file = Join-Path $tempDir "msys.exe"
 
 # PowerShell v2/3 caches the output stream. Then it throws errors due
 # to the FileStream not being what is expected. Fixes "The OS handle's
@@ -141,79 +126,72 @@ param (
   $downloader.DownloadFile($url, $file)
 }
 
-if ($url -eq $null -or $url -eq '') {
-  Write-Output "Getting latest version of the Chocolatey package for download."
-  $url = 'https://chocolatey.org/api/v2/Packages()?$filter=((Id%20eq%20%27chocolatey%27)%20and%20(not%20IsPrerelease))%20and%20IsLatestVersion'
-  [xml]$result = Download-String $url
-  $url = $result.feed.entry.content.src
-}
-
 # Download the Chocolatey package
 Write-Output "Getting Chocolatey from $url."
 Download-File $url $file
 
 # Determine unzipping method
 # 7zip is the most compatible so use it by default
-$7zaExe = Join-Path $tempDir '7za.exe'
-$unzipMethod = '7zip'
-$useWindowsCompression = $env:chocolateyUseWindowsCompression
-if ($useWindowsCompression -ne $null -and $useWindowsCompression -eq 'true') {
-  Write-Output 'Using built-in compression to unzip'
-  $unzipMethod = 'builtin'
-} elseif (-Not (Test-Path ($7zaExe))) {
-  Write-Output "Downloading 7-Zip commandline tool prior to extraction."
-  # download 7zip
-  Download-File 'https://chocolatey.org/7za.exe' "$7zaExe"
-}
+#$7zaExe = Join-Path $tempDir '7za.exe'
+#$unzipMethod = '7zip'
+#$useWindowsCompression = $env:chocolateyUseWindowsCompression
+#if ($useWindowsCompression -ne $null -and $useWindowsCompression -eq 'true') {
+#  Write-Output 'Using built-in compression to unzip'
+#  $unzipMethod = 'builtin'
+#} elseif (-Not (Test-Path ($7zaExe))) {
+#  Write-Output "Downloading 7-Zip commandline tool prior to extraction."
+#  # download 7zip
+#  Download-File 'https://chocolatey.org/7za.exe' "$7zaExe"
+#}
 
 # unzip the package
-Write-Output "Extracting $file to $tempDir..."
-if ($unzipMethod -eq '7zip') {
-  $params = "x -o`"$tempDir`" -bd -y `"$file`""
-  # use more robust Process as compared to Start-Process -Wait (which doesn't
-  # wait for the process to finish in PowerShell v3)
-  $process = New-Object System.Diagnostics.Process
-  $process.StartInfo = New-Object System.Diagnostics.ProcessStartInfo($7zaExe, $params)
-  $process.StartInfo.RedirectStandardOutput = $true
-  $process.StartInfo.UseShellExecute = $false
-  $process.StartInfo.WindowStyle = [System.Diagnostics.ProcessWindowStyle]::Hidden
-  $process.Start() | Out-Null
-  $process.BeginOutputReadLine()
-  $process.WaitForExit()
-  $exitCode = $process.ExitCode
-  $process.Dispose()
+#Write-Output "Extracting $file to $tempDir..."
+#if ($unzipMethod -eq '7zip') {
+#  $params = "x -o`"$tempDir`" -bd -y `"$file`""
+#  # use more robust Process as compared to Start-Process -Wait (which doesn't
+#  # wait for the process to finish in PowerShell v3)
+#  $process = New-Object System.Diagnostics.Process
+#  $process.StartInfo = New-Object System.Diagnostics.ProcessStartInfo($7zaExe, $params)
+#  $process.StartInfo.RedirectStandardOutput = $true
+#  $process.StartInfo.UseShellExecute = $false
+#  $process.StartInfo.WindowStyle = [System.Diagnostics.ProcessWindowStyle]::Hidden
+#  $process.Start() | Out-Null
+#  $process.BeginOutputReadLine()
+#  $process.WaitForExit()
+#  $exitCode = $process.ExitCode
+#  $process.Dispose()
+#
+#  $errorMessage = "Unable to unzip package using 7zip. Perhaps try setting `$env:chocolateyUseWindowsCompression = 'true' and call install again. Error:"
+#  switch ($exitCode) {
+#    0 { break }
+#    1 { throw "$errorMessage Some files could not be extracted" }
+#    2 { throw "$errorMessage 7-Zip encountered a fatal error while extracting the files" }
+#    7 { throw "$errorMessage 7-Zip command line error" }
+#    8 { throw "$errorMessage 7-Zip out of memory" }
+#    255 { throw "$errorMessage Extraction cancelled by the user" }
+#    default { throw "$errorMessage 7-Zip signalled an unknown error (code $exitCode)" }
+#  }
+#} else {
+#  if ($PSVersionTable.PSVersion.Major -lt 5) {
+#    try {
+#      $shellApplication = new-object -com shell.application
+#      $zipPackage = $shellApplication.NameSpace($file)
+#      $destinationFolder = $shellApplication.NameSpace($tempDir)
+#      $destinationFolder.CopyHere($zipPackage.Items(),0x10)
+#    } catch {
+#      throw "Unable to unzip package using built-in compression. Set `$env:chocolateyUseWindowsCompression = 'false' and call install again to use 7zip to unzip. Error: `n $_"
+#    }
+#  } else {
+#    Expand-Archive -Path "$file" -DestinationPath "$tempDir" -Force
+#  }
+#}
 
-  $errorMessage = "Unable to unzip package using 7zip. Perhaps try setting `$env:chocolateyUseWindowsCompression = 'true' and call install again. Error:"
-  switch ($exitCode) {
-    0 { break }
-    1 { throw "$errorMessage Some files could not be extracted" }
-    2 { throw "$errorMessage 7-Zip encountered a fatal error while extracting the files" }
-    7 { throw "$errorMessage 7-Zip command line error" }
-    8 { throw "$errorMessage 7-Zip out of memory" }
-    255 { throw "$errorMessage Extraction cancelled by the user" }
-    default { throw "$errorMessage 7-Zip signalled an unknown error (code $exitCode)" }
-  }
-} else {
-  if ($PSVersionTable.PSVersion.Major -lt 5) {
-    try {
-      $shellApplication = new-object -com shell.application
-      $zipPackage = $shellApplication.NameSpace($file)
-      $destinationFolder = $shellApplication.NameSpace($tempDir)
-      $destinationFolder.CopyHere($zipPackage.Items(),0x10)
-    } catch {
-      throw "Unable to unzip package using built-in compression. Set `$env:chocolateyUseWindowsCompression = 'false' and call install again to use 7zip to unzip. Error: `n $_"
-    }
-  } else {
-    Expand-Archive -Path "$file" -DestinationPath "$tempDir" -Force
-  }
-}
+# Call MSYS2 install
+Write-Output "Installing MSYS2 on this machine"
+#$toolsFolder = Join-Path $tempDir "tools"
+#$chocInstallPS1 = Join-Path $toolsFolder "chocolateyInstall.ps1"
 
-# Call chocolatey install
-Write-Output "Installing chocolatey on this machine"
-$toolsFolder = Join-Path $tempDir "tools"
-$chocInstallPS1 = Join-Path $toolsFolder "chocolateyInstall.ps1"
-
-& $chocInstallPS1
+& $file --silentUpdate
 
 Write-Output 'Ensuring chocolatey commands are on the path'
 $chocInstallVariableName = "ChocolateyInstall"
