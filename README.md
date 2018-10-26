@@ -1,6 +1,5 @@
 ![](./assets/logo.png)
 
-# MoBaGEn
 Welcome to the **MoBaGEn**. The **MO**dule **BA**sed **G**ame **EN**gine. 
 
 **MoBaGEn** is a free lightweight, cross-platform 3D Game Engine implemented in C++. It will support scripts in C#(Mono), Javascript(V8), python and Lua.
@@ -71,3 +70,8 @@ In order to report our costs properly via [OpenCollective](https://opencollectiv
 
 ## Development Log
 You can see our reports and tutorials via our channel in [YouTube](https://www.youtube.com/tolstenko) or our [Blog](http://infinibrains.com/blog)
+
+<div align="center">
+  <a href="https://www.youtube.com/watch?v=oY6Epmaxixk"><img src="https://img.youtube.com/vi/oY6Epmaxixk/0.jpg" alt="MoBaGEn Intro"></a>
+</div>
+
