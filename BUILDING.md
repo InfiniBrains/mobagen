@@ -28,6 +28,38 @@ sudo apt-get install git cmake clang build-essential libgl1-mesa-dev
 - [CMake addon](https://marketplace.visualstudio.com/items?itemName=vector-of-bool.cmake-tools) as CMake tool helper;
 - [JetBrains Resharper C++](https://www.jetbrains.com/resharper-cpp/) to follow our coding style.
 
+### Windows MinGW Compiler + CLion Editor (Recommended) 
+- Installing the compiler:
+1. [Install MSYS2_64bits](https://www.msys2.org/) 
+This will install 3 subsystems:
+`C:\msys64\msys2.exe`, `C:\msys64\mingw32.exe` and `C:\msys64\mingw64.exe`. This will cover only the `MingGW64` methods
+2. Run in MSYS2 MinGW64: 
+```
+pacman -Syu
+```
+The first time it will update the MSYS2 system
+```
+pacman -Syu
+```
+This second time it will update the apps.
+3. Install the compiler and other dev stuff
+```
+pacman -S base-devel mingw-w64-x86_64-toolchain git subversion mercurial mingw-w64-x86_64-cmake
+```
+4. Add to your "Path" into Windows "Envrionment Variables" (just type it on Windows Start)
+```
+C:\msys64\mingw64\bin
+```
+
+- Installing the Editor:
+1. Donwload and install [JetBrains CLion](https://www.jetbrains.com/clion/). I use the academic license as a professor, you can try using 30-day trial or as student.
+2. Configure Toolchain. File -> Settings -> Build, Execution, Deployment -> ToolChains -> Add
+- Environment -> `MinGW`
+- CMake -> `Bundled`
+- Make -> `C:\msys64\mingw64\bin\mingw32-make`
+- C Compiler -> `C:\msys64\mingw64\bin\gcc`
+- C++ Compiler -> `C:\msys64\mingw64\bin\g++`
+
 # Clonning
 In every platform already preparated you must have `git` installed, so open your terminal and type:
 ```
@@ -40,7 +72,7 @@ If you are platform agnostic, you can use CLion:
 
 ## CLion 
 - [JetBrains CLion](https://www.jetbrains.com/clion/)
-- Toolchain will be automatically set on Linux, OSX and Windows(you must install the Visual Studio 2017 toolchain first).
+- Toolchain will be automatically set on Linux, OSX and Windows(you must install the Visual Studio 2017 toolchain first, or MSYS2).
 
 # Usage
 First clone repo with the following command to download all submodules (which are located in the dependencies folder):
