@@ -1,3 +1,5 @@
+![](./assets/logo.png)
+
 # MoBaGEn
 Welcome to the **MoBaGEn**. The **MO**dule **BA**sed **G**ame **EN**gine. 
 
