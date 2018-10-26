@@ -35,3 +35,5 @@ bin_mingw/
 build-emscripten/
 
 \.idea/
+
+CMakeLists\.txt\.user
