@@ -214,6 +214,11 @@ if ($($env:Path).ToLower().Contains($($mingwExePath).ToLower()) -eq $false) {
   [Environment]::SetEnvironmentVariable("Path", $env:Path, [EnvironmentVariableTarget]::Machine)
 }
 
+if([System.IO.File]::Exists($mingwExePath\mingw64.exe)){
+    Write-Output 'Waiting for mingw finish install'
+    Start-Sleep -Seconds 1
+}
+
 & $mingwExePath\mingw64.exe pacman -Syuu --noconfirm
 #Write-Output 'Ensuring chocolatey.nupkg is in the lib folder'
 #$chocoPkgDir = Join-Path $chocoPath 'lib\chocolatey'
