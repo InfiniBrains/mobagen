@@ -197,7 +197,7 @@ Write-Output "Installing MSYS2 on this machine"
 #$toolsFolder = Join-Path $tempDir "tools"
 #$chocInstallPS1 = Join-Path $toolsFolder "chocolateyInstall.ps1"
 
-& $file --script $file2
+$file --script $file2 | Out-Null
 
 Write-Output 'Ensuring msys2 commands are on the path'
 $msysInstallVariableName = "MSYS2Install"
@@ -214,12 +214,9 @@ if ($($env:Path).ToLower().Contains($($mingwExePath).ToLower()) -eq $false) {
   [Environment]::SetEnvironmentVariable("Path", $env:Path, [EnvironmentVariableTarget]::Machine)
 }
 
-if([System.IO.File]::Exists("$msysPath\mingw64.exe") -eq $false){
-    Write-Output 'Waiting for mingw finish install'
-    Start-Sleep -Seconds 1
-}
+$msysExePath\pacman.exe -Syuu --noconfirm
 
-& $msysExePath\pacman.exe -Syuu --noconfirm
+
 #Write-Output 'Ensuring chocolatey.nupkg is in the lib folder'
 #$chocoPkgDir = Join-Path $chocoPath 'lib\chocolatey'
 #$nupkg = Join-Path $chocoPkgDir 'chocolatey.nupkg'
