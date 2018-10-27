@@ -191,7 +191,7 @@ Write-Output "Installing MSYS2 on this machine"
 #$toolsFolder = Join-Path $tempDir "tools"
 #$chocInstallPS1 = Join-Path $toolsFolder "chocolateyInstall.ps1"
 
-& $file --silentUpdate
+& $file --script
 
 Write-Output 'Ensuring chocolatey commands are on the path'
 $chocInstallVariableName = "ChocolateyInstall"
