@@ -210,11 +210,15 @@ $msysExePath = Join-Path $msysPath 'usr\bin'
 
 Start-Sleep -s 10
 
-& $msysExePath\pacman.exe -Syuu --noconfirm | Out-Null
+& $msysPath\mingw64.exe pacman -Syuu --noconfirm | Out-Null
 
 Start-Sleep -s 10
 
-& $msysExePath\pacman.exe -Syuu --noconfirm | Out-Null
+& $msysPath\mingw64.exe pacman -Syuu --noconfirm | Out-Null
+
+Start-Sleep -s 10
+
+& $msysPath\mingw64.exe pacman -Syuu --noconfirm | Out-Null
 
 #Write-Output 'Ensuring chocolatey.nupkg is in the lib folder'
 #$chocoPkgDir = Join-Path $chocoPath 'lib\chocolatey'
