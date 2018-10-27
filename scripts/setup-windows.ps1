@@ -208,11 +208,7 @@ if ($msysPath -eq $null -or $msysPath -eq '') {
 $mingwExePath = Join-Path $msysPath 'mingw64\bin'
 $msysExePath = Join-Path $msysPath 'usr\bin'
 
-if ($($env:Path).ToLower().Contains($($mingwExePath).ToLower()) -eq $false) {
-  $env:Path = [Environment]::GetEnvironmentVariable('Path',[System.EnvironmentVariableTarget]::Machine);
-  $env:Path += ";$mingwExePath";
-  [Environment]::SetEnvironmentVariable("Path", $env:Path, [EnvironmentVariableTarget]::Machine)
-}
+Start-Sleep -s 10
 
 & $msysExePath\pacman.exe -Syuu --noconfirm | Out-Null
 
