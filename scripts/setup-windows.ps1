@@ -208,17 +208,9 @@ if ($msysPath -eq $null -or $msysPath -eq '') {
 $mingwExePath = Join-Path $msysPath 'mingw64\bin'
 $msysExePath = Join-Path $msysPath 'usr\bin'
 
-Start-Sleep -s 10
-
-& $msysPath\mingw64.exe pacman -Syuu --noconfirm | Out-Null
-
-Start-Sleep -s 10
-
-& $msysPath\mingw64.exe pacman -Syuu --noconfirm | Out-Null
-
-Start-Sleep -s 10
-
-& $msysPath\mingw64.exe pacman -Syuu --noconfirm | Out-Null
+[Diagnostics.Process]::Start("$msysPath\usr\bin\sh.exe","c:\projects\mobagen\scripts\mingw-update-system.sh").WaitForExit()
+[Diagnostics.Process]::Start("$msysPath\usr\bin\sh.exe","c:\projects\mobagen\scripts\mingw-update-system.sh").WaitForExit()
+[Diagnostics.Process]::Start("$msysPath\usr\bin\sh.exe","c:\projects\mobagen\scripts\mingw-update-system.sh").WaitForExit()
 
 #Write-Output 'Ensuring chocolatey.nupkg is in the lib folder'
 #$chocoPkgDir = Join-Path $chocoPath 'lib\chocolatey'
