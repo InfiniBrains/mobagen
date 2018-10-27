@@ -35,13 +35,3 @@ Controller.prototype.FinishedPageCallback = function()
 {
     gui.clickButton(buttons.FinishButton);
 }
-//
-// Introduction
-// TargetDirectory
-// ComponentSelection
-// LicenseCheck
-// StartMenuSelection
-// ReadyForInstallation
-// PerformInstallation
-// InstallationFinished
-

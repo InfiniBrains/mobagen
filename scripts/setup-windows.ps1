@@ -199,23 +199,22 @@ Write-Output "Installing MSYS2 on this machine"
 
 & $file --script $file2
 
-#Write-Output 'Ensuring chocolatey commands are on the path'
-#$chocInstallVariableName = "ChocolateyInstall"
-#$chocoPath = [Environment]::GetEnvironmentVariable($chocInstallVariableName)
-#if ($chocoPath -eq $null -or $chocoPath -eq '') {
-#  $chocoPath = "$env:ALLUSERSPROFILE\Chocolatey"
-#}
-#
-#if (!(Test-Path ($chocoPath))) {
-#  $chocoPath = "$env:SYSTEMDRIVE\ProgramData\Chocolatey"
-#}
-#
-#$chocoExePath = Join-Path $chocoPath 'bin'
-#
-#if ($($env:Path).ToLower().Contains($($chocoExePath).ToLower()) -eq $false) {
-#  $env:Path = [Environment]::GetEnvironmentVariable('Path',[System.EnvironmentVariableTarget]::Machine);
-#}
-#
+Write-Output 'Ensuring msys2 commands are on the path'
+$msysInstallVariableName = "MSYS2Install"
+$msysPath = [Environment]::GetEnvironmentVariable($msysInstallVariableName)
+if ($msysPath -eq $null -or $msysPath -eq '') {
+  $msysPath = "C:\msys64"
+}
+$mingwExePath = Join-Path $msysPath 'mingw64\bin'
+$msysExePath = Join-Path $msysPath 'usr\bin'
+
+if ($($env:Path).ToLower().Contains($($mingwExePath).ToLower()) -eq $false) {
+  $env:Path = [Environment]::GetEnvironmentVariable('Path',[System.EnvironmentVariableTarget]::Machine);
+  $env:Path += ";$mingwExePath";
+  [Environment]::SetEnvironmentVariable("Path", $env:Path, [EnvironmentVariableTarget]::Machine)
+}
+
+& $mingwExePath\mingw64.exe pacman -Syuu --noconfirm
 #Write-Output 'Ensuring chocolatey.nupkg is in the lib folder'
 #$chocoPkgDir = Join-Path $chocoPath 'lib\chocolatey'
 #$nupkg = Join-Path $chocoPkgDir 'chocolatey.nupkg'
