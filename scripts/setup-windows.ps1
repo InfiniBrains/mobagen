@@ -137,7 +137,7 @@ $file2 = Join-Path $tempDir "setup-windows-msys.js"
 Download-File $url2 $file2
 
 $url3 = 'https://raw.githubusercontent.com/InfiniBrains/mobagen/feature/unity-gameobjects/scripts/mingw-update-system.sh'
-Write-Output "Downloading Script to auto update msys : $url3"
+Write-Output "Downloading Script to auto update msys2 feom: $url3"
 $file3 = Join-Path $tempDir "mingw-update-system.sh"
 Download-File $url3 $file3
 
