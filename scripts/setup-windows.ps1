@@ -137,9 +137,14 @@ $file2 = Join-Path $tempDir "setup-windows-msys.js"
 Download-File $url2 $file2
 
 $url3 = 'https://raw.githubusercontent.com/InfiniBrains/mobagen/feature/unity-gameobjects/scripts/mingw-update-system.sh'
-Write-Output "Downloading Script to auto update msys2 feom: $url3"
+Write-Output "Downloading Script to auto update msys2 from: $url3"
 $file3 = Join-Path $tempDir "mingw-update-system.sh"
 Download-File $url3 $file3
+
+$url4 = 'https://raw.githubusercontent.com/InfiniBrains/mobagen/feature/unity-gameobjects/scripts/mingw-install-toolkit.sh'
+Write-Output "Downloading Script to isntall toolkit from: $url4"
+$file4 = Join-Path $tempDir "mingw-install-toolkit.sh"
+Download-File $url4 $file4
 
 # Determine unzipping method
 # 7zip is the most compatible so use it by default
@@ -213,9 +218,13 @@ if ($msysPath -eq $null -or $msysPath -eq '') {
 $mingwExePath = Join-Path $msysPath 'mingw64\bin'
 $msysExePath = Join-Path $msysPath 'usr\bin'
 
+Write-Output 'Updating MSYS2'
 [Diagnostics.Process]::Start("$msysPath\usr\bin\sh.exe",$file3).WaitForExit()
 [Diagnostics.Process]::Start("$msysPath\usr\bin\sh.exe",$file3).WaitForExit()
 [Diagnostics.Process]::Start("$msysPath\usr\bin\sh.exe",$file3).WaitForExit()
+
+Write-Output 'Installing toolkit'
+[Diagnostics.Process]::Start("$msysPath\usr\bin\sh.exe",$file4).WaitForExit()
 
 #Write-Output 'Ensuring chocolatey.nupkg is in the lib folder'
 #$chocoPkgDir = Join-Path $chocoPath 'lib\chocolatey'
