@@ -204,19 +204,18 @@ Download-File $url4 $file4
 
 # Call MSYS2 install
 Write-Output "Installing MSYS2 on this machine"
-#$toolsFolder = Join-Path $tempDir "tools"
-#$chocInstallPS1 = Join-Path $toolsFolder "chocolateyInstall.ps1"
-
 & $file --script $file2 | Out-Null
 
 Write-Output 'Ensuring msys2 commands are on the path'
-$msysInstallVariableName = "MSYS2Install"
-$msysPath = [Environment]::GetEnvironmentVariable($msysInstallVariableName)
-if ($msysPath -eq $null -or $msysPath -eq '') {
-  $msysPath = "C:\msys64"
-}
+$msysPath = "C:\msys64"
 $mingwExePath = Join-Path $msysPath 'mingw64\bin'
 $msysExePath = Join-Path $msysPath 'usr\bin'
+
+if ($($env:Path).ToLower().Contains($($mingwExePath).ToLower()) -eq $false) {
+    $env:Path = [Environment]::GetEnvironmentVariable('Path',[System.EnvironmentVariableTarget]::Machine);
+    $env:Path += ";$mingwExePath";
+    [Environment]::SetEnvironmentVariable("Path", $env:Path, [EnvironmentVariableTarget]::Machine)
+}
 
 Write-Output 'Updating MSYS2'
 [Diagnostics.Process]::Start("$msysPath\usr\bin\sh.exe",$file3).WaitForExit()
