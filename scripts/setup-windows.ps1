@@ -219,7 +219,7 @@ if([System.IO.File]::Exists("$msysPath\mingw64.exe")){
     Start-Sleep -Seconds 1
 }
 
-& $mingwExePath\mingw64.exe pacman -Syuu --noconfirm
+& $msysExePath\pacman.exe -Syuu --noconfirm
 #Write-Output 'Ensuring chocolatey.nupkg is in the lib folder'
 #$chocoPkgDir = Join-Path $chocoPath 'lib\chocolatey'
 #$nupkg = Join-Path $chocoPkgDir 'chocolatey.nupkg'
