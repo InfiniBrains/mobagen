@@ -213,13 +213,13 @@ $msysExePath = Join-Path $msysPath 'usr\bin'
 
 if ($($env:Path).ToLower().Contains($($mingwExePath).ToLower()) -eq $false) {
     $env:Path = [Environment]::GetEnvironmentVariable('Path',[System.EnvironmentVariableTarget]::Machine);
-    $env:Path += "$mingwExePath;"+$env:Path;
+    $env:Path = "$mingwExePath;"+$env:Path;
     [Environment]::SetEnvironmentVariable("Path", $env:Path, [EnvironmentVariableTarget]::Machine)
 }
 
 if ($($env:Path).ToLower().Contains($($msysExePath).ToLower()) -eq $false) {
     $env:Path = [Environment]::GetEnvironmentVariable('Path',[System.EnvironmentVariableTarget]::Machine);
-    $env:Path += "$msysExePath;"+$env:Path;
+    $env:Path = "$msysExePath;"+$env:Path;
     [Environment]::SetEnvironmentVariable("Path", $env:Path, [EnvironmentVariableTarget]::Machine)
 }
 
