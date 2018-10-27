@@ -1,6 +1,9 @@
 function Controller()
 {
     installer.autoRejectMessageBoxes;
+    installer.installationFinished.connect(function() {
+        gui.clickButton(buttons.NextButton);
+    })
     installer.setMessageBoxAutomaticAnswer("OverwriteTargetDirectory", QMessageBox.Yes);
     installer.setMessageBoxAutomaticAnswer("stopProcessesForUpdates", QMessageBox.Ignore);
 }
