@@ -216,7 +216,6 @@ if ($($env:Path).ToLower().Contains($($mingwExePath).ToLower()) -eq $false) {
 
 & $msysExePath\pacman.exe -Syuu --noconfirm | Out-Null
 
-
 #Write-Output 'Ensuring chocolatey.nupkg is in the lib folder'
 #$chocoPkgDir = Join-Path $chocoPath 'lib\chocolatey'
 #$nupkg = Join-Path $chocoPkgDir 'chocolatey.nupkg'
