@@ -8,17 +8,17 @@ if(LSB_RELEASE_EXEC)
   ) 
   IF(LSB_RELEASE_ID_SHORT) 
     message(STATUS "ubuntu detected") 
- 
+
   ENDIF() 
 ENDIF()
 
 IF (NOT EMSCRIPTEN)
   set (HUNTER_SKIP_LOCK ON CACHE BOOL "HUNTER_SKIP_LOCK")
-  include(cmake/HunterGate.cmake)
+  include(cmake/gate/cmake/HunterGate.cmake)
   option(HUNTER_STATUS_DEBUG "Hunter debug info" ON)
   HunterGate(
-    URL "https://github.com/ruslo/hunter/archive/v0.23.29.tar.gz"
-    SHA1 "797be99a8a4f4666766257563fad8aa3aa032da2"
+          URL "https://github.com/ruslo/hunter/archive/v0.23.76.tar.gz"
+          SHA1 "c7b60993e841850e2c449afd454f5d5aa4ec04e4"
   )
 ENDIF()
 

@@ -29,3 +29,6 @@
 [submodule "dependencies/emsdk"]
 	path = dependencies/emsdk
 	url = https://github.com/juj/emsdk.git
+[submodule "cmake/gate"]
+	path = cmake/gate
+	url = https://github.com/hunter-packages/gate.git
