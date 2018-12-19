@@ -1,7 +1,7 @@
 # Building on Windows
 
 ## Setup
-You can choos which way you prefer to download and set up the environmen:
+You can choose which way you prefer to download and set up the environment:
 
 ### Install with cmd.exe
 Run the following command: (copy command text)
