@@ -12,15 +12,13 @@ if(LSB_RELEASE_EXEC)
   ENDIF() 
 ENDIF()
 
-IF (NOT EMSCRIPTEN)
-  set (HUNTER_SKIP_LOCK ON CACHE BOOL "HUNTER_SKIP_LOCK")
-  include(cmake/gate/cmake/HunterGate.cmake)
-  option(HUNTER_STATUS_DEBUG "Hunter debug info" ON)
-  HunterGate(
-          URL "https://github.com/ruslo/hunter/archive/v0.23.76.tar.gz"
-          SHA1 "c7b60993e841850e2c449afd454f5d5aa4ec04e4"
-  )
-ENDIF()
+set (HUNTER_SKIP_LOCK ON CACHE BOOL "HUNTER_SKIP_LOCK")
+include(cmake/gate/cmake/HunterGate.cmake)
+option(HUNTER_STATUS_DEBUG "Hunter debug info" ON)
+HunterGate(
+        URL "https://github.com/ruslo/hunter/archive/v0.23.123.tar.gz"
+        SHA1 "e28cbf2464e922bbeaec0c7d9ad35bc45670435d"
+)
 
 project (Engine)
 
