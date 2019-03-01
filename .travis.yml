@@ -4,19 +4,18 @@ matrix:
     - os: linux
       addons:
         apt:
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-trusty-5.0
+#          sources:
           packages:
-            - clang-5.0
-            - gcc-6
-            - g++-6
+            - clang
             - cmake
+            - git
+            - build-essential
+            - libgl1-mesa-dev
       env:
         - MATRIX_EVAL="CC=clang && CXX=clang++"
         - BUILD_TYPE=native
       group: travis_latest
-      dist: trusty
+      dist: xenial
       language: cpp
       compiler: clang
 
@@ -138,8 +137,8 @@ before_script:
 
 script:
   - if [ $TRAVIS_OS_NAME == linux ] && [ $BUILD_TYPE == emscripten ]; then
-      docker exec -it emscripten ./scripts/travis-build.sh -j9 ;
-      docker exec -it emscripten ./scripts/travis-build.sh -j9 ;
+      docker exec -it emscripten ./scripts/travis-build.sh ;
+      docker exec -it emscripten ./scripts/travis-build.sh ;
     elif [ $BUILD_TYPE == windows ]; then
       docker exec -it windows ./scripts/travis-build.sh -j9 ;
       docker exec -it windows ./scripts/travis-build.sh -j9 ;
