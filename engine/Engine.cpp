@@ -11,14 +11,16 @@
 
 #ifdef EMSCRIPTEN
 #include <emscripten.h>
-
-static Engine *instance = NULL;
 #endif
 
 // TODO: DO WE NEED FIXED UPDATES?
 // std::chrono::microseconds FIXED_TIME_STEP(std::chrono::milliseconds(20));
 
 namespace mobagen {
+#ifdef EMSCRIPTEN
+  static Engine *instance = NULL;
+#endif
+
   Engine::Engine(Game *game, char *windowTitle, glm::vec2 windowSize) {
     log_info("Initializing SDL");
     m_window = std::make_unique<Window>(windowTitle, windowSize);
