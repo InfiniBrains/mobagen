@@ -137,6 +137,8 @@ before_script:
   - if [ $BUILD_TYPE == windows ]; then
       git submodule update --init --recursive ;
       set generator="Visual Studio 15 2017 Win64";
+      choco feature enable -n=allowGlobalConfirmation ;
+      choco install -y make ;
       cmake --version ;
       cmake -Bbuild -H. -G %generator% -DCMAKE_BUILD_TYPE=Release ;
     fi
