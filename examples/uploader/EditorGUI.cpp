@@ -54,7 +54,7 @@ const char* EditorGUI::getType()
   return "EDITORGUI";
 }
 
-void EditorGUI::update(double delta) {}
+void EditorGUI::update(Input *input, std::chrono::microseconds delta) {}
 
 EditorGUI::EditorGUI()
 {

@@ -24,12 +24,12 @@ class Uploader : public Game
 {
 public:
   virtual void init(GLManager *glManager);
-  virtual void update(double delta);
+  virtual void update(Input *input, std::chrono::microseconds delta);
 };
 
-void Uploader::update(double delta)
+void Uploader::update(Input *input, std::chrono::microseconds delta)
 {
-  Game::update(delta);
+  Game::update(input, delta);
 }
 
 void Uploader::init(GLManager *glManager)
