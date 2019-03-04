@@ -6,7 +6,7 @@
 #include "components/DirectionalLight.hpp"
 #include "components/SpotLight.hpp"
 #include "components/PointLight.hpp"
-#include "components/Sphere.hpp"
+#include "components/SphereCollider.hpp"
 
 #include "Plane.hpp"
 #include "Mesh.hpp"
@@ -22,18 +22,19 @@
 #include "Matrix.hpp"
 #include <random>
 #include "Menu.hpp"
+#include "Input.hpp"
 
 
 class CoolGame : public Game
 {
 public:
   virtual void init(GLManager *glManager);
-  virtual void update(double delta);
+  virtual void update(Input *input, std::chrono::microseconds delta);
 };
 
-void CoolGame::update(double delta)
+void CoolGame::update(Input *input, std::chrono::microseconds delta)
 {
-  Game::update(delta);
+  Game::update(input, delta);
 }
 
 void CoolGame::init(GLManager *glManager)
@@ -46,11 +47,11 @@ void CoolGame::init(GLManager *glManager)
   auto specular = std::make_shared<Texture>(Asset("default_specular.jpg"));
 
   std::map<Crystal::CrystalType, std::shared_ptr<Texture>> textures;
-  textures[Crystal::CrystalType::BLUE]   = std::make_shared<Texture>(Asset("Blue.png"));
-  textures[Crystal::CrystalType::GREEN]  = std::make_shared<Texture>(Asset("Green.png"));
-  textures[Crystal::CrystalType::PURPLE] = std::make_shared<Texture>(Asset("Purple.png"));
-  textures[Crystal::CrystalType::RED]    = std::make_shared<Texture>(Asset("Red.png"));
-  textures[Crystal::CrystalType::YELLOW] = std::make_shared<Texture>(Asset("Yellow.png"));
+  textures[Crystal::CrystalType::BLUE]   = std::make_shared<Texture>(Asset("BlueOrig.png"));
+  textures[Crystal::CrystalType::GREEN]  = std::make_shared<Texture>(Asset("GreenOrig.png"));
+  textures[Crystal::CrystalType::PURPLE] = std::make_shared<Texture>(Asset("PurpleOrig.png"));
+  textures[Crystal::CrystalType::RED]    = std::make_shared<Texture>(Asset("RedOrig.png"));
+  textures[Crystal::CrystalType::YELLOW] = std::make_shared<Texture>(Asset("YellowOrig.png"));
 
   std::map<Crystal::CrystalType, std::shared_ptr<Material>> materials;
   materials[Crystal::CrystalType::BLUE]   = std::make_shared<Material>(textures[Crystal::CrystalType::BLUE], normal, specular);
@@ -84,17 +85,17 @@ void CoolGame::init(GLManager *glManager)
   auto backgroundMesh = Plane::getMesh();
   auto planeEntity = std::make_shared<Entity>();
   planeEntity->addComponent<MeshRenderer>(backgroundMesh, backgroundMat);
-  planeEntity->getTransform()->setPosition(glm::vec3(0, -10, 0));
-  planeEntity->getTransform()->setScale(glm::vec3(755, 1, 600));
+  planeEntity->getTransform().setPosition(glm::vec3(0, 0, 0));
+  planeEntity->getTransform().setScale(glm::vec3(755, 1, 600));
   addToScene(planeEntity);
 
   getRootScene()->addComponent<Menu>();
 
   auto cam = std::make_shared<Entity>();
   cam->addComponent<PerspectiveCamera>(glm::pi<float>() / 4.0f * 0.96f, getEngine()->getWindow()->getWidth() / (float)getEngine()->getWindow()->getHeight(), 0.01f, 10000.0f);
-  cam->getTransform()->setPosition(glm::vec3(0, getEngine()->getWindow()->getWidth(), 0));
-  cam->getTransform()->setScale(glm::vec3(0.8, 0.8, 0.8));
-  cam->getTransform()->setRotation(glm::quat(0, 0, 0.707, 0.707));
+  cam->getTransform().setPosition(glm::vec3(0, getEngine()->getWindow()->getWidth(), 0));
+  cam->getTransform().setScale(glm::vec3(0.8, 0.8, 0.8));
+  cam->getTransform().setRotation(glm::quat(0, 0, 0.707, 0.707));
   cam->addComponent<DirectionalLight>(glm::vec3(1,1,1), 0.5);
   addToScene(cam);
 
@@ -105,6 +106,7 @@ void CoolGame::init(GLManager *glManager)
 int main(int argc, char *argv[]) {
   CoolGame game;
   Engine gameEngine(&game, "Midas Miner!", glm::vec2(755,600));
+  gameEngine.getPhysicsManager()->setGravity(glm::vec3(0,0,0));
 
   gameEngine.start();
 

@@ -1,4 +1,5 @@
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
+#set(BUILD_SHARED_LIBS TRUE) TODO: check if this could be improved
 
 file(GLOB TARGET_INC ${CMAKE_CURRENT_SOURCE_DIR}/*.h ${CMAKE_CURRENT_SOURCE_DIR}/*.hpp)
 list(REMOVE_ITEM TARGET_INC ${CMAKE_CURRENT_SOURCE_DIR}/stdafx.h)
@@ -35,6 +36,17 @@ If(NOT EMSCRIPTEN AND NOT ANDROID)
 ELSE()
   target_link_libraries (engine PUBLIC ${ENGINE_LIBS})
 ENDIF()
+
+# TODO: Check if this approach bellow is better
+#IF (ANDROID)
+#  add_library (engine STATIC ${TARGET_SRC})
+#ELSE ()
+#  add_library (engine SHARED ${TARGET_SRC})
+#ENDIF ()
+#
+#target_link_libraries (engine ${ENGINE_LIBS})
+#set_target_properties(engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "stdafx.h")
+#cotire(engine)
 
 install (TARGETS engine DESTINATION lib)
 install (FILES ${TARGET_INC} DESTINATION include/engine)

@@ -1,10 +1,8 @@
 #pragma once
 
-#include <string>
 #include "EngineIOStream.hpp"
 
 namespace mobagen {
-
   class Asset {
   public:
     Asset(const std::string &fileName);
@@ -20,5 +18,4 @@ namespace mobagen {
     EngineIOStream *m_ioStream;
     size_t m_fileSize;
   };
-
 }

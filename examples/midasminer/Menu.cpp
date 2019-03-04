@@ -6,9 +6,9 @@ const char* Menu::getType()
 	return "MENU";
 }
 
-void Menu::update(double delta)
+void Menu::update(Input *input, std::chrono::microseconds delta)
 {
-	m_remainingTime -= delta;
+	m_remainingTime -= delta.count()/1000000.0;
 }
 
 void Menu::onGUI(ImGuiContext* context)

@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Texture.hpp"
 
 namespace mobagen {

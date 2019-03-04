@@ -1,10 +1,14 @@
 #include "CustomIOSystem.hpp"
 #include "CustomIOStream.hpp"
 
-namespace mobagen {
-  CustomIOSystem::CustomIOSystem(void) = default;
+//#include <string>
+//#include <stdio.h>
+// #include <unistd.h>
 
-  CustomIOSystem::~CustomIOSystem(void) = default;
+namespace mobagen {
+  CustomIOSystem::CustomIOSystem(void) {}
+
+  CustomIOSystem::~CustomIOSystem(void) {}
 
   bool CustomIOSystem::ComparePaths(const char *one, const char *second) const {
     return strcmp(one, second) == 0;

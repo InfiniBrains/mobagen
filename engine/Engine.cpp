@@ -2,16 +2,21 @@
 #include "Logger.hpp"
 #include "Ray.hpp"
 #include "GuiManager.hpp"
+#include "ForwardRenderer.hpp"
+
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>
+
 #include <limits>
 
 #ifdef EMSCRIPTEN
-  #include <emscripten.h>
-  static mobagen::Engine *instance = NULL;
-#else
-#include <thread>
+#include <emscripten.h>
+
+static Engine *instance = NULL;
 #endif
+
+// TODO: DO WE NEED FIXED UPDATES?
+// std::chrono::microseconds FIXED_TIME_STEP(std::chrono::milliseconds(20));
 
 namespace mobagen {
   Engine::Engine(Game *game, char *windowTitle, glm::vec2 windowSize) {
@@ -22,16 +27,15 @@ namespace mobagen {
     m_glewManager = std::make_unique<GLEWManager>();
 
     log_info("Initializing GL");
-    m_glManager = std::make_unique<GLManager>(m_window.get());
+    m_glManager = std::make_unique<GLManager>(std::make_unique<ForwardRenderer>(), m_window->getDrawableSize());
 
     log_info("Initializing Physics Manager");
     m_physicsManager = std::make_unique<PhysicsManager>();
 
     this->game = game;
 
-    m_deltaTime = 1 / 60.0;
-
     quit = false;
+    m_fireRay = false;
   }
 
   Engine::~Engine(void) {
@@ -50,35 +54,39 @@ namespace mobagen {
 
     m_window->makeCurrentContext();
 
-    lastUpdateTime = std::chrono::high_resolution_clock::now();
+    m_window->getInput()->registerKeyToAction(SDLK_F1, "propertyEditor");
+    m_window->getInput()->registerKeyToAction(SDLK_F2, "fullscreenToggle");
+
+    m_window->getInput()->registerButtonToAction(SDL_BUTTON_LEFT, "fireRay");
+
+    m_window->getInput()->bindAction("propertyEditor", IE_PRESSED, [this]() {
+      m_window->getGuiManager()->togglePropertyEditor();
+    });
+
+    m_window->getInput()->bindAction("fullscreenToggle", IE_PRESSED, [this]() {
+      m_window->toggleFullscreen();
+      m_glManager->setDrawSize(m_window->getDrawableSize());
+    });
+
+    m_window->getInput()->bindAction("fireRay", IE_PRESSED, [this]() {
+      m_fireRay = true;
+    });
+
+    m_window->getInput()->bindAction("fireRay", IE_RELEASED, [this]() {
+      m_fireRay = false;
+    });
+
+    m_time = std::chrono::high_resolution_clock::now();
+    // TODO: DO WE NEED FIXED UPDATES?
+    //m_physicsTimeSimulated = std::chrono::high_resolution_clock::now();
 
 #ifdef EMSCRIPTEN
     instance = this;
+
     emscripten_set_main_loop(Engine::loop, 0, 1);
 #else
-    auto accumulatedTime = std::chrono::duration<double>(std::chrono::duration_values<double>::zero());
     while (!quit) {
-      // run engine loop
       tick();
-
-      // get time
-      const auto afterTick = std::chrono::high_resolution_clock::now();
-
-      // sleep
-      std::chrono::duration<double> sleepTime;
-      sleepTime = std::chrono::duration<double>(1 / 60.0) - (afterTick - lastUpdateTime) - accumulatedTime;
-      if (sleepTime.count() > 0)
-#ifndef __MINGW32__
-        std::this_thread::sleep_for(sleepTime);
-#else
-        SDL_Delay(sleepTime.count());
-#endif
-      // get the sleep error and store the lastFrame time duration
-      auto now = std::chrono::high_resolution_clock::now();
-      m_deltaTime = (now - lastUpdateTime).count() / 1000000000.0;
-      lastUpdateTime = now;
-      accumulatedTime = (lastUpdateTime - afterTick) - sleepTime;
-
     }
 #endif
   }
@@ -91,33 +99,43 @@ namespace mobagen {
 #endif
 
   void Engine::tick(void) {
-    m_window->tick(m_deltaTime);
+    m_lastTime = m_time;
+    m_time = std::chrono::high_resolution_clock::now();
+    m_deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(m_time - m_lastTime);
 
-    quit = m_window->shouldQuit();
+    m_window.get()->tick();
+    m_window.get()->getGuiManager()->tick(m_window.get(), m_deltaTime);
 
-    game->updateInput(m_window->getInput(), getDeltaTime());
+    quit = m_window.get()->shouldQuit();
 
-    game->update(getDeltaTime());
+    m_physicsManager.get()->tick(m_deltaTime);
+
+    /* TODO: DO WE NEED FIXED UPDATES?
+    while (m_physicsTimeSimulated < m_time) {
+
+      m_physicsTimeSimulated += FIXED_TIME_STEP;
+    }*/
+
+    game->update(m_window->getInput(), m_deltaTime);
 
     game->render(m_glManager.get());
 
-    static bool f1Pressed = false;
-
-    if (!f1Pressed && m_window->getInput()->isPressed(SDLK_F1)) {
-      f1Pressed = true;
-      m_window->getGuiManager()->togglePropertyEditor();
-    } else if (f1Pressed && m_window->getInput()->isReleased(SDLK_F1)) {
-      f1Pressed = false;
-    }
+//    if (m_fireRay) {
+//      Ray ray = Ray::getPickRay(m_window->getInput()->getMousePosition(), m_window->getViewport(),
+//                                m_glManager->getViewMatrix(), m_glManager->getProjectionMatrix());
+//
+//      Entity *pickedEntity = m_physicsManager->pick(&ray);
+//
+//      if (pickedEntity != nullptr) {
+//        m_glManager->drawEntity(pickedEntity);
+//      }
+//
+//      m_glManager->drawLine(ray.getLine(10000.0f));
+//    }
 
     m_window->getGuiManager()->render(game->getRootScene().get());
 
     m_window->swapBuffer();
-#if EMSCRIPTEN
-    auto now = std::chrono::high_resolution_clock::now();
-    m_deltaTime = (now - lastUpdateTime).count()/1000000000.0;
-    lastUpdateTime = now;
-#endif
   }
 
   Window *Engine::getWindow(void) const {
@@ -132,7 +150,8 @@ namespace mobagen {
     return m_physicsManager.get();
   }
 
-  double Engine::getDeltaTime() {
+  std::chrono::microseconds Engine::getDeltaTime(void) const {
     return m_deltaTime;
   }
+
 }

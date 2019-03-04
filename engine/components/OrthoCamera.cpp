@@ -4,7 +4,7 @@
 #include "OrthoCamera.hpp"
 
 namespace mobagen {
-  OrthoCamera::OrthoCamera(float aspect, float scale, float zNear, float zFar) : Camera("OrthoCamera") {
+  OrthoCamera::OrthoCamera(float aspect, float scale, float zNear, float zFar) {
     m_scale = scale;
     m_aspect = aspect;
     m_zNear = zNear;

@@ -1,5 +1,7 @@
 #include "CustomIOStream.hpp"
 
+#include <string>
+
 namespace mobagen {
   CustomIOStream::CustomIOStream(const char *pFile, const char *pMode) {
     m_iostream = new EngineIOStream(std::string(pFile));
@@ -21,13 +23,14 @@ namespace mobagen {
     switch (pOrigin) {
       case aiOrigin_SET:
         return m_iostream->seek(pOffset, Origin_SET) ? AI_SUCCESS : AI_FAILURE;
+        break;
 
       case aiOrigin_CUR:
         return m_iostream->seek(pOffset, Origin_CUR) ? AI_SUCCESS : AI_FAILURE;
+        break;
 
       case aiOrigin_END:
         return m_iostream->seek(pOffset, Origin_END) ? AI_SUCCESS : AI_FAILURE;
-      default:
         break;
     }
   }

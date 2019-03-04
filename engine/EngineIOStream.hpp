@@ -1,7 +1,9 @@
 #pragma once
+
 #include <fstream>
+
 #ifdef ANDROID
-  #include "AndroidAssetManager.h"
+  #include "AndroidAssetManager.hpp"
 #endif
 
 namespace mobagen {

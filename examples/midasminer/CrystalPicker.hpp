@@ -6,7 +6,7 @@ using namespace mobagen;
 class CrystalPicker : public Component {
 public:
   CrystalPicker(std::map<Crystal::CrystalType, std::shared_ptr<Texture>> textures, std::map<Crystal::CrystalType, std::shared_ptr<Material>> materials);
-  void updateInput(Input *input, double delta) override;
+  void update(Input *input, std::chrono::microseconds delta) override;
   
   static glm::vec3 MatrixPositionToVec3(int x, int y);
   static glm::i32vec2 Vec3ToMatrixPosition(glm::vec3 pos);

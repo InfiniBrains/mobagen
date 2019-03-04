@@ -1,9 +1,12 @@
 #pragma once
-#include "components/Sphere.hpp"
+
 #include "Entity.hpp"
 #include "Ray.hpp"
 
 #include <vector>
+#include <chrono>
+
+#include <btBulletDynamicsCommon.h>
 
 namespace mobagen {
   class PhysicsManager {
@@ -12,13 +15,23 @@ namespace mobagen {
 
     ~PhysicsManager(void);
 
-    void registerCollider(std::shared_ptr<Sphere> sphere);
+    void registerCollider(btRigidBody *rigidBody);
 
-    void deregisterCollider(std::shared_ptr<Sphere> sphere);
+    void deregisterCollider(btRigidBody *rigidBody);
+
+    void tick(std::chrono::microseconds delta);
 
     Entity *pick(Ray *ray) const;
 
+    glm::vec3 getGravity();
+
+    void setGravity(glm::vec3);
+
   private:
-    std::vector<std::shared_ptr<Sphere>> m_colliders;
+    btDefaultCollisionConfiguration *m_collisionConfiguration;
+    btCollisionDispatcher *m_dispatcher;
+    btBroadphaseInterface *m_overlappingPairCache;
+    btSequentialImpulseConstraintSolver *m_solver;
+    btDiscreteDynamicsWorld *m_dynamicsWorld;
   };
 }

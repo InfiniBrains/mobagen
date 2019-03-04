@@ -1,4 +1,5 @@
 #pragma once
+
 #include "PointLight.hpp"
 
 namespace mobagen {
@@ -14,7 +15,7 @@ namespace mobagen {
 
     virtual void updateShader(Shader *shader);
 
-    float getCutoff() const;
+    float getCutoff(void) const;
 
   private:
     float m_cutoff;

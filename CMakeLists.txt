@@ -230,7 +230,17 @@ ELSE ()
   ENDIF()
 ENDIF()
 
-include_directories(${ENGINE_INCLUDES})
+IF(USE_BULLET)
+  SET(ENGINE_LIBS
+    ${ENGINE_LIBS}
+    bullet::BulletCollision
+    bullet::BulletDynamics
+    bullet::BulletSoftBody
+    bullet::LinearMath
+  )
+ENDIF()
+
+  include_directories(${ENGINE_INCLUDES})
 
 add_subdirectory( ${CMAKE_CURRENT_SOURCE_DIR}/engine )
 add_subdirectory( ${CMAKE_CURRENT_SOURCE_DIR}/examples )

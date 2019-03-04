@@ -7,7 +7,7 @@ class Matrix : public Component {
 public:
 	Matrix();
 	virtual const char * getType(void) override;
-	void update(double delta) override;
+	void update(Input *input, std::chrono::microseconds delta) override;
 
 	std::shared_ptr<Crystal> getElement(int x, int y);
 	void setElement(int x, int y, std::shared_ptr<Crystal> elem);

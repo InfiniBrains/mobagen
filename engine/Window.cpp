@@ -15,7 +15,6 @@ namespace mobagen {
     SDL_DisplayMode mode;
     SDL_GetCurrentDisplayMode(0, &mode);
 
-
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE, BITS_PER_CHANNEL);
     SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, BITS_PER_CHANNEL);
     SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, BITS_PER_CHANNEL);
@@ -46,10 +45,15 @@ namespace mobagen {
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
 #endif
 
-    // SDL_WINDOW_FULLSCREEN |
-    //  m_window = SDL_CreateWindow("Engine!", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, mode.w, mode.h - 100, SDL_WINDOW_OPENGL);
-    m_window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, windowSize.x, windowSize.y,
-                                SDL_WINDOW_OPENGL);
+    m_fullscreen = false;
+
+    uint32_t flags = SDL_WINDOW_OPENGL;
+
+    if (m_fullscreen)
+      flags |= SDL_WINDOW_FULLSCREEN;
+
+    // TODO: use mode.x, mode.y?
+    m_window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, (int)windowSize.x, (int)windowSize.y, flags);
     if (m_window == nullptr) {
       log_err("SDL_CreateWindow error: %s", SDL_GetError());
     }
@@ -80,7 +84,7 @@ namespace mobagen {
     m_guiManager = std::make_unique<GuiManager>(getDrawableSize(), getDisplaySize(), getSDLWindow());
   }
 
-  void Window::tick(double deltaTime) {
+  void Window::tick(void) {
     m_input.storeLastFrame();
     m_input.setMouseDelta(0, 0);
 
@@ -122,8 +126,6 @@ namespace mobagen {
     if (mouseWheelEvent == false) {
       m_input.handleMouseWheelEvent(0, 0);
     }
-
-    m_guiManager->tick(this, deltaTime);
   }
 
   void Window::swapBuffer(void) {
@@ -166,11 +168,11 @@ namespace mobagen {
     return m_guiManager.get();
   }
 
-  const char *Window::getClipboardText() {
+  const char *Window::getClipboardText(void* user_data) {
     return SDL_GetClipboardText();
   }
 
-  void Window::setClipboardText(const char *text) {
+  void Window::setClipboardText(void* user_data, const char* text) {
     SDL_SetClipboardText(text);
   }
 
@@ -184,5 +186,19 @@ namespace mobagen {
 
   void Window::drawCursor(bool enabled) {
     SDL_ShowCursor(enabled);
+  }
+
+  void Window::setFullscreen(uint32_t flag) {
+    SDL_SetWindowFullscreen(m_window, flag);
+  }
+
+  void Window::toggleFullscreen(void) {
+    m_fullscreen = !m_fullscreen;
+
+    if (m_fullscreen) {
+      setFullscreen(SDL_WINDOW_FULLSCREEN);
+    } else {
+      setFullscreen(0);
+    }
   }
 }

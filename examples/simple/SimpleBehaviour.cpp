@@ -1,7 +1,7 @@
 #include "SimpleBehaviour.h"
 #include "Logger.hpp"
 
-void SimpleBehaviour::update(double delta) {
+void SimpleBehaviour::update(Input *input, std::chrono::microseconds delta) {
   log_info("%s", "mensagem");
 }
 

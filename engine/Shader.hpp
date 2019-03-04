@@ -1,7 +1,9 @@
 #pragma once
+
 #include <map>
 #include <string>
 #include <memory>
+
 #define GLM_SWIZZLE
 #include <glm/glm.hpp>
 

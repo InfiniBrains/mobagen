@@ -30,7 +30,7 @@ public:
   void dropTo(glm::vec3 target);
   glm::vec3 getTargetPosition();
 
-  void update(double delta) override;
+  void update(Input *input, std::chrono::microseconds delta) override;
   CrystalType getColor();
   const char* getType() override;
 private:

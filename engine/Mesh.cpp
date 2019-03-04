@@ -1,6 +1,6 @@
 #include "Mesh.hpp"
-#include <map>
 
+#include <map>
 namespace mobagen {
   std::map<std::string, std::weak_ptr<MeshData>> m_meshCache;
 
@@ -13,7 +13,14 @@ namespace mobagen {
     }
   }
 
-  Mesh::~Mesh(void) = default;
+  void Mesh::reasign(std::string identifier, Vertex vertices[], int vertSize, unsigned int indices[],
+                     int indexSize)
+  {
+    m_meshData = std::make_shared<MeshData>(vertices, vertSize, indices, indexSize);
+  }
+
+  Mesh::~Mesh(void) {
+  }
 
   void Mesh::render(void) const {
     m_meshData->render();

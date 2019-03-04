@@ -1,30 +1,34 @@
 #pragma once
+
 #if defined(GLES2)
-  #include <GLES2/gl2.h>
+#include <GLES2/gl2.h>
 #elif defined(GLES3)
-  #include <GLES3/gl3.h>
+#include <GLES3/gl3.h>
 #else
-  #include <GL/glew.h>
+#include <GL/glew.h>
 #endif
+
 #include <vector>
 
+#include "Renderer.hpp"
+#include "SimpleRenderer.hpp"
 #include "Shader.hpp"
 #include "Entity.hpp"
 #include "Window.hpp"
+#include "Line.hpp"
 #include "components/Camera.hpp"
-
 #include "components/DirectionalLight.hpp"
 #include "components/PointLight.hpp"
 #include "components/SpotLight.hpp"
 
-#include "Line.hpp"
-
 namespace mobagen {
   class GLManager {
   public:
-    GLManager(const Window *window);
+    GLManager(std::unique_ptr<Renderer> renderer, const glm::vec2 &windowSize);
 
     ~GLManager(void);
+
+    void setDrawSize(const glm::vec2 &size);
 
     void bindRenderTarget(void) const;
 
@@ -56,16 +60,10 @@ namespace mobagen {
 
     GLuint lineBuffer;
     GLuint VertexArrayID;
+
   private:
-    void createShaders(void);
-
-    void renderLights(Entity *scene);
-
-    std::unique_ptr<Shader> m_simple;
-    std::unique_ptr<Shader> m_forwardAmbient;
-    std::unique_ptr<Shader> m_forwardDirectional;
-    std::unique_ptr<Shader> m_forwardPoint;
-    std::unique_ptr<Shader> m_forwardSpot;
+    std::unique_ptr<Renderer> m_renderer;
+    std::unique_ptr<SimpleRenderer> m_simpleRenderer;
 
     std::shared_ptr<Camera> m_activeCamera;
 

@@ -1,4 +1,5 @@
 #include "Material.hpp"
+
 namespace mobagen {
   Material::Material(std::shared_ptr<Texture> diffuseMap, std::shared_ptr<Texture> normalMap,
                      std::shared_ptr<Texture> specularMap) {

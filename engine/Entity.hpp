@@ -1,9 +1,11 @@
 #pragma once
+
 #include <vector>
 #include <map>
 #include <typeindex>
 #include <algorithm>
 #include <memory>
+#include <chrono>
 
 #include "Transform.hpp"
 #include "Shader.hpp"
@@ -25,22 +27,6 @@ namespace mobagen {
     void addChild(std::shared_ptr<Entity> child);
 
     template<class T>
-    inline void removeComponent(std::shared_ptr<T> component) {
-      // todo: check if it will remove the component properly
-      //component->deregisterFromEngine(m_engine);
-      //component->setParent(nullptr);
-
-//    auto f = std::find(componentsByTypeid[typeid(T)].begin(),componentsByTypeid[typeid(T)].end(), component);
-//    if(f!=componentsByTypeid[typeid(T)].end())
-//      componentsByTypeid[typeid(T)].erase(f);
-//
-//    auto d = std::find(components.begin(),components.end(), component);
-//    if(d!=components.end())
-//      components.erase(d);
-    }
-
-
-    template<class T>
     inline void addComponent(std::shared_ptr<T> component) {
       component->setParent(this);
       componentsByTypeid[typeid(T)].push_back(component);
@@ -55,11 +41,9 @@ namespace mobagen {
       components.push_back(component);
     }
 
-    void updateInputAll(Input *input, double delta);
+    void updateAll(Input *input, std::chrono::microseconds delta);
 
-    void updateAll(double delta);
-
-    void renderAll(Shader *shader);
+    void renderAll(Shader *shader) const;
 
     void registerWithEngineAll(Engine *engine);
 
@@ -67,7 +51,7 @@ namespace mobagen {
 
     Entity *getParent();
 
-    Transform *getTransform(void);
+    Transform &getTransform(void);
 
     std::vector<std::shared_ptr<Entity>> getChildren(void);
 
@@ -75,7 +59,7 @@ namespace mobagen {
 
     glm::mat4 &getWorldMatrix(void);
 
-    glm::vec4 getPosition(void);
+    glm::vec3 getPosition(void);
 
     glm::vec4 getDirection(void);
 
@@ -114,7 +98,7 @@ namespace mobagen {
     Engine *getEngine();
 
   private:
-    std::unique_ptr<Transform> transform;
+    Transform transform;
 
     Entity *parentEntity;
 
@@ -129,7 +113,7 @@ namespace mobagen {
 
     static void setTag(Entity *entity, const std::string &tag);
 
-    static std::map<std::string, std::vector<Entity *> > taggedEntities;
+    static std::map<std::string, std::vector<Entity *>> taggedEntities;
 
     std::map<std::type_index, std::vector<std::shared_ptr<Component>>> componentsByTypeid;
   };

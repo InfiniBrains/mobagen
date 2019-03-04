@@ -1,7 +1,8 @@
 #include "Asset.hpp"
 
-namespace mobagen {
+#include <string>
 
+namespace mobagen {
   Asset::Asset(const std::string &fileName) {
     m_ioStream = new EngineIOStream(fileName);
     m_fileSize = m_ioStream->fileSize();

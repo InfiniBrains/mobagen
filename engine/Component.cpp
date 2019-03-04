@@ -10,7 +10,7 @@ namespace mobagen {
     return m_parentEntity;
   }
 
-  Transform *Component::getTransform(void) const {
+  Transform &Component::getTransform(void) const {
     return m_parentEntity->getTransform();
   }
 
@@ -34,13 +34,15 @@ namespace mobagen {
     m_properties[name] = prop;
   }
 
+  // TODO: remove this getEngine
   Engine *Component::getEngine() {
     return m_parentEntity->getEngine();
   }
 
-  double Component::getDeltaTime() {
+  // TODO: remove this getEngine
+  std::chrono::microseconds Component::getDeltaTime() {
     return m_parentEntity->getEngine()->getDeltaTime();
   }
 
-  Component::Component() = default;
+//  Component::Component() = default;
 }

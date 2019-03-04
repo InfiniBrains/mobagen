@@ -12,24 +12,26 @@ CrystalPicker::CrystalPicker(std::map<Crystal::CrystalType, std::shared_ptr<Text
 	secondSelection = nullptr;
 }
 
-void CrystalPicker::updateInput(Input *input, double delta) {
+void CrystalPicker::update(Input *input, std::chrono::microseconds delta) {
   if (getParent()->getComponent<Menu>()->getTime() < 0)
 		return;
   auto engine = getEngine();
   if (input->mousePressedState(SDL_BUTTON_LEFT)==Input::InputState::JUSTPRESSED) {
-    Ray ray = Ray::getPickRay(input->getMousePosition(),
-                              engine->getWindow()->getViewport(),
-                              engine->getGLManager()->getViewMatrix(),
-                              engine->getGLManager()->getProjectionMatrix());
 
-    Entity *pickedEntity = getEngine()->getPhysicsManager()->pick(&ray);
-	
+	auto mousepos = input->getMousePosition();
+	auto pos = Vec3ToMatrixPosition(glm::vec3(377.5-mousepos.x,-1,300-mousepos.y)); // 377 -> window width/2 . 300 window height/2
+
+	auto picked = getParent()->getComponent<Matrix>()->getElement(pos.x,pos.y);
+
+	Entity* pickedEntity;
 	// check if picked some entity
-	if (pickedEntity == nullptr)
+	if (picked == nullptr)
 	  return;
-	else
-	  log_info("found entity at: (%f,%f,%f)", pickedEntity->getPosition().x, pickedEntity->getPosition().y, pickedEntity->getPosition().z);
-
+	else {
+		pickedEntity = picked->getParent();
+		log_info("found entity at: (%f,%f,%f)", pickedEntity->getPosition().x, pickedEntity->getPosition().y,
+				 pickedEntity->getPosition().z);
+	}
 	auto matrixpos = Vec3ToMatrixPosition(pickedEntity->getPosition().xyz());
 	log_info("x,y = %d,%d",matrixpos.x,matrixpos.y);
 

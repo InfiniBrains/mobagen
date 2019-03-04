@@ -2,7 +2,6 @@
 
 #define GLM_FORCE_RADIANS
 #define GLM_SWIZZLE
-#define GLM_ENABLE_EXPERIMENTAL
 #include <glm/glm.hpp>
 #include <glm/gtx/quaternion.hpp>
 #include <glm/gtx/transform.hpp>
@@ -13,8 +12,11 @@
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+
 #include <imgui.h>
+
 #include <SDL.h>
+
 #include <memory>
 #include <limits>
 #include <vector>
@@ -22,8 +24,8 @@
 #include <fstream>
 #include <algorithm>
 #include <string>
-#include <cstring>
 #include <typeindex>
+#include <string.h>
 #include <stdio.h>
 #include <errno.h>
 

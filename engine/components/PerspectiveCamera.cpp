@@ -4,7 +4,7 @@
 #include "PerspectiveCamera.hpp"
 
 namespace mobagen {
-  PerspectiveCamera::PerspectiveCamera(float fov, float aspect, float zNear, float zFar) : Camera("PerspectiveCamera") {
+  PerspectiveCamera::PerspectiveCamera(float fov, float aspect, float zNear, float zFar) {
     m_fov = fov;
     m_aspect = aspect;
     m_zNear = zNear;
