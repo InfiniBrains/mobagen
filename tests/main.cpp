@@ -24,12 +24,12 @@ class DocEditor : public Game
 {
 public:
   virtual void init(GLManager *glManager);
-  virtual void update(double delta);
+  virtual void update(Input *input, std::chrono::microseconds delta);
 };
 
-void DocEditor::update(double delta)
+void DocEditor::update(Input *input, std::chrono::microseconds delta)
 {
-  Game::update(delta);
+  Game::update(input, delta);
   //log_info("%llu",GameObject::m_components.size());
 }
 
