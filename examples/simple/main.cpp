@@ -50,7 +50,7 @@ void Simple::init(GLManager *glManager)
 
 int main(int argc, char *argv[]) {
 	Simple game;
-	Engine gameEngine(&game);//);
+	Engine gameEngine(&game, "Simple Test", glm::vec2(800,600));
 
 	gameEngine.start();
 
