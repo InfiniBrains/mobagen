@@ -19,6 +19,11 @@ matrix:
       language: cpp
       compiler: clang
 
+    - os: windows
+      language: cpp
+      env:
+        - BUILD_TYPE=native
+
 
     # windows cross compile
 #    - os: linux
@@ -130,9 +135,10 @@ before_script:
       docker exec -it emscripten apt-get install -y cmake wget ;
     fi
   - if [ $BUILD_TYPE == windows ]; then
-      docker run -dit --name windows -e TRAVIS_OS_NAME='linux' -e BUILD_TYPE='windows' -v `pwd`:/mobagen -w /mobagen library/ubuntu:bionic bash ;
-      docker exec -it windows apt-get update ;
-      docker exec -it windows apt-get install -y cmake wget binutils-mingw-w64* gcc-mingw-w64* g++-mingw-w64* wine-development git mingw-w64 mingw-w64-tools binutils-mingw-w64 binutils-mingw-w64-x86-64 binutils-mingw-w64-i686 mingw-w64-x86-64-dev mingw-w64-i686-dev autoconf automake autotools-dev zip ;
+      git submodule update --init --recursive ;
+      set generator="Visual Studio 15 2017 Win64";
+      cmake --version ;
+      cmake -Bbuild -H. -G %generator% -DCMAKE_BUILD_TYPE=Release ;
     fi
 
 script:
@@ -140,8 +146,7 @@ script:
       docker exec -it emscripten ./scripts/travis-build.sh ;
       docker exec -it emscripten ./scripts/travis-build.sh ;
     elif [ $BUILD_TYPE == windows ]; then
-      docker exec -it windows ./scripts/travis-build.sh -j9 ;
-      docker exec -it windows ./scripts/travis-build.sh -j9 ;
+      cmake --build build ;
     else
       ./scripts/travis-build.sh -j9 ;
     fi
