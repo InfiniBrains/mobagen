@@ -31,7 +31,7 @@ matrix:
         - cmake --version
         - cmake -Bbuild -H. -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=dependencies/polly/vs-15-2017-win64.cmake
         - ls build
-        - cd build && msbuild Engine.sln 
+        - cd build && msbuild.exe Engine.sln
 
     # windows cross compile
 #    - os: linux
