@@ -21,9 +21,9 @@ matrix:
 
     - os: windows
       language: cpp
-      cache:
-        directories:
-        - C:/Users/travis/.hunter/
+#      cache:
+#        directories:
+#        - C:/Users/travis/.hunter/
       env:
         - BUILD_TYPE=native
       install:
