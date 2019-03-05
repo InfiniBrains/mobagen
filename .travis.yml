@@ -25,7 +25,6 @@ matrix:
       cache:
         directories:
           - /c/Users/travis/.hunter/
-#      install: choco install mingw
       env:
         - BUILD_TYPE=native
         - MSBUILD_PATH="c:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin"
@@ -48,10 +47,28 @@ matrix:
       env:
         - BUILD_TYPE=android
       dist: xenial
-      language: cpp
-      compiler: clang
+      language: android
+      android:
+        components:
+          - tools
+          - android-26
+          - platform-tools
+          - build-tools-26.0.2
+          - extra
+          - extra-google-m2repository
+          - extra-android-m2repository
+          - extra-google-google_play_services
+      packages:
+        - gradle
       script:
-        - docker run --rm -v $(pwd):/src -t runmymind/docker-android-sdk:ubuntu-standalone sh -c "echo $ANDROID_SDK_ROOT"
+#        - docker run --rm -v $(pwd):/src -t runmymind/docker-android-sdk:ubuntu-standalone sh -c "echo $ANDROID_SDK_ROOT"
+        - docker run -dit --name android -e TRAVIS_OS_NAME='linux' -e BUILD_TYPE='android' -v `pwd`:/mobagen -w /mobagen runmymind/docker-android-sdk:ubuntu-standalone sh
+        - docker exec -it android apt-get update
+        - docker exec -it android sh -c "export ANDROID_SDK_ROOT=/opt/android-sdk-linux"
+        - docker exec -it android sh -c "export ANDROID_SDK=/opt/android-sdk-linux"
+        - docker exec -it android sh -c "export ANDROID_HOME=/opt/android-sdk-linux"
+        - docker exec -it android sh -c "export ANDROID_NDK_HOME=/opt/android-sdk-linux/ndk-bundle"
+        - docker exec -it android sh -c "export ANDROID_NDK_HOME=/opt/android-sdk-linux/ndk-bundle"
 
     # linux emscripten
     - os: linux

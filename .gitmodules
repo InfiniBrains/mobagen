@@ -25,7 +25,7 @@
 [submodule "dependencies/polly"]
 	path = dependencies/polly
 	url = https://github.com/ruslo/polly.git
-	branch = 12435ba7d3d106e3f71448b431c2fa8a0c0756e6
+	branch = dabca59456de58f2c1dd8acdb66c98f8d632859f
 [submodule "dependencies/emsdk"]
 	path = dependencies/emsdk
 	url = https://github.com/juj/emsdk.git
