@@ -21,8 +21,21 @@ matrix:
 
     - os: windows
       language: cpp
+      cache:
+        directories:
+        - C:/Users/travis/.hunter/
       env:
         - BUILD_TYPE=native
+      install:
+        - git submodule update --init --recursive
+        - choco feature enable -n=allowGlobalConfirmation
+        - choco install -y make
+        - choco install mingw
+        - alias make="mingw32-make"
+        - cmake --version ;
+        - cmake -Bbuild -H. -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=Release
+      script:
+        - cmake --build build
 
 
     # windows cross compile
@@ -134,27 +147,15 @@ before_script:
       docker exec -it emscripten rm /usr/local/bin/cmake ;
       docker exec -it emscripten apt-get install -y cmake wget ;
     fi
-  - if [ $BUILD_TYPE == windows ]; then
-      git submodule update --init --recursive ;
-      choco feature enable -n=allowGlobalConfirmation ;
-      choco install -y make ;
-      alias make="mingw32-make" ;
-      which make ;
-      which mingw32-make ;
-      which make.exe ;
-      which mingw32-make.exe ;
-      cmake --version ;
-      cmake -Bbuild -H. -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=Release ;
-    fi
 
 script:
   - if [ $TRAVIS_OS_NAME == linux ] && [ $BUILD_TYPE == emscripten ]; then
       docker exec -it emscripten ./scripts/travis-build.sh ;
       docker exec -it emscripten ./scripts/travis-build.sh ;
     elif [ $BUILD_TYPE == windows ]; then
-      alias make="mingw32-make"
-      cmake --build build ;
+      echo "tolsta to no windows" ;
     else
+      echo "nao eh windows" ;
       ./scripts/travis-build.sh -j9 ;
     fi
 
