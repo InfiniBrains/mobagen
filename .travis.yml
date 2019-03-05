@@ -51,7 +51,7 @@ matrix:
       android:
         components:
           - tools
-          - android-24
+          - android-26
           - platform-tools
           - build-tools-26.0.2
           - extra
@@ -76,12 +76,13 @@ matrix:
         - echo $ANDROID_NDK_HOME
         - echo $ANDROID_SDK
         - docker run -dit --name android -e TRAVIS_OS_NAME='linux' -e BUILD_TYPE='android' -v `pwd`:/mobagen -w /mobagen runmymind/docker-android-sdk:ubuntu-standalone sh
-#        - docker exec -it android apt-get update
-#        - docker exec -it android sh -c "export ANDROID_SDK_ROOT=/opt/android-sdk-linux"
-#        - docker exec -it android sh -c "export ANDROID_SDK=/opt/android-sdk-linux"
-#        - docker exec -it android sh -c "export ANDROID_HOME=/opt/android-sdk-linux"
-#        - docker exec -it android sh -c "export ANDROID_NDK_HOME=/opt/android-sdk-linux/ndk-bundle"
-#        - docker exec -it android sh -c "export ANDROID_NDK_HOME=/opt/android-sdk-linux/ndk-bundle"
+        - docker exec -it android apt-get update
+        - docker exec -it android sh -c "export ANDROID_SDK_ROOT=/opt/android-sdk-linux"
+        - docker exec -it android sh -c "export ANDROID_HOME=/opt/android-sdk-linux"
+        - docker exec -it android sh -c "export ANDROID_SDK=/opt/android-sdk-linux"
+        - docker exec -it android sh -c "export ANDROID_NDK_HOME=/opt/android-sdk-linux/ndk-bundle"
+        - docker exec -it android sh -c "export PATH=$PATH:$ANDROID_HOME/tools"
+        - docker exec -it android sh -c "export PATH=$PATH:$ANDROID_HOME/platform-tools"
 
     # linux emscripten
     - os: linux
