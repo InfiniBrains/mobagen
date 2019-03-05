@@ -26,15 +26,14 @@ matrix:
 #        - C:/Users/travis/.hunter/
       env:
         - BUILD_TYPE=native
-      install:
+      script:
         - git submodule update --init --recursive
-        - choco feature enable -n=allowGlobalConfirmation
+        #        - choco feature enable -n=allowGlobalConfirmation
         - choco install -y make
         - choco install mingw
         - alias make="mingw32-make"
         - cmake --version ;
         - cmake -Bbuild -H. -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=Release
-      script:
         - cmake --build build
 
 
