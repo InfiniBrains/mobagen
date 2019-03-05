@@ -40,55 +40,6 @@ matrix:
         - PowerShell -Command 'cmake --build build'
 #        - cd build && msbuild.exe Engine.sln
 
-    # linux android
-    - os: linux
-      services:
-        - docker
-      env:
-        - BUILD_TYPE=android
-      language: android
-      sudo: true
-      android:
-        components:
-          - tools
-          - android-24
-          - android-26
-          - platform-tools
-          - build-tools-24.0.0
-          - build-tools-26.0.2
-          - extra
-          - extra-google-m2repository
-          - extra-android-m2repository
-          - extra-google-google_play_services
-      packages:
-        - gradle
-        - maven
-        - ant
-        - oracle-java8-installer
-      install:
-        - export PATH=/usr/local/android-sdk/tools/bin:$PATH
-        - export PATH=$PATH:$ANDROID_HOME/tools
-        - export PATH=$PATH:$ANDROID_HOME/platform-tools
-        - echo y | sdkmanager "ndk-bundle"
-        - echo y | sdkmanager "platforms;android-24"
-      before_script:
-        - export ANDROID_NDK_HOME=$ANDROID_HOME/ndk-bundle
-        - export ANDROID_NDK_R17=$ANDROID_HOME/ndk-bundle
-        - export ANDROID_NDK_r17=$ANDROID_HOME/ndk-bundle
-        - jdk_switcher use oraclejdk8
-      script:
-#        - docker run --rm -v $(pwd):/src -t runmymind/docker-android-sdk:ubuntu-standalone sh -c "echo $ANDROID_SDK_ROOT"
-        - echo $ANDROID_SDK_ROOT
-        - echo $ANDROID_NDK_HOME
-        - echo $ANDROID_SDK
-        - which maven
-        - which ant
-        - which gradle
-        - java -version
-        - mkdir -p build
-        - cmake -H. -Bbuild -DCMAKE_BUILD_TYPE=RELEASE -DCMAKE_MAKE_PROGRAM=make -DCMAKE_TOOLCHAIN_FILE=dependencies/polly/android-ndk-r17-api-24-arm64-v8a-clang-libcxx14.cmake
-
-
     # linux emscripten
     - os: linux
       services:
@@ -115,6 +66,11 @@ matrix:
       language: cpp
       compiler: clang
 
+    # osx android
+    - os: osx
+      env:
+        - BUILD_TYPE=android
+
 
 before_script:
   - TRAVIS_TAG=`date +%Y-%m-%d`
@@ -129,7 +85,7 @@ before_script:
         brew cask install android-ndk ;
         brew install ant ;
 
-        echo \"y\" | sdkmanager \"tools\" \"platform-tools\" \"platforms;android-24\" \"build-tools;24.0.0\"  ;
+        echo y | sdkmanager 'tools' 'platform-tools' 'platforms;android-24' 'build-tools;24.0.0'  ;
 
         export ANDROID_SDK_ROOT=/usr/local/share/android-sdk ;
         export ANDROID_SDK=/usr/local/share/android-sdk ;
@@ -137,6 +93,7 @@ before_script:
         export ANDROID_NDK_HOME=/usr/local/share/android-ndk ;
         export ANDROID_NDK=/usr/local/share/android-ndk ;
         export ANDROID_NDK_r17=/usr/local/share/android-ndk ;
+        export ANDROID_NDK_R17=/usr/local/share/android-ndk ;
 
         export ANT_HOME=/usr/local/opt/ant ;
         export MAVEN_HOME=/usr/local/opt/maven ;
