@@ -31,8 +31,7 @@ matrix:
         - cmake --version
         - cmake -Bbuild -H. -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=dependencies/polly/vs-15-2017-win64.cmake
         - ls build
-        - cmake --build build
-
+        - cd build && msbuild Engine.sln 
 
     # windows cross compile
 #    - os: linux
@@ -52,6 +51,19 @@ matrix:
 #      dist: trusty
 #      language: cpp
 #      compiler: mingw
+
+    # linux android
+    - os: linux
+      services:
+        - docker
+      env:
+        - MATRIX_EVAL="CC=clang && CXX=clang++"
+        - BUILD_TYPE=android
+      dist: xenial
+      language: cpp
+      compiler: clang
+      script:
+        - docker run --rm -v $(pwd):/src -t runmymind/docker-android-sdk:ubuntu-standalone ls
 
 
     # linux emscripten
