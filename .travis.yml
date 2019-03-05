@@ -70,6 +70,8 @@ matrix:
     - os: osx
       env:
         - BUILD_TYPE=android
+      osx_image: xcode9.3
+      language: cpp
 
 
 before_script:
