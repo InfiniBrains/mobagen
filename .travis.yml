@@ -19,6 +19,7 @@ matrix:
       language: cpp
       compiler: clang
 
+    # windows native
     - os: windows
       language: cpp
       cache:
@@ -27,44 +28,25 @@ matrix:
       env:
         - BUILD_TYPE=native
       script:
+        - which msbuild
+        - which msbuild.exe
         - git submodule update --init --recursive
         - cmake --version
         - cmake -Bbuild -H. -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=dependencies/polly/vs-15-2017-win64.cmake
         - ls build
         - cd build && msbuild.exe Engine.sln
 
-    # windows cross compile
-#    - os: linux
-#      services:
-#        - docker
-#      addons:
-#        apt:
-#          sources:
-#            - ubuntu-toolchain-r-test
-#          packages:
-#            - cmake
-#            - wine
-#      env:
-#        - MATRIX_EVAL="CC=x86_64-w64-mingw32-gcc && CXX=x86_64-w64-mingw32-g++ && AR=x86_64-w64-mingw32-ar"
-#        - BUILD_TYPE=windows
-#      group: travis_latest
-#      dist: trusty
-#      language: cpp
-#      compiler: mingw
-
     # linux android
     - os: linux
       services:
         - docker
       env:
-        - MATRIX_EVAL="CC=clang && CXX=clang++"
         - BUILD_TYPE=android
       dist: xenial
       language: cpp
       compiler: clang
       script:
         - docker run --rm -v $(pwd):/src -t runmymind/docker-android-sdk:ubuntu-standalone ls
-
 
     # linux emscripten
     - os: linux
