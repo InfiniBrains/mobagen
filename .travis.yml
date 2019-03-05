@@ -40,6 +40,13 @@ matrix:
         - PowerShell -Command 'cmake --build build'
 #        - cd build && msbuild.exe Engine.sln
 
+    # linux android
+    - os: linux
+      services:
+        - docker
+      env:
+        - BUILD_TYPE=android
+        
     # linux emscripten
     - os: linux
       services:
@@ -98,6 +105,7 @@ before_script:
         export ANDROID_NDK_r17=/usr/local/share/android-ndk ;
         export ANDROID_NDK_R17=/usr/local/share/android-ndk ;
 
+        sudo chmod -R 777 /usr/local/opt/ant ;
         export ANT_HOME=/usr/local/opt/ant ;
         export MAVEN_HOME=/usr/local/opt/maven ;
         export GRADLE_HOME=/usr/local/opt/gradle ;
