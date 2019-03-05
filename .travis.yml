@@ -21,25 +21,6 @@ matrix:
         - PowerShell -Command 'cmake --build build'
 #        - cd build && msbuild.exe Engine.sln
 
-    # linux native
-    - os: linux
-      addons:
-        apt:
-#          sources:
-          packages:
-            - clang
-            - cmake
-            - git
-            - build-essential
-            - libgl1-mesa-dev
-      env:
-        - MATRIX_EVAL="CC=clang && CXX=clang++"
-        - BUILD_TYPE=native
-      group: travis_latest
-      dist: xenial
-      language: cpp
-      compiler: clang
-
     # linux android
     - os: linux
       addons:
@@ -86,6 +67,26 @@ matrix:
           # if you need to run emulator(s) during your tests
 #          - sys-img-x86-android-26
 #          - sys-img-armeabi-v7a-android-17
+
+
+    # linux native
+    - os: linux
+      addons:
+        apt:
+#          sources:
+          packages:
+            - clang
+            - cmake
+            - git
+            - build-essential
+            - libgl1-mesa-dev
+      env:
+        - MATRIX_EVAL="CC=clang && CXX=clang++"
+        - BUILD_TYPE=native
+      group: travis_latest
+      dist: xenial
+      language: cpp
+      compiler: clang
 
     # linux emscripten
     - os: linux
