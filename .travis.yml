@@ -48,6 +48,7 @@ matrix:
         - BUILD_TYPE=android
       dist: xenial
       language: android
+      sudo: true
       android:
         components:
           - tools
