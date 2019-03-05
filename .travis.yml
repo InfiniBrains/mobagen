@@ -46,7 +46,6 @@ matrix:
         - docker
       env:
         - BUILD_TYPE=android
-      dist: xenial
       language: android
       sudo: true
       android:
@@ -64,6 +63,9 @@ matrix:
         - maven
         - ant
       install:
+        - which sdkmanager
+        - export PATH=/usr/local/android-sdk/tools/bin:$PATH
+        - which sdkmanager
         - echo y | sdkmanager "ndk-bundle"
       before_script:
         - export ANDROID_NDK_HOME=$ANDROID_HOME/ndk-bundle
