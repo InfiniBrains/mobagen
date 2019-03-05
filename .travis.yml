@@ -30,10 +30,14 @@ matrix:
       script:
         - which msbuild
         - which msbuild.exe
+        - ls /c/Program\ Files\ (x86)/Microsoft\ Visual\ Studio/2017/Enterprise/MSBuild/15.0/Bin/MSBuild.exe
+        - ls /c/Program\ Files\ (x86)/Microsoft\ Visual\ Studio/2017/Community/MSBuild/15.0/Bin/MSBuild.exe
         - git submodule update --init --recursive
         - cmake --version
         - cmake -Bbuild -H. -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=dependencies/polly/vs-15-2017-win64.cmake
         - ls build
+#        - ls /c/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/MSBuild/15.0/Bin/MSBuild.exe
+#        - ls C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\MSBuild.exe
         - cd build && msbuild.exe Engine.sln
 
     # linux android
