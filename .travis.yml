@@ -28,15 +28,8 @@ matrix:
         - BUILD_TYPE=native
       script:
         - git submodule update --init --recursive
-        #        - choco feature enable -n=allowGlobalConfirmation
-#        - choco install -y make
-#        - choco install mingw
-#        - which mingw32-make
-#        - which mingw32-make.exe
-#        - which make
-#        - which make.exe
         - cmake --version
-        - cmake -Bbuild -H. -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=Release
+        - cmake -Bbuild -H. -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=dependencies/polly/vs-15-2017-win64.cmake
         - cmake --build build
 
 
