@@ -36,6 +36,7 @@ matrix:
         - export PATH=$MSBUILD_PATH:$PATH
         - git submodule update --init --recursive
         - cmake --version
+        - PowerShell -Command 'cmake --version'
         - cmake -Bbuild -H. -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=dependencies/polly/vs-15-2017-win64.cmake
         - PowerShell -Command 'cmake --build build'
 #        - cd build && msbuild.exe Engine.sln
