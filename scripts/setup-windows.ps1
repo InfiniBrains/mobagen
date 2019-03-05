@@ -236,3 +236,5 @@ Write-Output 'Installing toolkit'
 #$nupkg = Join-Path $chocoPkgDir 'chocolatey.nupkg'
 #if (![System.IO.Directory]::Exists($chocoPkgDir)) { [System.IO.Directory]::CreateDirectory($chocoPkgDir); }
 #Copy-Item "$file" "$nupkg" -Force -ErrorAction SilentlyContinue
+
+choco install visualstudio2017buildtools --package-parameters "--allWorkloads --includeRecommended --includeOptional --passive --locale en-US"
