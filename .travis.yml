@@ -24,17 +24,20 @@ matrix:
       language: cpp
       cache:
         directories:
-        - /c/Users/travis/.hunter/
+          - /c/Users/travis/.hunter/
 #      install: choco install mingw
       env:
         - BUILD_TYPE=native
         - MSBUILD_PATH="c:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin"
+      install:
+        - PowerShell -Command 'Set-ExecutionPolicy -ExecutionPolicy RemoteSigned'
+        - choco install -y visualstudio2017-workload-vctools
       script:
         - export PATH=$MSBUILD_PATH:$PATH
         - git submodule update --init --recursive
         - cmake --version
         - cmake -Bbuild -H. -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=dependencies/polly/vs-15-2017-win64.cmake
-        - cmd /c call cmake --build build
+        - PowerShell -Command 'cmake --build build'
 #        - cd build && msbuild.exe Engine.sln
 
     # linux android
