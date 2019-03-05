@@ -57,6 +57,7 @@ matrix:
         - BUILD_TYPE=android
       group: travis_latest
       dist: trusty
+      language: cpp
 
     # linux emscripten
     - os: linux
