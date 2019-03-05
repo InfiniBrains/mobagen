@@ -51,7 +51,7 @@ matrix:
       android:
         components:
           - tools
-          - android-26
+          - android-24
           - platform-tools
           - build-tools-26.0.2
           - extra
@@ -60,15 +60,25 @@ matrix:
           - extra-google-google_play_services
       packages:
         - gradle
+        - maven
+        - ant
+      install:
+        - echo y | sdkmanager "ndk-bundle"
+      before_script:
+        - export ANDROID_NDK_HOME=$ANDROID_HOME/ndk-bundle
+        - export ANDROID_NDK_R18=$ANDROID_HOME/ndk-bundle
       script:
 #        - docker run --rm -v $(pwd):/src -t runmymind/docker-android-sdk:ubuntu-standalone sh -c "echo $ANDROID_SDK_ROOT"
+        - echo $ANDROID_SDK_ROOT
+        - echo $ANDROID_NDK_HOME
+        - echo $ANDROID_SDK
         - docker run -dit --name android -e TRAVIS_OS_NAME='linux' -e BUILD_TYPE='android' -v `pwd`:/mobagen -w /mobagen runmymind/docker-android-sdk:ubuntu-standalone sh
-        - docker exec -it android apt-get update
-        - docker exec -it android sh -c "export ANDROID_SDK_ROOT=/opt/android-sdk-linux"
-        - docker exec -it android sh -c "export ANDROID_SDK=/opt/android-sdk-linux"
-        - docker exec -it android sh -c "export ANDROID_HOME=/opt/android-sdk-linux"
-        - docker exec -it android sh -c "export ANDROID_NDK_HOME=/opt/android-sdk-linux/ndk-bundle"
-        - docker exec -it android sh -c "export ANDROID_NDK_HOME=/opt/android-sdk-linux/ndk-bundle"
+#        - docker exec -it android apt-get update
+#        - docker exec -it android sh -c "export ANDROID_SDK_ROOT=/opt/android-sdk-linux"
+#        - docker exec -it android sh -c "export ANDROID_SDK=/opt/android-sdk-linux"
+#        - docker exec -it android sh -c "export ANDROID_HOME=/opt/android-sdk-linux"
+#        - docker exec -it android sh -c "export ANDROID_NDK_HOME=/opt/android-sdk-linux/ndk-bundle"
+#        - docker exec -it android sh -c "export ANDROID_NDK_HOME=/opt/android-sdk-linux/ndk-bundle"
 
     # linux emscripten
     - os: linux
