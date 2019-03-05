@@ -136,11 +136,15 @@ before_script:
     fi
   - if [ $BUILD_TYPE == windows ]; then
       git submodule update --init --recursive ;
-      set generator="Visual Studio 15 2017 Win64";
       choco feature enable -n=allowGlobalConfirmation ;
       choco install -y make ;
+      alias make="mingw32-make" ;
+      which make ;
+      which mingw32-make ;
+      which make.exe ;
+      which mingw32-make.exe ;
       cmake --version ;
-      cmake -Bbuild -H. -G %generator% -DCMAKE_BUILD_TYPE=Release ;
+      cmake -Bbuild -H. -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=Release ;
     fi
 
 script:
@@ -148,6 +152,7 @@ script:
       docker exec -it emscripten ./scripts/travis-build.sh ;
       docker exec -it emscripten ./scripts/travis-build.sh ;
     elif [ $BUILD_TYPE == windows ]; then
+      alias make="mingw32-make"
       cmake --build build ;
     else
       ./scripts/travis-build.sh -j9 ;
