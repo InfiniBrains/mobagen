@@ -51,8 +51,10 @@ matrix:
       android:
         components:
           - tools
+          - android-24
           - android-26
           - platform-tools
+          - build-tools-24.0.0
           - build-tools-26.0.2
           - extra
           - extra-google-m2repository
@@ -62,27 +64,30 @@ matrix:
         - gradle
         - maven
         - ant
+        - oracle-java8-installer
       install:
-        - which sdkmanager
         - export PATH=/usr/local/android-sdk/tools/bin:$PATH
-        - which sdkmanager
+        - export PATH=$PATH:$ANDROID_HOME/tools
+        - export PATH=$PATH:$ANDROID_HOME/platform-tools
         - echo y | sdkmanager "ndk-bundle"
+        - echo y | sdkmanager "platforms;android-24"
       before_script:
         - export ANDROID_NDK_HOME=$ANDROID_HOME/ndk-bundle
-        - export ANDROID_NDK_R18=$ANDROID_HOME/ndk-bundle
+        - export ANDROID_NDK_R17=$ANDROID_HOME/ndk-bundle
+        - export ANDROID_NDK_r17=$ANDROID_HOME/ndk-bundle
+        - jdk_switcher use oraclejdk8
       script:
 #        - docker run --rm -v $(pwd):/src -t runmymind/docker-android-sdk:ubuntu-standalone sh -c "echo $ANDROID_SDK_ROOT"
         - echo $ANDROID_SDK_ROOT
         - echo $ANDROID_NDK_HOME
         - echo $ANDROID_SDK
-        - docker run -dit --name android -e TRAVIS_OS_NAME='linux' -e BUILD_TYPE='android' -v `pwd`:/mobagen -w /mobagen runmymind/docker-android-sdk:ubuntu-standalone sh
-        - docker exec -it android apt-get update
-        - docker exec -it android sh -c "export ANDROID_SDK_ROOT=/opt/android-sdk-linux"
-        - docker exec -it android sh -c "export ANDROID_HOME=/opt/android-sdk-linux"
-        - docker exec -it android sh -c "export ANDROID_SDK=/opt/android-sdk-linux"
-        - docker exec -it android sh -c "export ANDROID_NDK_HOME=/opt/android-sdk-linux/ndk-bundle"
-        - docker exec -it android sh -c "export PATH=$PATH:$ANDROID_HOME/tools"
-        - docker exec -it android sh -c "export PATH=$PATH:$ANDROID_HOME/platform-tools"
+        - which maven
+        - which ant
+        - which gradle
+        - java -version
+        - mkdir -p build
+        - cmake -H. -Bbuild -DCMAKE_BUILD_TYPE=RELEASE -DCMAKE_MAKE_PROGRAM=make -DCMAKE_TOOLCHAIN_FILE=dependencies/polly/android-ndk-r17-api-24-arm64-v8a-clang-libcxx14.cmake
+
 
     # linux emscripten
     - os: linux
@@ -101,7 +106,6 @@ matrix:
       dist: trusty
       language: cpp
       compiler: emscripten
-
       
     # osx native
     - os: osx
