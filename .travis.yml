@@ -1,109 +1,109 @@
 matrix:
   include:
     # windows native
-    - os: windows
-      language: cpp
-      cache:
-        directories:
-          - /c/Users/travis/.hunter/
-      env:
-        - BUILD_TYPE=native
-        - MSBUILD_PATH="c:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin"
-      install:
-        - PowerShell -Command 'Set-ExecutionPolicy -ExecutionPolicy RemoteSigned'
-#        - choco install -y visualstudio2017-workload-vctools
-      script:
-        - export PATH=$MSBUILD_PATH:$PATH
-        - git submodule update --init --recursive
-        - cmake --version
-        - PowerShell -Command 'cmake --version'
-        - cmake -Bbuild -H. -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=dependencies/polly/vs-15-2017-win64.cmake
-        - PowerShell -Command 'cmake --build build'
-#        - cd build && msbuild.exe Engine.sln
-
-    # linux android
-    - os: linux
-      dist: xenial
-      android:
-        components:
-          - build-tools-24.0.1
-          - android-24
-          - add-on
-          - extra
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - clang
-            - gcc
-            - g++
-      env:
-        - BUILD_TYPE=android
-        - MATRIX_EVAL="CC=clang && CXX=clang++"
-      language: android
-      before_cache:
-        - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-        - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-      cache:
-        directories:
-          - $HOME/.gradle/caches/
-          - $HOME/.gradle/wrapper/
-          - $HOME/.android/build-cache
-      install:
-        - sudo add-apt-repository -y ppa:openjdk-r/ppa
-        - sudo apt-get update 
-        - sudo apt-get install -y openjdk-8-jdk
-        - java -version
-        - javac -version
-#        - echo 0 | sudo update-alternatives --config java
-        - wget --quiet --continue https://github.com/Kitware/CMake/releases/download/v3.14.0-rc3/cmake-3.14.0-rc3-Linux-x86_64.sh
-        - chmod +x cmake-3.14.0-rc3-Linux-x86_64.sh
-        - sudo mkdir /opt/cmake 
-        - sudo ./cmake-3.14.0-rc3-Linux-x86_64.sh --prefix=/opt/cmake --skip-license
-        - sudo rm -rf /usr/bin/cmake /usr/local/bin/cmake
-        - sudo ln -s /opt/cmake/bin/cmake /usr/local/bin/cmake
-        - sudo ln -s /opt/cmake/bin/cmake /usr/bin/cmake
-        - cmake --version
-        - wget --quiet --continue http://dl.google.com/android/repository/android-ndk-r18b-linux-x86_64.zip -O ndk.zip
-        - unzip -o -q ndk.zip
-        - export ANDROID_NDK=`pwd`/android-ndk-r18b
-        - export ANDROID_NDK_r18b=`pwd`/android-ndk-r18b
-        - mkdir android-sdk-linux
-        - wget --quiet --continue https://dl.google.com/android/repository/tools_r25.2.5-linux.zip -O android-sdk-linux/sdk.zip
-        - cd android-sdk-linux ; unzip -o -q sdk.zip ; cd ..
-        - export ANDROID_SDK=`pwd`/android-sdk-linux
-        - export ANDROID_HOME=$ANDROID_SDK
-        - export PATH=${ANDROID_SDK}/tools:${ANDROID_SDK}/tools/bin:${PATH}
-        - touch /home/travis/.android/repositories.cfg
-        - echo y | sdkmanager 'build-tools;24.0.1'
-        - echo y | sdkmanager 'platforms;android-24'
-        - echo y | sdkmanager 'platform-tools'
-        - export PATH=${ANDROID_SDK}/platform-tools:${ANDROID_NDK}:${PATH}
-      script:
-        - ./scripts/cmake-android.sh
+#    - os: windows
+#      language: cpp
+#      cache:
+#        directories:
+#          - /c/Users/travis/.hunter/
+#      env:
+#        - BUILD_TYPE=native
+#        - MSBUILD_PATH="c:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin"
+#      install:
+#        - PowerShell -Command 'Set-ExecutionPolicy -ExecutionPolicy RemoteSigned'
+##        - choco install -y visualstudio2017-workload-vctools
+#      script:
+#        - export PATH=$MSBUILD_PATH:$PATH
+#        - git submodule update --init --recursive
+#        - cmake --version
+#        - PowerShell -Command 'cmake --version'
+#        - cmake -Bbuild -H. -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=dependencies/polly/vs-15-2017-win64.cmake
+#        - PowerShell -Command 'cmake --build build'
+##        - cd build && msbuild.exe Engine.sln
+#
+#    # linux android
+#    - os: linux
+#      dist: xenial
 #      android:
 #        components:
-          # Uncomment the lines below if you want to
-          # use the latest revision of Android SDK Tools
-          # - tools
-          # - platform-tools
-
-          # The BuildTools version used by your project
-#          - build-tools-26.0.2
-
-          # The SDK version used to compile your project
-#          - android-26
-
-          # Additional components
-#          - extra-google-google_play_services
-#          - extra-google-m2repository
-#          - extra-android-m2repository
-
-          # Specify at least one system image,
-          # if you need to run emulator(s) during your tests
-#          - sys-img-x86-android-26
-#          - sys-img-armeabi-v7a-android-17
+#          - build-tools-24.0.1
+#          - android-24
+#          - add-on
+#          - extra
+#      addons:
+#        apt:
+#          sources:
+#            - ubuntu-toolchain-r-test
+#          packages:
+#            - clang
+#            - gcc
+#            - g++
+#      env:
+#        - BUILD_TYPE=android
+#        - MATRIX_EVAL="CC=clang && CXX=clang++"
+#      language: android
+#      before_cache:
+#        - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+#        - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+#      cache:
+#        directories:
+#          - $HOME/.gradle/caches/
+#          - $HOME/.gradle/wrapper/
+#          - $HOME/.android/build-cache
+#      install:
+#        - sudo add-apt-repository -y ppa:openjdk-r/ppa
+#        - sudo apt-get update
+#        - sudo apt-get install -y openjdk-8-jdk
+#        - java -version
+#        - javac -version
+##        - echo 0 | sudo update-alternatives --config java
+#        - wget --quiet --continue https://github.com/Kitware/CMake/releases/download/v3.14.0-rc3/cmake-3.14.0-rc3-Linux-x86_64.sh
+#        - chmod +x cmake-3.14.0-rc3-Linux-x86_64.sh
+#        - sudo mkdir /opt/cmake
+#        - sudo ./cmake-3.14.0-rc3-Linux-x86_64.sh --prefix=/opt/cmake --skip-license
+#        - sudo rm -rf /usr/bin/cmake /usr/local/bin/cmake
+#        - sudo ln -s /opt/cmake/bin/cmake /usr/local/bin/cmake
+#        - sudo ln -s /opt/cmake/bin/cmake /usr/bin/cmake
+#        - cmake --version
+#        - wget --quiet --continue http://dl.google.com/android/repository/android-ndk-r18b-linux-x86_64.zip -O ndk.zip
+#        - unzip -o -q ndk.zip
+#        - export ANDROID_NDK=`pwd`/android-ndk-r18b
+#        - export ANDROID_NDK_r18b=`pwd`/android-ndk-r18b
+#        - mkdir android-sdk-linux
+#        - wget --quiet --continue https://dl.google.com/android/repository/tools_r25.2.5-linux.zip -O android-sdk-linux/sdk.zip
+#        - cd android-sdk-linux ; unzip -o -q sdk.zip ; cd ..
+#        - export ANDROID_SDK=`pwd`/android-sdk-linux
+#        - export ANDROID_HOME=$ANDROID_SDK
+#        - export PATH=${ANDROID_SDK}/tools:${ANDROID_SDK}/tools/bin:${PATH}
+#        - touch /home/travis/.android/repositories.cfg
+#        - echo y | sdkmanager 'build-tools;24.0.1'
+#        - echo y | sdkmanager 'platforms;android-24'
+#        - echo y | sdkmanager 'platform-tools'
+#        - export PATH=${ANDROID_SDK}/platform-tools:${ANDROID_NDK}:${PATH}
+#      script:
+#        - ./scripts/cmake-android.sh
+##      android:
+##        components:
+#          # Uncomment the lines below if you want to
+#          # use the latest revision of Android SDK Tools
+#          # - tools
+#          # - platform-tools
+#
+#          # The BuildTools version used by your project
+##          - build-tools-26.0.2
+#
+#          # The SDK version used to compile your project
+##          - android-26
+#
+#          # Additional components
+##          - extra-google-google_play_services
+##          - extra-google-m2repository
+##          - extra-android-m2repository
+#
+#          # Specify at least one system image,
+#          # if you need to run emulator(s) during your tests
+##          - sys-img-x86-android-26
+##          - sys-img-armeabi-v7a-android-17
 
 
     # linux native
@@ -151,8 +151,16 @@ matrix:
       install:
         - docker run -dit --name emscripten -e TRAVIS_OS_NAME='linux' -e BUILD_TYPE='emscripten' -v `pwd`:/mobagen -v ${HOME}/.hunter:/root/.hunter -w /mobagen trzeci/emscripten:sdk-tag-1.38.12-64bit bash
         - docker exec -it emscripten apt-get update
-        - docker exec -it emscripten rm /usr/local/bin/cmake
-        - docker exec -it emscripten apt-get install -y cmake wget
+        - docker exec -it emscripten apt-get install -y wget
+        - docker exec -it emscripten wget --quiet --continue https://github.com/Kitware/CMake/releases/download/v3.14.0-rc3/cmake-3.14.0-rc3-Linux-x86_64.sh
+        - docker exec -it emscripten chmod +x cmake-3.14.0-rc3-Linux-x86_64.sh
+        - docker exec -it emscripten rm -rf /opt/cmake
+        - docker exec -it emscripten mkdir /opt/cmake
+        - docker exec -it emscripten ./cmake-3.14.0-rc3-Linux-x86_64.sh --prefix=/opt/cmake --skip-license
+        - docker exec -it emscripten rm -rf /usr/bin/cmake /usr/local/bin/cmake
+        - docker exec -it emscripten ln -s /opt/cmake/bin/cmake /usr/local/bin/cmake
+        - docker exec -it emscripten ln -s /opt/cmake/bin/cmake /usr/bin/cmake
+        - docker exec -it emscripten cmake --version
       script:
         - docker exec -it emscripten ./scripts/travis-build.sh
         - docker exec -it emscripten ./scripts/travis-build.sh
