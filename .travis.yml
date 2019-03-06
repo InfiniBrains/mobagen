@@ -67,7 +67,9 @@ matrix:
         - export ANDROID_SDK=`pwd`/android-sdk-linux
         - export ANDROID_HOME=$ANDROID_SDK
         - export PATH=${ANDROID_SDK}/tools:${ANDROID_SDK}/tools/bin:${PATH}
-        - echo y | sdkmanager 'build-tools;24.0.1' 'platforms;android-24' 'platform-tools'
+        - touch /home/travis/.android/repositories.cfg
+        - yes | sdkmanager --licenses
+        - sdkmanager 'build-tools;24.0.1' 'platforms;android-24' 'platform-tools'
         - export PATH=${ANDROID_SDK}/platform-tools:${ANDROID_NDK}:${PATH}
       script:
         - ./scripts/cmake-android.sh
