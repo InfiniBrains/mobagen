@@ -131,17 +131,17 @@ Write-Output "Getting MSYS2 from $url."
 Download-File $url $file
 
 # Download script to auto install msys2
-$url2 = 'https://raw.githubusercontent.com/InfiniBrains/mobagen/feature/unity-gameobjects/scripts/setup-windows-msys.js'
+$url2 = 'https://raw.githubusercontent.com/InfiniBrains/mobagen/develop/scripts/setup-windows-msys.js'
 Write-Output "Downloading Script to auto install msys2 from : $url2"
 $file2 = Join-Path $tempDir "setup-windows-msys.js"
 Download-File $url2 $file2
 
-$url3 = 'https://raw.githubusercontent.com/InfiniBrains/mobagen/feature/unity-gameobjects/scripts/mingw-update-system.sh'
+$url3 = 'https://raw.githubusercontent.com/InfiniBrains/mobagen/develop/scripts/mingw-update-system.sh'
 Write-Output "Downloading Script to auto update msys2 from: $url3"
 $file3 = Join-Path $tempDir "mingw-update-system.sh"
 Download-File $url3 $file3
 
-$url4 = 'https://raw.githubusercontent.com/InfiniBrains/mobagen/feature/unity-gameobjects/scripts/mingw-install-toolkit.sh'
+$url4 = 'https://raw.githubusercontent.com/InfiniBrains/mobagen/develop/scripts/mingw-install-toolkit.sh'
 Write-Output "Downloading Script to isntall toolkit from: $url4"
 $file4 = Join-Path $tempDir "mingw-install-toolkit.sh"
 Download-File $url4 $file4
