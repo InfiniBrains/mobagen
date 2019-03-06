@@ -38,7 +38,6 @@ matrix:
             - clang
             - gcc
             - g++
-            - cmake
       env:
         - BUILD_TYPE=android
         - MATRIX_EVAL="CC=clang && CXX=clang++"
@@ -52,6 +51,13 @@ matrix:
           - $HOME/.gradle/wrapper/
           - $HOME/.android/build-cache
       install:
+        - wget --quiet --continue https://github.com/Kitware/CMake/releases/download/v3.14.0-rc3/cmake-3.14.0-rc3-Linux-x86_64.sh
+        - chmod +x cmake-3.14.0-rc3-Linux-x86_64.sh
+        - sudo ./cmake-3.14.0-rc3-Linux-x86_64.sh --prefix=/opt/cmake --skip-license
+        - sudo mkdir /opt/cmake
+        - sudo ln -s /opt/cmake/bin/cmake /usr/local/bin/cmake
+        - sudo ln -s /opt/cmake/bin/cmake /usr/bin/cmake
+        - cmake --version
 #        - sudo apt-get update
 #        - java -version
 #        - which java
