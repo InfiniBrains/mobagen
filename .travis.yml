@@ -28,12 +28,11 @@ matrix:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-trusty-5.0
-      packages:
-        - clang-5.0
-        - gcc-6
-        - g++-6
-        - cmake
+          packages:
+            - clang-5.0
+            - gcc-7
+            - g++-7
+            - cmake
       env:
         - BUILD_TYPE=android
         - MATRIX_EVAL="CC=clang && CXX=clang++"
@@ -90,8 +89,13 @@ matrix:
     - os: linux
       addons:
         apt:
-#          sources:
+          sources:
+            - ubuntu-toolchain-r-test
           packages:
+            - clang-5.0
+            - gcc-7
+            - g++-7
+            - cmake
             - clang
             - cmake
             - git
