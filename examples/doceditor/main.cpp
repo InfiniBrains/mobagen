@@ -6,7 +6,7 @@
 #include "components/DirectionalLight.hpp"
 #include "components/SpotLight.hpp"
 #include "components/PointLight.hpp"
-#include "components/Sphere.hpp"
+#include "components/SphereCollider.hpp"
 
 #include "Plane.hpp"
 #include "Mesh.hpp"
@@ -24,12 +24,12 @@ class DocEditor : public Game
 {
 public:
   virtual void init(GLManager *glManager);
-  virtual void update(double delta);
+  virtual void update(Input *input, std::chrono::microseconds delta);
 };
 
-void DocEditor::update(double delta)
+void DocEditor::update(Input *input, std::chrono::microseconds delta)
 {
-  Game::update(delta);
+  Game::update(input, delta);
 }
 
 void DocEditor::init(GLManager *glManager)
@@ -48,21 +48,21 @@ void DocEditor::init(GLManager *glManager)
   auto backgroundMat = std::make_shared<Material>(getRootScene()->getComponent<EditorGUI>()->firstImage, getRootScene()->getComponent<EditorGUI>()->normalTexture, getRootScene()->getComponent<EditorGUI>()->specularTexture);
   auto backgroundMesh = Plane::getMesh();
   planeEntity->addComponent<MeshRenderer>(backgroundMesh, backgroundMat);
-  planeEntity->getTransform()->setPosition(glm::vec3(300, 0, 200));
-  planeEntity->getTransform()->setScale(glm::vec3(400, 1, 400));
+  planeEntity->getTransform().setPosition(glm::vec3(300, 0, 200));
+  planeEntity->getTransform().setScale(glm::vec3(400, 1, 400));
   addToScene(planeEntity);
 
   auto planeSpotLight =  std::make_shared<Entity>();
   planeSpotLight->addComponent<DirectionalLight>(glm::vec3(1,1,1), 0.5);
-  planeSpotLight->getTransform()->setPosition(glm::vec3(0, 512, 0));
-  planeSpotLight->getTransform()->setRotation(glm::quat(0, 0, 0.707, 0.707));
+  planeSpotLight->getTransform().setPosition(glm::vec3(0, 512, 0));
+  planeSpotLight->getTransform().setRotation(glm::quat(0, 0, 0.707, 0.707));
   addToScene(planeSpotLight);
 
   auto cam = std::make_shared<Entity>();
   cam->addComponent<OrthoCamera>(getEngine()->getWindow()->getWidth() / (float)getEngine()->getWindow()->getHeight(), 512, 0.01f, 10000.0f);
-  cam->getTransform()->setPosition(glm::vec3(0, 512, 0));
-  cam->getTransform()->setScale(glm::vec3(1, 1, 1));
-  cam->getTransform()->setRotation(glm::quat(0, 0, 0.707, 0.707));
+  cam->getTransform().setPosition(glm::vec3(0, 512, 0));
+  cam->getTransform().setScale(glm::vec3(1, 1, 1));
+  cam->getTransform().setRotation(glm::quat(0, 0, 0.707, 0.707));
   //cam->addComponent<DirectionalLight>(glm::vec3(1,1,1), 0.5);
   addToScene(cam);
 
@@ -72,7 +72,7 @@ void DocEditor::init(GLManager *glManager)
 
 int main(int argc, char *argv[]) {
   DocEditor game;
-  Engine gameEngine(&game, "DocEditor", glm::vec2(800,800));
+  Engine gameEngine(&game, "DocEditor",glm::vec2(800,600));
 
   gameEngine.start();
 

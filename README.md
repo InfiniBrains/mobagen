@@ -1,8 +1,8 @@
-# MoBaGEn
+![](./assets/logo.png)
+
 Welcome to the **MoBaGEn**. The **MO**dule **BA**sed **G**ame **EN**gine. 
 
 **MoBaGEn** is a free lightweight, cross-platform 3D Game Engine implemented in C++. It will support scripts in C#(Mono), Javascript(V8), python and Lua.
-
 
 [![Build status](https://ci.appveyor.com/api/projects/status/5mdt9wslio6fl7vp?svg=true)](https://ci.appveyor.com/project/tolstenko/mobagen) [![Build Status](https://api.travis-ci.org/InfiniBrains/mobagen.svg?branch=master)](https://travis-ci.org/InfiniBrains/mobagen) [![Active Contributors](https://api.gitential.com/accounts/758/projects/809/badges/active-contributors.svg)](https://gitential.com/accounts/758/projects/809/share?uuid=7533eb0d-42e1-41f1-8f8f-a8f8f1fdce70&utm_source=shield&utm_medium=shield&utm_campaign=809) [![Code Volume](https://api.gitential.com/accounts/758/projects/809/badges/code-volume.svg)](https://gitential.com/accounts/758/projects/809/share?uuid=7533eb0d-42e1-41f1-8f8f-a8f8f1fdce70&utm_source=shield&utm_medium=shield&utm_campaign=809) [![Coding Hours](https://api.gitential.com/accounts/758/projects/809/badges/coding-hours.svg)](https://gitential.com/accounts/758/projects/809/share?uuid=7533eb0d-42e1-41f1-8f8f-a8f8f1fdce70&utm_source=shield&utm_medium=shield&utm_campaign=809) [![Efficiency](https://api.gitential.com/accounts/758/projects/809/badges/efficiency.svg)](https://gitential.com/accounts/758/projects/809/share?uuid=7533eb0d-42e1-41f1-8f8f-a8f8f1fdce70&utm_source=shield&utm_medium=shield&utm_campaign=809) [![Utilization](https://api.gitential.com/accounts/758/projects/809/badges/utilization.svg)](https://gitential.com/accounts/758/projects/809/share?uuid=7533eb0d-42e1-41f1-8f8f-a8f8f1fdce70&utm_source=shield&utm_medium=shield&utm_campaign=809) [![Coverity](https://scan.coverity.com/projects/14798/badge.svg)](https://scan.coverity.com/projects/infinibrains-mobagen)  [![Coverage Status](https://coveralls.io/repos/github/InfiniBrains/mobagen/badge.svg?branch=master)](https://coveralls.io/github/InfiniBrains/mobagen?branch=master)
 [![Waffle.io - Columns and their card count](https://badge.waffle.io/InfiniBrains/mobagen.svg?columns=all)](https://waffle.io/InfiniBrains/mobagen)
@@ -24,6 +24,8 @@ Licensed under the [![WTFPL](http://www.wtfpl.net/wp-content/uploads/2012/12/wtf
 ## Contributing
 
 [Join us](https://infinibrains-inviter.herokuapp.com/) on Slack [![Slack Status](https://infinibrains-inviter.herokuapp.com/badge.svg)](https://infinibrains-inviter.herokuapp.com)!
+
+[Chat with us!](https://chat.whatsapp.com/HdkvAXNLoWk7uRuV1A4E8F) on WhatsApp <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/WhatsApp_logo-color-vertical.svg/1024px-WhatsApp_logo-color-vertical.svg.png" data-canonical-src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/WhatsApp_logo-color-vertical.svg/1024px-WhatsApp_logo-color-vertical.svg.png" width="20" height="20" />
  
 Before making pull requests, please read the [Contribution checklist](CONTRIBUTION.md) and [Coding Conventions](CODINGCONVENTION.md) pages from the documentation.
 
@@ -54,9 +56,10 @@ The change history is available online at [History](docs/HEAD/history.html) (Wor
 This project was made using these open-sourced [third parties](THIRDPARTIES.md).
 
 ## Contributors
-MoBaGEn development is made by these [People](PEOPLE.md), and the top contributors are:
+MoBaGEn development is made by these awesome [People](PEOPLE.md), and the top contributors are:
 - [Alexandre Tolstenko](http://linkedin.com/in/aletolstenko/)
 - [Marcos Soares](http://linkedin.com/in/marcos-soares-391718141/)
+- [Mauro Gavioli](https://www.linkedin.com/in/mauro-gavioli-de-carvalho-245691163/)
 
 ## Sponsorship
 This project is sponsored via [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=tolstenko@gmail.com) and [Patreon](https://www.patreon.com/infinibrains) by these kind people:
@@ -67,3 +70,8 @@ In order to report our costs properly via [OpenCollective](https://opencollectiv
 
 ## Development Log
 You can see our reports and tutorials via our channel in [YouTube](https://www.youtube.com/tolstenko) or our [Blog](http://infinibrains.com/blog)
+
+<div align="center">
+  <a href="https://www.youtube.com/watch?v=oY6Epmaxixk"><img src="https://img.youtube.com/vi/oY6Epmaxixk/0.jpg" alt="MoBaGEn Intro"></a>
+</div>
+

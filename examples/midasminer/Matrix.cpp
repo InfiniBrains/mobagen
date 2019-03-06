@@ -20,11 +20,11 @@ const char * Matrix::getType(void)
 	return "MATRIX";
 }
 
-void Matrix::update(double delta)
+void Matrix::update(Input *input, std::chrono::microseconds delta)
 {
 	if (getParent()->getComponent<Menu>()->getTime() < 0)
 		return;
-	m_timeToGlobalRun -= delta;
+	m_timeToGlobalRun -= delta.count()/1000000.0;
 	if (m_timeToGlobalRun < 0) {
 		if (solve())
 			m_timeToGlobalRun = 0.5;
@@ -95,7 +95,7 @@ bool Matrix::consume(int x, int y)
 	{
 		getParent()->getComponent<Menu>()->addScore(matches.size()*matches.size());
 		bool isHorizontal = false;
-		if (abs(matches[0]->getTransform()->getPosition().x - matches[1]->getTransform()->getPosition().x) > 1)
+		if (abs(matches[0]->getTransform().getPosition().x - matches[1]->getTransform().getPosition().x) > 1)
 			isHorizontal = true;
 
 		if (isHorizontal)
@@ -117,7 +117,7 @@ bool Matrix::consume(int x, int y)
 				setElement(pos.x, 0, matches[i]);
 				auto startPos = CrystalPicker::MatrixPositionToVec3(pos.x, -2);
 				auto newPos = CrystalPicker::MatrixPositionToVec3(pos.x, 0);
-				matches[i]->getTransform()->setPosition(startPos);
+				matches[i]->getTransform().setPosition(startPos);
 				matches[i]->dropTo(newPos);
 				matches[i]->decreaseSizeNow();
 				matches[i]->randomize();
@@ -144,7 +144,7 @@ bool Matrix::consume(int x, int y)
 				setElement(top.x, i, matches[i]);
 				auto startPos = CrystalPicker::MatrixPositionToVec3(top.x, -2 - matches.size() + i);
 				auto newPos = CrystalPicker::MatrixPositionToVec3(top.x, i);
-				matches[i]->getTransform()->setPosition(startPos);
+				matches[i]->getTransform().setPosition(startPos);
 				matches[i]->dropTo(newPos);
 				matches[i]->decreaseSizeNow();
 				matches[i]->randomize();

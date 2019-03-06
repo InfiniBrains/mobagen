@@ -6,7 +6,7 @@
 #include "components/DirectionalLight.hpp"
 #include "components/SpotLight.hpp"
 #include "components/PointLight.hpp"
-#include "components/Sphere.hpp"
+#include "components/SphereCollider.hpp"
 
 #include "Plane.hpp"
 #include "Mesh.hpp"
@@ -22,18 +22,19 @@
 #include "Matrix.hpp"
 #include <random>
 #include "Menu.hpp"
+#include "Input.hpp"
 
 
 class CoolGame : public Game
 {
 public:
   virtual void init(GLManager *glManager);
-  virtual void update(double delta);
+  virtual void update(Input *input, std::chrono::microseconds delta);
 };
 
-void CoolGame::update(double delta)
+void CoolGame::update(Input *input, std::chrono::microseconds delta)
 {
-  Game::update(delta);
+  Game::update(input, delta);
 }
 
 void CoolGame::init(GLManager *glManager)
@@ -84,17 +85,17 @@ void CoolGame::init(GLManager *glManager)
   auto backgroundMesh = Plane::getMesh();
   auto planeEntity = std::make_shared<Entity>();
   planeEntity->addComponent<MeshRenderer>(backgroundMesh, backgroundMat);
-  planeEntity->getTransform()->setPosition(glm::vec3(0, -10, 0));
-  planeEntity->getTransform()->setScale(glm::vec3(755, 1, 600));
+  planeEntity->getTransform().setPosition(glm::vec3(0, 0, 0));
+  planeEntity->getTransform().setScale(glm::vec3(755, 1, 600));
   addToScene(planeEntity);
 
   getRootScene()->addComponent<Menu>();
 
   auto cam = std::make_shared<Entity>();
   cam->addComponent<PerspectiveCamera>(glm::pi<float>() / 4.0f * 0.96f, getEngine()->getWindow()->getWidth() / (float)getEngine()->getWindow()->getHeight(), 0.01f, 10000.0f);
-  cam->getTransform()->setPosition(glm::vec3(0, getEngine()->getWindow()->getWidth(), 0));
-  cam->getTransform()->setScale(glm::vec3(0.8, 0.8, 0.8));
-  cam->getTransform()->setRotation(glm::quat(0, 0, 0.707, 0.707));
+  cam->getTransform().setPosition(glm::vec3(0, getEngine()->getWindow()->getWidth(), 0));
+  cam->getTransform().setScale(glm::vec3(0.8, 0.8, 0.8));
+  cam->getTransform().setRotation(glm::quat(0, 0, 0.707, 0.707));
   cam->addComponent<DirectionalLight>(glm::vec3(1,1,1), 0.5);
   addToScene(cam);
 
@@ -105,6 +106,7 @@ void CoolGame::init(GLManager *glManager)
 int main(int argc, char *argv[]) {
   CoolGame game;
   Engine gameEngine(&game, "Midas Miner!", glm::vec2(755,600));
+  gameEngine.getPhysicsManager()->setGravity(glm::vec3(0,0,0));
 
   gameEngine.start();
 

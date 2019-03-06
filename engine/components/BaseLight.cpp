@@ -1,7 +1,7 @@
 #include "BaseLight.hpp"
 
 namespace mobagen {
-  BaseLight::BaseLight(glm::vec3 color, float intensity) : Component() {
+  BaseLight::BaseLight(glm::vec3 color, float intensity) {
     m_color = color;
     m_intensity = intensity;
 

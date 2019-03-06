@@ -1,10 +1,10 @@
 #include "TextureData.hpp"
 
 namespace mobagen {
-  TextureData::TextureData(int width_, int height_, const unsigned char *data, GLenum textureTarget, GLfloat filter) {
-    createTexture(width_, height_, data, textureTarget, filter);
-    this->m_width = width_;
-    this->m_height = width_;
+  TextureData::TextureData(int width, int height, const unsigned char *data, GLenum textureTarget, GLfloat filter) {
+    createTexture(width, height, data, textureTarget, filter);
+    this->m_width = width;
+    this->m_height = height;
   }
 
   TextureData::~TextureData() {

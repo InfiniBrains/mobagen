@@ -1,4 +1,5 @@
 #pragma once
+
 #if defined(GLES2)
   #include <GLES2/gl2.h>
 #elif defined(GLES3)
@@ -6,6 +7,7 @@
 #else
   #include <GL/glew.h>
 #endif
+
 #include "Asset.hpp"
 #include "TextureData.hpp"
 

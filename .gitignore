@@ -7,6 +7,7 @@ bin/
 bin-xcode/
 bin-emscripten/
 bin-android/
+build-android/
 build/
 cmake-build-debug/
 gen/
@@ -22,8 +23,13 @@ imgui.ini
 emscripten.zip
 buildclion/
 bin-mingw/
-
+build2/
+build3/
+buildmingw/
+android-ndk-r18b/
+android-sdk-macosx/
 win64mingw\.zip
+ndk.zip
 
 *.TMP
 
@@ -32,3 +38,5 @@ bin_mingw/
 build-emscripten/
 
 \.idea/
+
+CMakeLists\.txt\.user

@@ -5,10 +5,12 @@
 #include <android/asset_manager.h>
 #include <android/asset_manager_jni.h>
 
-class AndroidAssetManager
-{
-public:
-  static AAssetManager *getAssetManager(void);
-};
+namespace mobagen {
+  class AndroidAssetManager
+  {
+  public:
+    static AAssetManager *getAssetManager(void);
+  };
+}
 
 #endif

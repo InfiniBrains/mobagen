@@ -1,5 +1,7 @@
 #pragma once
+
 #include <memory>
+#include <chrono>
 
 #include "Input.hpp"
 #include "Shader.hpp"
@@ -7,6 +9,7 @@
 #include "Transform.hpp"
 #include <imgui.h>
 #include "Object.hpp"
+
 
 namespace mobagen {
   class Engine;
@@ -28,13 +31,10 @@ namespace mobagen {
 
   class Component {
   public:
-    Component();
 
-    ~Component(void) {};
+    virtual ~Component(void) {};
 
-    virtual void updateInput(Input *input, double delta) {};
-
-    virtual void update(double delta) {};
+    virtual void update(Input *input, std::chrono::microseconds delta) {};
 
     virtual void render(Shader *shader) {};
 
@@ -54,13 +54,15 @@ namespace mobagen {
 
     Entity *getParent(void) const;
 
-    Transform *getTransform(void) const;
+    Transform &getTransform(void) const;
 
     std::map<const char *, Property> m_properties;
 
+    // TODO: Remove this
     Engine *getEngine();
 
-    double getDeltaTime();
+    // TODO: Remove this
+    std::chrono::microseconds getDeltaTime();
 
   protected:
     Entity *m_parentEntity;

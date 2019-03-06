@@ -1,14 +1,17 @@
 #include "GuiManager.hpp"
+
 #include "Shader.hpp"
 #include "TextureData.hpp"
 #include "Component.hpp"
+
 #if defined(GLES2)
-  #include <GLES2/gl2.h>
+#include <GLES2/gl2.h>
 #elif defined(GLES3)
-  #include <GLES3/gl3.h>
+#include <GLES3/gl3.h>
 #else
-  #include <GL/glew.h>
+#include <GL/glew.h>
 #endif
+
 #include <glm/gtx/transform.hpp>
 
 namespace mobagen {
@@ -89,10 +92,10 @@ namespace mobagen {
     glEnableVertexAttribArray(g_AttribLocationUV);
     glEnableVertexAttribArray(g_AttribLocationColor);
 
-#define OFFSETOF(TYPE, ELEMENT) ((size_t)&(((TYPE *)0)->ELEMENT))
-      glVertexAttribPointer(g_AttribLocationPosition, 2, GL_FLOAT, GL_FALSE, sizeof(ImDrawVert), (GLvoid*)OFFSETOF(ImDrawVert, pos));
-      glVertexAttribPointer(g_AttribLocationUV, 2, GL_FLOAT, GL_FALSE, sizeof(ImDrawVert), (GLvoid*)OFFSETOF(ImDrawVert, uv));
-      glVertexAttribPointer(g_AttribLocationColor, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(ImDrawVert), (GLvoid*)OFFSETOF(ImDrawVert, col));
+#define OFFSETOF(TYPE, ELEMENT) ((size_t) & (((TYPE *)0)->ELEMENT))
+    glVertexAttribPointer(g_AttribLocationPosition, 2, GL_FLOAT, GL_FALSE, sizeof(ImDrawVert), (GLvoid *)OFFSETOF(ImDrawVert, pos));
+    glVertexAttribPointer(g_AttribLocationUV, 2, GL_FLOAT, GL_FALSE, sizeof(ImDrawVert), (GLvoid *)OFFSETOF(ImDrawVert, uv));
+    glVertexAttribPointer(g_AttribLocationColor, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(ImDrawVert), (GLvoid *)OFFSETOF(ImDrawVert, col));
 #undef OFFSETOF
 #endif
 
@@ -141,19 +144,34 @@ namespace mobagen {
 #if !defined(GLES2)
     glBlendFunc(last_blend_src, last_blend_dst);
 #endif
-    if (last_enable_blend) glEnable(GL_BLEND); else glDisable(GL_BLEND);
-    if (last_enable_cull_face) glEnable(GL_CULL_FACE); else glDisable(GL_CULL_FACE);
-    if (last_enable_depth_test) glEnable(GL_DEPTH_TEST); else glDisable(GL_DEPTH_TEST);
-    if (last_enable_scissor_test) glEnable(GL_SCISSOR_TEST); else glDisable(GL_SCISSOR_TEST);
+    if (last_enable_blend)
+      glEnable(GL_BLEND);
+    else
+      glDisable(GL_BLEND);
+    if (last_enable_cull_face)
+      glEnable(GL_CULL_FACE);
+    else
+      glDisable(GL_CULL_FACE);
+    if (last_enable_depth_test)
+      glEnable(GL_DEPTH_TEST);
+    else
+      glDisable(GL_DEPTH_TEST);
+    if (last_enable_scissor_test)
+      glEnable(GL_SCISSOR_TEST);
+    else
+      glDisable(GL_SCISSOR_TEST);
     glViewport(last_viewport[0], last_viewport[1], (GLsizei) last_viewport[2], (GLsizei) last_viewport[3]);
   }
 
   void GuiManager::invalidateDeviceObjects(void) {
 #if !defined(GLES2)
-    if (g_VaoHandle) glDeleteVertexArrays(1, &g_VaoHandle);
+    if (g_VaoHandle)
+      glDeleteVertexArrays(1, &g_VaoHandle);
 #endif
-    if (g_VboHandle) glDeleteBuffers(1, &g_VboHandle);
-    if (g_ElementsHandle) glDeleteBuffers(1, &g_ElementsHandle);
+    if (g_VboHandle)
+      glDeleteBuffers(1, &g_VboHandle);
+    if (g_ElementsHandle)
+      glDeleteBuffers(1, &g_ElementsHandle);
     g_VaoHandle = g_VboHandle = g_ElementsHandle = 0;
 
     delete m_shader;
@@ -181,7 +199,7 @@ namespace mobagen {
     glEnableVertexAttribArray(g_AttribLocationUV);
     glEnableVertexAttribArray(g_AttribLocationColor);
 
-#define OFFSETOF(TYPE, ELEMENT) ((size_t)&(((TYPE *)0)->ELEMENT))
+#define OFFSETOF(TYPE, ELEMENT) ((size_t) & (((TYPE *)0)->ELEMENT))
     glVertexAttribPointer(g_AttribLocationPosition, 2, GL_FLOAT, GL_FALSE, sizeof(ImDrawVert),
                           (GLvoid *) OFFSETOF(ImDrawVert, pos));
     glVertexAttribPointer(g_AttribLocationUV, 2, GL_FLOAT, GL_FALSE, sizeof(ImDrawVert),
@@ -195,14 +213,11 @@ namespace mobagen {
   GuiManager::GuiManager(const glm::vec2 &drawableSize, const glm::vec2 &displaySize, SDL_Window *sdlWindow) {
     m_sdlWindow = sdlWindow;
 
-#ifdef ANDROID
     showProps = false;
-#else
-    showProps = false;
-#endif
+
     ImGui::CreateContext();
     ImGuiIO &io = ImGui::GetIO();
-    io.KeyMap[ImGuiKey_Tab] = SDLK_TAB;                     // Keyboard mapping. ImGui will use those indices to peek into the io.KeyDown[] array.
+    io.KeyMap[ImGuiKey_Tab] = SDLK_TAB; // Keyboard mapping. ImGui will use those indices to peek into the io.KeyDown[] array.
     io.KeyMap[ImGuiKey_LeftArrow] = SDL_SCANCODE_LEFT;
     io.KeyMap[ImGuiKey_RightArrow] = SDL_SCANCODE_RIGHT;
     io.KeyMap[ImGuiKey_UpArrow] = SDL_SCANCODE_UP;
@@ -222,23 +237,23 @@ namespace mobagen {
     io.KeyMap[ImGuiKey_Y] = SDLK_y;
     io.KeyMap[ImGuiKey_Z] = SDLK_z;
 
-    io.RenderDrawListsFn = GuiManager::renderDrawLists;   // Alternatively you can set this to NULL and call ImGui::GetDrawData() after ImGui::Render() to get the same ImDrawData pointer.
-    //io.SetClipboardTextFn = Window::setClipboardText;
-    //io.GetClipboardTextFn = Window::getClipboardText;
+    io.RenderDrawListsFn = GuiManager::renderDrawLists; // Alternatively you can set this to NULL and call ImGui::GetDrawData() after ImGui::Render() to get the same ImDrawData pointer.
+    io.SetClipboardTextFn = Window::setClipboardText;
+    io.GetClipboardTextFn = Window::getClipboardText;
 
-//#ifdef _WIN32
-//  SDL_SysWMinfo wmInfo;
-//  SDL_VERSION(&wmInfo.version);
-//  SDL_GetWindowWMInfo(m_sdlWindow, &wmInfo);
-//  io.ImeWindowHandle = wmInfo.info.win.window;
-//#endif
+    //#ifdef _WIN32
+    //  SDL_SysWMinfo wmInfo;
+    //  SDL_VERSION(&wmInfo.version);
+    //  SDL_GetWindowWMInfo(m_sdlWindow, &wmInfo);
+    //  io.ImeWindowHandle = wmInfo.info.win.window;
+    //#endif
 
     createDeviceObjects();
 
     unsigned char *pixels;
     int width, height;
     io.Fonts->GetTexDataAsRGBA32(&pixels, &width,
-                                 &height);   // Load as RGBA 32-bits for OpenGL3 demo because it is more likely to be compatible with user's existing shader.
+                                 &height); // Load as RGBA 32-bits for OpenGL3 demo because it is more likely to be compatible with user's existing shader.
     m_textureData = new TextureData(width, height, pixels, GL_TEXTURE_2D, GL_LINEAR);
 
     io.DisplaySize = ImVec2(displaySize.x, displaySize.y);
@@ -249,14 +264,14 @@ namespace mobagen {
   GuiManager::~GuiManager(void) {
     invalidateDeviceObjects();
     delete m_textureData;
-    // todo: destroy context
-    //ImGui::DestroyContext();
+    // TODO: use ImGui::DestroyContext() here
+    //ImGui::Shutdown();
   }
 
-  void GuiManager::tick(Window *window, double deltaTime) {
+  void GuiManager::tick(Window *window, std::chrono::microseconds delta) {
     ImGuiIO &io = ImGui::GetIO();
 
-    io.DeltaTime = deltaTime;
+    io.DeltaTime = std::chrono::duration_cast<std::chrono::duration<float>>(delta).count();
 
     glm::vec2 mousePos = window->getInput()->getMousePosition();
     io.MousePos = ImVec2(mousePos.x, mousePos.y);
@@ -354,7 +369,7 @@ namespace mobagen {
       ImGui::Selectable("translation");
       ImGui::NextColumn();
       ImGui::PushItemWidth(-1);
-      ImGui::SliderFloat3("##value", &(sceneGraph->getTransform()->m_position.x), -10.0f, 10.0f);
+      ImGui::SliderFloat3("##value", &(sceneGraph->getTransform().m_position.x), -10.0f, 10.0f);
       ImGui::PopItemWidth();
       ImGui::NextColumn();
 
@@ -365,7 +380,7 @@ namespace mobagen {
       ImGui::Selectable("rotation");
       ImGui::NextColumn();
       ImGui::PushItemWidth(-1);
-      ImGui::SliderFloat4("##value", &(sceneGraph->getTransform()->m_rotation.x), -1.0f, 1.0f);
+      ImGui::SliderFloat4("##value", &(sceneGraph->getTransform().m_rotation.x), -1.0f, 1.0f);
       ImGui::PopItemWidth();
       ImGui::NextColumn();
 
@@ -376,7 +391,7 @@ namespace mobagen {
       ImGui::Selectable("scale");
       ImGui::NextColumn();
       ImGui::PushItemWidth(-1);
-      ImGui::SliderFloat3("##value", &(sceneGraph->getTransform()->m_scale.x), 0.0f, 10.0f);
+      ImGui::SliderFloat3("##value", &(sceneGraph->getTransform().m_scale.x), 0.0f, 10.0f);
       ImGui::PopItemWidth();
       ImGui::NextColumn();
 
@@ -403,7 +418,6 @@ namespace mobagen {
 
   void GuiManager::render(Entity *sceneGraph) {
     renderComponents(sceneGraph);
-
     if (showProps) {
       ImGui::SetNextWindowPos(ImVec2(10, 10));
       ImGui::SetNextWindowSize(ImVec2(500, 0), ImGuiSetCond_FirstUseEver);
@@ -415,7 +429,6 @@ namespace mobagen {
       }
       ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate,
                   ImGui::GetIO().Framerate);
-
 
       ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(2, 2));
       ImGui::Separator();
@@ -430,7 +443,6 @@ namespace mobagen {
 
       // ImGui::ShowTestWindow();
     }
-
     ImGui::Render();
   }
 

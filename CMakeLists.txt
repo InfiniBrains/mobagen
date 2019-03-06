@@ -8,20 +8,17 @@ if(LSB_RELEASE_EXEC)
   ) 
   IF(LSB_RELEASE_ID_SHORT) 
     message(STATUS "ubuntu detected") 
- 
+
   ENDIF() 
 ENDIF()
 
-IF (NOT EMSCRIPTEN)
-  set (HUNTER_SKIP_LOCK ON CACHE BOOL "HUNTER_SKIP_LOCK")
-  include(cmake/HunterGate.cmake)
-  option(HUNTER_STATUS_DEBUG "Hunter debug info" ON)
-  HunterGate(
-    URL "https://github.com/ruslo/hunter/archive/v0.23.29.tar.gz"
-    SHA1 "797be99a8a4f4666766257563fad8aa3aa032da2"
-  )
-ENDIF()
-
+set (HUNTER_SKIP_LOCK ON CACHE BOOL "HUNTER_SKIP_LOCK")
+include(cmake/gate/cmake/HunterGate.cmake)
+option(HUNTER_STATUS_DEBUG "Hunter debug info" ON)
+HunterGate(
+        URL "https://github.com/ruslo/hunter/archive/v0.23.29.tar.gz"
+        SHA1 "797be99a8a4f4666766257563fad8aa3aa032da2"
+)
 project (Engine)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
@@ -34,19 +31,33 @@ IF(NOT EXISTS "${PROJECT_SOURCE_DIR}/buildconfig.txt")
   message(FATAL_ERROR "The file buildconfig.txt must exists to load build configurations from it.")
 ENDIF()
 
-IF(NOT DEFINED USE_GDCM)
+#if you want to always use what is write on buildconfig, you must to unset the variable cache
+#unset(USE_BULLET CACHE)
+
+IF(NOT DEFINED ${USE_BULLET})
+  readSettingFile("USE_BULLET=" "ON" STRING_RESULT )
+  set( USE_BULLET "${STRING_RESULT}" CACHE BOOL "USE BULLET?" )
+  message(STATUS "USE_BULLET from config file: ${USE_BULLET}")
+ENDIF()
+
+IF(NOT DEFINED ${USE_GDCM})
   readSettingFile("USE_GDCM=" "OFF" STRING_RESULT )
-  set( USE_GDCM "${STRING_RESULT}" CACHE STRING "USE GDCM?" )
+  set( USE_GDCM "${STRING_RESULT}" CACHE BOOL "USE GDCM?" )
   message(STATUS "USE_GDCM from config file: ${USE_GDCM}")
 ENDIF()
 
-IF(NOT DEFINED USE_CURL)
+IF(NOT DEFINED ${USE_CURL})
   readSettingFile("USE_CURL=" "OFF" STRING_RESULT )
-  set( USE_CURL "${STRING_RESULT}" CACHE STRING "USE CURL?" )
+  set( USE_CURL "${STRING_RESULT}" CACHE BOOL "USE CURL?" )
   message(STATUS "USE_CURL from config file: ${USE_CURL}")
 ENDIF()
 
-IF(USE_CURL)
+IF(${USE_BULLET})
+  hunter_add_package(bullet)
+  find_package(bullet CONFIG REQUIRED)
+ENDIF()
+
+IF(${USE_CURL})
   find_program (perl_path NAMES perl perl.exe)
   IF (NOT perl_path)
     message(FATAL_ERROR "You must install PERL and add it to PATH in order to build CURL")
@@ -55,7 +66,7 @@ IF(USE_CURL)
   ENDIF()
 ENDIF()
 
-IF (NOT EMSCRIPTEN AND USE_CURL)
+IF (NOT EMSCRIPTEN AND ${USE_CURL})
   set(LIBC ON CACHE BOOL "LIBC")
   hunter_add_package(cpr)
   find_package(cpr CONFIG REQUIRED)
@@ -81,6 +92,7 @@ set(BUILD_SHARED_LIBS FALSE)
 
 IF (ANDROID)
   include(${CP_CMAKE_DIR}/android.cmake)
+  add_definitions(-DSDL_JOYSTICK=0) # to avoid bugs with android + joystick
 ENDIF () 
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
@@ -218,7 +230,17 @@ ELSE ()
   ENDIF()
 ENDIF()
 
-include_directories(${ENGINE_INCLUDES})
+IF(USE_BULLET)
+  SET(ENGINE_LIBS
+    ${ENGINE_LIBS}
+    bullet::BulletCollision
+    bullet::BulletDynamics
+    bullet::BulletSoftBody
+    bullet::LinearMath
+  )
+ENDIF()
+
+  include_directories(${ENGINE_INCLUDES})
 
 add_subdirectory( ${CMAKE_CURRENT_SOURCE_DIR}/engine )
 add_subdirectory( ${CMAKE_CURRENT_SOURCE_DIR}/examples )

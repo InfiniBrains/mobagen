@@ -1,4 +1,5 @@
 #pragma once
+
 #include "settings.hpp"
 #include "Input.hpp"
 
@@ -7,9 +8,10 @@
 
 #include <glm/glm.hpp>
 #include <SDL.h>
+
 #if _WIN32
-  // https://stackoverflow.com/questions/4845410/error-lnk2019-unresolved-external-symbol-main-referenced-in-function-tmainc
-  #undef main
+// https://stackoverflow.com/questions/4845410/error-lnk2019-unresolved-external-symbol-main-referenced-in-function-tmainc
+#undef main
 #endif
 
 namespace mobagen {
@@ -23,7 +25,7 @@ namespace mobagen {
 
     void init(void);
 
-    void tick(double deltaTime);
+    void tick(void);
 
     void swapBuffer(void);
 
@@ -41,9 +43,9 @@ namespace mobagen {
 
     GuiManager *getGuiManager(void) const;
 
-    static const char *getClipboardText();
+    static const char *getClipboardText(void* user_data);
 
-    static void setClipboardText(const char *text);
+    static void setClipboardText(void* user_data, const char* text);
 
     void makeCurrentContext(void) const;
 
@@ -55,6 +57,10 @@ namespace mobagen {
 
     void drawCursor(bool enabled);
 
+    void setFullscreen(uint32_t flag);
+
+    void toggleFullscreen(void);
+
   private:
     SDL_Window *m_window;
     SDL_GLContext m_glContext;
@@ -65,5 +71,6 @@ namespace mobagen {
     Input m_input;
 
     bool m_quit;
+    bool m_fullscreen;
   };
 }

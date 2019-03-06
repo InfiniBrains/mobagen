@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Entity.hpp"
 #include "GLManager.hpp"
 #include "Input.hpp"
@@ -16,9 +17,7 @@ namespace mobagen {
 
     virtual void init(GLManager *glManager);
 
-    virtual void updateInput(Input *input, double delta);
-
-    virtual void update(double delta);
+    virtual void update(Input *input, std::chrono::microseconds delta);
 
     virtual void render(GLManager *glManager);
 

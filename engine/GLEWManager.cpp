@@ -1,7 +1,9 @@
 #ifndef ANDROID
   #include <GL/glew.h>
 #endif
+
 #include "GLEWManager.hpp"
+
 #include "Logger.hpp"
 
 namespace mobagen {
@@ -18,5 +20,5 @@ namespace mobagen {
 #endif
   }
 
-  GLEWManager::~GLEWManager(void) = default;
+  GLEWManager::~GLEWManager(void) {}
 }

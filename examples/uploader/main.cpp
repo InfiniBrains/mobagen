@@ -6,7 +6,7 @@
 #include "components/DirectionalLight.hpp"
 #include "components/SpotLight.hpp"
 #include "components/PointLight.hpp"
-#include "components/Sphere.hpp"
+#include "components/SphereCollider.hpp"
 
 #include "Plane.hpp"
 #include "Mesh.hpp"
@@ -24,12 +24,12 @@ class Uploader : public Game
 {
 public:
   virtual void init(GLManager *glManager);
-  virtual void update(double delta);
+  virtual void update(Input *input, std::chrono::microseconds delta);
 };
 
-void Uploader::update(double delta)
+void Uploader::update(Input *input, std::chrono::microseconds delta)
 {
-  Game::update(delta);
+  Game::update(input, delta);
 }
 
 void Uploader::init(GLManager *glManager)

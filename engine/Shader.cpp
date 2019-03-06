@@ -1,5 +1,6 @@
 #include "Shader.hpp"
 #include "Logger.hpp"
+
 #include "components/DirectionalLight.hpp"
 #include "components/PointLight.hpp"
 #include "components/SpotLight.hpp"
@@ -99,7 +100,6 @@ namespace mobagen {
     char shErr[1024];
     int errlen;
     GLint res;
-
     // Link the shaders
     glLinkProgram(g_shProg);
     glGetProgramiv(g_shProg, GL_LINK_STATUS, &res);
@@ -111,7 +111,7 @@ namespace mobagen {
     glGetProgramiv(g_shProg, GL_VALIDATE_STATUS, &res);
     if (GL_FALSE == res) {
       glGetProgramInfoLog(g_shProg, 1024, &errlen, shErr);
-      log_warn("Error validating shader: %s", shErr);
+      log_err("Error validating shader: %s", shErr);
     }
   }
 
@@ -151,7 +151,7 @@ namespace mobagen {
     setUniform1f(uniformName + ".base.intensity", pointLight->getIntensity());
 
     setUniformAttenuation(uniformName + ".attenuation", pointLight->getAttenuation());
-    setUniformVec3f(uniformName + ".position", pointLight->getParent()->getPosition().xyz());
+    setUniformVec3f(uniformName + ".position", pointLight->getParent()->getPosition());
     setUniform1f(uniformName + ".range", pointLight->getRange());
   }
 
@@ -162,7 +162,7 @@ namespace mobagen {
     setUniform1f(uniformName + ".pointLight.base.intensity", spotLight->getIntensity());
 
     setUniformAttenuation(uniformName + ".pointLight.attenuation", spotLight->getAttenuation());
-    setUniformVec3f(uniformName + ".pointLight.position", spotLight->getParent()->getPosition().xyz());
+    setUniformVec3f(uniformName + ".pointLight.position", spotLight->getParent()->getPosition());
     setUniform1f(uniformName + ".pointLight.range", spotLight->getRange());
 
     setUniformVec3f(uniformName + ".direction", spotLight->getParent()->getDirection().xyz());

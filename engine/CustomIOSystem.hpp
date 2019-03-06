@@ -1,4 +1,5 @@
 #pragma once
+
 #include <assimp/IOSystem.hpp>
 
 namespace mobagen {

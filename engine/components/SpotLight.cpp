@@ -1,8 +1,10 @@
 #include "SpotLight.hpp"
+
 #include "Engine.hpp"
 
 namespace mobagen {
-  SpotLight::SpotLight(glm::vec3 color, float intensity, float cutoff, std::shared_ptr<Attenuation> attenuation) : PointLight(color, intensity, attenuation) {
+  SpotLight::SpotLight(glm::vec3 color, float intensity, float cutoff, std::shared_ptr<Attenuation> attenuation)
+      : PointLight(color, intensity, attenuation) {
     m_cutoff = cutoff;
     setProperty("cutoff", FLOAT, &m_cutoff, 0, 1);
   }

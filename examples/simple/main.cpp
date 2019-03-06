@@ -6,7 +6,7 @@
 #include "components/DirectionalLight.hpp"
 #include "components/SpotLight.hpp"
 #include "components/PointLight.hpp"
-#include "components/Sphere.hpp"
+#include "components/SphereCollider.hpp"
 #include "SimpleBehaviour.h"
 
 #include "Plane.hpp"
@@ -28,12 +28,12 @@ class Simple : public Game
 {
 public:
 	virtual void init(GLManager *glManager);
-	virtual void update(double delta);
+    virtual void update(Input *input, std::chrono::microseconds delta);
 };
 
-void Simple::update(double delta)
+void Simple::update(Input *input, std::chrono::microseconds delta)
 {
-	Game::update(delta);
+	Game::update(input, delta);
 }
 
 void Simple::init(GLManager *glManager)
@@ -50,7 +50,7 @@ void Simple::init(GLManager *glManager)
 
 int main(int argc, char *argv[]) {
 	Simple game;
-	Engine gameEngine(&game, "SIMPLE EXAMPLE", glm::vec2(800, 600));
+	Engine gameEngine(&game, "Simple Test", glm::vec2(800,600));
 
 	gameEngine.start();
 

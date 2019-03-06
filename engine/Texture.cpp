@@ -13,15 +13,14 @@ namespace mobagen {
     auto it = m_textureCache.find(file.getIOStream()->getFileName());
 
     if (it == m_textureCache.end() || !(m_textureData = it->second.lock())) {
-
-      int width, height;
+      int x, y, bytesPerPixel;
       unsigned char *data = stbi_load_from_memory(reinterpret_cast<const unsigned char *>(file.read()),
-                                                  file.getIOStream()->fileSize(), &width, &height, &m_bytesPerPixel, 4);
+                                                  file.getIOStream()->fileSize(), &x, &y, &bytesPerPixel, 4);
 
       if (data == NULL) {
         log_err("Unable to load texture: %s", file.getIOStream()->getFileName().c_str());
       } else {
-        m_textureData = std::make_shared<TextureData>(width, height, data, textureTarget, filter);
+        m_textureData = std::make_shared<TextureData>(x, y, data, textureTarget, filter);
         m_textureCache[file.getIOStream()->getFileName()] = m_textureData;
         stbi_image_free(data);
       }

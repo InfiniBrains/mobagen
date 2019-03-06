@@ -1,5 +1,5 @@
 #include "Game.hpp"
-#include "GameObject.hpp"
+
 namespace mobagen {
   Game::Game(void) {
     this->rootScene = std::make_shared<Entity>();
@@ -23,15 +23,8 @@ namespace mobagen {
     rootScene->addChild(entity);
   }
 
-  void Game::updateInput(Input *input, double delta) {
-    rootScene->updateInputAll(input, delta);
-  }
-
-  void Game::update(double delta) {
-    rootScene->updateAll(delta);
-//  for(auto go : GameObject::){
-//
-//  }
+  void Game::update(Input *input, std::chrono::microseconds delta) {
+    rootScene->updateAll(input, delta);
   }
 
   void Game::render(GLManager *glManager) {

@@ -1,4 +1,7 @@
 #pragma once
+
+#include <chrono>
+
 #include "Window.hpp"
 #include "Entity.hpp"
 
@@ -13,7 +16,7 @@ namespace mobagen {
 
     void render(Entity *sceneGraph);
 
-    void tick(Window *window, double deltaTime);
+    void tick(Window *window, std::chrono::microseconds delta);
 
     void addInputCharactersUTF8(const char *text);
 

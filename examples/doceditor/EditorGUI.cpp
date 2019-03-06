@@ -158,7 +158,7 @@ const char* EditorGUI::getType()
   return "EDITORGUI";
 }
 
-void EditorGUI::update(double delta) {}
+void EditorGUI::update(Input *input, std::chrono::microseconds delta) {}
 
 #ifndef EMSCRIPTEN
 size_t writefunc(void *ptr, size_t size, size_t nmemb, std::string *s)
@@ -339,8 +339,8 @@ void EditorGUI::equalize() {
       auto modifiedMat = std::make_shared<Material>(secondImage, normalTexture, specularTexture);
       auto modifiedMesh = Plane::getMesh();
       secondEntity->addComponent<MeshRenderer>(modifiedMesh, modifiedMat);
-      secondEntity->getTransform()->setPosition(glm::vec3(-300, 0, 200));
-      secondEntity->getTransform()->setScale(glm::vec3(400, 1, 400));
+      secondEntity->getTransform().setPosition(glm::vec3(-300, 0, 200));
+      secondEntity->getTransform().setScale(glm::vec3(400, 1, 400));
       rootScene->addChild(secondEntity);
     }
 
@@ -395,8 +395,8 @@ void EditorGUI::equalize() {
       auto modifiedMat = std::make_shared<Material>(thirdImage, normalTexture, specularTexture);
       auto modifiedMesh = Plane::getMesh();
       thirdEntity->addComponent<MeshRenderer>(modifiedMesh, modifiedMat);
-      thirdEntity->getTransform()->setPosition(glm::vec3(300, 0, -300));
-      thirdEntity->getTransform()->setScale(glm::vec3(400, 1, 400));
+      thirdEntity->getTransform().setPosition(glm::vec3(300, 0, -300));
+      thirdEntity->getTransform().setScale(glm::vec3(400, 1, 400));
       rootScene->addChild(thirdEntity);
     }
 
@@ -423,8 +423,8 @@ void EditorGUI::equalize() {
       auto modifiedMat = std::make_shared<Material>(forthImage, normalTexture, specularTexture);
       auto modifiedMesh = Plane::getMesh();
       forthEntity->addComponent<MeshRenderer>(modifiedMesh, modifiedMat);
-      forthEntity->getTransform()->setPosition(glm::vec3(-300, 0, -300));
-      forthEntity->getTransform()->setScale(glm::vec3(400, 1, 400));
+      forthEntity->getTransform().setPosition(glm::vec3(-300, 0, -300));
+      forthEntity->getTransform().setScale(glm::vec3(400, 1, 400));
       rootScene->addChild(forthEntity);
     }
 
@@ -472,8 +472,8 @@ void EditorGUI::highPass() {
     auto modifiedMat = std::make_shared<Material>(secondImage, normalTexture, specularTexture);
     auto modifiedMesh = Plane::getMesh();
     secondEntity->addComponent<MeshRenderer>(modifiedMesh, modifiedMat);
-    secondEntity->getTransform()->setPosition(glm::vec3(-300, 0, 200));
-    secondEntity->getTransform()->setScale(glm::vec3(400, 1, 400));
+    secondEntity->getTransform().setPosition(glm::vec3(-300, 0, 200));
+    secondEntity->getTransform().setScale(glm::vec3(400, 1, 400));
     rootScene->addChild(secondEntity);
     delete[] outputdata;
   }
@@ -490,8 +490,8 @@ void EditorGUI::highPass() {
     auto modifiedMat = std::make_shared<Material>(thirdImage, normalTexture, specularTexture);
     auto modifiedMesh = Plane::getMesh();
     thirdEntity->addComponent<MeshRenderer>(modifiedMesh, modifiedMat);
-    thirdEntity->getTransform()->setPosition(glm::vec3(300, 0, -300));
-    thirdEntity->getTransform()->setScale(glm::vec3(400, 1, 400));
+    thirdEntity->getTransform().setPosition(glm::vec3(300, 0, -300));
+    thirdEntity->getTransform().setScale(glm::vec3(400, 1, 400));
     rootScene->addChild(thirdEntity);
 
     delete[] outputdata;
@@ -509,8 +509,8 @@ void EditorGUI::highPass() {
     auto modifiedMat = std::make_shared<Material>(forthImage, normalTexture, specularTexture);
     auto modifiedMesh = Plane::getMesh();
     forthEntity->addComponent<MeshRenderer>(modifiedMesh, modifiedMat);
-    forthEntity->getTransform()->setPosition(glm::vec3(-300, 0, -300));
-    forthEntity->getTransform()->setScale(glm::vec3(400, 1, 400));
+    forthEntity->getTransform().setPosition(glm::vec3(-300, 0, -300));
+    forthEntity->getTransform().setScale(glm::vec3(400, 1, 400));
     rootScene->addChild(forthEntity);
 
     delete[] outputdata;

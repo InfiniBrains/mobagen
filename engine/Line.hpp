@@ -1,8 +1,8 @@
 #pragma once
+
 #include "Shader.hpp"
 
 #include <glm/glm.hpp>
-
 namespace mobagen {
   class Line {
   public:

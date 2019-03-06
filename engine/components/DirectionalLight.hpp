@@ -1,5 +1,7 @@
 #pragma once
+
 #include "BaseLight.hpp"
+
 namespace mobagen {
   class DirectionalLight : public BaseLight {
   public:

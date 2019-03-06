@@ -1,13 +1,15 @@
 #pragma once
+
+#include <chrono>
+
 #include "GLManager.hpp"
 #include "Window.hpp"
 #include "GLEWManager.hpp"
 #include "PhysicsManager.hpp"
+
 #include "Game.hpp"
+
 #include "Input.hpp"
-#include "components/Sphere.hpp"
-#include <chrono>
-#include <cstring>
 
 namespace mobagen {
   class Engine {
@@ -30,7 +32,7 @@ namespace mobagen {
 
     PhysicsManager *getPhysicsManager(void) const;
 
-    double getDeltaTime();
+    std::chrono::microseconds getDeltaTime(void) const;
 
   private:
     std::unique_ptr<Window> m_window;
@@ -38,13 +40,13 @@ namespace mobagen {
     std::unique_ptr<GLManager> m_glManager;
     std::unique_ptr<PhysicsManager> m_physicsManager;
 
-    std::chrono::time_point<std::chrono::high_resolution_clock> lastUpdateTime;
+    std::chrono::high_resolution_clock::time_point m_time, m_lastTime;
+    std::chrono::microseconds m_deltaTime;
+
+    //std::chrono::high_resolution_clock::time_point m_physicsTimeSimulated;
 
     Game *game;
 
-    Input input;
-
-    bool quit;
-    double m_deltaTime;
+    bool quit, m_fireRay;
   };
 }

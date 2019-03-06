@@ -1,45 +1,135 @@
 matrix:
   include:
+    # windows native
+    - os: windows
+      language: cpp
+      cache:
+        directories:
+          - /c/Users/travis/.hunter/
+      env:
+        - BUILD_TYPE=native
+        - MSBUILD_PATH="c:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin"
+      install:
+        - PowerShell -Command 'Set-ExecutionPolicy -ExecutionPolicy RemoteSigned'
+#        - choco install -y visualstudio2017-workload-vctools
+      script:
+        - export PATH=$MSBUILD_PATH:$PATH
+        - git submodule update --init --recursive
+        - cmake --version
+        - PowerShell -Command 'cmake --version'
+        - cmake -Bbuild -H. -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=dependencies/polly/vs-15-2017-win64.cmake
+        - PowerShell -Command 'cmake --build build'
+#        - cd build && msbuild.exe Engine.sln
+
+    # linux android
+    - os: linux
+      dist: xenial
+      android:
+        components:
+          - build-tools-24.0.1
+          - android-24
+          - add-on
+          - extra
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - clang
+            - gcc
+            - g++
+      env:
+        - BUILD_TYPE=android
+        - MATRIX_EVAL="CC=clang && CXX=clang++"
+      language: android
+      before_cache:
+        - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+        - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+      cache:
+        directories:
+          - $HOME/.gradle/caches/
+          - $HOME/.gradle/wrapper/
+          - $HOME/.android/build-cache
+      install:
+        - sudo add-apt-repository -y ppa:openjdk-r/ppa
+        - sudo apt-get update 
+        - sudo apt-get install -y openjdk-8-jdk
+        - java -version
+        - javac -version
+#        - echo 0 | sudo update-alternatives --config java
+        - wget --quiet --continue https://github.com/Kitware/CMake/releases/download/v3.14.0-rc3/cmake-3.14.0-rc3-Linux-x86_64.sh
+        - chmod +x cmake-3.14.0-rc3-Linux-x86_64.sh
+        - sudo mkdir /opt/cmake 
+        - sudo ./cmake-3.14.0-rc3-Linux-x86_64.sh --prefix=/opt/cmake --skip-license
+        - sudo rm -rf /usr/bin/cmake /usr/local/bin/cmake
+        - sudo ln -s /opt/cmake/bin/cmake /usr/local/bin/cmake
+        - sudo ln -s /opt/cmake/bin/cmake /usr/bin/cmake
+        - cmake --version
+        - wget --quiet --continue http://dl.google.com/android/repository/android-ndk-r18b-linux-x86_64.zip -O ndk.zip
+        - unzip -o -q ndk.zip
+        - export ANDROID_NDK=`pwd`/android-ndk-r18b
+        - export ANDROID_NDK_r18b=`pwd`/android-ndk-r18b
+        - mkdir android-sdk-linux
+        - wget --quiet --continue https://dl.google.com/android/repository/tools_r25.2.5-linux.zip -O android-sdk-linux/sdk.zip
+        - cd android-sdk-linux ; unzip -o -q sdk.zip ; cd ..
+        - export ANDROID_SDK=`pwd`/android-sdk-linux
+        - export ANDROID_HOME=$ANDROID_SDK
+        - export PATH=${ANDROID_SDK}/tools:${ANDROID_SDK}/tools/bin:${PATH}
+        - touch /home/travis/.android/repositories.cfg
+        - echo y | sdkmanager 'build-tools;24.0.1'
+        - echo y | sdkmanager 'platforms;android-24'
+        - echo y | sdkmanager 'platform-tools'
+        - export PATH=${ANDROID_SDK}/platform-tools:${ANDROID_NDK}:${PATH}
+      script:
+        - ./scripts/cmake-android.sh
+#      android:
+#        components:
+          # Uncomment the lines below if you want to
+          # use the latest revision of Android SDK Tools
+          # - tools
+          # - platform-tools
+
+          # The BuildTools version used by your project
+#          - build-tools-26.0.2
+
+          # The SDK version used to compile your project
+#          - android-26
+
+          # Additional components
+#          - extra-google-google_play_services
+#          - extra-google-m2repository
+#          - extra-android-m2repository
+
+          # Specify at least one system image,
+          # if you need to run emulator(s) during your tests
+#          - sys-img-x86-android-26
+#          - sys-img-armeabi-v7a-android-17
+
+
     # linux native
     - os: linux
       addons:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-trusty-5.0
           packages:
-            - clang-5.0
-            - gcc-6
-            - g++-6
+            - clang
+            - gcc
+            - g++
             - cmake
+            - clang
+            - cmake
+            - git
+            - build-essential
+            - libgl1-mesa-dev
       env:
-        - MATRIX_EVAL="CC=clang && CXX=clang++"
         - BUILD_TYPE=native
-      group: travis_latest
-      dist: trusty
+        - MATRIX_EVAL="CC=clang && CXX=clang++"
+      dist: xenial
       language: cpp
       compiler: clang
-
-
-    # windows cross compile
-#    - os: linux
-#      services:
-#        - docker
-#      addons:
-#        apt:
-#          sources:
-#            - ubuntu-toolchain-r-test
-#          packages:
-#            - cmake
-#            - wine
-#      env:
-#        - MATRIX_EVAL="CC=x86_64-w64-mingw32-gcc && CXX=x86_64-w64-mingw32-g++ && AR=x86_64-w64-mingw32-ar"
-#        - BUILD_TYPE=windows
-#      group: travis_latest
-#      dist: trusty
-#      language: cpp
-#      compiler: mingw
-
+      script:
+        - ./scripts/travis-build.sh -j9
 
     # linux emscripten
     - os: linux
@@ -58,95 +148,56 @@ matrix:
       dist: trusty
       language: cpp
       compiler: emscripten
+      install:
+        - docker run -dit --name emscripten -e TRAVIS_OS_NAME='linux' -e BUILD_TYPE='emscripten' -v `pwd`:/mobagen -v ${HOME}/.hunter:$/root/.hunter -w /mobagen trzeci/emscripten:sdk-tag-1.38.12-64bit bash
+        - docker exec -it emscripten apt-get update
+        - docker exec -it emscripten rm /usr/local/bin/cmake
+        - docker exec -it emscripten apt-get install -y cmake wget
+      script:
+        - docker exec -it emscripten ./scripts/travis-build.sh
+        - docker exec -it emscripten ./scripts/travis-build.sh
 
-      
     # osx native
     - os: osx
       env:
-        - MATRIX_EVAL="CC=clang && CXX=clang++"
         - BUILD_TYPE=native
+        - MATRIX_EVAL="CC=clang && CXX=clang++"
       language: cpp
       compiler: clang
+      script:
+        - ./scripts/travis-build.sh -j9
 
+    # osx android
+    - os: osx
+      env:
+        - BUILD_TYPE=android
+      osx_image: xcode9.3
+      language: cpp
+      install:
+        - TRAVIS_TAG=`date +%Y-%m-%d`
+        - brew tap caskroom/cask
+        - brew update
+        - brew cask install caskroom/versions/java8
+        - brew install ant
+        - wget --quiet --continue https://dl.google.com/android/repository/android-ndk-r18b-darwin-x86_64.zip -O ndk.zip
+        - unzip -o -q ndk.zip
+        - export ANDROID_NDK=`pwd`/android-ndk-r18b
+        - export ANDROID_NDK_r18b=`pwd`/android-ndk-r18b
+        - mkdir android-sdk-macosx
+        - wget --quiet --continue https://dl.google.com/android/repository/tools_r25.2.5-macosx.zip -O android-sdk-macosx/sdk.zip
+        - cd android-sdk-macosx ; unzip -o -q sdk.zip ; cd ..
+        - export ANDROID_SDK=`pwd`/android-sdk-macosx
+        - export ANDROID_HOME=$ANDROID_SDK
+        - export PATH=${ANDROID_SDK}/tools:${ANDROID_SDK}/tools/bin:${PATH}
+        - echo y | sdkmanager 'build-tools;24.0.1' 'platforms;android-24' 'platform-tools'
+        - export PATH=${ANDROID_SDK}/platform-tools:${ANDROID_NDK}:${PATH}
+      script:
+        - ./scripts/cmake-android.sh
 
 before_script:
   - TRAVIS_TAG=`date +%Y-%m-%d`
 #  - TRAVIS_TAG=`git tag | grep -v rc | sort -t. -k 1,1n -k 2,2n -k 3,3n -k 4,4n | sed '1!G;h;$!d' | sed -n 1p`
   - uname -a
-  - "if [ $TRAVIS_OS_NAME == osx ] && [ $BUILD_TYPE == android ]; then \
-        brew update ;
-        brew tap caskroom/versions ;
-        brew cask install java8 ;
-        touch ~/.android/repositories.cfg ;
-        brew cask install android-sdk ;
-        brew cask install android-ndk ;
-        brew install ant ;
-
-        echo \"y\" | sdkmanager \"tools\" \"platform-tools\" \"platforms;android-24\" \"build-tools;24.0.0\"  ;
-
-        export ANDROID_SDK_ROOT=/usr/local/share/android-sdk ;
-        export ANDROID_SDK=/usr/local/share/android-sdk ;
-
-        export ANDROID_NDK_HOME=/usr/local/share/android-ndk ;
-        export ANDROID_NDK=/usr/local/share/android-ndk ;
-        export ANDROID_NDK_r17=/usr/local/share/android-ndk ;
-
-        export ANT_HOME=/usr/local/opt/ant ;
-        export MAVEN_HOME=/usr/local/opt/maven ;
-        export GRADLE_HOME=/usr/local/opt/gradle ;
-
-        export PATH=$ANT_HOME/bin:$PATH ;
-        export PATH=$MAVEN_HOME/bin:$PATH ;
-        export PATH=$GRADLE_HOME/bin:$PATH ;
-
-        export PATH=$ANDROID_SDK_ROOT/tools:$PATH ;
-        export PATH=$ANDROID_SDK_ROOT/platform-tools:$PATH ;
-        export PATH=$ANDROID_SDK_ROOT/platforms/android-24:$PATH ;
-        export PATH=$ANDROID_SDK_ROOT/build-tools/24.0.0:$PATH ;
-
-        export PATH=$ANDROID_NDK_HOME:$PATH ;
-    fi"
-  - "if [ $TRAVIS_OS_NAME == linux ] && [ $BUILD_TYPE == android ]; then \
-        wget --quiet --continue http://dl.google.com/android/repository/android-ndk-r12b-linux-x86_64.zip -O ndk.zip;
-        unzip -o -q ndk.zip;
-        export ANDROID_NDK=`pwd`/android-ndk-r12b;
-
-        wget --quiet --continue http://dl.google.com/android/android-sdk_r24.4.1-linux.tgz;
-        tar -xzf android-sdk_r24.4.1-linux.tgz;
-        export ANDROID_SDK=`pwd`/android-sdk-linux;
-        jdk_switcher use oraclejdk8;
-
-        export ANDROID_HOME=$ANDROID_SDK;
-        export PATH=${ANDROID_SDK}/tools:${ANDROID_SDK}/platform-tools:${ANDROID_NDK}:${PATH};
-        echo \"y\" | android update sdk -a -u -s -t platform-tools,build-tools-24.0.1,android-22;
-    fi"
-  - "if [ $TRAVIS_OS_NAME == osx ] && [ $BUILD_TYPE == emscripten ]; then \
-        brew update;
-        brew install emscripten;
-    fi"
-  - if [ $TRAVIS_OS_NAME == linux ] && [ $BUILD_TYPE == emscripten ]; then 
-      docker run -dit --name emscripten -e TRAVIS_OS_NAME='linux' -e BUILD_TYPE='emscripten' -v `pwd`:/mobagen -w /mobagen trzeci/emscripten:sdk-incoming-64bit bash ; 
-      docker exec -it emscripten apt-get update ;
-      docker exec -it emscripten rm /usr/local/bin/cmake ;
-      docker exec -it emscripten apt-get install -y cmake wget ;
-    fi
-  - if [ $BUILD_TYPE == windows ]; then
-      docker run -dit --name windows -e TRAVIS_OS_NAME='linux' -e BUILD_TYPE='windows' -v `pwd`:/mobagen -w /mobagen library/ubuntu:bionic bash ;
-      docker exec -it windows apt-get update ;
-      docker exec -it windows apt-get install -y cmake wget binutils-mingw-w64* gcc-mingw-w64* g++-mingw-w64* wine-development git mingw-w64 mingw-w64-tools binutils-mingw-w64 binutils-mingw-w64-x86-64 binutils-mingw-w64-i686 mingw-w64-x86-64-dev mingw-w64-i686-dev autoconf automake autotools-dev zip ;
-    fi
-
-script:
-  - if [ $TRAVIS_OS_NAME == linux ] && [ $BUILD_TYPE == emscripten ]; then
-      docker exec -it emscripten ./scripts/travis-build.sh -j9 ;
-      docker exec -it emscripten ./scripts/travis-build.sh -j9 ;
-    elif [ $BUILD_TYPE == windows ]; then
-      docker exec -it windows ./scripts/travis-build.sh -j9 ;
-      docker exec -it windows ./scripts/travis-build.sh -j9 ;
-    else
-      ./scripts/travis-build.sh -j9 ;
-    fi
-
 
 before_deploy:
   - echo tolsta $TRAVIS_OS_NAME $BUILD_TYPE $TRAVIS_BRANCH $TRAVIS_TAG
