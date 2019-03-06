@@ -11,7 +11,7 @@ cmake .. -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_TOOLCHAIN_FILE=$DIR/../depende
 make $*
 make android-build
 
-STATE=$(adb get-state || exit 0)
-if [ "$STATE" == "device" ]; then
-	make android-install android-start
-fi;
+#STATE=$(adb get-state || exit 0)
+#if [ "$STATE" == "device" ]; then
+	 # make android-install android-start
+#fi;
