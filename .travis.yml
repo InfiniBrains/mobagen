@@ -24,6 +24,12 @@ matrix:
     # linux android
     - os: linux
       dist: xenial
+      android:
+        components:
+          - build-tools-24.0.1
+          - android-24
+          - add-on
+          - extra
       addons:
         apt:
           sources:
@@ -36,7 +42,7 @@ matrix:
       env:
         - BUILD_TYPE=android
         - MATRIX_EVAL="CC=clang && CXX=clang++"
-      language: cpp
+      language: android
       before_cache:
         - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
         - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
@@ -46,10 +52,11 @@ matrix:
           - $HOME/.gradle/wrapper/
           - $HOME/.android/build-cache
       install:
-        - sudo apt-get update
-        - sudo apt-get purge openjdk-11-jdk
-        - sudo apt-get install openjdk-8-jdk
-        - java -version
+#        - sudo apt-get update
+#        - java -version
+#        - which java
+#        - sudo apt-get install openjdk-8-jdk
+#        - java -version
         - wget --quiet --continue http://dl.google.com/android/repository/android-ndk-r18b-linux-x86_64.zip -O ndk.zip
         - unzip -o -q ndk.zip
         - export ANDROID_NDK=`pwd`/android-ndk-r18b
