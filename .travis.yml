@@ -154,11 +154,11 @@ matrix:
         - docker exec -it emscripten apt-get install -y wget
         - docker exec -it emscripten wget --quiet --continue https://github.com/Kitware/CMake/releases/download/v3.14.0-rc3/cmake-3.14.0-rc3-Linux-x86_64.sh
         - docker exec -it emscripten chmod +x cmake-3.14.0-rc3-Linux-x86_64.sh
-        - docker exec -it emscripten sudo mkdir /opt/cmake
-        - docker exec -it emscripten sudo ./cmake-3.14.0-rc3-Linux-x86_64.sh --prefix=/opt/cmake --skip-license
-        - docker exec -it emscripten sudo rm -rf /usr/bin/cmake /usr/local/bin/cmake
-        - docker exec -it emscripten sudo ln -s /opt/cmake/bin/cmake /usr/local/bin/cmake
-        - docker exec -it emscripten sudo ln -s /opt/cmake/bin/cmake /usr/bin/cmake
+        - docker exec -it emscripten mkdir /opt/cmake
+        - docker exec -it emscripten ./cmake-3.14.0-rc3-Linux-x86_64.sh --prefix=/opt/cmake --skip-license
+        - docker exec -it emscripten rm -rf /usr/bin/cmake /usr/local/bin/cmake
+        - docker exec -it emscripten ln -s /opt/cmake/bin/cmake /usr/local/bin/cmake
+        - docker exec -it emscripten ln -s /opt/cmake/bin/cmake /usr/bin/cmake
         - docker exec -it emscripten cmake --version
       script:
         - docker exec -it emscripten ./scripts/travis-build.sh
