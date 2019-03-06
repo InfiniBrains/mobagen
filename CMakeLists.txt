@@ -16,10 +16,9 @@ set (HUNTER_SKIP_LOCK ON CACHE BOOL "HUNTER_SKIP_LOCK")
 include(cmake/gate/cmake/HunterGate.cmake)
 option(HUNTER_STATUS_DEBUG "Hunter debug info" ON)
 HunterGate(
-        URL "https://github.com/ruslo/hunter/archive/v0.23.123.tar.gz"
-        SHA1 "e28cbf2464e922bbeaec0c7d9ad35bc45670435d"
+        URL "https://github.com/ruslo/hunter/archive/v0.23.29.tar.gz"
+        SHA1 "797be99a8a4f4666766257563fad8aa3aa032da2"
 )
-
 project (Engine)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)

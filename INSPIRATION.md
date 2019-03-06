@@ -23,3 +23,6 @@ Uses the following 3rd party libraries:
 - Assimp asset importing library.
 - GLEW extension loading library.
 - Dear ImGui UI library.
+
+Docs:
+- https://medium.com/@kevinkreuzer/the-way-to-fully-automated-releases-in-open-source-projects-44c015f38fd6?_branch_match_id=467041473575681523

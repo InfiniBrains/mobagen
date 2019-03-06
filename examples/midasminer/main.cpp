@@ -47,11 +47,11 @@ void CoolGame::init(GLManager *glManager)
   auto specular = std::make_shared<Texture>(Asset("default_specular.jpg"));
 
   std::map<Crystal::CrystalType, std::shared_ptr<Texture>> textures;
-  textures[Crystal::CrystalType::BLUE]   = std::make_shared<Texture>(Asset("BlueOrig.png"));
-  textures[Crystal::CrystalType::GREEN]  = std::make_shared<Texture>(Asset("GreenOrig.png"));
-  textures[Crystal::CrystalType::PURPLE] = std::make_shared<Texture>(Asset("PurpleOrig.png"));
-  textures[Crystal::CrystalType::RED]    = std::make_shared<Texture>(Asset("RedOrig.png"));
-  textures[Crystal::CrystalType::YELLOW] = std::make_shared<Texture>(Asset("YellowOrig.png"));
+  textures[Crystal::CrystalType::BLUE]   = std::make_shared<Texture>(Asset("Blue.png"));
+  textures[Crystal::CrystalType::GREEN]  = std::make_shared<Texture>(Asset("Green.png"));
+  textures[Crystal::CrystalType::PURPLE] = std::make_shared<Texture>(Asset("Purple.png"));
+  textures[Crystal::CrystalType::RED]    = std::make_shared<Texture>(Asset("Red.png"));
+  textures[Crystal::CrystalType::YELLOW] = std::make_shared<Texture>(Asset("Yellow.png"));
 
   std::map<Crystal::CrystalType, std::shared_ptr<Material>> materials;
   materials[Crystal::CrystalType::BLUE]   = std::make_shared<Material>(textures[Crystal::CrystalType::BLUE], normal, specular);
