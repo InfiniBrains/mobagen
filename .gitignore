@@ -26,8 +26,10 @@ bin-mingw/
 build2/
 build3/
 buildmingw/
-
+android-ndk-r18b/
+android-sdk-macosx/
 win64mingw\.zip
+ndk.zip
 
 *.TMP
 
