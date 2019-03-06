@@ -47,6 +47,7 @@ matrix:
           - $HOME/.android/build-cache
       install:
         - sudo apt-get update
+        - sudo apt-get purge openjdk-11-jdk
         - sudo apt-get install openjdk-8-jdk
         - java -version
         - wget --quiet --continue http://dl.google.com/android/repository/android-ndk-r18b-linux-x86_64.zip -O ndk.zip
