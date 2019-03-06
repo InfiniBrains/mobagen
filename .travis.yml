@@ -23,6 +23,7 @@ matrix:
 
     # linux android
     - os: linux
+      dist: xenial
       addons:
         apt:
           sources:
@@ -99,7 +100,6 @@ matrix:
       env:
         - BUILD_TYPE=native
         - MATRIX_EVAL="CC=clang && CXX=clang++"
-      group: travis_latest
       dist: xenial
       language: cpp
       compiler: clang
