@@ -47,11 +47,11 @@ matrix:
           - $HOME/.android/build-cache
       install:
         - jdk_switcher use oraclejdk8
-        - wget --continue http://dl.google.com/android/repository/android-ndk-r18b-linux-x86_64.zip -O ndk.zip
+        - wget --quiet --continue http://dl.google.com/android/repository/android-ndk-r18b-linux-x86_64.zip -O ndk.zip
         - unzip -o -q ndk.zip
         - export ANDROID_NDK=`pwd`/android-ndk-r18b
         - export ANDROID_NDK_r18b=`pwd`/android-ndk-r18b
-        - wget --continue https://dl.google.com/android/repository/tools_r25.2.5-linux.zip -O android-sdk-linux/sdk.zip
+        - wget --quiet --continue https://dl.google.com/android/repository/tools_r25.2.5-linux.zip -O android-sdk-linux/sdk.zip
         - mkdir android-sdk-linux
         - cd android-sdk-linux ; unzip -o -q sdk.zip
         - export ANDROID_SDK=`pwd`/android-sdk-linux
@@ -142,12 +142,12 @@ matrix:
         - brew update
         - brew cask install caskroom/versions/java8
         - brew install ant
-        - wget --continue https://dl.google.com/android/repository/android-ndk-r18b-darwin-x86_64.zip -O ndk.zip
+        - wget --quiet --continue https://dl.google.com/android/repository/android-ndk-r18b-darwin-x86_64.zip -O ndk.zip
         - unzip -o -q ndk.zip
         - export ANDROID_NDK=`pwd`/android-ndk-r18b
         - export ANDROID_NDK_r18b=`pwd`/android-ndk-r18b
         - mkdir android-sdk-macosx
-        - wget --continue https://dl.google.com/android/repository/tools_r25.2.5-macosx.zip -O android-sdk-macosx/sdk.zip
+        - wget --quiet --continue https://dl.google.com/android/repository/tools_r25.2.5-macosx.zip -O android-sdk-macosx/sdk.zip
         - cd android-sdk-macosx ; unzip -o -q sdk.zip
         - export ANDROID_SDK=`pwd`/android-sdk-macosx
         - export ANDROID_HOME=$ANDROID_SDK
