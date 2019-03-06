@@ -29,9 +29,9 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
-            - clang-5.0
-            - gcc-7
-            - g++-7
+            - clang
+            - gcc
+            - g++
             - cmake
       env:
         - BUILD_TYPE=android
@@ -92,9 +92,9 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
-            - clang-5.0
-            - gcc-7
-            - g++-7
+            - clang
+            - gcc
+            - g++
             - cmake
             - clang
             - cmake
