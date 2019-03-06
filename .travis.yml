@@ -24,6 +24,8 @@ matrix:
     # linux android
     - os: linux
       dist: xenial
+      jdk:
+        - oraclejdk8
       addons:
         apt:
           sources:
@@ -36,7 +38,7 @@ matrix:
       env:
         - BUILD_TYPE=android
         - MATRIX_EVAL="CC=clang && CXX=clang++"
-      language: android
+      language: cpp
       before_cache:
         - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
         - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
