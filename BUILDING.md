@@ -16,69 +16,80 @@ brew install git
 ```
 
 ## Linux
-You will need to install *git* and *build-essentials* using your package manager. 
+You will need to install *git*, *build-essentials* and *cmake* using your package manager. 
 
 ### Ubuntu
 ``` bash
-sudo apt-get install git cmake clang build-essential
+sudo apt-get install git cmake clang build-essential libgl1-mesa-dev
 ```
 
 ## Windows
-- Installing [MSYS2](http://www.msys2.org/) to install linux tools on Windows terminal;
-- Open *MSYS2* terminal and install the i686 or x64 versions of *gcc*(or *clang*), *git*, *make* and *cmake*:
-``` bash
-pacman -S mingw-w64-x86_64-gcc git mingw-w64-x86_64-make mingw-w64-x86_64-cmake
+- [Microsoft Visual Studio Community](https://www.visualstudio.com/downloads/) as IDE and Compiler;
+- [CMake addon](https://marketplace.visualstudio.com/items?itemName=vector-of-bool.cmake-tools) as CMake tool helper;
+- [JetBrains Resharper C++](https://www.jetbrains.com/resharper-cpp/) to follow our coding style.
+
+### Windows MinGW Compiler + CLion Editor (Recommended) 
+- Installing the compiler:
+1. [Install MSYS2_64bits](https://www.msys2.org/) 
+This will install 3 subsystems:
+`C:\msys64\msys2.exe`, `C:\msys64\mingw32.exe` and `C:\msys64\mingw64.exe`. This will cover only the `MingGW64` methods
+2. Run in MSYS2 MinGW64: 
 ```
-If this fails, try to search the right package name using:
-``` bash
-pacman -Ss packagename
+pacman -Syu
 ```
-Where *packagename* is the package you want to search for the right name.
+The first time it will update the MSYS2 system
+```
+pacman -Syu
+```
+This second time it will update the apps.
+3. Install the compiler and other dev stuff
+```
+pacman -S base-devel mingw-w64-x86_64-toolchain git subversion mercurial mingw-w64-x86_64-cmake
+```
+4. Add to your "Path" into Windows "Envrionment Variables" (just type it on Windows Start)
+```
+C:\msys64\mingw64\bin
+```
+
+- Installing the Editor:
+1. Donwload and install [JetBrains CLion](https://www.jetbrains.com/clion/). I use the academic license as a professor, you can try using 30-day trial or as student.
+2. Configure Toolchain. File -> Settings -> Build, Execution, Deployment -> ToolChains -> Add
+- Environment -> `MinGW`
+- CMake -> `Bundled`
+- Make -> `C:\msys64\mingw64\bin\mingw32-make.exe`
+- C Compiler -> `C:\msys64\mingw64\bin\gcc.exe`
+- C++ Compiler -> `C:\msys64\mingw64\bin\g++.exe`
 
 # Clonning
-In every platform already preparated you will have git installed, so open your terminal and type:
+In every platform already preparated you must have `git` installed, so open your terminal and type:
 ```
 git clone --recursive -j8 https://github.com/InfiniBrains/mobagen.git
 ``` 
 This will clone the repo and all submodules.
 
 # Building
-If you are platform agnostic, you can use VScode or CLion: 
-## Visual Studio Code
-- Install [Visual Studio Code](https://code.visualstudio.com/);
-- Install all C++ extensions that may help you:
--- C++ Intellisense
--- C++ Lint (this will enforce code style)
--- CMake tools
--- CMake
+If you are platform agnostic, you can use CLion: 
 
 ## CLion 
 - [JetBrains CLion](https://www.jetbrains.com/clion/)
-- Toolchain will be automatically set on Linux and OSX. But in Windows, if you follow our way of work, point it to: *C:\msys64\mingw64* . 
+- Toolchain will be automatically set on Linux, OSX and Windows(you must install the Visual Studio 2017 toolchain first, or MSYS2).
 
-## Windows
-But if you prefer Microsoft development tools:
-- [Microsoft Visual Studio Community](https://www.visualstudio.com/downloads/) as IDE and Compiler;
-- [CMake addon](https://marketplace.visualstudio.com/items?itemName=vector-of-bool.cmake-tools) as CMake tool helper;
-- [JetBrains Resharper C++](https://www.jetbrains.com/resharper-cpp/) to follow our coding style.
-
-
-## Usage
-
+# Usage
 First clone repo with the following command to download all submodules (which are located in the dependencies folder):
 `git clone --recursive -j8 https://github.com/InfiniBrains/mobagen.git`
 
 All builds require cmake 3.6.0, so the first step is to download that [here](https://cmake.org/download/)
 
-#### Windows Build
-
-1. Run the cmake gui and point it to this projects folder, configure and then generate a project using whatever toolchain you want. Tested with visual studio 2015
+## Windows Build
+1. Run the cmake gui and point it to this projects folder, configure and then generate a project using whatever toolchain you want. Tested with visual studio 2017
 2. Build the project
 
-#### Mac/Linux Build
+or
 
+You can use `CMake addon` with `Visual Studio` to open the project, and build it.
+
+## Mac/Linux Build
 Run:
-
 ```bash
 ./scripts/cmake-make.sh -j8
 ```
@@ -94,26 +105,18 @@ cd bin
 make -j8
 ```
 
-#### HTML 5 WebGL engine Build
-
-To build the html5 engine:
-
-First install emscripten:
-```bash
-brew install emscripten
-```
+## HTML 5 WebGL engine Build
+To build the HTML5 engine on OSX or Ubuntu:
 
 Then build the engine:
 ```bash
-./scripts/cmake-emscripten.sh -j8
+./scripts/emscripten-build.sh -j8
 ```
 
-Then run with:
+Then serve it on OSX:
 ```bash
 cd bin-emscripten/bin
-
 python -m SimpleHTTPServer
-
 open http://localhost:8000/
 ```
 
@@ -123,8 +126,7 @@ cd bin-emscripten/
 make -j8
 ```
 
-#### Android Build
-
+## Android Build
 To build for android do the following:
 
 First download the android ndk and sdk (https://developer.android.com/tools/sdk/ndk/) and (https://developer.android.com/sdk/index.html)

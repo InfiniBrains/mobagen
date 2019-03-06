@@ -5,7 +5,7 @@ set -e
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 if [[ $BUILD_TYPE == android ]]; then
-  ANDROID_NDK=$ANDROID_NDK $DIR/cmake-android.sh -j9
+  $DIR/cmake-android.sh -j9
 elif [[ $BUILD_TYPE == native ]]; then
   $DIR/cmake-make.sh -j9
 elif [[ $BUILD_TYPE == emscripten ]] ; then
