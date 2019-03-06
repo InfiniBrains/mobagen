@@ -93,6 +93,7 @@ set(BUILD_SHARED_LIBS FALSE)
 
 IF (ANDROID)
   include(${CP_CMAKE_DIR}/android.cmake)
+  add_definitions(-DSDL_JOYSTICK=0) # to avoid bugs with android + joystick
 ENDIF () 
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
