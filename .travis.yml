@@ -53,7 +53,7 @@ matrix:
         - export ANDROID_NDK_r18b=`pwd`/android-ndk-r18b
         - mkdir android-sdk-linux
         - wget --quiet --continue https://dl.google.com/android/repository/tools_r25.2.5-linux.zip -O android-sdk-linux/sdk.zip
-        - cd android-sdk-linux ; unzip -o -q sdk.zip
+        - cd android-sdk-linux ; unzip -o -q sdk.zip ; cd ..
         - export ANDROID_SDK=`pwd`/android-sdk-linux
         - export ANDROID_HOME=$ANDROID_SDK
         - export PATH=${ANDROID_SDK}/tools:${ANDROID_SDK}/tools/bin:${PATH}
@@ -160,12 +160,13 @@ matrix:
         - export ANDROID_NDK_r18b=`pwd`/android-ndk-r18b
         - mkdir android-sdk-macosx
         - wget --quiet --continue https://dl.google.com/android/repository/tools_r25.2.5-macosx.zip -O android-sdk-macosx/sdk.zip
-        - cd android-sdk-macosx ; unzip -o -q sdk.zip
+        - cd android-sdk-macosx ; unzip -o -q sdk.zip ; cd ..
         - export ANDROID_SDK=`pwd`/android-sdk-macosx
         - export ANDROID_HOME=$ANDROID_SDK
         - export PATH=${ANDROID_SDK}/tools:${ANDROID_SDK}/tools/bin:${PATH}
         - echo y | sdkmanager 'build-tools;24.0.1' 'platforms;android-24' 'platform-tools'
         - export PATH=${ANDROID_SDK}/platform-tools:${ANDROID_NDK}:${PATH}
+      script:
         - ./scripts/cmake-android.sh
 
 before_script:
