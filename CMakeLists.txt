@@ -167,6 +167,8 @@ IF (EMSCRIPTEN)
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/html/index.html ${CMAKE_BINARY_DIR}/bin/index.html COPYONLY)
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/html/midasminer.html ${CMAKE_BINARY_DIR}/bin/midasminer.html COPYONLY)
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/html/doceditor.html ${CMAKE_BINARY_DIR}/bin/doceditor.html COPYONLY)
+  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/html/animation.html ${CMAKE_BINARY_DIR}/bin/animation.html COPYONLY)
+  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/html/uploader.html ${CMAKE_BINARY_DIR}/bin/uploader.html COPYONLY)
 
 ELSEIF (ANDROID)
   add_definitions( -DGLES2=1 )
@@ -240,7 +242,7 @@ IF(USE_BULLET)
   )
 ENDIF()
 
-  include_directories(${ENGINE_INCLUDES})
+include_directories(${ENGINE_INCLUDES})
 
 add_subdirectory( ${CMAKE_CURRENT_SOURCE_DIR}/engine )
 add_subdirectory( ${CMAKE_CURRENT_SOURCE_DIR}/examples )
@@ -252,10 +254,4 @@ IF (NOT ANDROID)
   ENDIF ()
 ENDIF ()
 
-#projects
-set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT midasminer)
-set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT doceditor)
-set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT tests)
-set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT uploader)
-set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT simple)
 
