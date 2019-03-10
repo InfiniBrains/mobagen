@@ -14,6 +14,7 @@ IF (EMSCRIPTEN)
 
 ELSEIF (ANDROID)
   # set( SDL_FILESYSTEM FALSE )
+  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
   set( PTHREADS OFF CACHE BOOL "Pthread support" )
   add_definitions(-DGL_GLEXT_PROTOTYPES)
 ELSE ()
@@ -41,9 +42,17 @@ IF(USE_GDCM)
   add_subdirectory( gdcm )
 ENDIF()
 
+
+# Avoid assimp bug for android
+IF (ANDROID)
+  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-narrowing")
+ENDIF()
+
 set( ASSIMP_BUILD_ASSIMP_TOOLS OFF CACHE BOOL "Build assimp tools" )
 set( ASSIMP_BUILD_TESTS OFF CACHE BOOL "Build assimp tests" )
 set( ASSIMP_BUILD_SAMPLES OFF CACHE BOOL "Build assimp samples" )
+set( ASSIMP_NO_EXPORT ON CACHE BOOL "ASSIMP_NO_EXPORT" )
+set( ASSIMP_BUILD_ALL_IMPORTERS_BY_DEFAULT OFF CACHE BOOL "ASSIMP_BUILD_ALL_IMPORTERS_BY_DEFAULT" )
 
 set( ASSIMP_BUILD_3DS_IMPORTER OFF CACHE BOOL "Build importer" )
 add_definitions(-DASSIMP_BUILD_NO_3DS_EXPORTER)
@@ -184,15 +193,12 @@ add_subdirectory( assimp )
 
 INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/imgui/ )
 
-add_library (imgui STATIC 
-  ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui.h 
-  ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui.cpp 
-  ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui_demo.cpp 
-  ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui_draw.cpp 
-) 
-
-
-
+add_library (imgui STATIC
+  ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui.h
+  ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui_demo.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui_draw.cpp
+)
 
 #execute_process( COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/openssl/config no-shared no-engine no-hw no-dso --prefix=${CMAKE_BINARY_DIR} )
 #execute_process( COMMAND make -C ${CMAKE_CURRENT_SOURCE_DIR}/openssl depend -j9 && make -C ${CMAKE_CURRENT_SOURCE_DIR}/openssl -j9 && make -C ${CMAKE_CURRENT_SOURCE_DIR}/openssl install_sw )
