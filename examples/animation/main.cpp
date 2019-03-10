@@ -130,13 +130,6 @@ void CoolGame::init(GLManager *glManager)
     addToScene(plane);
   } //*/
 
-  for (int i = 0; i < 2; i++)
-  {
-    MeshLoader ml("AncientUgandan.obj"); //"regr01.ply"
-    ml.getEntity()->getTransform().setPosition(glm::vec3(0, i * 3, -2.5));
-    ml.getEntity()->addComponent<SphereCollider>(1, 1);
-    addToScene(ml.getEntity());
-  }
 
   md5mesh = new SkeletalAnimationModelLoader("boblampclean.md5mesh");                                                              //:md5mesh("boblampclean.md5mesh"), skelete("01_03.bvh"),astroBoy("astroBoy_walk_Maya.dae"), testWuson("Testwuson.X")//, dogHouse("house.obj"), bigHouse("regr01.obj")
   skelete = new SkeletalAnimationModelLoader("Testwuson.X");                                                                       // , &glm::angleAxis(-glm::pi<float>() / 2.0f, glm::vec3(1.0f, 0.0f, 0.0f)), 0.05f); //:md5mesh("boblampclean.md5mesh"), skelete("01_03.bvh"),astroBoy("astroBoy_walk_Maya.dae"), testWuson("Testwuson.X")//, dogHouse("house.obj"), bigHouse("regr01.obj")

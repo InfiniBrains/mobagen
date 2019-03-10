@@ -43,7 +43,8 @@ namespace mobagen {
     std::chrono::high_resolution_clock::time_point m_time, m_lastTime;
     std::chrono::microseconds m_deltaTime;
 
-    //std::chrono::high_resolution_clock::time_point m_physicsTimeSimulated;
+    std::chrono::duration<long long, std::micro> m_physicsTimeAccumulated;
+    std::chrono::duration<long long, std::micro> m_physicsTimeStepSize;
 
     Game *game;
 

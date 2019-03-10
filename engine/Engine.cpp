@@ -6,6 +6,7 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>
+#include <chrono>
 
 #include <limits>
 
@@ -13,8 +14,7 @@
 #include <emscripten.h>
 #endif
 
-// TODO: DO WE NEED FIXED UPDATES?
-// std::chrono::microseconds FIXED_TIME_STEP(std::chrono::milliseconds(20));
+using namespace std::chrono_literals;
 
 namespace mobagen {
 #ifdef EMSCRIPTEN
@@ -79,8 +79,9 @@ namespace mobagen {
     });
 
     m_time = std::chrono::high_resolution_clock::now();
-    // TODO: DO WE NEED FIXED UPDATES?
-    //m_physicsTimeSimulated = std::chrono::high_resolution_clock::now();
+
+    m_physicsTimeStepSize = std::chrono::microseconds(1000000/360); // 6 steps per frame
+    m_physicsTimeAccumulated = std::chrono::microseconds(0);
 
 #ifdef EMSCRIPTEN
     instance = this;
@@ -110,30 +111,18 @@ namespace mobagen {
 
     quit = m_window.get()->shouldQuit();
 
-    m_physicsManager.get()->tick(m_deltaTime);
+    // Fixed timestep
+    m_physicsTimeAccumulated += m_deltaTime; // get the remainings from the last step
+    while (m_physicsTimeAccumulated >= m_physicsTimeStepSize) {
+      m_physicsTimeAccumulated -= m_physicsTimeStepSize;
+      m_physicsManager.get()->tick(m_physicsTimeStepSize);
+    }
 
-    /* TODO: DO WE NEED FIXED UPDATES?
-    while (m_physicsTimeSimulated < m_time) {
-
-      m_physicsTimeSimulated += FIXED_TIME_STEP;
-    }*/
+    // we need to simulate the remaining time amd render it in order to avoid jitter on the last simulation step
 
     game->update(m_window->getInput(), m_deltaTime);
 
     game->render(m_glManager.get());
-
-//    if (m_fireRay) {
-//      Ray ray = Ray::getPickRay(m_window->getInput()->getMousePosition(), m_window->getViewport(),
-//                                m_glManager->getViewMatrix(), m_glManager->getProjectionMatrix());
-//
-//      Entity *pickedEntity = m_physicsManager->pick(&ray);
-//
-//      if (pickedEntity != nullptr) {
-//        m_glManager->drawEntity(pickedEntity);
-//      }
-//
-//      m_glManager->drawLine(ray.getLine(10000.0f));
-//    }
 
     m_window->getGuiManager()->render(game->getRootScene().get());
 
