@@ -129,7 +129,7 @@ matrix:
       language: cpp
       compiler: clang
       script:
-        - ./scripts/travis-build.sh -j9
+        - ./scripts/travis-build.sh
 
     # linux emscripten
     - os: linux
@@ -173,7 +173,7 @@ matrix:
       language: cpp
       compiler: clang
       script:
-        - ./scripts/travis-build.sh -j9
+        - ./scripts/travis-build.sh
 
     # osx android
     - os: osx

@@ -201,14 +201,14 @@ add_library (imgui STATIC
 )
 
 #execute_process( COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/openssl/config no-shared no-engine no-hw no-dso --prefix=${CMAKE_BINARY_DIR} )
-#execute_process( COMMAND make -C ${CMAKE_CURRENT_SOURCE_DIR}/openssl depend -j9 && make -C ${CMAKE_CURRENT_SOURCE_DIR}/openssl -j9 && make -C ${CMAKE_CURRENT_SOURCE_DIR}/openssl install_sw )
+#execute_process( COMMAND make -C ${CMAKE_CURRENT_SOURCE_DIR}/openssl depend && make -C ${CMAKE_CURRENT_SOURCE_DIR}/openssl && make -C ${CMAKE_CURRENT_SOURCE_DIR}/openssl install_sw )
 
 #include(ExternalProject)
 #ExternalProject_Add(
 #    openssl
 #    SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/openssl"
 #    CONFIGURE_COMMAND ${CMAKE_SOURCE_DIR}/dependencies/openssl/config no-shared no-engine no-hw no-dso --prefix=${CMAKE_BINARY_DIR}
-#    BUILD_COMMAND make depend -j9 && make -j9
+#    BUILD_COMMAND make depend && make
 #    INSTALL_COMMAND make install_sw
 #    BUILD_IN_SOURCE 1
 #)
