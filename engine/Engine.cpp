@@ -14,6 +14,10 @@
 #include <emscripten.h>
 #endif
 
+#if defined(__MINGW32__) || defined(_MSC_VER)
+#include <thread>
+#endif
+
 using namespace std::chrono_literals;
 
 namespace mobagen {
@@ -87,7 +91,6 @@ namespace mobagen {
 
 #ifdef EMSCRIPTEN
     instance = this;
-
     emscripten_set_main_loop(Engine::loop, 0, 1);
 #else
     auto preTick = std::chrono::high_resolution_clock::now();
@@ -99,14 +102,15 @@ namespace mobagen {
       auto sleepTime = std::chrono::duration_cast<std::chrono::microseconds>(m_targetSleepTime - tickTime - m_sleepError);
 
       if(sleepTime<std::chrono::microseconds::zero()) sleepTime = std::chrono::microseconds::zero();
-
+#if defined(__MINGW32__) || defined(_MSC_VER)
+      std::this_thread::sleep_for(sleepTime);
+#else
       SDL_Delay((uint32_t)(sleepTime.count()/1000));
+#endif
 
       auto posSleep = std::chrono::high_resolution_clock::now();
       m_sleepError = std::chrono::duration_cast<std::chrono::microseconds>(posSleep-posTick) - sleepTime;
       preTick = posSleep;
-
-      //log_info("deltaTime, Tick, sleepTarget, sleepError: (%lld\t%lld\t%lld\t%lld)", m_deltaTime, tickTime, sleepTime, m_sleepError);
     }
 #endif
   }
