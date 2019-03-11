@@ -38,6 +38,8 @@ namespace mobagen {
 
     quit = false;
     m_fireRay = false;
+
+    m_targetSleepTime = std::chrono::duration<long long, std::micro>(1000000/60);
   }
 
   Engine::~Engine(void) {
@@ -88,8 +90,23 @@ namespace mobagen {
 
     emscripten_set_main_loop(Engine::loop, 0, 1);
 #else
+    auto preTick = std::chrono::high_resolution_clock::now();
+    auto m_sleepError = std::chrono::microseconds(0);
     while (!quit) {
       tick();
+      auto posTick = std::chrono::high_resolution_clock::now();
+      auto tickTime = std::chrono::duration_cast<std::chrono::microseconds>(posTick - preTick);
+      auto sleepTime = std::chrono::duration_cast<std::chrono::microseconds>(m_targetSleepTime - tickTime - m_sleepError);
+
+      if(sleepTime<std::chrono::microseconds::zero()) sleepTime = std::chrono::microseconds::zero();
+
+      SDL_Delay((uint32_t)(sleepTime.count()/1000));
+
+      auto posSleep = std::chrono::high_resolution_clock::now();
+      m_sleepError = std::chrono::duration_cast<std::chrono::microseconds>(posSleep-posTick) - sleepTime;
+      preTick = posSleep;
+
+      //log_info("deltaTime, Tick, sleepTarget, sleepError: (%lld\t%lld\t%lld\t%lld)", m_deltaTime, tickTime, sleepTime, m_sleepError);
     }
 #endif
   }
@@ -112,13 +129,12 @@ namespace mobagen {
     quit = m_window.get()->shouldQuit();
 
     // Fixed timestep
-    m_physicsTimeAccumulated += m_deltaTime; // get the remainings from the last step
+    m_physicsTimeAccumulated += m_deltaTime; // get the remaining from the last step
     while (m_physicsTimeAccumulated >= m_physicsTimeStepSize) {
       m_physicsTimeAccumulated -= m_physicsTimeStepSize;
       m_physicsManager.get()->tick(m_physicsTimeStepSize);
     }
-
-    // we need to simulate the remaining time amd render it in order to avoid jitter on the last simulation step
+    // TODO: we need to simulate the remaining time and render it in order to avoid jitter on the last simulation step
 
     game->update(m_window->getInput(), m_deltaTime);
 

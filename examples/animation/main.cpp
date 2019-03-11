@@ -48,7 +48,7 @@ public:
   CoolGame()
   {
     walking = false;
-  } //*/
+  }
   virtual void init(GLManager *glManager);
   virtual void update(Input *input, std::chrono::microseconds delta);
 
@@ -60,13 +60,13 @@ double timeElaped = 0.0;
 void CoolGame::update(Input *input, std::chrono::microseconds delta)
 {
   timeElaped += std::chrono::duration_cast<std::chrono::duration<float>>(delta).count();
-  skelete->loadNewFrame(0, timeElaped);
-  testWuson->loadNewFrame(0, timeElaped); //channel:0,1
-  md5mesh->loadNewFrame(0, timeElaped);
-  if (walking)
-    astroBoy->loadNewFrame(0, timeElaped);
-  else
-    astroBoy->loadNewFrame(0, 0);
+//  skelete->loadNewFrame(0, timeElaped);
+//  testWuson->loadNewFrame(0, timeElaped); //channel:0,1
+//  md5mesh->loadNewFrame(0, timeElaped);
+//  if (walking)
+//    astroBoy->loadNewFrame(0, timeElaped);
+//  else
+//    astroBoy->loadNewFrame(0, 0);
 
   Game::update(input, delta);
 }
