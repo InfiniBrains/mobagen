@@ -161,7 +161,7 @@ matrix:
 #        - docker exec -it emscripten ln -s /opt/cmake/bin/cmake /usr/local/bin/cmake
 #        - docker exec -it emscripten ln -s /opt/cmake/bin/cmake /usr/bin/cmake
 #        - docker exec -it emscripten cmake --version
-        - cd dependencies/emsdk ; ./emsdk install sdk-1.38.12-64bit
+        - ./dependencies/emsdk install sdk-1.38.12-64bit
       script:
 #        - docker exec -it emscripten ./scripts/travis-build.sh
 #        - docker exec -it emscripten ./scripts/travis-build.sh
