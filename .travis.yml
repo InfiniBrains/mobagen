@@ -165,7 +165,7 @@ matrix:
       language: cpp
       compiler: cpp
       install:
-        - brew install cmake
+        - brew upgrade cmake
         - cmake --version
       script:
         - ./scripts/travis-build.sh
