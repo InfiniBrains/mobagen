@@ -164,6 +164,8 @@ matrix:
         - MATRIX_EVAL="CC=gcc && CXX=g++"
       language: cpp
       compiler: cpp
+      install:
+        - brew install cmake
       script:
         - ./scripts/travis-build.sh
 
