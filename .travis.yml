@@ -118,7 +118,6 @@ matrix:
             - g++
             - cmake
             - clang
-            - cmake
             - git
             - build-essential
             - libgl1-mesa-dev
@@ -129,6 +128,7 @@ matrix:
       language: cpp
       compiler: clang
       script:
+        - cmake --version
         - ./scripts/travis-build.sh
 
     # linux emscripten
@@ -166,6 +166,7 @@ matrix:
       compiler: cpp
       install:
         - brew install cmake
+        - cmake --version
       script:
         - ./scripts/travis-build.sh
 
