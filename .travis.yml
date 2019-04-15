@@ -133,16 +133,15 @@ matrix:
 
     # linux emscripten
     - os: linux
-      jdk: openjdk8
+#      jdk: openjdk8
       services:
         - docker
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - cmake
-            - build-essential
+#      addons:
+#        apt:
+#          sources:
+#            - ubuntu-toolchain-r-test
+#          packages:
+#            - build-essential
       env:
         - BUILD_TYPE=emscripten
       group: travis_latest

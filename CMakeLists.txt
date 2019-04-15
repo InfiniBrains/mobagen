@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.11.4)
+cmake_minimum_required(VERSION 3.12.4)
 
 find_program(LSB_RELEASE_EXEC lsb_release) 
 if(LSB_RELEASE_EXEC) 
