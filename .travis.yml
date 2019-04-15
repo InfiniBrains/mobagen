@@ -141,6 +141,7 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - cmake
+            - build-essential
       env:
         - BUILD_TYPE=emscripten
       group: travis_latest
@@ -148,6 +149,7 @@ matrix:
       language: cpp
       compiler: emscripten
       install:
+        - cmake --version
         - ./dependencies/emsdk/emsdk install sdk-1.38.12-64bit
         - ./dependencies/emsdk/emsdk activate sdk-1.38.12-64bit
       script:
@@ -162,7 +164,6 @@ matrix:
       language: cpp
       compiler: cpp
       script:
-        - brew install gcc@7
         - ./scripts/travis-build.sh
 
 #    # osx android
