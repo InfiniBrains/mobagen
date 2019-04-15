@@ -158,10 +158,11 @@ matrix:
     - os: osx
       env:
         - BUILD_TYPE=native
-        - MATRIX_EVAL="CC=clang && CXX=clang++"
+        - MATRIX_EVAL="CC=gcc && CXX=g++"
       language: cpp
-      compiler: clang
+      compiler: cpp
       script:
+        - brew install gcc@7
         - ./scripts/travis-build.sh
 
 #    # osx android
