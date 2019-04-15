@@ -133,6 +133,7 @@ matrix:
 
     # linux emscripten
     - os: linux
+      jdk: openjdk8
       services:
         - docker
       addons:
