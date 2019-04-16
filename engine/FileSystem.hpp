@@ -15,6 +15,10 @@ namespace mobagen {
 
     char getOsSeparator(void) const;
 
+    std::vector<std::string> ListDirectory(std::string path);
+
+    bool IsFile(std::string path);
+
     Assimp::IOStream *Open(const char *pFile, const char *pMode);
 
     void Close(Assimp::IOStream *pFile);

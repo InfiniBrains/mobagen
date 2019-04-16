@@ -118,7 +118,6 @@ matrix:
             - g++
             - cmake
             - clang
-            - cmake
             - git
             - build-essential
             - libgl1-mesa-dev
@@ -129,18 +128,20 @@ matrix:
       language: cpp
       compiler: clang
       script:
+        - cmake --version
         - ./scripts/travis-build.sh
 
     # linux emscripten
     - os: linux
+#      jdk: openjdk8
       services:
         - docker
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - cmake
+#      addons:
+#        apt:
+#          sources:
+#            - ubuntu-toolchain-r-test
+#          packages:
+#            - build-essential
       env:
         - BUILD_TYPE=emscripten
       group: travis_latest
@@ -148,6 +149,7 @@ matrix:
       language: cpp
       compiler: emscripten
       install:
+        - cmake --version
         - ./dependencies/emsdk/emsdk install sdk-1.38.12-64bit
         - ./dependencies/emsdk/emsdk activate sdk-1.38.12-64bit
       script:
@@ -158,9 +160,12 @@ matrix:
     - os: osx
       env:
         - BUILD_TYPE=native
-        - MATRIX_EVAL="CC=clang && CXX=clang++"
+        - MATRIX_EVAL="CC=gcc && CXX=g++"
       language: cpp
-      compiler: clang
+      compiler: cpp
+      install:
+        - brew upgrade cmake
+        - cmake --version
       script:
         - ./scripts/travis-build.sh
 
