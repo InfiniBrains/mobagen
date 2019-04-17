@@ -2,8 +2,9 @@
 #include "FileCustom.hpp"
 
 #include <iterator>
-//#include <experimental/filesystem>
-//namespace fs = std::experimental::filesystem;
+#include <sys/types.h>
+#include <dirent.h>
+#include <sys/stat.h>
 
 namespace mobagen {
   FileSystem::FileSystem(void) {}
@@ -43,14 +44,27 @@ namespace mobagen {
   std::vector<std::string> FileSystem::ListDirectory(std::string path) {
     std::vector<std::string> contents;
 
-//    for(auto& p: fs::directory_iterator(path))
-//      contents.emplace_back(p.path().string());
+    DIR* dirp = opendir(path.c_str());
+    struct dirent * dp;
+    while ((dp = readdir(dirp)) != NULL)
+      contents.push_back(dp->d_name);
+    closedir(dirp);
 
     return contents;
   }
 
-  bool FileSystem::IsFile(std::string path) {
-//    return fs::is_regular_file(path);
-  return false;
+  bool FileSystem::IsDirectory(std::string path) {
+      struct stat s;
+      if( stat(path.c_str(),&s) == 0 )
+      {
+          if( s.st_mode & S_IFDIR )
+              return true; ; // dir
+          else if( s.st_mode & S_IFREG )
+              return false; // file
+          else
+              return false; //something else
+      }
+      else
+          return false;
   }
 }
