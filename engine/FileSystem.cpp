@@ -4,12 +4,11 @@
 
 #if !defined(_WIN32) && !defined(_WIN64) && (defined(__unix__) || defined(__unix) || (defined(__APPLE__) && defined(__MACH__)))
 /* UNIX-style OS. ------------------------------------------- */
+#include <unistd.h>
 #if defined(_POSIX_VERSION)
 /* POSIX compliant */
-#include <dirent.h>
 #include <sys/types.h>
 #include <sys/dir.h>
-#include <unistd.h>
 #endif
 #endif
 
