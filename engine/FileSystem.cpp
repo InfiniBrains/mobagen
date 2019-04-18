@@ -1,10 +1,9 @@
 #include "FileSystem.hpp"
 #include "FileCustom.hpp"
 
-#include <iterator>
-#include <sys/types.h>
 #include <dirent.h>
-#include <sys/stat.h>
+#include <sys/types.h>
+#include <sys/dir.h>
 
 namespace mobagen {
   FileSystem::FileSystem(void) {}
@@ -54,17 +53,17 @@ namespace mobagen {
   }
 
   bool FileSystem::IsDirectory(std::string path) {
-      struct stat s;
-      if( stat(path.c_str(),&s) == 0 )
-      {
-          if( s.st_mode & S_IFDIR )
-              return true; ; // dir
-          else if( s.st_mode & S_IFREG )
-              return false; // file
-          else
-              return false; //something else
-      }
-      else
+//      struct stat s;
+//      if( stat(path.c_str(),&s) == 0 )
+//      {
+//          if( s.st_mode & S_IFDIR )
+//              return true; ; // dir
+//          else if( s.st_mode & S_IFREG )
+//              return false; // file
+//          else
+//              return false; //something else
+//      }
+//      else
           return false;
   }
 }
