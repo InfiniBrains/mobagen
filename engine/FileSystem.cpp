@@ -1,9 +1,17 @@
 #include "FileSystem.hpp"
 #include "FileCustom.hpp"
 
+
+#if !defined(_WIN32) && !defined(_WIN64) && (defined(__unix__) || defined(__unix) || (defined(__APPLE__) && defined(__MACH__)))
+/* UNIX-style OS. ------------------------------------------- */
+#if defined(_POSIX_VERSION)
+/* POSIX compliant */
 #include <dirent.h>
 #include <sys/types.h>
 #include <sys/dir.h>
+#include <unistd.h>
+#endif
+#endif
 
 namespace mobagen {
   FileSystem::FileSystem(void) {}
@@ -43,11 +51,13 @@ namespace mobagen {
   std::vector<std::string> FileSystem::ListDirectory(std::string path) {
     std::vector<std::string> contents;
 
+#if defined(_POSIX_VERSION)
     DIR* dirp = opendir(path.c_str());
     struct dirent * dp;
     while ((dp = readdir(dirp)) != NULL)
       contents.push_back(dp->d_name);
     closedir(dirp);
+#endif
 
     return contents;
   }
