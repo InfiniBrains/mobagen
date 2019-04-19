@@ -177,4 +177,9 @@ namespace mobagen
   {
 	return Open(path.c_str(), pMode);
   }
+
+  auto FileSystem::Close(Assimp::IOStream *file) -> void
+  {
+    delete file;
+  }
 }

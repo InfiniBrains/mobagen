@@ -24,12 +24,6 @@ namespace mobagen {
   	static auto IsDirectory(const std::string& path) -> bool;
 	static auto Open(const char* pFile, const char* pMode) -> Assimp::IOStream*;
 	static auto Open(const std::string& path, const char* pMode) -> Assimp::IOStream*;
-
-		/* 
-		 
-		 Assimp::IOStream *Open(const char *pFile, const char *pMode);
-
-		 void Close(Assimp::IOStream *pFile);*/
-
+	static auto Close(Assimp::IOStream *file) -> void;
   };
 }
