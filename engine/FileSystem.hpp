@@ -1,26 +1,31 @@
 #pragma once
-
-#include <assimp/IOSystem.hpp>
+#include "assimp/IOStream.hpp"
+#include <vector>
 
 namespace mobagen {
-  class FileSystem : public Assimp::IOSystem {
+  class FileSystem {
   public:
-    FileSystem(void);
+	static auto Exists(const char* path) -> bool;
+	static auto Exists(std::string path) -> bool;
+	// TODO: compare paths with "../" 
+	static auto ComparePaths(const char* one, const char* second) -> bool;
+	// TODO: compare paths with "../" 
+	static auto ComparePaths(const std::string& one, const std::string& second) -> bool;
+	static auto GetPathSeparator() -> char;
+	static auto ListDirectory(const std::string& path) -> std::vector<std::string>;
+	static auto ListDirectory(const char* path) -> std::vector<std::string>;
+	static auto IsFile(const char* path) -> bool;
+	static auto IsFile(const std::string& path) -> bool;
+	static auto IsDirectory(const char* path) -> bool;
+  	static auto IsDirectory(const std::string& path) -> bool;
+	static auto Open(const char* pFile, const char* pMode) -> Assimp::IOStream*;
+	static auto Open(const std::string& path, const char* pMode) -> Assimp::IOStream*;
 
-    ~FileSystem(void);
+		/* 
+		 
+		 Assimp::IOStream *Open(const char *pFile, const char *pMode);
 
-    bool ComparePaths(const char *one, const char *second) const;
+		 void Close(Assimp::IOStream *pFile);*/
 
-    bool Exists(const char *pFile) const;
-
-    char getOsSeparator(void) const;
-
-    std::vector<std::string> ListDirectory(std::string path);
-
-    bool IsDirectory(std::string path);
-
-    Assimp::IOStream *Open(const char *pFile, const char *pMode);
-
-    void Close(Assimp::IOStream *pFile);
   };
 }
