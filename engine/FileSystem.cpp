@@ -1,6 +1,10 @@
 #include "FileSystem.hpp"
+
+#include <assimp/IOSystem.hpp>
+
 #include "FileCustom.hpp"
 #include "Logger.hpp"
+
 
 #if !defined(_WIN32) && !defined(_WIN64) && (defined(__unix__) || defined(__unix) || (defined(__APPLE__) && defined(__MACH__)))
 /* UNIX-style OS. ------------------------------------------- */

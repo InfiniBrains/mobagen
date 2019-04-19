@@ -1,5 +1,5 @@
 #pragma once
-#include "assimp/IOStream.hpp"
+#include <assimp/IOStream.hpp>
 #include <vector>
 
 namespace mobagen {
