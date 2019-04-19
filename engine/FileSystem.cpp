@@ -12,6 +12,10 @@
 #endif
 #endif
 
+#if defined(_WIN32) || defined(_WIN64) || defined(_MSC_VER)
+#include "direntwin.h"
+#endif
+
 namespace mobagen {
   FileSystem::FileSystem(void) {}
 
@@ -50,29 +54,27 @@ namespace mobagen {
   std::vector<std::string> FileSystem::ListDirectory(std::string path) {
     std::vector<std::string> contents;
 
-#if defined(_POSIX_VERSION)
     DIR* dirp = opendir(path.c_str());
     struct dirent * dp;
     while ((dp = readdir(dirp)) != NULL)
       contents.push_back(dp->d_name);
     closedir(dirp);
-#endif
 
     return contents;
   }
 
   bool FileSystem::IsDirectory(std::string path) {
-//      struct stat s;
-//      if( stat(path.c_str(),&s) == 0 )
-//      {
-//          if( s.st_mode & S_IFDIR )
-//              return true; ; // dir
-//          else if( s.st_mode & S_IFREG )
-//              return false; // file
-//          else
-//              return false; //something else
-//      }
-//      else
-          return false;
+    struct stat s;
+    if( stat(path.c_str(),&s) == 0 )
+    {
+      if( s.st_mode & S_IFDIR )
+        return true; // dir
+//      else if( s.st_mode & S_IFREG )
+//        return false; // file
+      else
+        return false; //something else
+    }
+    else
+      return false;
   }
 }
