@@ -53,7 +53,7 @@ namespace mobagen
 	  return one == second;
   }
 
-  auto FileSystem::GetPathSeparator() -> char
+  auto FileSystem::PathSeparator() -> char
   {
 #if defined(_WIN32) || defined(_WIN64)
 	  return '\\';

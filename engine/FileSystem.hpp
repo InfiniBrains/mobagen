@@ -11,7 +11,7 @@ namespace mobagen {
 	static auto ComparePaths(const char* one, const char* second) -> bool;
 	// TODO: compare paths with "../" 
 	static auto ComparePaths(const std::string& one, const std::string& second) -> bool;
-	static auto GetPathSeparator() -> char;
+	static auto PathSeparator() -> char;
 	static auto ListDirectory(const std::string& path) -> std::vector<std::string>;
 	static auto ListDirectory(const char* path) -> std::vector<std::string>;
 	static auto ListDirectoryFiles(const std::string& path)->std::vector<std::string>;
