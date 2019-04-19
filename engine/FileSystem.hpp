@@ -14,7 +14,11 @@ namespace mobagen {
 	static auto GetPathSeparator() -> char;
 	static auto ListDirectory(const std::string& path) -> std::vector<std::string>;
 	static auto ListDirectory(const char* path) -> std::vector<std::string>;
-	static auto IsFile(const char* path) -> bool;
+	static auto ListDirectoryFiles(const std::string& path)->std::vector<std::string>;
+	static auto ListDirectoryFiles(const char* path)->std::vector<std::string>;
+	static auto ListDirectoryFolders(const std::string& path)->std::vector<std::string>;
+	static auto ListDirectoryFolders(const char* path)->std::vector<std::string>;
+  	static auto IsFile(const char* path) -> bool;
 	static auto IsFile(const std::string& path) -> bool;
 	static auto IsDirectory(const char* path) -> bool;
   	static auto IsDirectory(const std::string& path) -> bool;

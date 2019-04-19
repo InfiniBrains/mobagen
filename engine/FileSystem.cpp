@@ -82,6 +82,60 @@ namespace mobagen
 	return contents;
   }
 
+  auto FileSystem::ListDirectoryFiles(const std::string& path) -> std::vector<std::string>
+  {
+	return ListDirectoryFiles(path.c_str());
+  }
+
+  auto FileSystem::ListDirectoryFiles(const char* path) -> std::vector<std::string>
+  {
+	std::vector<std::string> contents;
+
+	if (!IsDirectory(path))
+	{
+	  log_err("Path is not a directory: %s", path);
+	  return contents;
+	}
+
+	const auto dir = opendir(path);
+	struct dirent * dp;
+	while ((dp = readdir(dir)) != nullptr)
+	{
+	  if(IsFile(dp->d_name))
+	    contents.emplace_back(dp->d_name);
+	}
+  	closedir(dir);
+
+	return contents;
+  }
+
+  auto FileSystem::ListDirectoryFolders(const std::string& path) -> std::vector<std::string>
+  {
+	  return ListDirectoryFolders(path.c_str());
+  }
+
+  auto FileSystem::ListDirectoryFolders(const char* path) -> std::vector<std::string>
+  {
+	std::vector<std::string> contents;
+
+	if (!IsDirectory(path))
+	{
+	  log_err("Path is not a directory: %s", path);
+	  return contents;
+	}
+
+	const auto dir = opendir(path);
+	struct dirent * dp;
+	while ((dp = readdir(dir)) != nullptr)
+	{
+	  if(IsDirectory(dp->d_name))
+	    contents.emplace_back(dp->d_name);
+	}
+  	closedir(dir);
+
+	return contents;
+  }
+
   auto FileSystem::IsFile(const char* path) -> bool
   {
 	struct stat s {};
