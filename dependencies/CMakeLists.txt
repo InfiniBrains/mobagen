@@ -195,6 +195,8 @@ add_library (imgui STATIC
   ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui_demo.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui_draw.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui_internal.h
+  ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui_widgets.cpp
 )
 
 #execute_process( COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/openssl/config no-shared no-engine no-hw no-dso --prefix=${CMAKE_BINARY_DIR} )
