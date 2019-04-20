@@ -1,4 +1,4 @@
-#include "FileSystem.hpp"
+#include "FileSystemHelper.hpp"
 #include "MeshLoader.hpp"
 #include "components/MeshRenderer.hpp"
 
@@ -21,7 +21,7 @@ namespace mobagen {
       }
     } else {
       Assimp::Importer importer;
-      importer.SetIOHandler(new FileSystem());
+      importer.SetIOHandler(new FileSystemHelper());
 
       const aiScene *scene = importer.ReadFile(file,
                                                aiProcess_Triangulate |
@@ -124,7 +124,7 @@ namespace mobagen {
     ///////////////////////////////////*/
     m_fileName = file;
     Assimp::Importer importer;
-    importer.SetIOHandler(new FileSystem());
+    importer.SetIOHandler(new FileSystemHelper());
 
     const aiScene *scene = importer.ReadFile(file,
                                              aiProcess_Triangulate |
