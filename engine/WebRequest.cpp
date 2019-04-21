@@ -11,10 +11,11 @@ namespace mobagen {
   const std::string WebRequest::kHttpVerbPUT = "PUT";
 
   WebRequest::WebRequest() {
-    easyhandle = nullptr;
+
     method = &kHttpVerbGET;
 #ifdef APPLE
 #ifdef USE_CURL
+    easyhandle = nullptr;
     curl_global_init(CURL_GLOBAL_ALL);
 #endif
 #else
@@ -22,12 +23,13 @@ namespace mobagen {
   }
 
   WebRequest::WebRequest(std::string url) {
-    easyhandle = nullptr;
+    
     method = &kHttpVerbGET;
     this->url = std::move(url);
 #ifdef APPLE
 #ifdef USE_CURL
     curl_global_init(CURL_GLOBAL_ALL);
+    easyhandle = nullptr;
 #endif
 #else
 #endif
