@@ -5,10 +5,9 @@ if(LSB_RELEASE_EXEC)
   execute_process(COMMAND ${LSB_RELEASE_EXEC} -is 
     OUTPUT_VARIABLE LSB_RELEASE_ID_SHORT 
     OUTPUT_STRIP_TRAILING_WHITESPACE 
-  ) 
+  )
   IF(LSB_RELEASE_ID_SHORT) 
-    message(STATUS "ubuntu detected") 
-
+    message(STATUS "ubuntu detected")
   ENDIF() 
 ENDIF()
 
@@ -36,25 +35,36 @@ ENDIF()
 
 IF(NOT DEFINED ${USE_BULLET})
   readSettingFile("USE_BULLET=" "ON" STRING_RESULT )
-  set( USE_BULLET "${STRING_RESULT}" CACHE BOOL "USE BULLET?" )
+  string(COMPARE EQUAL "${STRING_RESULT}" "ON" is_equal)
+  if(is_equal)
+    set(USE_BULLET 1)
+  else()
+    set(USE_BULLET 0)
+  endif()
   message(STATUS "USE_BULLET from config file: ${USE_BULLET}")
 ENDIF()
 
 IF(NOT DEFINED ${USE_GDCM})
   readSettingFile("USE_GDCM=" "OFF" STRING_RESULT )
-  set( USE_GDCM "${STRING_RESULT}" CACHE BOOL "USE GDCM?" )
+  string(COMPARE EQUAL "${USE_GDCM}" "ON" is_equal)
+  if(is_equal)
+    set(USE_GDCM 1)
+  else()
+    set(USE_GDCM 0)
+  endif()
   message(STATUS "USE_GDCM from config file: ${USE_GDCM}")
 ENDIF()
 
 IF(NOT DEFINED ${USE_CURL})
   readSettingFile("USE_CURL=" "OFF" STRING_RESULT )
-  set( USE_CURL "${STRING_RESULT}" CACHE BOOL "USE CURL?" )
+  string(COMPARE EQUAL "${STRING_RESULT}" "ON" is_equal)
+  if(is_equal)
+    set(USE_CURL 1)
+  else()
+    set(USE_CURL 0)
+  endif()
   message(STATUS "USE_CURL from config file: ${USE_CURL}")
 ENDIF()
-
-message(STATUS "USE_CURL")
-message(STATUS USE_CURL) 
-Message(STATUS ${USE_CURL}) 
 
 IF(${USE_BULLET})
   hunter_add_package(bullet)
@@ -69,7 +79,7 @@ IF(${USE_CURL})
     message(STATUS "Perl was found in PATH: ${perl_path}")
   ENDIF()
 
-  IF(APPLE)
+  IF(${APPLE})
     add_definitions(-DUSE_CURL)
     add_definitions(-DAPPLE)
 
@@ -86,7 +96,7 @@ find_package(ZLIB CONFIG REQUIRED)
 
 set(LIBC ON CACHE BOOL "LIBC")
 
-IF (NOT EMSCRIPTEN)
+IF(NOT EMSCRIPTEN)
   hunter_add_package(SDL2)
   find_package(SDL2 CONFIG REQUIRED)
 ENDIF()
@@ -94,7 +104,7 @@ ENDIF()
 set(NOMINMAX ON CACHE BOOL "workaround for minmax problem with windows.h")
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include(cotire)
@@ -102,7 +112,7 @@ include(cotire)
 set(BUILD_STATIC_LIBS TRUE)
 set(BUILD_SHARED_LIBS FALSE)
 
-IF (ANDROID)
+IF(ANDROID)
   include(${CP_CMAKE_DIR}/android.cmake)
   add_definitions(-DSDL_JOYSTICK=0) # to avoid bugs with android + joystick
 ENDIF () 
@@ -118,7 +128,7 @@ add_definitions(-UGLEW_BUILD)
 
 add_subdirectory(dependencies)
 
-if(USE_GDCM)
+if(${USE_GDCM})
   include(${CMAKE_CURRENT_BINARY_DIR}/dependencies/gdcm/GDCMConfig.cmake )
   SET(GDCM_LIBRARIES
     gdcmCommon
@@ -176,7 +186,7 @@ IF (EMSCRIPTEN)
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/html/animation.html ${CMAKE_BINARY_DIR}/bin/animation.html COPYONLY)
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/html/uploader.html ${CMAKE_BINARY_DIR}/bin/uploader.html COPYONLY)
 
-ELSEIF (ANDROID)
+ELSEIF(ANDROID)
   add_definitions( -DGLES2=1 )
 
   set(ENGINE_LIBS
@@ -207,22 +217,22 @@ ELSE ()
     ${IMGUI_LIBRARY}
   )
   set(ENGINE_INCLUDES
-      ${GLM_INCLUDE_DIRS}
-      ${ASSIMP_INCLUDE_DIR}
-      ${CMAKE_BINARY_DIR}/dependencies/assimp/include
-      ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/stb
-      ${IMGUI_INCLUDE_DIRS}
-      ${CMAKE_CURRENT_SOURCE_DIR}/engine/
-    )
+    ${GLM_INCLUDE_DIRS}
+    ${ASSIMP_INCLUDE_DIR}
+    ${CMAKE_BINARY_DIR}/dependencies/assimp/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/stb
+    ${IMGUI_INCLUDE_DIRS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/engine/
+  )
   
   IF(${USE_GDCM})
     SET(ENGINE_LIBS
       ${ENGINE_LIBS}
-	  ${GDCM_LIBRARIES}
+	    ${GDCM_LIBRARIES}
     )
 	SET(ENGINE_INCLUDES
       ${ENGINE_INCLUDES}
-	  ${GDCM_INCLUDE_DIRS}
+	    ${GDCM_INCLUDE_DIRS}
     )
   ENDIF()
 ENDIF()
@@ -238,16 +248,16 @@ IF(${USE_BULLET})
 ENDIF()
 
 SET(ENGINE_LIBS
-    ${ENGINE_LIBS}
-    ZLIB::zlib
+  ${ENGINE_LIBS}
+  ZLIB::zlib
 )
 
-IF(APPLE AND ${USE_CURL})
+IF(${APPLE} AND ${USE_CURL})
   SET(ENGINE_LIBS
-      ${ENGINE_LIBS}
-      CURL::libcurl
-      OpenSSL::SSL
-      OpenSSL::Crypto
+    ${ENGINE_LIBS}
+    CURL::libcurl
+    OpenSSL::SSL
+    OpenSSL::Crypto
   )
 ENDIF()
 
