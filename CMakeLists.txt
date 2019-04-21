@@ -52,6 +52,10 @@ IF(NOT DEFINED ${USE_CURL})
   message(STATUS "USE_CURL from config file: ${USE_CURL}")
 ENDIF()
 
+message(STATUS "USE_CURL")
+message(STATUS USE_CURL) 
+Message(STATUS ${USE_CURL}) 
+
 IF(${USE_BULLET})
   hunter_add_package(bullet)
   find_package(bullet CONFIG REQUIRED)
