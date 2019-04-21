@@ -69,11 +69,6 @@ IF(NOT DEFINED ${USE_CURL})
   message(STATUS "USE_CURL from config file: ${USE_CURL}")
 ENDIF()
 
-IF(USE_BULLET)
-  hunter_add_package(bullet)
-  find_package(bullet CONFIG REQUIRED)
-ENDIF()
-
 IF(USE_CURL)
   find_program (perl_path NAMES perl perl.exe)
   IF (NOT perl_path)
@@ -93,6 +88,11 @@ IF(USE_CURL)
     hunter_add_package(CURL)
     find_package(CURL CONFIG REQUIRED)
   ENDIF()
+ENDIF()
+
+IF(USE_BULLET)
+  hunter_add_package(bullet)
+  find_package(bullet CONFIG REQUIRED)
 ENDIF()
 
 # zlib support
