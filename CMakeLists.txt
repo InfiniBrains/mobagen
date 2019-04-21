@@ -1,5 +1,10 @@
 cmake_minimum_required(VERSION 3.12.4)
 
+IF(NOT DEFINED APPLE)
+  set(APPLE OFF)
+  MESSAGE(STATUS "NOT APPLE MACHINE")
+ENDIF()
+
 find_program(LSB_RELEASE_EXEC lsb_release) 
 if(LSB_RELEASE_EXEC) 
   execute_process(COMMAND ${LSB_RELEASE_EXEC} -is 
@@ -77,7 +82,7 @@ IF(USE_CURL)
     message(STATUS "Perl was found in PATH: ${perl_path}")
   ENDIF()
 
-  IF(DEFINED ${APPLE})
+  IF(APPLE)
     add_definitions(-DUSE_CURL)
     add_definitions(-DAPPLE)
 
@@ -250,13 +255,15 @@ SET(ENGINE_LIBS
   ZLIB::zlib
 )
 
-IF(USE_CURL AND DEFINED ${APPLE})
-  SET(ENGINE_LIBS
-    ${ENGINE_LIBS}
-    CURL::libcurl
-    OpenSSL::SSL
-    OpenSSL::Crypto
-  )
+IF(USE_CURL)
+  if(APPLE)
+    SET(ENGINE_LIBS
+      ${ENGINE_LIBS}
+      CURL::libcurl
+      OpenSSL::SSL
+      OpenSSL::Crypto
+    )
+  endif()
 ENDIF()
 
 include_directories(${ENGINE_INCLUDES})
