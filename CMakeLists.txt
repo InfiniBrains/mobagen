@@ -57,7 +57,7 @@ IF(${USE_BULLET})
   find_package(bullet CONFIG REQUIRED)
 ENDIF()
 
-IF(DEFINED ${USE_CURL})
+IF(${USE_CURL})
   find_program (perl_path NAMES perl perl.exe)
   IF (NOT perl_path)
     message(FATAL_ERROR "You must install PERL and add it to PATH in order to build CURL")
