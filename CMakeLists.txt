@@ -72,10 +72,12 @@ find_package(ZLIB CONFIG REQUIRED)
 
 IF (NOT EMSCRIPTEN AND ${USE_CURL})
   set(LIBC ON CACHE BOOL "LIBC")
-  hunter_add_package(cpr)
-  find_package(cpr CONFIG REQUIRED)
+  hunter_add_package(OpenSSL)
+  find_package(OpenSSL REQUIRED)
   hunter_add_package(CURL)
   find_package(CURL CONFIG REQUIRED)
+  hunter_add_package(cpr)
+  find_package(cpr CONFIG REQUIRED)
 ENDIF()
 
 IF (NOT EMSCRIPTEN)
@@ -137,12 +139,9 @@ set ( ASSIMP_LIBRARY assimp )
 set ( GLM_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/glm/ )
 
 set ( IMGUI_INCLUDE_DIRS
-  ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/imgui/
-  ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/imgui/addons
-  ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/imgui/addons/imguifilesystem)
+  ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/imgui/)
 
 set ( IMGUI_LIBRARY imgui )
-
 
 IF (EMSCRIPTEN)
   #SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall --preload-file ${CMAKE_CURRENT_SOURCE_DIR}/Engine/example/assets/ -s DEMANGLE_SUPPORT=1 -s ASSERTIONS=2 -s TOTAL_MEMORY=536870912 -s USE_SDL=2 -std=c++14 -Oz")
@@ -215,7 +214,10 @@ ELSE ()
   IF(USE_CURL)
     SET(ENGINE_LIBS
       ${ENGINE_LIBS}
+      CURL::libcurl
       cpr::cpr
+      OpenSSL::SSL
+      OpenSSL::Crypto
     ) 
   ENDIF()
   
