@@ -57,7 +57,7 @@ IF(${USE_BULLET})
   find_package(bullet CONFIG REQUIRED)
 ENDIF()
 
-IF(${USE_CURL})
+IF(DEFINED ${USE_CURL})
   find_program (perl_path NAMES perl perl.exe)
   IF (NOT perl_path)
     message(FATAL_ERROR "You must install PERL and add it to PATH in order to build CURL")
@@ -238,7 +238,7 @@ SET(ENGINE_LIBS
     ZLIB::zlib
 )
 
-IF(APPLE AND USE_CURL)
+IF(APPLE AND DEFINED ${USE_CURL})
   SET(ENGINE_LIBS
       ${ENGINE_LIBS}
       CURL::libcurl
