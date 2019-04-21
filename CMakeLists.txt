@@ -77,7 +77,7 @@ IF(USE_CURL)
     message(STATUS "Perl was found in PATH: ${perl_path}")
   ENDIF()
 
-  IF(DEFINED APPLE)
+  IF(DEFINED ${APPLE})
     add_definitions(-DUSE_CURL)
     add_definitions(-DAPPLE)
 
@@ -250,7 +250,7 @@ SET(ENGINE_LIBS
   ZLIB::zlib
 )
 
-IF(USE_CURL AND DEFINED APPLE)
+IF(USE_CURL AND DEFINED ${APPLE})
   SET(ENGINE_LIBS
     ${ENGINE_LIBS}
     CURL::libcurl
