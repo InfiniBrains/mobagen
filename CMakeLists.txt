@@ -4,6 +4,7 @@ IF(NOT DEFINED APPLE)
   set(APPLE OFF)
   MESSAGE(STATUS "NOT APPLE MACHINE")
 ENDIF()
+MESSAGE(STATUS "APPLE variable: ${APPLE}")
 
 find_program(LSB_RELEASE_EXEC lsb_release) 
 if(LSB_RELEASE_EXEC) 
@@ -78,8 +79,6 @@ IF(USE_CURL)
   ENDIF()
 
   IF(APPLE)
-    message(FATAL_ERROR "Entering apple")
-
     add_definitions(-DUSE_CURL)
     add_definitions(-DAPPLE)
 
@@ -259,7 +258,6 @@ SET(ENGINE_LIBS
 
 IF(USE_CURL)
   if(APPLE)
-    message(FATAL_ERROR "Entering apple2")
     SET(ENGINE_LIBS
       ${ENGINE_LIBS}
       CURL::libcurl
