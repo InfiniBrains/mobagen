@@ -211,7 +211,7 @@ ELSE ()
       ${CMAKE_CURRENT_SOURCE_DIR}/engine/
     )
   
-  IF(USE_GDCM)
+  IF(${USE_GDCM})
     SET(ENGINE_LIBS
       ${ENGINE_LIBS}
 	  ${GDCM_LIBRARIES}
@@ -223,7 +223,7 @@ ELSE ()
   ENDIF()
 ENDIF()
 
-IF(USE_BULLET)
+IF(${USE_BULLET})
   SET(ENGINE_LIBS
     ${ENGINE_LIBS}
     bullet::BulletCollision
@@ -238,7 +238,7 @@ SET(ENGINE_LIBS
     ZLIB::zlib
 )
 
-IF(APPLE AND DEFINED ${USE_CURL})
+IF(APPLE AND ${USE_CURL})
   SET(ENGINE_LIBS
       ${ENGINE_LIBS}
       CURL::libcurl
