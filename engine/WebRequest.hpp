@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <map>
+#include <memory>
 
 #ifdef APPLE
 #ifdef USE_CURL
