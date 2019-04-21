@@ -64,21 +64,23 @@ IF(${USE_CURL})
   ELSE()
     message(STATUS "Perl was found in PATH: ${perl_path}")
   ENDIF()
+
+  IF(APPLE)
+    add_definitions(-DUSE_CURL)
+    add_definitions(-DAPPLE)
+
+    hunter_add_package(OpenSSL)
+    find_package(OpenSSL REQUIRED)
+    hunter_add_package(CURL)
+    find_package(CURL CONFIG REQUIRED)
+  ENDIF()
 ENDIF()
 
 # zlib support
 hunter_add_package(ZLIB)
 find_package(ZLIB CONFIG REQUIRED)
 
-IF (NOT EMSCRIPTEN AND ${USE_CURL})
-  set(LIBC ON CACHE BOOL "LIBC")
-  hunter_add_package(OpenSSL)
-  find_package(OpenSSL REQUIRED)
-  hunter_add_package(CURL)
-  find_package(CURL CONFIG REQUIRED)
-  hunter_add_package(cpr)
-  find_package(cpr CONFIG REQUIRED)
-ENDIF()
+set(LIBC ON CACHE BOOL "LIBC")
 
 IF (NOT EMSCRIPTEN)
   hunter_add_package(SDL2)
@@ -148,7 +150,6 @@ IF (EMSCRIPTEN)
   SET(CMAKE_CXX_FLAGS "--closure 1 --preload-file ${CMAKE_CURRENT_SOURCE_DIR}/assets/ -s WASM=0 -s ALLOW_MEMORY_GROWTH=1 -s USE_SDL=2 -Oz")
   add_definitions(-DASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets/")
 
-  # CHECK FOR CURL AND GDCM
   set(ENGINE_LIBS
     ${ASSIMP_LIBRARY}
     ${IMGUI_LIBRARY}
@@ -174,7 +175,6 @@ IF (EMSCRIPTEN)
 ELSEIF (ANDROID)
   add_definitions( -DGLES2=1 )
 
-  # CHECK FOR CURL AND GDCM
   set(ENGINE_LIBS
     SDL2::SDL2
     ${ASSIMP_LIBRARY}
@@ -210,16 +210,6 @@ ELSE ()
       ${IMGUI_INCLUDE_DIRS}
       ${CMAKE_CURRENT_SOURCE_DIR}/engine/
     )
-
-  IF(USE_CURL)
-    SET(ENGINE_LIBS
-      ${ENGINE_LIBS}
-      CURL::libcurl
-      cpr::cpr
-      OpenSSL::SSL
-      OpenSSL::Crypto
-    ) 
-  ENDIF()
   
   IF(USE_GDCM)
     SET(ENGINE_LIBS
@@ -246,8 +236,16 @@ ENDIF()
 SET(ENGINE_LIBS
     ${ENGINE_LIBS}
     ZLIB::zlib
-#    c++experimental
 )
+
+IF(APPLE AND USE_CURL)
+  SET(ENGINE_LIBS
+      ${ENGINE_LIBS}
+      CURL::libcurl
+      OpenSSL::SSL
+      OpenSSL::Crypto
+  )
+ENDIF()
 
 include_directories(${ENGINE_INCLUDES})
 

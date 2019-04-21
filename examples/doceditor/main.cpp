@@ -18,6 +18,7 @@
 #include <iostream>
 #include <map>
 #include <random>
+#include "WebRequest.hpp"
 
 using namespace mobagen;
 
@@ -45,6 +46,9 @@ void DocEditor::init(GLManager *glManager)
   auto primary_camera = cam->getComponent<OrthoCamera>();
   getEngine()->getGLManager()->setActiveCamera(primary_camera);
 
+//  auto request = WebRequest();
+//  //request.SetUrl("https://www.httpbin.org/get");
+//  request.
 
 }
 
