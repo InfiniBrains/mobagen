@@ -26,12 +26,10 @@ set(ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR} CACHE STRING "Root dir")
 set(CP_CMAKE_DIR ${PROJECT_SOURCE_DIR}/cmake)
 include(${CP_CMAKE_DIR}/macros.cmake)
 
+# read build configs
 IF(NOT EXISTS "${PROJECT_SOURCE_DIR}/buildconfig.txt")
   message(FATAL_ERROR "The file buildconfig.txt must exists to load build configurations from it.")
 ENDIF()
-
-#if you want to always use what is write on buildconfig, you must to unset the variable cache
-#unset(USE_BULLET CACHE)
 
 IF(NOT DEFINED ${USE_BULLET})
   readSettingFile("USE_BULLET=" "ON" STRING_RESULT )
@@ -66,12 +64,12 @@ IF(NOT DEFINED ${USE_CURL})
   message(STATUS "USE_CURL from config file: ${USE_CURL}")
 ENDIF()
 
-IF(${USE_BULLET})
+IF(USE_BULLET)
   hunter_add_package(bullet)
   find_package(bullet CONFIG REQUIRED)
 ENDIF()
 
-IF(${USE_CURL})
+IF(USE_CURL)
   find_program (perl_path NAMES perl perl.exe)
   IF (NOT perl_path)
     message(FATAL_ERROR "You must install PERL and add it to PATH in order to build CURL")
@@ -79,7 +77,7 @@ IF(${USE_CURL})
     message(STATUS "Perl was found in PATH: ${perl_path}")
   ENDIF()
 
-  IF(APPLE)
+  IF(DEFINED APPLE)
     add_definitions(-DUSE_CURL)
     add_definitions(-DAPPLE)
 
@@ -128,7 +126,7 @@ add_definitions(-UGLEW_BUILD)
 
 add_subdirectory(dependencies)
 
-if(${USE_GDCM})
+if(USE_GDCM)
   include(${CMAKE_CURRENT_BINARY_DIR}/dependencies/gdcm/GDCMConfig.cmake )
   SET(GDCM_LIBRARIES
     gdcmCommon
@@ -225,7 +223,7 @@ ELSE ()
     ${CMAKE_CURRENT_SOURCE_DIR}/engine/
   )
   
-  IF(${USE_GDCM})
+  IF(USE_GDCM)
     SET(ENGINE_LIBS
       ${ENGINE_LIBS}
 	    ${GDCM_LIBRARIES}
@@ -237,7 +235,7 @@ ELSE ()
   ENDIF()
 ENDIF()
 
-IF(${USE_BULLET})
+IF(USE_BULLET)
   SET(ENGINE_LIBS
     ${ENGINE_LIBS}
     bullet::BulletCollision
@@ -252,7 +250,7 @@ SET(ENGINE_LIBS
   ZLIB::zlib
 )
 
-IF(APPLE AND ${USE_CURL})
+IF(USE_CURL AND DEFINED APPLE)
   SET(ENGINE_LIBS
     ${ENGINE_LIBS}
     CURL::libcurl
