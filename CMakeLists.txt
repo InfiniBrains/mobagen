@@ -83,6 +83,8 @@ IF(USE_CURL)
   ENDIF()
 
   IF(APPLE)
+    message(FATAL_ERROR "Entering apple")
+
     add_definitions(-DUSE_CURL)
     add_definitions(-DAPPLE)
 
@@ -257,6 +259,7 @@ SET(ENGINE_LIBS
 
 IF(USE_CURL)
   if(APPLE)
+    message(FATAL_ERROR "Entering apple2")
     SET(ENGINE_LIBS
       ${ENGINE_LIBS}
       CURL::libcurl
