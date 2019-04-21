@@ -82,25 +82,31 @@ IF(USE_CURL)
     add_definitions(-DUSE_CURL)
     add_definitions(-DAPPLE)
 
+    message(STATUS "######################### ADDING OPENSSL #######################################")
     hunter_add_package(OpenSSL)
     find_package(OpenSSL REQUIRED)
+
+    message(STATUS "######################### ADDING CURL #######################################")
     hunter_add_package(CURL)
     find_package(CURL CONFIG REQUIRED)
   ENDIF()
 ENDIF()
 
+# zlib support
+message(STATUS "######################### ADDING ZLIB #######################################")
+hunter_add_package(ZLIB)
+find_package(ZLIB CONFIG REQUIRED)
+
 IF(USE_BULLET)
+  message(STATUS "######################### ADDING BULLET #######################################")
   hunter_add_package(bullet)
   find_package(bullet CONFIG REQUIRED)
 ENDIF()
 
-# zlib support
-hunter_add_package(ZLIB)
-find_package(ZLIB CONFIG REQUIRED)
-
 set(LIBC ON CACHE BOOL "LIBC")
 
 IF(NOT EMSCRIPTEN)
+  message(STATUS "######################### ADDING SDL2 #######################################")
   hunter_add_package(SDL2)
   find_package(SDL2 CONFIG REQUIRED)
 ENDIF()
