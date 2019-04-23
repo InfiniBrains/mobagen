@@ -195,3 +195,8 @@ add_library (imgui STATIC
   ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui_internal.h
   ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui_widgets.cpp
 )
+
+IF(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/curl.zip)
+  file(DOWNLOAD https://curl.haxx.se/windows/dl-7.64.1_1/curl-7.64.1_1-win64-mingw.zip ${CMAKE_CURRENT_SOURCE_DIR}/curl.zip EXPECTED_HASH SHA256=c729be88bf139f43fe56aa196058f72ed344dc000877afae33b95cf51c2fb8f8)
+  execute_process( COMMAND "${CMAKE_COMMAND} -E tar xfz curl.zip")
+ENDIF()
