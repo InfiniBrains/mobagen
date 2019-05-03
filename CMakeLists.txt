@@ -14,8 +14,6 @@ IF("${CMAKE_GENERATOR}" MATCHES "(M|m?)in(G|g?)(W|w?)")
   MESSAGE(STATUS "MINGW Detected!!!!!!!!!!!!!!!!!!!!!!")
 ENDIF()
 
-
-
 IF(NOT DEFINED WIN32)
   SET(WIN32 OFF)
   MESSAGE(STATUS "NOT WINDOWS MACHINE")
