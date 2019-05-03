@@ -2,15 +2,6 @@
 #include "FileSystem.hpp"
 
 namespace mobagen {
-  bool startsWith(std::string mainStr, std::string toMatch)
-  {
-    // std::string::find returns 0 if toMatch is found at starting
-    if(mainStr.find(toMatch) == 0)
-      return true;
-    else
-      return false;
-  }
-
   File::File(const std::string &fileName) {
     m_fileName = fileName;
 
@@ -22,7 +13,7 @@ namespace mobagen {
 #elif EMSCRIPTEN
     m_file = new std::fstream(ASSET_DIR + m_fileName, std::ifstream::binary | std::fstream::in | std::fstream::out);
 #else
-	  m_file = new std::fstream((std::string("assets") + FileSystem::PathSeparator() + m_fileName).c_str(), std::ifstream::binary | std::fstream::in | std::fstream::out);
+	m_file = new std::fstream((std::string("assets") + FileSystem::PathSeparator() + m_fileName).c_str(), std::ifstream::binary | std::fstream::in | std::fstream::out);
 #endif
   }
 

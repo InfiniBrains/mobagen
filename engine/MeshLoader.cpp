@@ -15,6 +15,7 @@ namespace mobagen {
   MeshLoader::MeshLoader(const std::string file) {
     m_fileName = file;
 
+    // TODO: Check this approach for android and emscripten
     std::string filename(file);
     #ifdef ANDROID
     // ??
@@ -42,7 +43,7 @@ namespace mobagen {
                                                aiProcess_CalcTangentSpace); //*/
 
       if (!scene) {
-        log_err("Failed to load mesh: %s", m_fileName.c_str());
+        log_err("FAILED TO LOAD MESH: %s", m_fileName.c_str());
       } else
         loadScene(scene);
     }
@@ -138,7 +139,6 @@ namespace mobagen {
     importer.SetIOHandler(new FileSystemHelper());
 
     // TODO: Check this approach for android and emscripten
-
     std::string filename(file);
     #ifdef ANDROID
     // ??

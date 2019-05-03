@@ -55,7 +55,9 @@ namespace mobagen
 
   auto FileSystem::PathSeparator() -> char
   {
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(__MINGW64__) || defined(__MINGW32__)
+      return '/';
+#elif defined(_WIN32) || defined(_WIN64)
 	  return '\\';
 #else
 	  return '/';

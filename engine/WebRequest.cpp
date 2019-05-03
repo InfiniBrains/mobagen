@@ -86,6 +86,11 @@ namespace mobagen {
   }
 
   std::string WebRequest::GetData() {
+#ifdef APPLE
+#ifdef USE_CURL
     return readBuffer;
+#endif
+#endif
+    return "";
   }
 }
