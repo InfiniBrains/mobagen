@@ -1,14 +1,20 @@
 cmake_minimum_required(VERSION 3.10.2)
 
+MESSAGE(STATUS "MSYS=${MSYS}")
+MESSAGE(STATUS "CYGWIN=${CYGWIN}")
+MESSAGE(STATUS "MINGW=${MINGW}")
+MESSAGE(STATUS "WIN32=${WIN32}")
+
+#CHECK MINGW
 IF(NOT DEFINED MINGW)
   SET(MINGW OFF)
-  MESSAGE(STATUS "NOT MINGW MACHINE")
+ENDIF()
+# TODO: IMPROVE THIS CHECK
+IF("${CMAKE_GENERATOR}" MATCHES "(M|m?)in(G|g?)(W|w?)")
+  MESSAGE(STATUS "MINGW Detected!!!!!!!!!!!!!!!!!!!!!!")
 ENDIF()
 
-IF(NOT DEFINED MSYS)
-  SET(MSYS OFF)
-  MESSAGE(STATUS "NOT MSYS MACHINE")
-ENDIF()
+
 
 IF(NOT DEFINED WIN32)
   SET(WIN32 OFF)
@@ -25,15 +31,22 @@ IF(NOT DEFINED APPLE)
   MESSAGE(STATUS "NOT APPLE MACHINE")
 ENDIF()
 
-find_program(LSB_RELEASE_EXEC lsb_release) 
-if(LSB_RELEASE_EXEC) 
-  execute_process(COMMAND ${LSB_RELEASE_EXEC} -is 
-    OUTPUT_VARIABLE LSB_RELEASE_ID_SHORT 
-    OUTPUT_STRIP_TRAILING_WHITESPACE 
-  )
-  IF(LSB_RELEASE_ID_SHORT) 
+MESSAGE(STATUS "Compilator=${CMAKE_CXX_COMPILER}")
+MESSAGE(STATUS "Generator=${CMAKE_GENERATOR}")
+MESSAGE(STATUS "UNIX=${CMAKE_HOST_UNIX}")
+MESSAGE(STATUS "APPLE=${CMAKE_HOST_APPLE}")
+MESSAGE(STATUS "WIN32=${CMAKE_HOST_WIN32}")
+
+
+find_program(LSB_RELEASE_EXEC lsb_release)
+if(LSB_RELEASE_EXEC)
+  execute_process(COMMAND ${LSB_RELEASE_EXEC} -is
+          OUTPUT_VARIABLE LSB_RELEASE_ID_SHORT
+          OUTPUT_STRIP_TRAILING_WHITESPACE
+          )
+  IF(LSB_RELEASE_ID_SHORT)
     message(STATUS "ubuntu detected")
-  ENDIF() 
+  ENDIF()
 ENDIF()
 
 set (HUNTER_SKIP_LOCK ON CACHE BOOL "HUNTER_SKIP_LOCK")
@@ -142,7 +155,7 @@ set(BUILD_SHARED_LIBS FALSE)
 IF(ANDROID)
   include(${CP_CMAKE_DIR}/android.cmake)
   add_definitions(-DSDL_JOYSTICK=0) # to avoid bugs with android + joystick
-ENDIF () 
+ENDIF ()
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
@@ -158,22 +171,22 @@ add_subdirectory(dependencies)
 if(USE_GDCM)
   include(${CMAKE_CURRENT_BINARY_DIR}/dependencies/gdcm/GDCMConfig.cmake )
   SET(GDCM_LIBRARIES
-    gdcmCommon
-    gdcmDICT
-    gdcmDSED
-    gdcmIOD
-    gdcmMSFF
-    gdcmMEXD
-    gdcmjpeg8
-    gdcmjpeg12
-    gdcmjpeg16
-    gdcmexpat
-    gdcmopenjp2
-    gdcmcharls
-    gdcmzlib
-    #gdcmuuid
-    socketxx
-  )
+          gdcmCommon
+          gdcmDICT
+          gdcmDSED
+          gdcmIOD
+          gdcmMSFF
+          gdcmMEXD
+          gdcmjpeg8
+          gdcmjpeg12
+          gdcmjpeg16
+          gdcmexpat
+          gdcmopenjp2
+          gdcmcharls
+          gdcmzlib
+          #gdcmuuid
+          socketxx
+          )
 endif()
 
 set ( ASSIMP_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/assimp/include )
@@ -182,7 +195,7 @@ set ( ASSIMP_LIBRARY assimp )
 set ( GLM_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/glm/ )
 
 set ( IMGUI_INCLUDE_DIRS
-  ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/imgui/)
+        ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/imgui/)
 
 set ( IMGUI_LIBRARY imgui )
 
@@ -193,20 +206,20 @@ IF (EMSCRIPTEN)
   add_definitions(-DASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets/")
 
   set(ENGINE_LIBS
-    ${ASSIMP_LIBRARY}
-    ${IMGUI_LIBRARY}
-    ${GDCM_LIBRARIES}
-  )
+          ${ASSIMP_LIBRARY}
+          ${IMGUI_LIBRARY}
+          ${GDCM_LIBRARIES}
+          )
 
   set(ENGINE_INCLUDES
-    ${GLM_INCLUDE_DIRS}
-    ${ASSIMP_INCLUDE_DIR}
-    ${CMAKE_BINARY_DIR}/dependencies/assimp/include
-    ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/stb
-    ${IMGUI_INCLUDE_DIRS}
-    ${CMAKE_CURRENT_SOURCE_DIR}/engine/
-    ${GDCM_INCLUDE_DIRS}
-  )
+          ${GLM_INCLUDE_DIRS}
+          ${ASSIMP_INCLUDE_DIR}
+          ${CMAKE_BINARY_DIR}/dependencies/assimp/include
+          ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/stb
+          ${IMGUI_INCLUDE_DIRS}
+          ${CMAKE_CURRENT_SOURCE_DIR}/engine/
+          ${GDCM_INCLUDE_DIRS}
+          )
 
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/html/index.html ${CMAKE_BINARY_DIR}/bin/index.html COPYONLY)
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/html/midasminer.html ${CMAKE_BINARY_DIR}/bin/midasminer.html COPYONLY)
@@ -218,76 +231,76 @@ ELSEIF(ANDROID)
   add_definitions( -DGLES2=1 )
 
   set(ENGINE_LIBS
-    SDL2::SDL2
-    ${ASSIMP_LIBRARY}
-    ${IMGUI_LIBRARY}
-    ${GDCM_LIBRARIES}
-  )
+          SDL2::SDL2
+          ${ASSIMP_LIBRARY}
+          ${IMGUI_LIBRARY}
+          ${GDCM_LIBRARIES}
+          )
 
   set(ENGINE_INCLUDES
-    ${GLM_INCLUDE_DIRS}
-    ${ASSIMP_INCLUDE_DIR}
-    ${CMAKE_BINARY_DIR}/dependencies/assimp/include
-    ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/stb
-    ${IMGUI_INCLUDE_DIRS}
-    ${CMAKE_CURRENT_SOURCE_DIR}/engine/
-    ${GDCM_INCLUDE_DIRS}
-  )
+          ${GLM_INCLUDE_DIRS}
+          ${ASSIMP_INCLUDE_DIR}
+          ${CMAKE_BINARY_DIR}/dependencies/assimp/include
+          ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/stb
+          ${IMGUI_INCLUDE_DIRS}
+          ${CMAKE_CURRENT_SOURCE_DIR}/engine/
+          ${GDCM_INCLUDE_DIRS}
+          )
 ELSE ()
   SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -fPIC")
   SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -fPIC")
   find_package(OpenGL REQUIRED)
 
   set(ENGINE_LIBS
-    SDL2::SDL2
-    ${OPENGL_LIBRARY}
-    ${ASSIMP_LIBRARY}
-    ${IMGUI_LIBRARY}
-  )
+          SDL2::SDL2
+          ${OPENGL_LIBRARY}
+          ${ASSIMP_LIBRARY}
+          ${IMGUI_LIBRARY}
+          )
   set(ENGINE_INCLUDES
-    ${GLM_INCLUDE_DIRS}
-    ${ASSIMP_INCLUDE_DIR}
-    ${CMAKE_BINARY_DIR}/dependencies/assimp/include
-    ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/stb
-    ${IMGUI_INCLUDE_DIRS}
-    ${CMAKE_CURRENT_SOURCE_DIR}/engine/
-  )
-  
+          ${GLM_INCLUDE_DIRS}
+          ${ASSIMP_INCLUDE_DIR}
+          ${CMAKE_BINARY_DIR}/dependencies/assimp/include
+          ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/stb
+          ${IMGUI_INCLUDE_DIRS}
+          ${CMAKE_CURRENT_SOURCE_DIR}/engine/
+          )
+
   IF(USE_GDCM)
     SET(ENGINE_LIBS
-      ${ENGINE_LIBS}
-	    ${GDCM_LIBRARIES}
-    )
-	SET(ENGINE_INCLUDES
-      ${ENGINE_INCLUDES}
-	    ${GDCM_INCLUDE_DIRS}
-    )
+            ${ENGINE_LIBS}
+            ${GDCM_LIBRARIES}
+            )
+    SET(ENGINE_INCLUDES
+            ${ENGINE_INCLUDES}
+            ${GDCM_INCLUDE_DIRS}
+            )
   ENDIF()
 ENDIF()
 
 IF(USE_BULLET)
   SET(ENGINE_LIBS
-    ${ENGINE_LIBS}
-    bullet::BulletCollision
-    bullet::BulletDynamics
-    bullet::BulletSoftBody
-    bullet::LinearMath
-  )
+          ${ENGINE_LIBS}
+          bullet::BulletCollision
+          bullet::BulletDynamics
+          bullet::BulletSoftBody
+          bullet::LinearMath
+          )
 ENDIF()
 
 SET(ENGINE_LIBS
-  ${ENGINE_LIBS}
-  ZLIB::zlib
-)
+        ${ENGINE_LIBS}
+        ZLIB::zlib
+        )
 
 IF(USE_CURL)
   if(APPLE)
     SET(ENGINE_LIBS
-      ${ENGINE_LIBS}
-      CURL::libcurl
-      OpenSSL::SSL
-      OpenSSL::Crypto
-    )
+            ${ENGINE_LIBS}
+            CURL::libcurl
+            OpenSSL::SSL
+            OpenSSL::Crypto
+            )
   endif()
 ENDIF()
 
@@ -302,5 +315,3 @@ IF (NOT ANDROID)
     add_subdirectory( ${CMAKE_CURRENT_SOURCE_DIR}/tests )
   ENDIF ()
 ENDIF ()
-
-
