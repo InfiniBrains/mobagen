@@ -6,9 +6,12 @@
 #ifdef APPLE
 #ifdef USE_CURL
 #include <curl/curl.h>
+#include "DownloadHandler.hpp"
+
 #endif
 #endif
 
+// TODO: move this to network namespace
 namespace mobagen {
   class WebRequest {
   public:
@@ -42,7 +45,8 @@ namespace mobagen {
 //      disposeDownloadHandlerOnDispose	If true, any DownloadHandler attached to this UnityWebRequest will have DownloadHandler.Dispose called automatically when UnityWebRequest.Dispose is called.
 //      disposeUploadHandlerOnDispose	If true, any UploadHandler attached to this UnityWebRequest will have UploadHandler.Dispose called automatically when UnityWebRequest.Dispose is called.
 //      downloadedBytes	Returns the number of bytes of body data the system has downloaded from the remote server. (Read Only)
-//      downloadHandler	Holds a reference to a DownloadHandler object, which manages body data received from the remote server by this UnityWebRequest.
+    // Holds a reference to a DownloadHandler object, which manages body data received from the remote server by this UnityWebRequest.
+    // std::shared_ptr<DownloadHandler> downloadHandler = std::make_shared<DownloadHandler>();
 //      downloadProgress	Returns a floating-point value between 0.0 and 1.0, indicating the progress of downloading body data from the server. (Read Only)
 //      error	A human-readable string describing any system errors encountered by this UnityWebRequest object while handling HTTP requests or responses. (Read Only)
 //      isDone	Returns true after the UnityWebRequest has finished communicating with the remote server. (Read Only)
@@ -75,6 +79,8 @@ namespace mobagen {
     // Set a HTTP request header to a custom value.
     void SetRequestHeader(std::string name, std::string value);
 
+    // TODO: Improve this to use download handler
+    std::string GetData();
 // static methods
 //        ClearCookieCache	Clears stored cookies from the cache.
 //        Delete	Creates a UnityWebRequest configured for HTTP DELETE.
@@ -90,10 +96,6 @@ namespace mobagen {
 //        SerializeSimpleForm	Serialize a dictionary of strings into a byte array containing URL-encoded UTF8 characters.
 //        UnEscapeURL	Converts URL-friendly escape sequences back to normal text.
 
-
-
-
-
   private:
     // default method
     const std::string * method;
@@ -104,9 +106,9 @@ namespace mobagen {
 
 #ifdef APPLE
 #ifdef USE_CURL
-    std::string readBuffer;
+    std::string readBuffer = "";
 
-    size_t WriteCallback(char *contents, size_t size, size_t nmemb, void *userp)
+    static size_t WriteCallback(char *contents, size_t size, size_t nmemb, void *userp)
     {
         ((std::string*)userp)->append((char*)contents, size * nmemb);
         return size * nmemb;
@@ -117,6 +119,5 @@ namespace mobagen {
 #else
 
 #endif
-
   };
 }

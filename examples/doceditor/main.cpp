@@ -46,10 +46,9 @@ void DocEditor::init(GLManager *glManager)
   auto primary_camera = cam->getComponent<OrthoCamera>();
   getEngine()->getGLManager()->setActiveCamera(primary_camera);
 
-//  auto request = WebRequest();
-//  //request.SetUrl("https://www.httpbin.org/get");
-//  request.
-
+  auto request = WebRequest::Get("https://www.httpbin.org/get");
+  request->SendWebRequest();
+  log_info("%s", request->GetData().c_str());
 }
 
 int main(int argc, char *argv[]) {

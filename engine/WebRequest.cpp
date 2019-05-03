@@ -1,6 +1,7 @@
 #include <utility>
 
 #include "WebRequest.hpp"
+#include "Logger.hpp"
 
 namespace mobagen {
   const std::string WebRequest::kHttpVerbCREATE = "CREATE";
@@ -71,6 +72,20 @@ namespace mobagen {
   }
 
   void WebRequest::SendWebRequest() {
-    // TODO: implement this
+#ifdef APPLE
+#ifdef USE_CURL
+    easyhandle = curl_easy_init();
+    curl_easy_setopt(easyhandle, CURLOPT_URL, url.c_str());
+    curl_easy_setopt(easyhandle, CURLOPT_VERBOSE, 1L);
+    curl_easy_setopt(easyhandle, CURLOPT_WRITEFUNCTION, WriteCallback);
+    curl_easy_setopt(easyhandle, CURLOPT_WRITEDATA, &readBuffer);
+
+    curl_easy_perform(easyhandle);
+#endif
+#endif
+  }
+
+  std::string WebRequest::GetData() {
+    return readBuffer;
   }
 }
