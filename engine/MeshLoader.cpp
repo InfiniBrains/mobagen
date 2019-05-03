@@ -3,6 +3,7 @@
 #include "components/MeshRenderer.hpp"
 
 #include "Logger.hpp"
+#include "FileSystem.hpp"
 
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
@@ -14,6 +15,17 @@ namespace mobagen {
   MeshLoader::MeshLoader(const std::string file) {
     m_fileName = file;
 
+    std::string filename(file);
+    #ifdef ANDROID
+    // ??
+    #elif EMSCRIPTEN
+    file = ASSET_DIR + file;
+    #else
+    filename = std::string("assets") + FileSystem::PathSeparator() + filename;
+    #endif
+
+    m_fileName = filename;
+
     if (MeshLoader::sceneMeshRendererDataCache[m_fileName].size() > 0) {
       m_entity = std::make_shared<Entity>();
       for (auto meshRenderData : MeshLoader::sceneMeshRendererDataCache[m_fileName]) {
@@ -23,14 +35,14 @@ namespace mobagen {
       Assimp::Importer importer;
       importer.SetIOHandler(new FileSystemHelper());
 
-      const aiScene *scene = importer.ReadFile(file,
+      const aiScene *scene = importer.ReadFile(m_fileName,
                                                aiProcess_Triangulate |
                                                aiProcess_GenSmoothNormals |
                                                aiProcess_FlipUVs |
                                                aiProcess_CalcTangentSpace); //*/
 
       if (!scene) {
-        log_err("Failed to load mesh: %s", file.c_str());
+        log_err("Failed to load mesh: %s", m_fileName.c_str());
       } else
         loadScene(scene);
     }
@@ -122,11 +134,23 @@ namespace mobagen {
     transformation = aiMatrix4x4Compose(scale, rotat, position);
     //}
     ///////////////////////////////////*/
-    m_fileName = file;
     Assimp::Importer importer;
     importer.SetIOHandler(new FileSystemHelper());
 
-    const aiScene *scene = importer.ReadFile(file,
+    // TODO: Check this approach for android and emscripten
+
+    std::string filename(file);
+    #ifdef ANDROID
+    // ??
+    #elif EMSCRIPTEN
+    file = ASSET_DIR + file;
+    #else
+    filename = std::string("assets") + FileSystem::PathSeparator() + filename;
+    #endif
+
+    m_fileName = filename;
+
+    const aiScene *scene = importer.ReadFile(filename,
                                              aiProcess_Triangulate |
                                              aiProcess_GenSmoothNormals |
                                              aiProcess_FlipUVs |
