@@ -19,7 +19,7 @@ namespace mobagen {
     #ifdef ANDROID
     // ??
     #elif EMSCRIPTEN
-    file = ASSET_DIR + file;
+    filename = std::string(ASSET_DIR) + m_file;
     #else
     filename = std::string("assets") + FileSystem::PathSeparator() + filename;
     #endif
