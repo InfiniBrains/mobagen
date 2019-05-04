@@ -3,12 +3,9 @@
 #include <map>
 #include <memory>
 
-#ifdef APPLE
-#ifdef USE_CURL
+#if (defined(APPLE) || defined (__MINGW64__)) && defined(USE_CURL)
 #include <curl/curl.h>
 #include "DownloadHandler.hpp"
-
-#endif
 #endif
 
 // TODO: move this to network namespace
@@ -104,8 +101,7 @@ namespace mobagen {
     std::map<std::string,std::string> requestHeaders;
     std::map<std::string,std::string> responseHeaders;
 
-#ifdef APPLE
-#ifdef USE_CURL
+#if (defined(APPLE) || defined (__MINGW64__)) && defined(USE_CURL)
     std::string readBuffer = "";
 
     static size_t WriteCallback(char *contents, size_t size, size_t nmemb, void *userp)
@@ -115,7 +111,6 @@ namespace mobagen {
     }
 
     CURL* easyhandle;
-#endif
 #else
 
 #endif

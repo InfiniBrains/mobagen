@@ -14,11 +14,9 @@ namespace mobagen {
   WebRequest::WebRequest() {
 
     method = &kHttpVerbGET;
-#ifdef APPLE
-#ifdef USE_CURL
+#if (defined(APPLE) || defined (__MINGW64__)) && defined(USE_CURL)
     easyhandle = nullptr;
     curl_global_init(CURL_GLOBAL_ALL);
-#endif
 #else
 #endif
   }
@@ -27,23 +25,19 @@ namespace mobagen {
     
     method = &kHttpVerbGET;
     this->url = std::move(url);
-#ifdef APPLE
-#ifdef USE_CURL
+#if (defined(APPLE) || defined (__MINGW64__)) && defined(USE_CURL)
     curl_global_init(CURL_GLOBAL_ALL);
     easyhandle = nullptr;
-#endif
 #else
 #endif
   }
 
   WebRequest::~WebRequest() {
-#ifdef APPLE
-#ifdef USE_CURL
+#if (defined(APPLE) || defined (__MINGW64__)) && defined(USE_CURL)
     if(easyhandle!=nullptr)
       curl_easy_cleanup(easyhandle);
     easyhandle = nullptr;
     curl_global_cleanup(); // TODO: inspect if this is necessary
-#endif
 #endif
   }
 
@@ -72,8 +66,7 @@ namespace mobagen {
   }
 
   void WebRequest::SendWebRequest() {
-#ifdef APPLE
-#ifdef USE_CURL
+#if (defined(APPLE) || defined (__MINGW64__)) && defined(USE_CURL)
     easyhandle = curl_easy_init();
     curl_easy_setopt(easyhandle, CURLOPT_URL, url.c_str());
     curl_easy_setopt(easyhandle, CURLOPT_VERBOSE, 1L);
@@ -82,15 +75,13 @@ namespace mobagen {
 
     curl_easy_perform(easyhandle);
 #endif
-#endif
   }
 
   std::string WebRequest::GetData() {
-#ifdef APPLE
-#ifdef USE_CURL
+#if (defined(APPLE) || defined (__MINGW64__)) && defined(USE_CURL)
     return readBuffer;
-#endif
-#endif
+#else
     return "";
+#endif
   }
 }

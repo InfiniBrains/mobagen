@@ -9,32 +9,16 @@ MESSAGE(STATUS "WIN32=${WIN32}")
 IF(NOT DEFINED MINGW)
   SET(MINGW OFF)
 ENDIF()
-# TODO: IMPROVE THIS CHECK
 IF("${CMAKE_GENERATOR}" MATCHES "(M|m?)in(G|g?)(W|w?)")
-  MESSAGE(STATUS "MINGW Detected!!!!!!!!!!!!!!!!!!!!!!")
+  SET(MINGW ON)
+  MESSAGE(STATUS "MinGW Detected")
 ENDIF()
 
-IF(NOT DEFINED WIN32)
-  SET(WIN32 OFF)
-  MESSAGE(STATUS "NOT WINDOWS MACHINE")
-ENDIF()
-
-IF(NOT DEFINED UNIX)
-  SET(UNIX OFF)
-  MESSAGE(STATUS "NOT UNIX MACHINE")
-ENDIF()
-
+# CHECK OR APPLE MACHINE
 IF(NOT DEFINED APPLE)
   set(APPLE OFF)
   MESSAGE(STATUS "NOT APPLE MACHINE")
 ENDIF()
-
-MESSAGE(STATUS "Compilator=${CMAKE_CXX_COMPILER}")
-MESSAGE(STATUS "Generator=${CMAKE_GENERATOR}")
-MESSAGE(STATUS "UNIX=${CMAKE_HOST_UNIX}")
-MESSAGE(STATUS "APPLE=${CMAKE_HOST_APPLE}")
-MESSAGE(STATUS "WIN32=${CMAKE_HOST_WIN32}")
-
 
 find_program(LSB_RELEASE_EXEC lsb_release)
 if(LSB_RELEASE_EXEC)
@@ -54,7 +38,7 @@ HunterGate(
         URL "https://github.com/ruslo/hunter/archive/v0.23.29.tar.gz"
         SHA1 "797be99a8a4f4666766257563fad8aa3aa032da2"
 )
-project (Engine)
+project(Engine)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 set(ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR} CACHE STRING "Root dir")
@@ -100,7 +84,15 @@ IF(NOT DEFINED ${USE_CURL})
   message(STATUS "USE_CURL from config file: ${USE_CURL}")
 ENDIF()
 
-IF(USE_CURL AND APPLE)
+IF(APPLE)
+  add_definitions(-DAPPLE)
+ENDIF()
+
+IF(USE_CURL)
+  add_definitions(-DUSE_CURL)
+ENDIF()
+
+IF(USE_CURL AND (APPLE OR MINGW))
   find_program (perl_path NAMES perl perl.exe)
   IF (NOT perl_path)
     message(FATAL_ERROR "You must install PERL and add it to PATH in order to build CURL")
@@ -109,9 +101,6 @@ IF(USE_CURL AND APPLE)
   ENDIF()
 
   IF(APPLE)
-    add_definitions(-DUSE_CURL)
-    add_definitions(-DAPPLE)
-
     message(STATUS "######################### ADDING OPENSSL #######################################")
     hunter_add_package(OpenSSL)
     find_package(OpenSSL REQUIRED)
@@ -119,6 +108,10 @@ IF(USE_CURL AND APPLE)
     message(STATUS "######################### ADDING CURL #######################################")
     hunter_add_package(CURL)
     find_package(CURL CONFIG REQUIRED)
+  ENDIF()
+
+  IF(MINGW)
+    find_package(CURL REQUIRED)
   ENDIF()
 ENDIF()
 
@@ -230,6 +223,7 @@ ELSEIF(ANDROID)
 
   set(ENGINE_LIBS
           SDL2::SDL2
+          SDL2::SDL2main
           ${ASSIMP_LIBRARY}
           ${IMGUI_LIBRARY}
           ${GDCM_LIBRARIES}
@@ -251,6 +245,7 @@ ELSE ()
 
   set(ENGINE_LIBS
           SDL2::SDL2
+          SDL2::SDL2main
           ${OPENGL_LIBRARY}
           ${ASSIMP_LIBRARY}
           ${IMGUI_LIBRARY}
@@ -286,20 +281,15 @@ IF(USE_BULLET)
           )
 ENDIF()
 
-SET(ENGINE_LIBS
-        ${ENGINE_LIBS}
-        ZLIB::zlib
-        )
+SET(ENGINE_LIBS ${ENGINE_LIBS} ZLIB::zlib)
 
-IF(USE_CURL)
-  if(APPLE)
-    SET(ENGINE_LIBS
-            ${ENGINE_LIBS}
-            CURL::libcurl
-            OpenSSL::SSL
-            OpenSSL::Crypto
-            )
-  endif()
+IF(USE_CURL AND MINGW)
+  SET(ENGINE_INCLUDES ${ENGINE_INCLUDES} ${CURL_INCLUDE_DIR})
+  SET(ENGINE_LIBS ${ENGINE_LIBS} ${CURL_LIBRARIES})
+ENDIF()
+
+IF(USE_CURL AND APPLE)
+  SET(ENGINE_LIBS ${ENGINE_LIBS} CURL::libcurl OpenSSL::SSL OpenSSL::Crypto)
 ENDIF()
 
 include_directories(${ENGINE_INCLUDES})
