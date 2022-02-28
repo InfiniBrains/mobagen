@@ -17,9 +17,9 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/libs)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/libs)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-add_subdirectory(libs)
+add_subdirectory(external)
 
-LINK_DIRECTORIES(${CMAKE_BINARY_DIR}/lib)
+LINK_DIRECTORIES(${CMAKE_BINARY_DIR}/libs)
 
 IF(EMSCRIPTEN)
     message(STATUS "emscripten build")
@@ -29,7 +29,7 @@ IF(EMSCRIPTEN)
 
     configure_file(${CMAKE_CURRENT_SOURCE_DIR}/html/index.html ${CMAKE_BINARY_DIR}/bin/index.html COPYONLY)
 ELSE()
-    set ( SDL2_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libs/sdl/include )
+    set ( SDL2_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/sdl/include)
     set ( SDL2_LIBRARY SDL2 )
 ENDIF()
 
@@ -43,5 +43,3 @@ include_directories(${SDL2_INCLUDE_DIR})
 add_executable(editor)
 target_sources(editor PUBLIC editor/main.cpp)
 target_link_libraries(editor IMGUI ${SDL2_LIBRARIES})
-
-

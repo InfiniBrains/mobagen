@@ -1,8 +1,8 @@
-[submodule "libs/imgui"]
-	path = libs/imgui
+[submodule "external/imgui"]
+	path = external/imgui
 	url = https://github.com/ocornut/imgui.git
-[submodule "libs/SDL"]
-	path = libs/SDL
+[submodule "external/SDL"]
+	path = external/SDL
 	url = https://github.com/libsdl-org/SDL.git
 [submodule "cmake/gate"]
 	path = cmake/gate
