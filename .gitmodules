@@ -4,3 +4,6 @@
 [submodule "libs/SDL"]
 	path = libs/SDL
 	url = https://github.com/libsdl-org/SDL.git
+[submodule "cmake/gate"]
+	path = cmake/gate
+	url = https://github.com/cpp-pm/gate.git
