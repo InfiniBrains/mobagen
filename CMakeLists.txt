@@ -1,22 +1,33 @@
-cmake_minimum_required(VERSION 3.21)
+cmake_minimum_required(VERSION 3.16.3)
 
-MESSAGE(STATUS $ENV{EMSDK})
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 IF(EMSCRIPTEN)
-    IF (WIN32 AND NOT DEFINED ENV{EMSDK})
+    IF (WIN32)
+        MESSAGE(FATAL_ERROR "EMSCRIPTEN BUILD NOT SUPPORTED ON WINDOWS")
         MESSAGE(STATUS "INITIALIZING EMSDK")
-        execute_process( COMMAND git submodule update --init --recursive )
+        execute_process(COMMAND git submodule update --init --recursive )
         execute_process(COMMAND cmd /c "${CMAKE_SOURCE_DIR}/scripts/win-set-env-vars.bat")
         MESSAGE(FATAL_ERROR "PLEASE RESTART YOUR COMPUTER TO RELOAD ENV VARS")
     ELSEIF(NOT DEFINED ENV{EMSDK})
         MESSAGE(STATUS "INITIALIZING EMSDK")
-        execute_process( COMMAND git submodule update --init --recursive )
+        execute_process(COMMAND git submodule update --init --recursive )
         execute_process(COMMAND external/emsdk/emsdk install latest)
         execute_process(COMMAND external/emsdk/emsdk activate latest --system)
         MESSAGE(FATAL_ERROR "PLEASE RESTART YOUR COMPUTER TO RELOAD ENV VARS")
     ELSEIF(DEFINED ENV{EMSDK})
         MESSAGE(STATUS "EMSDK FOUND AT $ENV{EMSDK}")
-    endif()
+        execute_process(COMMAND cmd /c emcc --version RESULT_VARIABLE rv)
+        LIST(APPEND CMAKE_PROGRAM_PATH  "$ENV{EMSDK}/upstream/bin")
+        SET(ENV{EMSCRIPTEN} $ENV{EMSDK}/upstream/emscripten)
+        MESSAGE(STATUS "EMSCRIPTEN PATH: $ENV{EMSCRIPTEN}")
+
+#        SET(CMAKE_CXX_FLAGS "-std=c++20" CACHE STRING "" FORCE)
+#        SET(CMAKE_C_COMPILER "emcc" CACHE STRING "" FORCE)
+
+#        include(cmake/polly/emscripten-cxx17.cmake)
+    ENDIF()
 ENDIF()
 
 include(cmake/gate/cmake/HunterGate.cmake)
@@ -30,8 +41,7 @@ HunterGate(
 
 project(mobagen)
 
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/libs)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/libs)
