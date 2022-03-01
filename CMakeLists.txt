@@ -1,5 +1,24 @@
 cmake_minimum_required(VERSION 3.21)
 
+MESSAGE(STATUS $ENV{EMSDK})
+
+IF(EMSCRIPTEN)
+    IF (WIN32 AND NOT DEFINED ENV{EMSDK})
+        MESSAGE(STATUS "INITIALIZING EMSDK")
+        execute_process( COMMAND git submodule update --init --recursive )
+        execute_process(COMMAND cmd /c "${CMAKE_SOURCE_DIR}/scripts/win-set-env-vars.bat")
+        MESSAGE(FATAL_ERROR "PLEASE RESTART YOUR COMPUTER TO RELOAD ENV VARS")
+    ELSEIF(NOT DEFINED ENV{EMSDK})
+        MESSAGE(STATUS "INITIALIZING EMSDK")
+        execute_process( COMMAND git submodule update --init --recursive )
+        execute_process(COMMAND external/emsdk/emsdk install latest)
+        execute_process(COMMAND external/emsdk/emsdk activate latest --system)
+        MESSAGE(FATAL_ERROR "PLEASE RESTART YOUR COMPUTER TO RELOAD ENV VARS")
+    ELSEIF(DEFINED ENV{EMSDK})
+        MESSAGE(STATUS "EMSDK FOUND AT $ENV{EMSDK}")
+    endif()
+ENDIF()
+
 include(cmake/gate/cmake/HunterGate.cmake)
 option(HUNTER_STATUS_DEBUG "Hunter debug info" ON)
 HunterGate(
@@ -7,6 +26,7 @@ HunterGate(
         SHA1 "64024b7b95b4c86d50ae05b926814448c93a70a0"
         LOCAL
 )
+
 
 project(mobagen)
 

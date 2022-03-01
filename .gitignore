@@ -30,3 +30,5 @@
 .idea/
 
 cmake-build-debug/
+
+*.stackdump

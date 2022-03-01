@@ -1,6 +1,6 @@
 # Architecture
 
-![Architecture](../assets/architecture.svg)
+![Architecture](assets/architecture.svg)
 
 
 https://playground.diagram.codes/d/system-layers

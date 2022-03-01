@@ -1,6 +1,9 @@
 execute_process( COMMAND git submodule update --init --recursive )
 #set_directory_properties( PROPERTIES CLEAN_NO_CUSTOM 1)
 
+
+
+
 IF (EMSCRIPTEN)
 ELSEIF (ANDROID)
     #  set( SDL_STATIC ON CACHE BOOL "Build the static SDL library" )
@@ -26,10 +29,7 @@ ELSE ()
     #  add_subdirectory( glew )
 ENDIF ()
 
-IF(EMSCRIPTEN)
-ELSE()
-    add_subdirectory( sdl )
-ENDIF()
+add_subdirectory( sdl )
 
 set(IMGUI_DIR ${CMAKE_CURRENT_SOURCE_DIR}/imgui)
 add_library(IMGUI STATIC)
