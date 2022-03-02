@@ -1,8 +1,9 @@
 execute_process( COMMAND git submodule update --init --recursive )
 #set_directory_properties( PROPERTIES CLEAN_NO_CUSTOM 1)
 
-
-
+if(COMMAND cmake_policy)
+    cmake_policy(SET CMP0003 NEW)
+endif(COMMAND cmake_policy)
 
 IF (EMSCRIPTEN)
 ELSEIF (ANDROID)
@@ -29,7 +30,7 @@ ELSE ()
     #  add_subdirectory( glew )
 ENDIF ()
 
-add_subdirectory( sdl )
+add_subdirectory( SDL )
 
 set(IMGUI_DIR ${CMAKE_CURRENT_SOURCE_DIR}/imgui)
 add_library(IMGUI STATIC)

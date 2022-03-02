@@ -1,34 +1,4 @@
-cmake_minimum_required(VERSION 3.16.3)
-
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-IF(EMSCRIPTEN)
-    IF (WIN32)
-        MESSAGE(FATAL_ERROR "EMSCRIPTEN BUILD NOT SUPPORTED ON WINDOWS")
-        MESSAGE(STATUS "INITIALIZING EMSDK")
-        execute_process(COMMAND git submodule update --init --recursive )
-        execute_process(COMMAND cmd /c "${CMAKE_SOURCE_DIR}/scripts/win-set-env-vars.bat")
-        MESSAGE(FATAL_ERROR "PLEASE RESTART YOUR COMPUTER TO RELOAD ENV VARS")
-    ELSEIF(NOT DEFINED ENV{EMSDK})
-        MESSAGE(STATUS "INITIALIZING EMSDK")
-        execute_process(COMMAND git submodule update --init --recursive )
-        execute_process(COMMAND external/emsdk/emsdk install latest)
-        execute_process(COMMAND external/emsdk/emsdk activate latest --system)
-        MESSAGE(FATAL_ERROR "PLEASE RESTART YOUR COMPUTER TO RELOAD ENV VARS")
-    ELSEIF(DEFINED ENV{EMSDK})
-        MESSAGE(STATUS "EMSDK FOUND AT $ENV{EMSDK}")
-        execute_process(COMMAND cmd /c emcc --version RESULT_VARIABLE rv)
-        LIST(APPEND CMAKE_PROGRAM_PATH  "$ENV{EMSDK}/upstream/bin")
-        SET(ENV{EMSCRIPTEN} $ENV{EMSDK}/upstream/emscripten)
-        MESSAGE(STATUS "EMSCRIPTEN PATH: $ENV{EMSCRIPTEN}")
-
-#        SET(CMAKE_CXX_FLAGS "-std=c++20" CACHE STRING "" FORCE)
-#        SET(CMAKE_C_COMPILER "emcc" CACHE STRING "" FORCE)
-
-#        include(cmake/polly/emscripten-cxx17.cmake)
-    ENDIF()
-ENDIF()
+cmake_minimum_required(VERSION 3.22.2)
 
 include(cmake/gate/cmake/HunterGate.cmake)
 option(HUNTER_STATUS_DEBUG "Hunter debug info" ON)
@@ -38,10 +8,13 @@ HunterGate(
         LOCAL
 )
 
-
 project(mobagen)
 
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(CMAKE_C_STANDARD 17)
+set(CMAKE_C_STANDARD_REQUIRED ON)
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/libs)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/libs)
@@ -54,17 +27,23 @@ LINK_DIRECTORIES(${CMAKE_BINARY_DIR}/libs)
 IF(EMSCRIPTEN)
     message(STATUS "emscripten build")
     #  SET(CMAKE_CXX_FLAGS "--preload-file ${CMAKE_CURRENT_SOURCE_DIR}/assets/ -s WASM=0 -s ALLOW_MEMORY_GROWTH=1 -s USE_SDL=2 -s DISABLE_EXCEPTION_CATCHING=2 -s USE_PTHREADS=1 --proxy-to-worker -s FETCH=1")
-    SET(CMAKE_CXX_FLAGS "--preload-file ${CMAKE_CURRENT_SOURCE_DIR}/assets/ -s WASM=0 -s USE_SDL=2 -s DISABLE_EXCEPTION_CATCHING=2 --proxy-to-worker -s FETCH=1")
+#    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --preload-file ${CMAKE_CURRENT_SOURCE_DIR}/assets/ -s WASM=0 -s DISABLE_EXCEPTION_CATCHING=2 --proxy-to-worker -s FETCH=1")
+#    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --preload-file ${CMAKE_CURRENT_SOURCE_DIR}/assets/")
+
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0 -s WASM=0 -s FULL_ES2=1")
+
+    MESSAGE(STATUS ${CMAKE_CXX_FLAGS})
+
     add_definitions(-DASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets/")
 
     configure_file(${CMAKE_CURRENT_SOURCE_DIR}/html/index.html ${CMAKE_BINARY_DIR}/bin/index.html COPYONLY)
 ELSE()
-    set ( SDL2_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/sdl/include)
+    set ( SDL2_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/SDL/include)
     set ( SDL2_LIBRARY SDL2 )
 ENDIF()
 
 
-find_library(SDL2 SDL2)
+#find_library(SDL2 SDL2)
 include_directories(${SDL2_INCLUDE_DIR})
 #add_library(main SHARED main.cpp)
 #target_sources(main PRIVATE main.cpp)
