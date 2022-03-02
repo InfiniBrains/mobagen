@@ -18,4 +18,4 @@ pwd
 
 emcmake cmake -DCMAKE_C_ABI_COMPILED=ON -DCMAKE_CXX_ABI_COMPILED=ON -DEMSCRIPTEN=1 -DCMAKE_BUILD_TYPE=MinSizeRel -H. -Bbuild
 
-cmake --build build/ -j 20
+cmake --build build/ 
