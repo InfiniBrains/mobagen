@@ -42,11 +42,6 @@ ELSE()
     set ( SDL2_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/SDL/include)
 ENDIF()
 
-set ( SDL2_LIBRARY SDL2 SDL2main )
-
-#find_library(SDL2 SDL2)
-message(STATUS "SDL2 lib is ${SDL2}" )
-
 include_directories(${SDL2_INCLUDE_DIR})
 #add_library(main SHARED main.cpp)
 #target_sources(main PRIVATE main.cpp)
