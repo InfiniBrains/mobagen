@@ -29,11 +29,12 @@ ELSE ()
     #
     #  add_subdirectory( glew )
 ENDIF ()
+add_definitions(-DHAVE_LIBC=OFF)
 
 add_subdirectory( SDL )
 
 set(IMGUI_DIR ${CMAKE_CURRENT_SOURCE_DIR}/imgui)
-add_library(IMGUI STATIC)
+add_library(IMGUI SHARED)
 
 target_sources( IMGUI
         PRIVATE

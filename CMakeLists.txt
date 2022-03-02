@@ -11,18 +11,19 @@ HunterGate(
 project(mobagen)
 
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+#set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_C_STANDARD 17)
-set(CMAKE_C_STANDARD_REQUIRED ON)
+#set(CMAKE_C_STANDARD_REQUIRED ON)
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/libs)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/libs)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-add_subdirectory(external)
-
 LINK_DIRECTORIES(${CMAKE_BINARY_DIR}/libs)
+LINK_DIRECTORIES(${CMAKE_BINARY_DIR}/libs/Debug)
+
+add_subdirectory(external)
 
 IF(EMSCRIPTEN)
     message(STATUS "emscripten build")
@@ -41,8 +42,11 @@ ELSE()
     set ( SDL2_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/SDL/include)
 ENDIF()
 
+set ( SDL2_LIBRARY SDL2 SDL2main )
 
 #find_library(SDL2 SDL2)
+message(STATUS "SDL2 lib is ${SDL2}" )
+
 include_directories(${SDL2_INCLUDE_DIR})
 #add_library(main SHARED main.cpp)
 #target_sources(main PRIVATE main.cpp)
