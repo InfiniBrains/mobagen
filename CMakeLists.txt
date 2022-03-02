@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.22.2)
+cmake_minimum_required(VERSION 3.21.1)
 
 include(cmake/gate/cmake/HunterGate.cmake)
 option(HUNTER_STATUS_DEBUG "Hunter debug info" ON)
@@ -39,7 +39,6 @@ IF(EMSCRIPTEN)
     configure_file(${CMAKE_CURRENT_SOURCE_DIR}/html/index.html ${CMAKE_BINARY_DIR}/bin/index.html COPYONLY)
 ELSE()
     set ( SDL2_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/SDL/include)
-    set ( SDL2_LIBRARY SDL2 )
 ENDIF()
 
 
@@ -51,4 +50,4 @@ include_directories(${SDL2_INCLUDE_DIR})
 
 add_executable(editor)
 target_sources(editor PUBLIC editor/main.cpp)
-target_link_libraries(editor IMGUI ${SDL2_LIBRARIES})
+target_link_libraries(editor IMGUI SDL2)
