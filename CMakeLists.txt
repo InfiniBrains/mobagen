@@ -21,6 +21,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/libs)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 LINK_DIRECTORIES(${CMAKE_BINARY_DIR}/libs)
+LINK_DIRECTORIES(${CMAKE_BINARY_DIR}/libs/Debug)
 
 add_subdirectory(external)
 
@@ -39,11 +40,13 @@ IF(EMSCRIPTEN)
     configure_file(${CMAKE_CURRENT_SOURCE_DIR}/html/index.html ${CMAKE_BINARY_DIR}/bin/index.html COPYONLY)
 ELSE()
     set ( SDL2_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/SDL/include)
-    set ( SDL2_LIBRARY SDL2 )
 ENDIF()
 
+set ( SDL2_LIBRARY SDL2 SDL2main )
 
-#find_library(SDL2 SDL2)
+message(STATUS "SDL_LIBRARY are ${SDL2_LIBRARY}" )
+message(STATUS "CMAKE_BUILD_TYPE is ${CMAKE_BUILD_TYPE}")
+
 include_directories(${SDL2_INCLUDE_DIR})
 #add_library(main SHARED main.cpp)
 #target_sources(main PRIVATE main.cpp)
