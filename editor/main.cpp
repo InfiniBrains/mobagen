@@ -66,7 +66,7 @@ Engine::~Engine() {}
 void Engine::Run() {
     // Main loop
 #ifndef EMSCRIPTEN
-    while (!done) { Tick() }
+    while (!done) { Tick(); }
     Exit();
 #endif
 }
