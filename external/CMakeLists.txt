@@ -34,7 +34,7 @@ add_definitions(-DHAVE_LIBC=OFF)
 add_subdirectory( SDL )
 
 set(IMGUI_DIR ${CMAKE_CURRENT_SOURCE_DIR}/imgui)
-add_library(IMGUI STATIC)
+add_library(IMGUI SHARED)
 
 target_sources( IMGUI
         PRIVATE
@@ -55,9 +55,7 @@ target_include_directories( IMGUI
         PUBLIC ${SDL2_DIR}/include
         )
 
-set ( SDL2_LIBRARY SDL2 SDL2main )
-
-target_link_libraries(IMGUI PUBLIC ${SDL2_LIBRARY} ${CMAKE_DL_LIBS})
+target_link_libraries(IMGUI PUBLIC SDL2main SDL2 ${CMAKE_DL_LIBS})
 
 #set( ASSIMP_BUILD_ASSIMP_TOOLS OFF CACHE BOOL "Build assimp tools" )
 #set( ASSIMP_BUILD_TESTS OFF CACHE BOOL "Build assimp tests" )

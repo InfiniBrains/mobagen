@@ -44,8 +44,8 @@ ENDIF()
 
 set ( SDL2_LIBRARY SDL2 SDL2main )
 
-message(STATUS "SDL_LIBRARY are ${SDL2_LIBRARY}" )
-message(STATUS "CMAKE_BUILD_TYPE is ${CMAKE_BUILD_TYPE}")
+#find_library(SDL2 SDL2)
+message(STATUS "SDL2 lib is ${SDL2}" )
 
 include_directories(${SDL2_INCLUDE_DIR})
 #add_library(main SHARED main.cpp)
@@ -54,4 +54,4 @@ include_directories(${SDL2_INCLUDE_DIR})
 
 add_executable(editor)
 target_sources(editor PUBLIC editor/main.cpp)
-target_link_libraries(editor IMGUI ${SDL2_LIBRARIES})
+target_link_libraries(editor IMGUI SDL2)
