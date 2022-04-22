@@ -36,3 +36,5 @@ cmake-build*
 bin-emscripten/
 
 build/
+
+.DS_Store
