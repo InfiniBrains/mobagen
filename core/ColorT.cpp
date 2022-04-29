@@ -1,4 +1,5 @@
 #include "ColorT.h"
+#include <stdexcept>
 
 Color32::Color32(u_int32_t packed) {
     this->a = packed >> 24;
@@ -31,6 +32,36 @@ bool Color32::operator==(const Color32 &rhs) const {
 
 bool Color32::operator!=(const Color32 &rhs) const {
     return !(rhs == *this);
+}
+
+uint8_t &Color32::operator[](const int &i) {
+    if (i < 0 || i > 4) throw std::out_of_range("Out of color range\n");
+    switch (i) {
+        default:
+        case 0:
+            return a;
+        case 1:
+            return r;
+        case 2:
+            return g;
+        case 3:
+            return b;
+    }
+}
+
+const uint8_t &Color32::operator[](const int &i) const {
+    if (i < 0 || i > 4) throw std::out_of_range("Out of color range\n");
+    switch (i) {
+        default:
+        case 0:
+            return a;
+        case 1:
+            return r;
+        case 2:
+            return g;
+        case 3:
+            return b;
+    }
 }
 
 Colorf::Colorf(u_int32_t packed) {

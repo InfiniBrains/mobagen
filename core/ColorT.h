@@ -87,10 +87,35 @@ struct Color32 {
     explicit Color32(u_int32_t packed);
     explicit Color32(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
 
-    Color32& operator= (const Colorf& rhs);
+    // unary operations
+    Color32 operator- () const;
+    Color32 operator+ () const;
 
+    // binary operatons
+    Color32 operator- (const Color32& rhs) const;
+    Color32 operator- (const uint8_t& rhs) const;
+    Color32 operator+ (const Color32& rhs) const;
+    Color32 operator+ (const uint8_t& rhs) const;
+    Color32 operator* (const uint8_t& rhs) const;
+    Color32 operator* (const float & rhs) const;
+    friend Color32 operator* (const float& lhs, const Color32& rhs);
+    friend Color32 operator* (const uint8_t& lhs, const Color32& rhs);
+    Color32 operator/ (const float& rhs) const;
     bool operator==(const Color32 &rhs) const;
     bool operator!=(const Color32 &rhs) const;
+
+    // assignment operator
+    Color32& operator= (const Colorf& rhs);
+
+    //compound assignment operations
+    Color32& operator+= (const Color32& rhs);
+    Color32& operator-= (const Color32& rhs);
+    Color32& operator*= (const float& rhs);
+    Color32& operator/= (const float& rhs);
+
+    // subscript operator
+    uint8_t& operator[] (const int& i);
+    const uint8_t & operator[] (const int& i) const;
 };
 
 struct Colorf {
