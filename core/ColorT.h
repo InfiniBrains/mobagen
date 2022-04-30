@@ -84,7 +84,7 @@ struct Colorf;
 
 struct Color32 {
     uint8_t a,r,g,b;
-    explicit Color32(u_int32_t packed);
+    explicit Color32(uint32_t packed);
     explicit Color32(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
 
     // unary operations
@@ -120,7 +120,7 @@ struct Color32 {
 
 struct Colorf {
     float a,r,g,b;
-    explicit Colorf(u_int32_t packed);
+    explicit Colorf(uint32_t packed);
     explicit Colorf(float r, float g, float b, float a);
 
     Colorf& operator= (const Color32& rhs);

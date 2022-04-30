@@ -1,7 +1,7 @@
 #include "ColorT.h"
 #include <stdexcept>
 
-Color32::Color32(u_int32_t packed) {
+Color32::Color32(uint32_t packed) {
     this->a = packed >> 24;
     this->r = (packed << 8) >> 24;
     this->g = (packed << 16) >> 24;
@@ -64,7 +64,7 @@ const uint8_t &Color32::operator[](const int &i) const {
     }
 }
 
-Colorf::Colorf(u_int32_t packed) {
+Colorf::Colorf(uint32_t packed) {
     this->a = ((float)(packed >> 24))/255;
     this->r = ((float)((packed << 8) >> 24))/255;
     this->g = ((float)((packed << 16) >> 24))/255;
