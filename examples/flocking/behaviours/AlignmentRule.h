@@ -2,11 +2,12 @@
 #define MOBAGEN_ALIGNMENTRULE_H
 
 #include "FlockingRule.h"
+#include "ColorT.h"
 
 /* Steer toward average heading of local flockmates */
 class AlignmentRule : public FlockingRule {
 public:
-    explicit AlignmentRule(World* pWorld, float weight = 1., bool isEnabled = true) : FlockingRule(pWorld, Vector3::Yellow(), weight, isEnabled) {}
+    explicit AlignmentRule(World* pWorld, float weight = 1., bool isEnabled = true) : FlockingRule(pWorld, Color::Yellow, weight, isEnabled) {}
 
     std::unique_ptr<FlockingRule> clone() override {
         return std::make_unique<AlignmentRule>(*this);

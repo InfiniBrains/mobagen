@@ -84,8 +84,9 @@ struct Colorf;
 
 struct Color32 {
     uint8_t a,r,g,b;
+    explicit Color32();
     explicit Color32(uint32_t packed);
-    explicit Color32(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
+    explicit Color32(uint8_t r, uint8_t g, uint8_t b, uint8_t a=255);
 
     // unary operations
     Color32 operator- () const;
@@ -116,16 +117,51 @@ struct Color32 {
     // subscript operator
     uint8_t& operator[] (const int& i);
     const uint8_t & operator[] (const int& i) const;
+
+    // random
+    static Color32 RandomColor(int min=0, int max=0);
+    static Color32 RandomColor(int rmin, int rmax, int gmin, int gmax, int bmin, int bmax, int amin=0, int amax=0);
+
+    // intensity
+    Color32 Shade(float);
+    Color32 Shade100();
+    Color32 Shade200();
+    Color32 Shade300();
+    Color32 Shade400();
+    Color32 Shade600();
+    Color32 Shade700();
+    Color32 Shade800();
+    Color32 Shade900();
+    inline Color32 Light() const{return Color32(((short)r+255)/2, ((short)g+255)/2, ((short)b+255)/2);
+    };
+    inline Color32 Dark() const{return Color32(r/2, g/2, b/2);};
 };
 
 struct Colorf {
     float a,r,g,b;
+public:
     explicit Colorf(uint32_t packed);
     explicit Colorf(float r, float g, float b, float a);
 
+    // operators
+    // todo: create all operators
     Colorf& operator= (const Color32& rhs);
+
+    static void RGBtoHSV(Colorf color, float* H, float* S, float* V);
+    static Colorf HSVtoRGB(float H, float S, float V, bool hdr=true);
+
+private:
+    static void RGBToHSVHelper(
+            float offset,
+            float dominantcolor,
+            float colorone,
+            float colortwo,
+            float* H,
+            float* S,
+            float* V);
 };
 
+// todo: create color hsv class
 
 namespace Color {
     static inline const Color32 Transparent = Color32(0);

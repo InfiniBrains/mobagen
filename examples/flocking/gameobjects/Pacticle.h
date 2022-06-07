@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "Transform.h"
 #include "Polygon.h"
+#include "ColorT.h"
 
 class Particle : public GameObject {
 private:
@@ -23,10 +24,10 @@ private:
 public:
     Vector2 velocity; // todo: make this private
     bool drawAcceleration = false;
-    Vector3 color; // todo: make this private
+    Color32 color; // todo: make this private
 
     //Constructor
-    explicit Particle(Engine *pEngine, float size = 4.f, Vector3 color = Vector3::RandomColor(31,255));
+    explicit Particle(Engine *pEngine, float size = 4.f, Color32 color = Color32::RandomColor(31,255));
 
     //Getter / Setters
     Transform getTransform() const {

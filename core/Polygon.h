@@ -5,6 +5,7 @@
 #include "Vector2.h"
 #include "Transform.h"
 #include "Vector3.h"
+#include "ColorT.h"
 
 // naive approach to represent a polygon
 struct Polygon {
@@ -16,10 +17,10 @@ public:
     // polygon points to be used in the draw functions
     std::vector<Vector2> getDrawablePoints(const Transform& transform);
 
-    void Draw(SDL_Renderer* renderer, const Transform& transform, const Vector3& color);
-    void Draw(SDL_Renderer* renderer, const Vector2& position, const Vector2& scale, const Vector2& rotation, const Vector3& color);
+    void Draw(SDL_Renderer* renderer, const Transform& transform, const Color32& color);
+    void Draw(SDL_Renderer* renderer, const Vector2& position, const Vector2& scale, const Vector2& rotation, const Color32& color);
 
-    static void DrawLine(SDL_Renderer* renderer, const Vector2& v1, const Vector2& v2, const Vector3& color);
+    static void DrawLine(SDL_Renderer* renderer, const Vector2& v1, const Vector2& v2, const Color32& color);
 };
 
 struct Circle: Polygon{
