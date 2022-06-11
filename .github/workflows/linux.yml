@@ -18,11 +18,14 @@ jobs:
       with:
         submodules: recursive
 
+    - name: Install OpenGL
+      run: apt install mesa-common-dev libgl1-mesa-dev
+
     - name: Configure CMake
       run: cmake -Bbuild -H. -DCMAKE_BUILD_TYPE=MinSizeRel 
 
     - name: Build
-      run: cmake --build build/
+      run: cmake --build build/ -j20
 
     - name: Release
       uses: fnkr/github-action-ghr@v1.3
