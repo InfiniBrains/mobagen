@@ -60,14 +60,14 @@ bool BoundedAreaRule::drawImguiRuleExtra() {
     return valueHasChanged;
 }
 
-void BoundedAreaRule::draw(const Boid& boid, SDL_Renderer* renderer) const {
-    FlockingRule::draw(boid, renderer);
+void BoundedAreaRule::draw(const Boid& boid, Vector2& windowSize) const {
+    FlockingRule::draw(boid, windowSize);
     auto size = this->world->engine->window->size();
     auto dist = (float)desiredDistance;
 
     // Draw a rectangle on the map
-    Polygon::DrawLine(renderer, Vector2(dist,dist), Vector2(size.x - dist,dist), Color::Gray); // TOP
-    Polygon::DrawLine(renderer, Vector2(size.x - dist,dist), Vector2(size.x - dist,size.y - dist), Color::Gray); // RIGHT
-    Polygon::DrawLine(renderer, Vector2(size.x - dist,size.y - dist), Vector2(dist,size.y - dist), Color::Gray); // Bottom
-    Polygon::DrawLine(renderer, Vector2(dist,size.y - dist), Vector2(dist,dist), Color::Gray); // LEFT
+    Polygon::DrawLine(windowSize, Vector2(dist,dist), Vector2(size.x - dist,dist), Color::Gray); // TOP
+    Polygon::DrawLine(windowSize, Vector2(size.x - dist,dist), Vector2(size.x - dist,size.y - dist), Color::Gray); // RIGHT
+    Polygon::DrawLine(windowSize, Vector2(size.x - dist,size.y - dist), Vector2(dist,size.y - dist), Color::Gray); // Bottom
+    Polygon::DrawLine(windowSize, Vector2(dist,size.y - dist), Vector2(dist,dist), Color::Gray); // LEFT
 }

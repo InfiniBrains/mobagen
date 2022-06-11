@@ -15,12 +15,12 @@ public:
     std::vector<Vector2> points;
 
     // polygon points to be used in the draw functions
-    std::vector<Vector2> getDrawablePoints(const Transform& transform);
+    std::vector<Vector2> getDrawablePoints(const Vector2& windowSize, const Transform& transform);
 
-    void Draw(SDL_Renderer* renderer, const Transform& transform, const Color32& color);
-    void Draw(SDL_Renderer* renderer, const Vector2& position, const Vector2& scale, const Vector2& rotation, const Color32& color);
+    void Draw(const Vector2& windowSize, const Transform& transform, const Color32& color);
+    void Draw(const Vector2& windowSize, const Vector2& position, const Vector2& scale, const Vector2& rotation, const Color32& color);
 
-    static void DrawLine(SDL_Renderer* renderer, const Vector2& v1, const Vector2& v2, const Color32& color);
+    static void DrawLine(const Vector2& windowSize, const Vector2& v1, const Vector2& v2, const Color32& color);
 };
 
 struct Circle: Polygon{

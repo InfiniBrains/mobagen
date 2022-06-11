@@ -25,6 +25,35 @@ Window::Window(std::string title) {
     }
     SDL_Log("SDL INIT");
 
+//    SDL_DisplayMode mode;
+//    SDL_GetCurrentDisplayMode(0, &mode);
+
+//    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
+//    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
+//    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
+//    SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
+//    SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE, 8 * 4);
+//    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 8 * 2);
+//    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+//
+//#if defined(GLES3)
+//    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
+//    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+//    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
+//#elif defined(GLES2)
+//    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
+//    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
+//    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
+//#elif defined(EMSCRIPTEN)
+//    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
+//    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
+//    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
+//#else
+//    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+//    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+//    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+//#endif
+
     auto width = 1280;
     auto height = 720;
 #ifdef EMSCRIPTEN
@@ -32,22 +61,50 @@ Window::Window(std::string title) {
     height = canvas_get_height();
 #endif
 
+
     // Setup window
-    // auto window_flags = (SDL_WindowFlags)(SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI);
-    auto window_flags = (SDL_WindowFlags)(SDL_WINDOW_RESIZABLE);
-    sdlWindow = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED,
-                                 SDL_WINDOWPOS_CENTERED, width, height, window_flags);
-    SDL_Log("SDL CREATED");
+    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+    SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+    //auto window_flags = (SDL_WindowFlags)(SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI);
+    auto window_flags = (SDL_WindowFlags)(SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE );
+    sdlWindow = SDL_CreateWindow("Dear ImGui SDL2+OpenGL example", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, window_flags);
+
+    if (sdlWindow == nullptr) {
+        printf("SDL_CreateWindow Error: %s\n", SDL_GetError());
+        throw std::runtime_error(SDL_GetError());
+    }
+    SDL_Log("SDL WINDOW CREATED");
 
     // Setup SDL_Renderer instance
-    sdlRenderer = SDL_CreateRenderer(sdlWindow, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);
-    if (sdlRenderer == nullptr) {
-        SDL_Log("Error creating SDL_Renderer!");
-        throw std::runtime_error("Error creating SDL_Renderer!");
+//    sdlRenderer = SDL_CreateRenderer(sdlWindow, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);
+//    if (sdlRenderer == nullptr) {
+//        SDL_Log("Error creating SDL_Renderer!");
+//        throw std::runtime_error("Error creating SDL_Renderer!");
+//    }
+
+//    SDL_RendererInfo info;
+//    SDL_GetRendererInfo(sdlRenderer, &info);
+//    SDL_Log("Current SDL_Renderer: %s", info.name);
+
+// Setup Platform/Renderer backends
+//    ImGui_ImplSDL2_InitForSDLRenderer(sdlWindow, sdlRenderer);
+//    ImGui_ImplSDLRenderer_Init(sdlRenderer);
+
+    SDL_GLContext gl_context = SDL_GL_CreateContext(sdlWindow);
+
+    m_glContext = SDL_GL_CreateContext(sdlWindow);
+    if (m_glContext == nullptr) {
+        printf("SDL_GL_CreateContext Error: %s\n", SDL_GetError());
+        throw std::runtime_error(SDL_GetError());
     }
-    SDL_RendererInfo info;
-    SDL_GetRendererInfo(sdlRenderer, &info);
-    SDL_Log("Current SDL_Renderer: %s", info.name);
+    SDL_Log("SDL GL CONTEXT CREATED");
+
+    SDL_GL_MakeCurrent(sdlWindow, gl_context);
+    SDL_GL_SetSwapInterval(1); // Enable vsync
+//    SDL_GL_SetSwapInterval(0);
 
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
@@ -61,9 +118,8 @@ Window::Window(std::string title) {
     ImGui::StyleColorsDark();
     //ImGui::StyleColorsClassic();
 
-    // Setup Platform/Renderer backends
-    ImGui_ImplSDL2_InitForSDLRenderer(sdlWindow, sdlRenderer);
-    ImGui_ImplSDLRenderer_Init(sdlRenderer);
+    ImGui_ImplSDL2_InitForOpenGL(sdlWindow, m_glContext);
+    ImGui_ImplOpenGL2_Init();
 
     // Load Fonts
     // - If no fonts are loaded, dear imgui will use the default font. You can also load multiple fonts and use ImGui::PushFont()/PopFont() to select them.
@@ -82,7 +138,8 @@ Window::Window(std::string title) {
 }
 
 Window::~Window() {
-    SDL_DestroyRenderer(sdlRenderer);
+//    SDL_DestroyRenderer(sdlRenderer);
+    SDL_GL_DeleteContext(m_glContext);
     SDL_DestroyWindow(sdlWindow);
     SDL_Quit();
 }
@@ -90,6 +147,9 @@ Window::~Window() {
 // todo: cache this per frame to avoid call SDL_GetWindowSize every single call
 // todo: this should be integer return
 Vector2 Window::size() const {
+    // int display_w, display_h;
+    // SDL_GL_GetDrawableSize(sdlWindow, &display_w, &display_h);
+
     int x,y;
     SDL_GetWindowSize(this->sdlWindow,&x, &y);
     return {(float)x,(float)y};

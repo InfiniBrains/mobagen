@@ -81,5 +81,4 @@ struct Vector2 {
 };
 
 
-
 #endif //MOBAGEN_VECTOR2_H

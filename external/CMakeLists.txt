@@ -45,7 +45,7 @@ target_sources( IMGUI
         ${IMGUI_DIR}/imgui.cpp
 
         PRIVATE
-        ${IMGUI_DIR}/backends/imgui_impl_sdlrenderer.cpp
+        ${IMGUI_DIR}/backends/imgui_impl_opengl2.cpp
         ${IMGUI_DIR}/backends/imgui_impl_sdl.cpp
         )
 

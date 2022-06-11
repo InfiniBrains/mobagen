@@ -1,9 +1,13 @@
 #pragma once
 
 #include <string>
-#include "SDL_video.h"
-#include "SDL_render.h"
 #include "Vector2.h"
+
+#include "imgui.h"
+#include "imgui_impl_sdl.h"
+#include "imgui_impl_opengl2.h"
+#include <SDL.h>
+#include <SDL_opengl.h>
 
 #ifdef EMSCRIPTEN
 #include <emscripten.h>
@@ -37,7 +41,7 @@ class Window {
 
     //Input *getInput(void);
 
-    SDL_Window *getSDLWindow(void);
+//    SDL_Window *getSDLWindow(void);
 
 //    bool shouldQuit(void) const;
 
@@ -51,14 +55,14 @@ public:
     explicit Window(std::string title);
 
     SDL_Window *sdlWindow;
-    SDL_Renderer *sdlRenderer;
+    SDL_GLContext m_glContext;
+//    SDL_Renderer *sdlRenderer;
 
     Vector2 size() const;
 
     ~Window();
 
 private:
-    SDL_GLContext m_glContext;
 //    std::unique_ptr<GuiManager> m_guiManager;
 
 //    int m_width, m_height;

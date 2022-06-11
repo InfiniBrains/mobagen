@@ -49,7 +49,7 @@ public:
     void Update(float deltaTime) override;
 
     // Inherited via Drawable
-    virtual void OnDraw(SDL_Renderer* renderer) override;
+    virtual void OnDraw(Vector2& windowSize) override;
 };
 
 

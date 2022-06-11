@@ -39,10 +39,10 @@ void Boid::Update(float deltaTime) {
     }
 }
 
-void Boid::OnDraw(SDL_Renderer *renderer) {
+void Boid::OnDraw(Vector2& windowSize) {
     if (drawDebugRadius)
         circle.Draw(
-                renderer,
+                windowSize,
                 transform.position,
                 {detectionRadius,detectionRadius},
                 Vector2::zero(),
@@ -52,7 +52,7 @@ void Boid::OnDraw(SDL_Renderer *renderer) {
     if (drawDebugRules)
         for (auto& rule : rules)
             if (rule->isEnabled)
-                rule->draw(*this, renderer);
+                rule->draw(*this, windowSize);
 
-    Particle::OnDraw(renderer); // super()
+    Particle::OnDraw(windowSize); // super()
 }

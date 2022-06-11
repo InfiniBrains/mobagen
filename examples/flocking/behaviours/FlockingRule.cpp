@@ -61,8 +61,8 @@ bool FlockingRule::drawImguiRule() {
     return valueHasChanged;
 }
 
-void FlockingRule::draw(const Boid& boid, SDL_Renderer* renderer) const {
-    Polygon::DrawLine(renderer,
+void FlockingRule::draw(const Boid& boid, Vector2& windowSize) const {
+    Polygon::DrawLine(windowSize,
                       boid.transform.position,
                       boid.transform.position+force*1.5f,
                       debugColor);

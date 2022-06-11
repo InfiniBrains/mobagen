@@ -62,7 +62,7 @@ public:
 
     // todo: probably we need to call this and change boid to particle
     // Inherited via Drawable
-    virtual void draw(const Boid &boid, SDL_Renderer* renderer) const;
+    virtual void draw(const Boid &boid, Vector2& windowSize) const;
 };
 
 #endif

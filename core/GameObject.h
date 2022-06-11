@@ -17,7 +17,7 @@ public:
 
     virtual void Start(){};
     virtual void OnGui(ImGuiContext *context) {};
-    virtual void OnDraw(SDL_Renderer* renderer) {};
+    virtual void OnDraw(Vector2& windowSize) {};
     virtual void Update(float deltaTime) {};
 };
 #endif

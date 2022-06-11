@@ -2,6 +2,12 @@
 #include "SDL.h"
 #include "Polygon.h"
 
+#include "imgui.h"
+#include "imgui_impl_sdl.h"
+#include "imgui_impl_opengl2.h"
+#include <SDL.h>
+#include <SDL_opengl.h>
+
 #ifdef EMSCRIPTEN
 static Engine *instance = nullptr;
 void Engine::loop(void){
@@ -19,7 +25,7 @@ Engine::Engine() {
 Engine::~Engine() {
     if(window) {
         // Cleanup
-        ImGui_ImplSDLRenderer_Shutdown();
+        ImGui_ImplOpenGL2_Shutdown();
         ImGui_ImplSDL2_Shutdown();
         ImGui::DestroyContext();
         delete (window);
@@ -62,23 +68,17 @@ int Engine::Start(std::string title) {
 
 void Engine::Tick() {
     // Start the Dear ImGui frame
-    ImGui_ImplSDLRenderer_NewFrame();
+    //ImGui_ImplSDLRenderer_NewFrame();
+    ImGui_ImplOpenGL2_NewFrame();
     ImGui_ImplSDL2_NewFrame();
     ImGui::NewFrame();
-
-    SDL_SetRenderDrawColor(
-            window->sdlRenderer,
-            (Uint8)(clear_color.x * 255),
-            (Uint8)(clear_color.y * 255),
-            (Uint8)(clear_color.z * 255),
-            (Uint8)(clear_color.w * 255));
-    SDL_RenderClear(window->sdlRenderer);
 
     // inputs processing
     processInput();
 
     // update
-    auto deltaTime = ImGui::GetIO().DeltaTime;
+    auto io = ImGui::GetIO();
+    auto deltaTime = io.DeltaTime;
     for(auto go : gameObjects)
         go->Update(deltaTime);
 
@@ -91,9 +91,20 @@ void Engine::Tick() {
     // Rendering
     ImGui::Render();
 
+    // Rendering
+    glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);
+    glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    auto windowSize = Vector2(io.DisplaySize.x, io.DisplaySize.y);
+
     // Draw
     for(auto go : gameObjects)
-        go->OnDraw(window->sdlRenderer);
+        go->OnDraw(windowSize);
+
+    //glUseProgram(0); // You may want this if using this code in an OpenGL 3+ context where shaders may be bound
+    ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
+
 
     // destroy objects marked to death
     if(!toDestroy.empty()) {
@@ -104,9 +115,10 @@ void Engine::Tick() {
         toDestroy.clear();
     }
 
-    ImGui_ImplSDLRenderer_RenderDrawData(ImGui::GetDrawData());
-    SDL_RenderPresent(window->sdlRenderer);
+    SDL_GL_SwapWindow(window->sdlWindow);
+#ifndef EMSCRIPTEN
     SDL_Delay(0);
+#endif
 }
 
 void Engine::Exit() {

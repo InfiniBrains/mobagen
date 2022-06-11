@@ -15,26 +15,25 @@ SET(CORE_INC_DIR ${CMAKE_CURRENT_SOURCE_DIR} CACHE PATH "CORE INCLUDE SOURCE PAT
 #SET(CORE_SRC ${CORE_SRC} ${CORE_INC})
 
 add_library(core SHARED ${CORE_SRC} ${CORE_INC})
-target_link_libraries (core PUBLIC SDL2 IMGUI)
 
-#If(NOT EMSCRIPTEN AND NOT ANDROID)
-#    add_definitions(-DGLEW_STATIC)
-#    #  add_definitions(-DGLEW_BUILD)
-#    set(GLEW_USE_STATIC_LIBS ON CACHE BOOL "bla")
-#    set(BUILD_SHARED_LIBS OFF CACHE BOOL "bla")
-#    set( glew-cmake_BUILD_SHARED OFF CACHE BOOL "Build the shared glew library" )
-#    set( glew-cmake_BUILD_STATIC ON CACHE BOOL "Build the static glew library" )
-#    set( glew-cmake_BUILD_SINGLE_CONTEXT ON CACHE BOOL "Build the single context glew library" )
-#    set( glew-cmake_BUILD_MULTI_CONTEXT OFF CACHE BOOL "Build the multi context glew library" )
-#
-#    message(STATUS "######################### ADDING GLEW #######################################")
-#    hunter_add_package(glew)
-#    find_package(glew CONFIG REQUIRED)
-#
-#    target_link_libraries (engine PUBLIC ${ENGINE_LIBS} glew::glew)
-#ELSE()
-#    target_link_libraries (engine PUBLIC ${ENGINE_LIBS})
-#ENDIF()
+If(NOT EMSCRIPTEN AND NOT ANDROID)
+    add_definitions(-DGLEW_STATIC)
+    #  add_definitions(-DGLEW_BUILD)
+    set(GLEW_USE_STATIC_LIBS ON CACHE BOOL "bla")
+    set(BUILD_SHARED_LIBS OFF CACHE BOOL "bla")
+    set( glew-cmake_BUILD_SHARED OFF CACHE BOOL "Build the shared glew library" )
+    set( glew-cmake_BUILD_STATIC ON CACHE BOOL "Build the static glew library" )
+    set( glew-cmake_BUILD_SINGLE_CONTEXT ON CACHE BOOL "Build the single context glew library" )
+    set( glew-cmake_BUILD_MULTI_CONTEXT OFF CACHE BOOL "Build the multi context glew library" )
+
+    message(STATUS "######################### ADDING GLEW #######################################")
+    hunter_add_package(glew)
+    find_package(glew CONFIG REQUIRED)
+
+    target_link_libraries (core PUBLIC ${CORE_LIBS} glew::glew SDL2 IMGUI)
+ELSE()
+    target_link_libraries (core PUBLIC ${CORE_LIBS} SDL2 IMGUI)
+ENDIF()
 
 # TODO: Check if this approach bellow is better
 #IF (ANDROID)
