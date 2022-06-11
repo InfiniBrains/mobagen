@@ -18,6 +18,12 @@ jobs:
       with:
         submodules: recursive
 
+    - name: cache
+      uses: actions/cache@v3
+      with:
+        path: /home/runner/.hunter
+        key: ${{ runner.os }}-mobagen
+
     - name: Install OpenGL
       run: sudo apt install mesa-common-dev libgl1-mesa-dev
 

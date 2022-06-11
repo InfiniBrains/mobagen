@@ -18,6 +18,12 @@ jobs:
         with:
           submodules: recursive
 
+      - name: cache
+        uses: actions/cache@v3
+        with:
+          path: /home/runner/.hunter
+          key: ${{ runner.os }}-mobagen
+
       - name: Configure CMake
         run: cmake -Bbuild -H. -DCMAKE_BUILD_TYPE=MinSizeRel
 
