@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          submodules: 'true'
+          submodules: recursive
 
       - name: Emscripten Install
         run: ./scripts/emscripten-install.sh || true
