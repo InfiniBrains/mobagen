@@ -1,10 +1,10 @@
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
 
-file(GLOB EDITOR_INC
+file(GLOB CATCHTHECAT_INC
         ${CMAKE_CURRENT_SOURCE_DIR}/*.h
         ${CMAKE_CURRENT_SOURCE_DIR}/*.hpp)
 
-file(GLOB EDITOR_SRC
+file(GLOB CATCHTHECAT_SRC
         ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/*.c
         )
@@ -41,7 +41,7 @@ file(GLOB EDITOR_SRC
 
 # todo: check this
 #install (TARGETS editor DESTINATION lib)
-install (FILES ${EDITOR_INC} DESTINATION include/editor)
+install (FILES ${CATCHTHECAT_INC} DESTINATION include/editor)
 
 # TODO: ADD THIS BACK WHEN NEEDED
 # IF (NOT TARGET uninstall)
@@ -50,10 +50,9 @@ install (FILES ${EDITOR_INC} DESTINATION include/editor)
 #   add_custom_target(uninstall "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
 # ENDIF()
 
-add_executable(editor ${EDITOR_SRC} ${EDITOR_INC})
+add_executable(catchthecat ${CATCHTHECAT_SRC} ${CATCHTHECAT_INC})
 
-target_include_directories(editor PUBLIC ${SDL2_INCLUDE_DIR} ${CORE_INC_DIR})
-target_link_libraries (editor PUBLIC SDL2 IMGUI core)
+target_include_directories(catchthecat PUBLIC ${SDL2_INCLUDE_DIR} ${CORE_INC_DIR})
+target_link_libraries (catchthecat PUBLIC SDL2 IMGUI core)
 
 #target_sources(editor PUBLIC ${TARGET_SRC} )
-

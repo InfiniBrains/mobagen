@@ -1,21 +1,23 @@
 #include <Engine.h>
-#include "Editor.h"
+#include "World.h"
 // Main code
 int main(int, char**) {
-    SDL_Log("Creating Engine");
-    auto engine = new Engine();
-    SDL_Log("Engine Created");
+//    SDL_Log("Creating Engine");
+//    auto engine = new Engine();
+//    SDL_Log("Engine Created");
+//
+//    SDL_Log("Starting Engine");
+//    if(engine->Start("Editor")) {
+//        SDL_Log("Engine Started");
+//        engine->Run();
+//    }
+//
+//    SDL_Log("Exiting Engine");
+//    engine->Exit();
+//    SDL_Log("Engine Exited");
+  auto w = new World();
+  w->print();
 
-    SDL_Log("Starting Engine");
-    if(engine->Start("Editor")) {
-        SDL_Log("Engine Started");
-        new Editor(engine);
-        engine->Run();
-    }
-
-    SDL_Log("Exiting Engine");
-    engine->Exit();
-    SDL_Log("Engine Exited");
-    return 0;
+  return 0;
 }
 
