@@ -1,5 +1,5 @@
-#ifndef MOBAGEN_COLORT_H
-#define MOBAGEN_COLORT_H
+#ifndef COLORT_H
+#define COLORT_H
 
 #include <cstdint>
 #include "Vector3.h"
@@ -307,4 +307,4 @@ namespace Color {
     static inline const Color32 Yellow = Color32(0xff00ffff);
     static inline const Color32 YellowGreen = Color32(0xff32cd9a);
 }
-#endif //MOBAGEN_COLORT_H
+#endif //COLORT_H

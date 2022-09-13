@@ -40,7 +40,6 @@ IF(NOT DEFINED APPLE)
     MESSAGE(STATUS "NOT APPLE MACHINE")
 ENDIF()
 
-
 find_program(LSB_RELEASE_EXEC lsb_release)
 if(LSB_RELEASE_EXEC)
     execute_process(COMMAND ${LSB_RELEASE_EXEC} -is
@@ -73,17 +72,26 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 LINK_DIRECTORIES(${CMAKE_BINARY_DIR}/libs)
 LINK_DIRECTORIES(${CMAKE_BINARY_DIR}/libs/Debug)
 
+#set(DIRECTX OFF CACHE BOOL "use directx")
+#set(VIDEO_OPENGL ON CACHE BOOL "use opengl")
+#set(VIDEO_OPENGLES OFF CACHE BOOL "use opengles")
+#add_definitions(-DGL_GLEXT_PROTOTYPES)
+
+message("CMAKE_SYSTEM_NAME [${CMAKE_SYSTEM_NAME}]")
+
+
 IF(EMSCRIPTEN)
     message(STATUS "emscripten build")
     #  SET(CMAKE_CXX_FLAGS "--preload-file ${CMAKE_CURRENT_SOURCE_DIR}/assets/ -s WASM=0 -s ALLOW_MEMORY_GROWTH=1 -s USE_SDL=2 -s DISABLE_EXCEPTION_CATCHING=2 -s USE_PTHREADS=1 --proxy-to-worker -s FETCH=1")
 #    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --preload-file ${CMAKE_CURRENT_SOURCE_DIR}/assets/ -s WASM=0 -s DISABLE_EXCEPTION_CATCHING=2 --proxy-to-worker -s FETCH=1")
 #    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --preload-file ${CMAKE_CURRENT_SOURCE_DIR}/assets/")
 
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0 -s WASM=0 -s FULL_ES2=1 -s USE_WEBGL2=1")
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0")
+#    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0 -s WASM=0 -s USE_SDL=2 -s FULL_ES2=1 -s MAX_WEBGL_VERSION=2 -s USE_GLFW=3 -lgl -lglfw3 -lGLEW")
 
-    MESSAGE(STATUS ${CMAKE_CXX_FLAGS})
+    MESSAGE(STATUS "CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
 
-    add_definitions(-DASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets/")
+    add_definitions(-DASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets/" -DGLES2)
 
     configure_file(${CMAKE_CURRENT_SOURCE_DIR}/html/index.html ${CMAKE_BINARY_DIR}/bin/index.html COPYONLY)
 ELSE()
@@ -96,5 +104,5 @@ add_subdirectory(external)
 
 add_subdirectory(core)
 
-add_subdirectory(editor)
 add_subdirectory(examples)
+#add_subdirectory(editor)

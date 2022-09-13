@@ -14,7 +14,7 @@ SET(CORE_INC_DIR ${CMAKE_CURRENT_SOURCE_DIR} CACHE PATH "CORE INCLUDE SOURCE PAT
 
 #SET(CORE_SRC ${CORE_SRC} ${CORE_INC})
 
-add_library(core SHARED ${CORE_SRC} ${CORE_INC})
+add_library(core STATIC ${CORE_SRC} ${CORE_INC})
 
 If(NOT EMSCRIPTEN AND NOT ANDROID)
     add_definitions(-DGLEW_STATIC)
@@ -31,8 +31,18 @@ If(NOT EMSCRIPTEN AND NOT ANDROID)
     find_package(glew CONFIG REQUIRED)
 
     target_link_libraries (core PUBLIC ${CORE_LIBS} glew::glew SDL2 IMGUI)
+#ELSEIF(DEFINED EMSCRIPTEN)
+#    target_link_libraries (core PUBLIC ${CORE_LIBS} IMGUI SDL2)
+ELSEIF(DEFINED EMSCRIPTEN)
+    set_target_properties(
+            core
+            PROPERTIES
+            LINK_FLAGS
+            "-s USE_SDL=2 -s USE_WEBGL2=1 -s WASM=0 -s ALLOW_MEMORY_GROWTH=1 -s USE_SDL=2 -s FETCH=1 -s FULL_ES2=1 -s USE_ZLIB=1"
+    )
+    target_link_libraries (core PUBLIC ${CORE_LIBS} IMGUI SDL2 )
 ELSE()
-    target_link_libraries (core PUBLIC ${CORE_LIBS} SDL2 IMGUI)
+    target_link_libraries (core PUBLIC ${CORE_LIBS} IMGUI SDL2 )
 ENDIF()
 
 # TODO: Check if this approach bellow is better

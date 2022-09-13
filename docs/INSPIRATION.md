@@ -1,3 +1,29 @@
+# rendering
+- https://github.com/DiligentGraphics/DiligentCore/
+- https://github.com/bkaradzic/bgfx
+- https://github.com/google/filament
+- https://github.com/ConfettiFX/The-Forge
+
+# ECS
+- https://github.com/SanderMertens/flecs
+
+assimp
+glm
+
+# serialization
+- https://github.com/USCiLab/cereal
+- json
+- yaml
+
+# reflection
+- https://github.com/rttrorg/rttr
+
+# audio
+- https://github.com/kcat/openal-soft
+
+# unsorted
+- https://github.com/mosra/magnum
+- https://github.com/ConfettiFX/The-Forge
 - https://www.haroldserrano.com/blog/books-i-used-to-develop-a-game-engine
 - https://gafferongames.com/
 - https://www.redblobgames.com/

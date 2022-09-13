@@ -1,5 +1,5 @@
 #include <Engine.h>
-
+#include "Editor.h"
 // Main code
 int main(int, char**) {
     SDL_Log("Creating Engine");
@@ -9,6 +9,7 @@ int main(int, char**) {
     SDL_Log("Starting Engine");
     if(engine->Start("Editor")) {
         SDL_Log("Engine Started");
+        new Editor(engine);
         engine->Run();
     }
 

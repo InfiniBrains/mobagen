@@ -1,7 +1,22 @@
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#define GL_GLEXT_PROTOTYPES
+#define EGL_EGLEXT_PROTOTYPES
+#endif
+
+#if defined(GLES2)
+#include <GLES2/gl2.h>
+#include <SDL_opengles2.h>
+#elif defined(GLES3)
+#include <GLES3/gl3.h>
+#else
+#include <GL/glew.h>
+#endif
+
 #include "Polygon.h"
 #include "ColorT.h"
-#include "SDL.h"
-#include "SDL_opengl.h"
+//#include <SDL_opengl.h>
+
 
 std::vector<Vector2> Polygon::getDrawablePoints(const Vector2& windowDimensions, const Transform& transform) {
     std::vector<Vector2> ret;

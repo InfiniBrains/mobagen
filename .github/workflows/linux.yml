@@ -21,11 +21,15 @@ jobs:
     - name: cache
       uses: actions/cache@v3
       with:
-        path: /home/runner/.hunter
         key: ${{ runner.os }}-mobagen
+        path: |
+          /home/runner/.hunter
+          /home/runner/work/mobagen/mobagen/external/emsdk/zips/
 
-    - name: Install OpenGL
-      run: sudo apt install mesa-common-dev libgl1-mesa-dev
+    - name: Install dependencies
+      run: | 
+        sudo apt update
+        sudo apt install -y build-essential cmake mesa-common-dev libgl1-mesa-dev libx11-dev mesa-common-dev mesa-utils libgl-dev python3-distutils libgl1-mesa-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev  
 
     - name: Configure CMake
       run: cmake -Bbuild -H. -DCMAKE_BUILD_TYPE=MinSizeRel 
