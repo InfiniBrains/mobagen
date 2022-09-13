@@ -15,7 +15,7 @@ int main(int, char**) {
 //    SDL_Log("Exiting Engine");
 //    engine->Exit();
 //    SDL_Log("Engine Exited");
-  auto w = new World();
+  auto w = new World(13);
   w->print();
 
   return 0;

@@ -16,7 +16,8 @@ class World {
   // . means empty
   // C means cat
   // # means blocked
-  char worldState [121];
+  std::vector<char>worldState;
+  int sideSize=0;
   // todo: optimization make the world state only use 16 Bytes.
   // hints on how to do it:
   // the world have 11x11 size, so it needs 121 bits to represent it. in other words we need 16 bytes to fully represent it. bit representation: 0 empty, 1 blocked.
@@ -25,26 +26,28 @@ class World {
 
   // clears the world
   void clearWorld() {
-      for(auto i = 0;i<121; i++)
-        worldState[i]='.';
-      for(int i=0; i<15; i++)
-        worldState[Random::Range(0,120)]='#';
-      worldState[60] = 'C';
+    worldState.resize(sideSize*sideSize);
+    for(char &i : worldState) i='.';
+    for(int i=0; i<sideSize*1.5; i++)
+      worldState[Random::Range(0,(int)worldState.size()-1)]='#';
+    worldState[(int)worldState.size()/2] = 'C';
   };
 
   // directions
-  inline static Point2D NE(Point2D p){return Point2D(0,0);}; // todo;
-  inline static Point2D NW(Point2D p){return Point2D(0,0);}; // todo;
-  inline static Point2D E(Point2D p){return Point2D(0,0);}; // todo;
-  inline static Point2D W(Point2D p){return Point2D(0,0);}; // todo;
-  inline static Point2D SE(Point2D p){return Point2D(0,0);}; // todo;
-  inline static Point2D SW(Point2D p){return Point2D(0,0);}; // todo;
+  inline static Point2D NE(Point2D p){return {0,0};}; // todo;
+  inline static Point2D NW(Point2D p){return {0,0};}; // todo;
+  inline static Point2D E(Point2D p){return {0,0};}; // todo;
+  inline static Point2D W(Point2D p){return {0,0};}; // todo;
+  inline static Point2D SE(Point2D p){return {0,0};}; // todo;
+  inline static Point2D SW(Point2D p){return {0,0};}; // todo;
 
   // check if point is inside the world
   inline static bool isValidPosition(Point2D p){return false;}; // todo;
 
  public:
-  World(){
+  explicit World(int size=11): sideSize(size) {
+    if(size%2==0)
+      throw;
     clearWorld();
   }
 
