@@ -74,3 +74,12 @@ Square::Square() {
     points.push_back(Vector2::up().Rotate(225));
     points.push_back(Vector2::up().Rotate(315));
 }
+
+Hexagon::Hexagon() {
+    points.push_back(Vector2::up().Rotate(0));
+    points.push_back(Vector2::up().Rotate(60));
+    points.push_back(Vector2::up().Rotate(120));
+    points.push_back(Vector2::up().Rotate(180));
+    points.push_back(Vector2::up().Rotate(240));
+    points.push_back(Vector2::up().Rotate(300));
+}

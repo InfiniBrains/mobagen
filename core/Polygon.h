@@ -31,4 +31,8 @@ struct Square: Polygon{
     explicit Square();
 };
 
+struct Hexagon: Polygon{
+    explicit Hexagon();
+};
+
 #endif //POLYGON_H
