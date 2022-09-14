@@ -35,9 +35,6 @@ class World {
   static Point2D SE(const Point2D &p);
   static Point2D SW(const Point2D &p);
 
-  // check if point is inside the world
-  inline static bool isValidPosition(Point2D p){return false;}; // todo;
-
  public:
   explicit World(int size=11);
 
@@ -47,7 +44,11 @@ class World {
     return worldState[(y+sideSize/2)*(sideSize) + x + sideSize/2];
   }
 
-  void print() ;
+  // print the world state
+  void print();
+
+  // check if point is inside the world
+  bool isValidPosition(Point2D p);
 };
 
 #endif  // WORLD_H

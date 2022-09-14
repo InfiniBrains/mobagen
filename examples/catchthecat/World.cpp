@@ -11,11 +11,13 @@ void World::print() {
       std::cout << " ";
   }
 }
+
 World::World(int size): sideSize(size) {
   if(size%2==0)
     throw;
   clearWorld();
 }
+
 void World::clearWorld() {
   worldState.resize(sideSize*sideSize);
   for(char &i : worldState) i='.';
@@ -54,4 +56,13 @@ Point2D World::SW(const Point2D& p) {
   if(p.y%2)
     return {p.x, p.y+1};
   return {p.x+1, p.y+1};
+}
+
+bool World::isValidPosition(Point2D p) {
+    auto sideOver2=sideSize/2;
+    return
+        (p.x>=-sideOver2) &&
+        (p.x<=sideOver2) &&
+        (p.y<=sideOver2) &&
+        (p.y>=-sideOver2);
 }
