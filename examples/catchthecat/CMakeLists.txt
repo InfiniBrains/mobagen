@@ -41,7 +41,7 @@ file(GLOB CATCHTHECAT_SRC
 
 # todo: check this
 #install (TARGETS editor DESTINATION lib)
-install (FILES ${CATCHTHECAT_INC} DESTINATION include/editor)
+install (FILES ${CATCHTHECAT_INC} DESTINATION include/catchthecat)
 
 # TODO: ADD THIS BACK WHEN NEEDED
 # IF (NOT TARGET uninstall)

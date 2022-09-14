@@ -7,7 +7,7 @@
 
 struct Point2D {
  public:
-  Point2D(int8_t x, int8_t y): x(x), y(y){};
+  Point2D(int x, int y): x((int8_t)x), y((int8_t)y){};
   int8_t x, y;
 };
 
@@ -25,50 +25,29 @@ class World {
   // create a structure holding one byte for cat position and 16 bytes for the blocked map.
 
   // clears the world
-  void clearWorld() {
-    worldState.resize(sideSize*sideSize);
-    for(char &i : worldState) i='.';
-    for(int i=0; i<sideSize*1.5; i++)
-      worldState[Random::Range(0,(int)worldState.size()-1)]='#';
-    worldState[(int)worldState.size()/2] = 'C';
-  };
+  void clearWorld();
 
   // directions
-  inline static Point2D NE(Point2D p){return {0,0};}; // todo;
-  inline static Point2D NW(Point2D p){return {0,0};}; // todo;
-  inline static Point2D E(Point2D p){return {0,0};}; // todo;
-  inline static Point2D W(Point2D p){return {0,0};}; // todo;
-  inline static Point2D SE(Point2D p){return {0,0};}; // todo;
-  inline static Point2D SW(Point2D p){return {0,0};}; // todo;
+  static Point2D NE(const Point2D &p);
+  static Point2D NW(const Point2D &p);
+  static Point2D E(const Point2D &p);
+  static Point2D W(const Point2D &p);
+  static Point2D SE(const Point2D &p);
+  static Point2D SW(const Point2D &p);
 
   // check if point is inside the world
   inline static bool isValidPosition(Point2D p){return false;}; // todo;
 
  public:
-  explicit World(int size=11): sideSize(size) {
-    if(size%2==0)
-      throw;
-    clearWorld();
-  }
+  explicit World(int size=11);
 
   // the top left (x,y) is (-5,-5) the center is on (0,0);
   // get the content of a given
-  char getContent(const int8_t& x, const int8_t& y){
-    return worldState[(y+5)*11 + x + 5];
+  inline char getContent(const int8_t& x, const int8_t& y) {
+    return worldState[(y+sideSize/2)*(sideSize) + x + sideSize/2];
   }
 
-  void print() {
-    for(uint8_t i = 0; i<121; ) {
-      std::cout << worldState[i];
-      i++;
-      if((i+11)%22==0)
-        std::cout << std::endl << " ";
-      else if (i%11==0)
-        std::cout << std::endl;
-      else
-        std::cout << " ";
-    }
-  }
+  void print() ;
 };
 
 #endif  // WORLD_H
