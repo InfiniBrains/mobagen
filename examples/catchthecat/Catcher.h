@@ -2,9 +2,9 @@
 // Created by tolst on 12/09/2022.
 //
 
-#ifndef MOBAGEN_CATCHER_H
-#define MOBAGEN_CATCHER_H
+#ifndef CATCHER_H
+#define CATCHER_H
 
 class Catcher {};
 
-#endif  // MOBAGEN_CATCHER_H
+#endif  // CATCHER_H

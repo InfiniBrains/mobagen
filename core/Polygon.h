@@ -1,5 +1,5 @@
-#ifndef MOBAGEN_POLYGON_H
-#define MOBAGEN_POLYGON_H
+#ifndef POLYGON_H
+#define POLYGON_H
 
 #include <vector>
 #include "Vector2.h"
@@ -31,4 +31,4 @@ struct Square: Polygon{
     explicit Square();
 };
 
-#endif //MOBAGEN_POLYGON_H
+#endif //POLYGON_H

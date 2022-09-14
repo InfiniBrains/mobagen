@@ -1,10 +1,6 @@
-//
-// Created by tolst on 12/09/2022.
-//
-
-#ifndef MOBAGEN_CAT_H
-#define MOBAGEN_CAT_H
+#ifndef CAT_H
+#define CAT_H
 
 class Cat {};
 
-#endif  // MOBAGEN_CAT_H
+#endif  // CAT_H

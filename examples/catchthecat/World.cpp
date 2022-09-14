@@ -1,4 +1,5 @@
 #include "World.h"
+
 void World::print() {
   for (int i = 0; i < worldState.size();) {
     std::cout << worldState[i];

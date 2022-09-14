@@ -1,5 +1,5 @@
-#ifndef MOBAGEN_VECTOR2_H
-#define MOBAGEN_VECTOR2_H
+#ifndef VECTOR2_H
+#define VECTOR2_H
 
 #include <cmath>
 #include <stdexcept>
@@ -82,4 +82,4 @@ struct Vector2 {
 
 
 
-#endif //MOBAGEN_VECTOR2_H
+#endif //VECTOR2_H
