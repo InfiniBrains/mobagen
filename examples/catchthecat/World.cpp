@@ -88,6 +88,27 @@ bool World::isNeighbor(const Point2D &p1, const Point2D &p2) {
 void World::OnDraw(SDL_Renderer* renderer) {
     Hexagon hex;
     Transform t;
-    t.scale*=100;
-    hex.Draw(renderer, t, Color::Tomato);
+    auto windowSize = engine->window->size();
+    t.scale *= (windowSize.y / (float)sideSize)/2;
+
+    t.position = {windowSize.x/2 - (sideSize)*t.scale.x, windowSize.y/2 - (sideSize-1)*t.scale.y};
+    for (int i = 0; i < worldState.size();) {
+      if(worldState[i]=='#')
+        hex.Draw(renderer, t, Color::Blue);
+      else if(worldState[i]=='C')
+        hex.Draw(renderer, t, Color::Red);
+      else
+        hex.Draw(renderer, t, Color::Gray);
+      i++;
+      if ((i) % (2 * sideSize) == 0) {
+        t.position.x = windowSize.x / 2 - (sideSize)*t.scale.x;
+        t.position.y += 2*t.scale.y;
+      }
+      else if (i % sideSize == 0) {
+        t.position.x = windowSize.x / 2 - (sideSize)*t.scale.x + t.scale.x;
+        t.position.y += 2*t.scale.y;
+      }
+      else
+        t.position.x += 2*t.scale.x;
+    }
 }

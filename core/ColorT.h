@@ -164,6 +164,7 @@ private:
 // todo: create color hsv class
 
 namespace Color {
+    static inline const Color32 TransparentBlack = Color32(0);
     static inline const Color32 Transparent = Color32(0);
     static inline const Color32 AliceBlue = Color32(0xfffff8f0);
     static inline const Color32 AntiqueWhite = Color32(0xffd7ebfa);
@@ -259,7 +260,7 @@ namespace Color {
     static inline const Color32 MintCream = Color32(0xfffafff5);
     static inline const Color32 MistyRose = Color32(0xffe1e4ff);
     static inline const Color32 Moccasin = Color32(0xffb5e4ff);
-    static inline const Color32 MonoGameOrange = Color32(0xff003ce7);
+    // static inline const Color32 MonoGameOrange = Color32(0xff003ce7);
     static inline const Color32 NavajoWhite = Color32(0xffaddeff);
     static inline const Color32 Navy = Color32(0xff800000);
     static inline const Color32 OldLace = Color32(0xffe6f5fd);
@@ -283,27 +284,27 @@ namespace Color {
     static inline const Color32 RosyBrown = Color32(0xff8f8fbc);
     static inline const Color32 RoyalBlue = Color32(0xffe16941);
     static inline const Color32 SaddleBrown = Color32(0xff13458b);
-    static inline const Color32 Salmon= Color32(0xff7280fa);
+    static inline const Color32 Salmon = Color32(0xff7280fa);
     static inline const Color32 SandyBrown = Color32(0xff60a4f4);
     static inline const Color32 SeaGreen = Color32(0xff578b2e);
     static inline const Color32 SeaShell = Color32(0xffeef5ff);
     static inline const Color32 Sienna = Color32(0xff2d52a0);
-    static inline const Color32 Silver  = Color32(0xffc0c0c0);
-    static inline const Color32 SkyBlue  = Color32(0xffebce87);
-    static inline const Color32 SlateBlue= Color32(0xffcd5a6a);
-    static inline const Color32 SlateGray= Color32(0xff908070);
-    static inline const Color32 Snow= Color32(0xfffafaff);
-    static inline const Color32 SpringGreen= Color32(0xff7fff00);
-    static inline const Color32 SteelBlue= Color32(0xffb48246);
-    static inline const Color32 Tan= Color32(0xff8cb4d2);
-    static inline const Color32 Teal= Color32(0xff808000);
-    static inline const Color32 Thistle= Color32(0xffd8bfd8);
-    static inline const Color32 Tomato= Color32(0xff4763ff);
-    static inline const Color32 Turquoise= Color32(0xffd0e040);
-    static inline const Color32 Violet= Color32(0xffee82ee);
-    static inline const Color32 Wheat= Color32(0xffb3def5);
+    static inline const Color32 Silver = Color32(0xffc0c0c0);
+    static inline const Color32 SkyBlue = Color32(0xffebce87);
+    static inline const Color32 SlateBlue = Color32(0xffcd5a6a);
+    static inline const Color32 SlateGray = Color32(0xff908070);
+    static inline const Color32 Snow = Color32(0xfffafaff);
+    static inline const Color32 SpringGreen = Color32(0xff7fff00);
+    static inline const Color32 SteelBlue = Color32(0xffb48246);
+    static inline const Color32 Tan = Color32(0xff8cb4d2);
+    static inline const Color32 Teal = Color32(0xff808000);
+    static inline const Color32 Thistle = Color32(0xffd8bfd8);
+    static inline const Color32 Tomato = Color32(0xff4763ff);
+    static inline const Color32 Turquoise = Color32(0xffd0e040);
+    static inline const Color32 Violet = Color32(0xffee82ee);
+    static inline const Color32 Wheat = Color32(0xffb3def5);
     static inline const Color32 White = Color32(0xffffffff);
-    static inline const Color32 WhiteSmoke= Color32(0xfff5f5f5);
+    static inline const Color32 WhiteSmoke = Color32(0xfff5f5f5);
     static inline const Color32 Yellow = Color32(0xff00ffff);
     static inline const Color32 YellowGreen = Color32(0xff32cd9a);
 }

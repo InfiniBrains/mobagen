@@ -5,9 +5,9 @@
 
 Color32::Color32(uint32_t packed) {
     this->a = packed >> 24;
-    this->r = (packed << 8) >> 24;
+    this->b = (packed << 8) >> 24;
     this->g = (packed << 16) >> 24;
-    this->b = (packed << 24) >> 24;
+    this->r = (packed << 24) >> 24;
 }
 
 Color32::Color32(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
