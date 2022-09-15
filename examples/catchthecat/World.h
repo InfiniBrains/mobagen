@@ -56,7 +56,7 @@ class World: GameObject {
   bool isNeighbor(const Point2D& p1, const Point2D &p2);
   inline bool isEmpty(const Point2D &p);
 
-  void OnGui(ImGuiContext *context) override;
+  void OnDraw(SDL_Renderer* renderer) override;
 };
 
 #endif  // WORLD_H

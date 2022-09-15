@@ -1,4 +1,5 @@
 #include "World.h"
+#include "Polygon.h"
 
 void World::print() {
   for (int i = 0; i < worldState.size();) {
@@ -84,6 +85,9 @@ bool World::isNeighbor(const Point2D &p1, const Point2D &p2) {
         return p1.x == p2.x || p2.x == p1.x+1;
 }
 
-void World::OnGui(ImGuiContext *context) {
-
+void World::OnDraw(SDL_Renderer* renderer) {
+    Hexagon hex;
+    Transform t;
+    t.scale*=100;
+    hex.Draw(renderer, t, Color::Tomato);
 }

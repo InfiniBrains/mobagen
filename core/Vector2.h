@@ -23,6 +23,7 @@ struct Vector2 {
     static Vector2 left(){return {-1., 0.};}
     static Vector2 right(){return {1., 0.};}
     static Vector2 zero(){return {0., 0.};}
+    static Vector2 identity(){return {1., 1.};}
 
     //unary operations
     Vector2 operator- () const;
