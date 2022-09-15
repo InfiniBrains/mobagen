@@ -6,9 +6,10 @@ int main(int, char**) {
   auto engine = new Engine();
   SDL_Log("Engine Created");
 
+  new World(engine,21);
+
   SDL_Log("Starting Engine");
-  if(engine->Start("Editor")) {
-    new World(engine,21);
+  if(engine->Start("Catch The Cat")) {
     SDL_Log("Engine Started");
     engine->Run();
   }
@@ -19,4 +20,3 @@ int main(int, char**) {
 
   return 0;
 }
-
