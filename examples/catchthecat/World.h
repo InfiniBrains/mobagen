@@ -3,10 +3,11 @@
 
 #include "Random.h"
 #include "Point2D.h"
+#include "GameObject.h"
 #include <iostream>
 #include <vector>
 
-class World {
+class World: GameObject {
  private:
   // . means empty
   // C means cat
@@ -32,7 +33,7 @@ class World {
   static Point2D SW(const Point2D &p);
 
  public:
-  explicit World(int size=11);
+  explicit World(Engine* pEngine, int size=11);
 
   // the top left (x,y) is (-5,-5) the center is on (0,0);
   // get the content of a given
@@ -54,6 +55,8 @@ class World {
 
   bool isNeighbor(const Point2D& p1, const Point2D &p2);
   inline bool isEmpty(const Point2D &p);
+
+  void OnGui(ImGuiContext *context) override;
 };
 
 #endif  // WORLD_H

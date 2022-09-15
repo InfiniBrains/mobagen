@@ -8,6 +8,7 @@ int main(int, char**) {
 
   SDL_Log("Starting Engine");
   if(engine->Start("Editor")) {
+    new World(engine,21);
     SDL_Log("Engine Started");
     engine->Run();
   }
@@ -15,8 +16,6 @@ int main(int, char**) {
   SDL_Log("Exiting Engine");
   engine->Exit();
   SDL_Log("Engine Exited");
-  auto w = new World(21);
-  w->print();
 
   return 0;
 }

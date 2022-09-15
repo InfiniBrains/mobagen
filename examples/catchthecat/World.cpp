@@ -13,7 +13,7 @@ void World::print() {
   }
 }
 
-World::World(int size): sideSize(size) {
+World::World(Engine *pEngine, int size): GameObject(pEngine), sideSize(size){
   if(size%2==0)
     throw;
   clearWorld();
@@ -82,4 +82,8 @@ bool World::isNeighbor(const Point2D &p1, const Point2D &p2) {
         return p1.x == p2.x || p2.x == p1.x-1;
     else
         return p1.x == p2.x || p2.x == p1.x+1;
+}
+
+void World::OnGui(ImGuiContext *context) {
+
 }
