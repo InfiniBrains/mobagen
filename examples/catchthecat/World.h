@@ -2,14 +2,9 @@
 #define WORLD_H
 
 #include "Random.h"
+#include "Point2D.h"
 #include <iostream>
 #include <vector>
-
-struct Point2D {
- public:
-  Point2D(int x, int y): x((int8_t)x), y((int8_t)y){};
-  int8_t x, y;
-};
 
 class World {
  private:
@@ -17,6 +12,7 @@ class World {
   // C means cat
   // # means blocked
   std::vector<char>worldState;
+  // size of the side of the map
   int sideSize=0;
   // todo: optimization make the world state only use 16 Bytes.
   // hints on how to do it:
@@ -40,6 +36,12 @@ class World {
 
   // the top left (x,y) is (-5,-5) the center is on (0,0);
   // get the content of a given
+  inline char getContent(const Point2D& p) {
+    return worldState[(p.y+sideSize/2)*(sideSize) + p.x + sideSize/2];
+  }
+
+  // the top left (x,y) is (-5,-5) the center is on (0,0);
+  // get the content of a given
   inline char getContent(const int8_t& x, const int8_t& y) {
     return worldState[(y+sideSize/2)*(sideSize) + x + sideSize/2];
   }
@@ -48,7 +50,10 @@ class World {
   void print();
 
   // check if point is inside the world
-  bool isValidPosition(Point2D p);
+  bool isValidPosition(Point2D p) const;
+
+  bool isNeighbor(const Point2D& p1, const Point2D &p2);
+  inline bool isEmpty(const Point2D &p);
 };
 
 #endif  // WORLD_H
