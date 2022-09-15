@@ -57,6 +57,7 @@ class World: GameObject {
   inline bool isEmpty(const Point2D &p);
 
   void OnDraw(SDL_Renderer* renderer) override;
+  void OnGui(ImGuiContext *context) override;
 };
 
 #endif  // WORLD_H

@@ -21,6 +21,7 @@ World::World(Engine *pEngine, int size): GameObject(pEngine), sideSize(size){
 }
 
 void World::clearWorld() {
+  worldState.clear();
   worldState.resize(sideSize*sideSize);
   for(char &i : worldState) i='.';
   for(int i=0; i<sideSize*1.5; i++)
@@ -111,4 +112,14 @@ void World::OnDraw(SDL_Renderer* renderer) {
       else
         t.position.x += 2*t.scale.x;
     }
+}
+
+void World::OnGui(ImGuiContext *context) {
+    ImGui::SetCurrentContext(context);
+    ImGui::Begin("Settings", nullptr);
+    if(ImGui::SliderInt("Side SIze", &sideSize, 5, 21)){
+        sideSize = (sideSize/2)*2 + 1;
+        clearWorld();
+    }
+    ImGui::End();
 }
