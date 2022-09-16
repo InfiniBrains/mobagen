@@ -4,11 +4,20 @@
 #include "Random.h"
 #include "Point2D.h"
 #include "GameObject.h"
+#include "Cat.h"
+#include "Catcher.h"
 #include <iostream>
 #include <vector>
 
 class World: GameObject {
  private:
+  float timeBetweenAITicks=1;
+  float timeForNextTick=1;
+  bool catTurn = true;
+
+  Cat *cat;
+  Catcher *catcher;
+
   // . means empty
   // C means cat
   // # means blocked
@@ -58,6 +67,7 @@ class World: GameObject {
 
   void OnDraw(SDL_Renderer* renderer) override;
   void OnGui(ImGuiContext *context) override;
+  void Update(float deltaTime) override;
 };
 
 #endif  // WORLD_H

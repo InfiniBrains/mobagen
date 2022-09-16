@@ -29,7 +29,8 @@ ELSE ()
     #
     #  add_subdirectory( glew )
 ENDIF ()
-#add_definitions(-DHAVE_LIBC=OFF)
+add_definitions(-DSDL_LIBC=OFF )
+add_definitions(-DHAVE_LIBC=OFF)
 
 add_subdirectory( SDL )
 

@@ -1,14 +1,18 @@
 #ifndef AGENT_H
 #define AGENT_H
-#include "World.h"
+#include "Point2D.h"
+
+class World;
 
 class Agent {
 public:
   explicit Agent(World *world):world(world){};
 
-private:
+protected:
   World *world;
-  virtual void moveIsAcceptable(Point2D& p)=0;
+
+private:
+  virtual bool moveIsAcceptable(Point2D& p)=0;
 };
 
 #endif  // AGENT_H

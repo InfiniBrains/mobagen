@@ -17,6 +17,8 @@ void World::print() {
 World::World(Engine *pEngine, int size): GameObject(pEngine), sideSize(size){
   if(size%2==0)
     throw;
+  cat = new Cat(this);
+
   clearWorld();
 }
 
@@ -117,9 +119,20 @@ void World::OnDraw(SDL_Renderer* renderer) {
 void World::OnGui(ImGuiContext *context) {
     ImGui::SetCurrentContext(context);
     ImGui::Begin("Settings", nullptr);
-    if(ImGui::SliderInt("Side SIze", &sideSize, 5, 21)){
+    if(ImGui::SliderInt("Side Size", &sideSize, 5, 21)){
         sideSize = (sideSize/2)*2 + 1;
         clearWorld();
     }
     ImGui::End();
+}
+
+void World::Update(float deltaTime) {
+    timeForNextTick-=deltaTime;
+    if(timeForNextTick<0) {
+        timeForNextTick = timeBetweenAITicks;
+        if(catTurn) {
+
+        }
+        catTurn^=catTurn;
+    }
 }
