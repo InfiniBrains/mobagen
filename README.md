@@ -1,5 +1,6 @@
 # MoBaGEn
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f8da66b90d964968b3c37e086ccf2e14)](https://app.codacy.com/gh/InfiniBrains/mobagen?utm_source=github.com&utm_medium=referral&utm_content=InfiniBrains/mobagen&utm_campaign=Badge_Grade_Settings)
 [![Windows](https://github.com/InfiniBrains/mobagen/actions/workflows/windows.yml/badge.svg)](https://github.com/InfiniBrains/mobagen/actions/workflows/windows.yml) [![Web](https://github.com/InfiniBrains/mobagen/actions/workflows/web.yml/badge.svg)](https://github.com/InfiniBrains/mobagen/actions/workflows/web.yml) [![Linux](https://github.com/InfiniBrains/mobagen/actions/workflows/linux.yml/badge.svg)](https://github.com/InfiniBrains/mobagen/actions/workflows/linux.yml) [![OSX](https://github.com/InfiniBrains/mobagen/actions/workflows/osx.yml/badge.svg)](https://github.com/InfiniBrains/mobagen/actions/workflows/osx.yml) [![pages-build-deployment](https://github.com/InfiniBrains/mobagen/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/InfiniBrains/mobagen/actions/workflows/pages/pages-build-deployment) 
 
 
